@@ -1,0 +1,1 @@
+require 'wsdl_mapper'
