@@ -8,7 +8,7 @@ module WsdlMapper
       end
 
       def eql? other
-        name == other.name && ns == other.ns
+        self.class == other.class && name == other.name && ns == other.ns
       end
 
       def == other

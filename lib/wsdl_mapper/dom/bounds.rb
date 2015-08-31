@@ -1,7 +1,9 @@
 module WsdlMapper
   module Dom
     class Bounds
-      def initialize min: 0, max: 0, nillable: false
+      attr_reader :min, :max, :nillable
+
+      def initialize min: nil, max: nil, nillable: nil
         @min, @max, @nillable = min, max, nillable
       end
     end

@@ -1,3 +1,5 @@
+require 'wsdl_mapper/dom/builtin_type'
+
 module WsdlMapper
   module Dom
     class Schema
@@ -9,6 +11,14 @@ module WsdlMapper
 
       def add_type type
         @types[type.name] = type
+      end
+
+      def get_type name
+        if name.namespace == BuiltinType::NAMESPACE
+          BuiltinType.types[name]
+        else
+          @types[name]
+        end
       end
     end
   end

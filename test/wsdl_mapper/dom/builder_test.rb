@@ -26,7 +26,7 @@ module DomTests
 
       type = schema.types.values.first
 
-      assert_kind_of Type, type
+      assert_kind_of ComplexType, type
       assert_equal Name.new(nil, 'noteType'), type.name
     end
 
@@ -35,6 +35,37 @@ module DomTests
       type = schema.types.values.first
 
       assert_equal 4, type.properties.count
+
+      props = type.properties.values
+
+      prop_names = props.map { |p| p.name.name }
+      assert_includes prop_names, 'to'
+      assert_includes prop_names, 'from'
+      assert_includes prop_names, 'heading'
+      assert_includes prop_names, 'body'
+
+      assert_equal 0, props[0].sequence
+      assert_equal 1, props[1].sequence
+      assert_equal 2, props[2].sequence
+      assert_equal 3, props[3].sequence
+
+      props.each do |prop|
+        assert_equal 1, prop.bounds.min
+        assert_equal 1, prop.bounds.max
+      end
+    end
+
+    def test_complex_type_property_bounds
+      schema = build_from_fixture 'example_2'
+      type = schema.types.values.first
+
+      props = type.properties.values
+
+      to_prop = props.find { |p| p.name.name == 'to' }
+      heading_prop = props.find { |p| p.name.name == 'heading' }
+
+      assert_equal -1, to_prop.bounds.max
+      assert_equal 0, heading_prop.bounds.min
     end
   end
 end

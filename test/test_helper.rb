@@ -1,6 +1,8 @@
 require 'bundler/setup'
 require 'minitest/autorun'
 
+require 'byebug'
+
 module TestHelper
   extend self
 
