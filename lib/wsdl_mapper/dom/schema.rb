@@ -4,6 +4,7 @@ module WsdlMapper
   module Dom
     class Schema
       attr_reader :types
+      attr_accessor :target_namespace
 
       def initialize
         @types = {}
@@ -14,7 +15,7 @@ module WsdlMapper
       end
 
       def get_type name
-        if name.namespace == BuiltinType::NAMESPACE
+        if name.ns == BuiltinType::NAMESPACE
           BuiltinType.types[name]
         else
           @types[name]

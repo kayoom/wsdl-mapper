@@ -51,7 +51,7 @@ module WsdlMapper
 
       def get_bounds xsd_element
         parent_bounds = get_parent_bounds xsd_element.parent
-        bounds = get_attribute_bounds xsd_element
+        # bounds = get_attribute_bounds xsd_element
 
         parent_bounds#.override bounds
       end

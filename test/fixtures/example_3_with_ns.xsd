@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns="example.org/example_3" targetNamespace="example.org/example_3">
+
+  <xs:element name="note" type="ns:noteType"/>
+
+  <xs:complexType name="noteType">
+    <xs:sequence>
+      <xs:element name="to" type="xs:string"/>
+      <xs:element name="from" type="xs:string"/>
+      <xs:element name="heading" type="xs:string"/>
+      <xs:element name="body" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="fancyNoteType">
+    <xs:complexContent>
+      <xs:extension base="ns:noteType">
+        <xs:sequence>
+          <xs:element name="attachments" type="xs:string" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

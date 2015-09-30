@@ -18,6 +18,12 @@ module WsdlMapper
       def hash
         [ns, name].hash
       end
+
+      def to_s
+        name unless ns
+
+        "#{ns}##{name}"
+      end
     end
   end
 end

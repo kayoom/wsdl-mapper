@@ -24,7 +24,8 @@ module SchemaTests
     end
 
     # def test_byebug
-    #   @file = XsdFile.new(TestHelper.get_fixture("ms_cust_order_example.xsd"))
+    #   skip
+    #   doc = Nokogiri::XML::Document.parse(TestHelper.get_fixture("ms_cust_order_example.xsd"))
     #   require 'byebug'
     #   byebug
     # end

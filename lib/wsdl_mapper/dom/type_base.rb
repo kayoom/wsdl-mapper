@@ -2,6 +2,7 @@ module WsdlMapper
   module Dom
     class TypeBase
       attr_reader :name
+      attr_accessor :documentation
 
       def initialize name
         @name = name

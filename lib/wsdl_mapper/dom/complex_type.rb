@@ -4,6 +4,7 @@ module WsdlMapper
   module Dom
     class ComplexType < WsdlMapper::Dom::TypeBase
       attr_reader :properties
+      attr_accessor :base
 
       def initialize name
         super

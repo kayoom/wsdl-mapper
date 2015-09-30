@@ -25,4 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'byebug'
 
   spec.add_dependency "soap4r-ng"
+
+  # spec.add_dependency "ox"
+  spec.add_dependency "nokogiri"
 end
