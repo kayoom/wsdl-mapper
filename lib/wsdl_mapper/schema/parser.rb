@@ -1,7 +1,10 @@
 require 'wsdl_mapper/schema/parser_base'
 
 require 'wsdl_mapper/schema/complex_type_parser'
+require 'wsdl_mapper/schema/simple_type_parser'
 require 'wsdl_mapper/schema/annotation_parser'
+
+require 'wsdl_mapper/dom/schema'
 
 module WsdlMapper
   module Schema
@@ -12,7 +15,7 @@ module WsdlMapper
       class InvalidRootException < ParserException ; end
       class InvalidNsException < ParserException ; end
 
-      attr_reader :schema, :parsers, :namespaces, :target_namespace, :default_namespace
+      attr_reader :schema, :parsers, :namespaces, :target_namespace, :default_namespace, :log_msgs
 
       def initialize
         @base = self
@@ -20,12 +23,14 @@ module WsdlMapper
 
         @parsers = {
           COMPLEX_TYPE  => ComplexTypeParser.new(self),
-          ANNOTATION    => AnnotationParser.new(self)
+          ANNOTATION    => AnnotationParser.new(self),
+          SIMPLE_TYPE   => SimpleTypeParser.new(self)
         }
 
         @namespaces = {}
         @target_namespace = nil
         @default_namespace = nil
+        @log_msgs = []
       end
 
       def parse doc
@@ -35,11 +40,19 @@ module WsdlMapper
 
         parse_target_namespace schema_node
 
-        schema_node.children.each do |node|
+        each_element schema_node do |node|
           parse_node node
         end
 
         @schema
+      end
+
+      def log_msg node, msg = '', source = self
+        msg = LogMsg.new(node, source, msg)
+        log_msgs << msg
+        puts msg.to_s
+        puts caller
+        puts "\n\n"
       end
 
       protected
@@ -63,7 +76,7 @@ module WsdlMapper
       end
 
       def get_schema_node doc
-        schema_node = doc.children.first
+        schema_node = first_element doc
 
         if schema_node.namespace.nil? || schema_node.namespace.href != NS
           raise InvalidNsException

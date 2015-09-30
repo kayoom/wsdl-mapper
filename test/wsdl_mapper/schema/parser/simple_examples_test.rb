@@ -95,6 +95,23 @@ module SchemaTests
         assert_equal app_info, prop.documentation.app_info
       end
 
+      def test_example_4_simple_enum
+        schema = TestHelper.parse_schema 'example_4.xsd'
+        type = schema.types.values.first
+
+        assert_instance_of SimpleType, type
+
+        base_type = schema.get_type Name.new(Xsd::NS, 'token')
+
+        assert_equal base_type, type.base
+
+        assert_equal 2, type.enumerations.count
+
+        expected_enums = [Enumeration.new('ship'), Enumeration.new('bill')]
+        assert_includes expected_enums, type.enumerations.first
+        assert_includes expected_enums, type.enumerations.last
+      end
+
       # def test_sandbox
       #   doc = TestHelper.get_xml_doc 'ebaySvc.xsd'
       #

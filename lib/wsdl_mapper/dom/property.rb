@@ -8,6 +8,7 @@ module WsdlMapper
 
       def initialize name, type_name, bounds: Bounds.new, sequence: 0
         @name, @type_name, @bounds, @sequence = name, type_name, bounds, sequence
+        @documentation = Documentation.new
       end
     end
   end

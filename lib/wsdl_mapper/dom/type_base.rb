@@ -6,6 +6,7 @@ module WsdlMapper
 
       def initialize name
         @name = name
+        @documentation = Documentation.new
       end
 
       def hash

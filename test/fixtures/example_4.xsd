@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="addressType">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="ship"/>
+      <xs:enumeration value="bill"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

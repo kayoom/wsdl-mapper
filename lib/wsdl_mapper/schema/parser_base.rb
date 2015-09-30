@@ -1,5 +1,6 @@
 require 'wsdl_mapper/schema/xsd'
 require 'wsdl_mapper/dom/documentation'
+require 'wsdl_mapper/dom/bounds'
 
 module WsdlMapper
   module Schema
@@ -13,7 +14,7 @@ module WsdlMapper
         end
 
         def to_s
-          "#{@msg}: #{@node_name} - #{@source.class.name}"
+          "#{@msg}: #{@node} - #{@source.class.name}"
         end
       end
 
@@ -31,17 +32,27 @@ module WsdlMapper
       include Xsd
 
       protected
+      def parse_base node, type
+        base_type_name = parse_name node.attributes['base'].value
+        type.base = @base.schema.get_type base_type_name
+      end
+
+      def log_msg node, msg
+        @base.log_msg node, msg, self
+      end
+
       def parse_node node
         parser = @base.parsers[get_name(node)]
 
         if parser
           parser.parse node
+        else
+          log_msg node, :unknown
         end
       end
 
-      def parse_annotation node
-        anno_node = find_node node, ANNOTATION
-        @base.parsers[ANNOTATION].parse anno_node
+      def parse_annotation node, type
+        type.documentation = @base.parsers[ANNOTATION].parse node
       end
 
       def parse_bounds node
@@ -72,6 +83,11 @@ module WsdlMapper
         node.children.find { |n| is_element? n }
       end
 
+      def first_element! node
+        first_element(node) ||
+          raise(ArgumentError.new("#{node.name} has no child elements."))
+      end
+
       def select_nodes node, name
         node.children.select { |n| is_element?(n) && name_matches?(n, name) }
       end
@@ -84,6 +100,13 @@ module WsdlMapper
         return node.name == name.name && name.ns.nil? if node.namespace.nil?
 
         node.name == name.name && node.namespace.href == name.ns
+      end
+
+      def each_element node
+        node.children.each do |child|
+          next unless is_element? child
+          yield child
+        end
       end
 
       def parse_name name_str

@@ -2,6 +2,7 @@ require 'wsdl_mapper/dom/schema'
 require 'wsdl_mapper/dom/name'
 require 'wsdl_mapper/dom/complex_type'
 require 'wsdl_mapper/dom/property'
+require 'wsdl_mapper/dom/attribute'
 require 'wsdl_mapper/dom/bounds'
 
 
