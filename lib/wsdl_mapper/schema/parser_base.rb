@@ -42,7 +42,10 @@ module WsdlMapper
       end
 
       def parse_node node
-        parser = @base.parsers[get_name(node)]
+        name = get_name(node)
+        return if name == ELEMENT
+
+        parser = @base.parsers[name]
 
         if parser
           parser.parse node
@@ -55,20 +58,23 @@ module WsdlMapper
         type.documentation = @base.parsers[ANNOTATION].parse node
       end
 
-      def parse_bounds node
-        min = 1
-        max = 1
+      def parse_bounds node, container
+        bounds = DEFAULT_BOUNDS[container].dup
+
+        if bounds.nil?
+          raise ArgumentError.new("Unknown container #{container}")
+        end
 
         if node.attributes.has_key? 'minOccurs'
-          min = node.attributes['minOccurs'].value.to_i
+          bounds.min = node.attributes['minOccurs'].value.to_i
         end
 
         if node.attributes.has_key? 'maxOccurs'
           max = node.attributes['maxOccurs'].value
-          max = max == 'unbounded' ? nil : max.to_i
+          bounds.max = max == 'unbounded' ? nil : max.to_i
         end
 
-        Bounds.new min: min, max: max
+        bounds
       end
 
       def get_name node
@@ -107,6 +113,11 @@ module WsdlMapper
           next unless is_element? child
           yield child
         end
+      end
+
+      def fetch_attribute_value name, node, default_value = nil
+        attr = node.attributes[name]
+        attr ? attr.value : default_value
       end
 
       def parse_name name_str

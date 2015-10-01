@@ -112,6 +112,39 @@ module SchemaTests
         assert_includes expected_enums, type.enumerations.last
       end
 
+      def test_example_5_complex_type_simple_content
+        schema = TestHelper.parse_schema 'example_5.xsd'
+        type = schema.types.values.first
+
+        assert_instance_of ComplexType, type
+
+        base_type = schema.get_type Name.new(Xsd::NS, 'float')
+
+        assert_equal base_type, type.base
+
+        attr = type.attributes.values.first
+        assert_equal "currency", attr.name
+      end
+
+      def test_example_6_complex_type_properties_all
+        schema = TestHelper.parse_schema 'example_6.xsd'
+        type = schema.types.values.first
+
+        assert_equal 2, type.properties.count
+
+        props = type.properties.values
+
+        user_name_prop = props.first
+        assert_equal 'userName', user_name_prop.name.name
+        assert_equal 1, user_name_prop.bounds.min
+        assert_equal 1, user_name_prop.bounds.max
+
+        password_prop = props.last
+        assert_equal 'password', password_prop.name.name
+        assert_equal 0, password_prop.bounds.min
+        assert_equal 1, password_prop.bounds.max
+      end
+
       # def test_sandbox
       #   doc = TestHelper.get_xml_doc 'ebaySvc.xsd'
       #

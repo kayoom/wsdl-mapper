@@ -3,6 +3,7 @@ require 'wsdl_mapper/schema/parser_base'
 require 'wsdl_mapper/schema/complex_type_parser'
 require 'wsdl_mapper/schema/simple_type_parser'
 require 'wsdl_mapper/schema/annotation_parser'
+require 'wsdl_mapper/schema/import_parser'
 
 require 'wsdl_mapper/dom/schema'
 
@@ -24,7 +25,8 @@ module WsdlMapper
         @parsers = {
           COMPLEX_TYPE  => ComplexTypeParser.new(self),
           ANNOTATION    => AnnotationParser.new(self),
-          SIMPLE_TYPE   => SimpleTypeParser.new(self)
+          SIMPLE_TYPE   => SimpleTypeParser.new(self),
+          IMPORT        => ImportParser.new(self)
         }
 
         @namespaces = {}
