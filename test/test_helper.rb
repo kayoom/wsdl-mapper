@@ -18,4 +18,27 @@ module TestHelper
   def parse_schema(name)
     WsdlMapper::Schema::Parser.new.parse get_xml_doc name
   end
+
+  class TmpPath
+    def initialize
+      @path = File.join File.dirname(__FILE__), 'tmp', SecureRandom.hex(5)
+      FileUtils.mkdir_p @path
+    end
+
+    def join *args
+      File.join @path, *args
+    end
+
+    def to_s
+      @path
+    end
+
+    def unlink
+      FileUtils.rm_rf @path
+    end
+  end
+
+  def get_tmp_path
+    TmpPath.new
+  end
 end

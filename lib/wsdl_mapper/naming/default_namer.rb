@@ -12,7 +12,9 @@ module WsdlMapper
       end
 
       def get_type_name type
-        TypeName.new get_class_name(type), @module_path, get_file_name(type), get_file_path
+        type_name = TypeName.new get_class_name(type), @module_path, get_file_name(type.name.name), get_file_path(@module_path)
+        type_name.parent = make_parents @module_path
+        type_name
       end
 
       def get_property_name property
@@ -20,6 +22,14 @@ module WsdlMapper
       end
 
       private
+      def make_parents path
+        return if path.empty?
+        mod, path = path.last, path[0...-1]
+        type_name = TypeName.new mod, path, get_file_name(mod), get_file_path(path)
+        type_name.parent = make_parents path
+        type_name
+      end
+
       def get_attribute_name property
         underscore property.name.name
       end
@@ -32,12 +42,12 @@ module WsdlMapper
         camelize type.name.name
       end
 
-      def get_file_name type
-        underscore(type.name.name) + ".rb"
+      def get_file_name name
+        underscore(name) + ".rb"
       end
 
-      def get_file_path
-        @module_path.map do |m|
+      def get_file_path path
+        path.map do |m|
           underscore m
         end
       end

@@ -19,6 +19,10 @@ module WsdlMapper
       def add_property property
         @properties[property.name] = property
       end
+
+      def self.to_proc
+        -> (obj) { obj.is_a? self }
+      end
     end
   end
 end

@@ -21,6 +21,10 @@ module WsdlMapper
           @types[name]
         end
       end
+
+      def each_type &block
+        @types.values.each &block
+      end
     end
   end
 end

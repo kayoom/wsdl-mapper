@@ -22,6 +22,7 @@ module NamingTests
       assert_equal 'note_type.rb', type_name.file_name
       assert_equal [], type_name.module_path
       assert_equal [], type_name.file_path
+      assert_nil type_name.parent
     end
 
     def test_simple_type_name_with_module_path
@@ -35,6 +36,21 @@ module NamingTests
       assert_equal 'note_type.rb', type_name.file_name
       assert_equal %w[NotesApi Types], type_name.module_path
       assert_equal %w[notes_api types], type_name.file_path
+
+      parent = type_name.parent
+      refute_nil parent
+      assert_equal 'Types', parent.module_name
+      assert_equal 'types.rb', parent.file_name
+      assert_equal %w[NotesApi], parent.module_path
+      assert_equal %w[notes_api], parent.file_path
+
+      parent2 = parent.parent
+      refute_nil parent2
+      assert_equal 'NotesApi', parent2.module_name
+      assert_equal 'notes_api.rb', parent2.file_name
+      assert_equal [], parent2.module_path
+      assert_equal [], parent2.file_path
+      assert_nil parent2.parent
     end
 
     def test_simple_property_name
