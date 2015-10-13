@@ -20,6 +20,14 @@ module WsdlMapper
         @properties[property.name] = property
       end
 
+      def each_property &block
+        properties.values.each &block
+      end
+
+      def each_attribute &block
+        attributes.values.each &block
+      end
+
       def self.to_proc
         -> (obj) { obj.is_a? self }
       end

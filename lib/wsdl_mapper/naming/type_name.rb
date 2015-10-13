@@ -12,8 +12,23 @@ module WsdlMapper
         @file_path = file_path
       end
 
+      # TODO: test
+      def parents
+        @parents ||= if parent.nil?
+          []
+        else
+          [parent] + parent.parents
+        end
+      end
+
+      # TODO: test
+      def require_path
+        @require_path ||= File.join *@file_path, File.basename(@file_name, ".rb")
+      end
+
+      # TODO: test
       def name
-        @name ||= ['', @module_path, @class_name] * "::"
+        @name ||= ['', *@module_path, @class_name] * "::"
       end
 
       def eql? other

@@ -1,9 +1,11 @@
 module WsdlMapper
   module Generation
     class TypeToGenerate
+      attr_reader :type, :name
+
       def initialize type, type_name
         @type = type
-        @type_name = type_name
+        @name = type_name
       end
     end
   end

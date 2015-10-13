@@ -21,11 +21,10 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "minitest"
+  spec.add_development_dependency "guard"
+  spec.add_development_dependency "guard-minitest"
 
   spec.add_development_dependency 'byebug'
 
-  spec.add_dependency "soap4r-ng"
-
-  # spec.add_dependency "ox"
   spec.add_dependency "nokogiri"
 end

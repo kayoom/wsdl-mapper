@@ -1,6 +1,8 @@
 require 'bundler/setup'
 require 'minitest/autorun'
 
+require 'nokogiri'
+
 require 'byebug'
 
 module TestHelper
