@@ -18,6 +18,7 @@ module WsdlMapper
           end
           f.begin_class ttg.name.class_name
           f.attr_accessor *property_names.map(&:attr_name)
+          @generator.ctr_generator.generate ttg, f, result
           f.end
           modules.each { f.end }
         end

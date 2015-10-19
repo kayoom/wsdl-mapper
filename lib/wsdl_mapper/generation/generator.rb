@@ -4,6 +4,7 @@ require 'wsdl_mapper/generation/result'
 
 require 'wsdl_mapper/generation/class_generator'
 require 'wsdl_mapper/generation/module_generator'
+require 'wsdl_mapper/generation/no_ctr_generator'
 
 require 'wsdl_mapper/dom/complex_type'
 require 'wsdl_mapper/generation/type_to_generate'
@@ -13,17 +14,21 @@ module WsdlMapper
     class Generator
       attr_reader :context, :namer
 
+      attr_reader :class_generator, :module_generator, :ctr_generator
+
       def initialize context,
           formatter_class: DefaultFormatter,
           namer: WsdlMapper::Naming::DefaultNamer.new,
-          class_generator_class: ClassGenerator,
-          module_generator_class: ModuleGenerator
+          class_generator_factory: ClassGenerator,
+          module_generator_factory: ModuleGenerator,
+          ctr_generator_factory: NoCtrGenerator
 
         @formatter_class = formatter_class
         @context = context
         @namer = namer
-        @class_generator = class_generator_class.new self
-        @module_generator = module_generator_class.new self
+        @class_generator = class_generator_factory.new self
+        @module_generator = module_generator_factory.new self
+        @ctr_generator = ctr_generator_factory.new self
       end
 
       def generate schema
