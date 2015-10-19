@@ -38,6 +38,7 @@ module WsdlMapper
       end
 
       def begin_def name, args = []
+        next_statement
         statement method_definition(name, args)
         inc_indent
       end

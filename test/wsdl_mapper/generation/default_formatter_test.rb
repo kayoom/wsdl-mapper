@@ -30,6 +30,7 @@ module GenerationTests
       formatter.end
 
       expected = <<RUBY
+
 def do_something(with_this, and_that)
   puts with_this, and_that
 end
@@ -43,6 +44,7 @@ RUBY
       formatter.end
 
       expected = <<RUBY
+
 def do_something
   puts 'foo bar'
 end
