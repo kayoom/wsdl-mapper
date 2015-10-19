@@ -24,20 +24,6 @@ module WsdlMapper
         result.files << file_name
         self
       end
-
-      protected
-      def get_modules type_name
-        parent = type_name.parent
-
-        modules = []
-        while parent
-          modules << parent
-          parent = parent.parent
-        end
-
-        modules.reverse
-      end
     end
   end
 end
-

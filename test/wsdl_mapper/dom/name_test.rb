@@ -29,4 +29,3 @@ module DomTests
     end
   end
 end
-

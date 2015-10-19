@@ -42,10 +42,6 @@ module WsdlMapper
       def hash
         [self.class, name].hash
       end
-
-      def is? str
-        name == str
-      end
     end
   end
 end

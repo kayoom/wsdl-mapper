@@ -6,10 +6,6 @@ module WsdlMapper
       def value
         name
       end
-
-      def value= value
-        self.name = value
-      end
     end
   end
 end

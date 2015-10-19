@@ -11,8 +11,18 @@ module WsdlMapper
         end
       end
 
+      def self.[] name
+        types[name.to_s]
+      end
+
       def self.build name
-        new name
+        new Name.new(NAMESPACE, name.to_s)
+      end
+
+      extend Enumerable
+
+      def self.each &block
+        types.values.each &block
       end
     end
   end
