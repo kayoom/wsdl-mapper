@@ -1,13 +1,13 @@
 require 'test_helper'
 
-require 'wsdl_mapper/dom/enumeration'
+require 'wsdl_mapper/dom/enumeration_value'
 
 module DomTests
-  class EnumerationTest < Minitest::Test
+  class EnumerationValueTest < Minitest::Test
     include WsdlMapper::Dom
 
     def test_value_accessors
-      enum = Enumeration.new 'foo'
+      enum = EnumerationValue.new 'foo'
       assert_equal 'foo', enum.value
     end
   end

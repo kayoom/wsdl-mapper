@@ -44,8 +44,8 @@ module WsdlMapper
       def parse_simple_type_enumeration node, type
         value = node.attributes['value'].value
 
-        enum = Enumeration.new value
-        type.enumerations << enum
+        enum = EnumerationValue.new value
+        type.enumeration_values << enum
       end
     end
   end

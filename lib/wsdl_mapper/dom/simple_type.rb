@@ -1,15 +1,19 @@
 require 'wsdl_mapper/dom/type_base'
-require 'wsdl_mapper/dom/enumeration'
+require 'wsdl_mapper/dom/enumeration_value'
 
 module WsdlMapper
   module Dom
     class SimpleType < WsdlMapper::Dom::TypeBase
       attr_accessor :base
-      attr_reader :enumerations
+      attr_reader :enumeration_values
 
       def initialize name
         super
-        @enumerations = []
+        @enumeration_values = []
+      end
+
+      def enumeration?
+        @enumeration_values.any?
       end
     end
   end

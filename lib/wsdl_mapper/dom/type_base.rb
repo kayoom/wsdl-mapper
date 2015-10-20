@@ -20,6 +20,10 @@ module WsdlMapper
       def eql? other
         self.class == other.class && name == other.name
       end
+
+      def self.to_proc
+        -> (obj) { obj.is_a? self }
+      end
     end
   end
 end

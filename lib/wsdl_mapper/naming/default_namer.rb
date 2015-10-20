@@ -1,5 +1,6 @@
 require 'wsdl_mapper/naming/type_name'
 require 'wsdl_mapper/naming/property_name'
+require 'wsdl_mapper/naming/enumeration_value_name'
 require 'wsdl_mapper/naming/inflector'
 
 module WsdlMapper
@@ -12,13 +13,17 @@ module WsdlMapper
       end
 
       def get_type_name type
-        type_name = TypeName.new get_class_name(type), @module_path, get_file_name(type.name.name), get_file_path(@module_path)
+        type_name = TypeName.new get_class_name(type.name.name), @module_path, get_file_name(type.name.name), get_file_path(@module_path)
         type_name.parent = make_parents @module_path
         type_name
       end
 
       def get_property_name property
-        PropertyName.new get_attribute_name(property), get_var_name(property)
+        PropertyName.new get_attribute_name(property.name.name), get_var_name(property.name.name)
+      end
+
+      def get_enumeration_value_name enum_value
+        EnumerationValueName.new get_constant_name(enum_value.value), get_key_name(enum_value.value)
       end
 
       private
@@ -30,16 +35,24 @@ module WsdlMapper
         type_name
       end
 
-      def get_attribute_name property
-        underscore property.name.name
+      def get_constant_name name
+        underscore(name).upcase
       end
 
-      def get_var_name property
-        "@#{get_attribute_name(property)}"
+      def get_key_name name
+        underscore name
       end
 
-      def get_class_name type
-        camelize type.name.name
+      def get_attribute_name name
+        underscore name
+      end
+
+      def get_var_name name
+        "@#{get_attribute_name(name)}"
+      end
+
+      def get_class_name name
+        camelize name
       end
 
       def get_file_name name

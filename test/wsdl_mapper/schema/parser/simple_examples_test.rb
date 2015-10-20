@@ -105,11 +105,11 @@ module SchemaTests
 
         assert_equal base_type, type.base
 
-        assert_equal 2, type.enumerations.count
+        assert_equal 2, type.enumeration_values.count
 
-        expected_enums = [Enumeration.new('ship'), Enumeration.new('bill')]
-        assert_includes expected_enums, type.enumerations.first
-        assert_includes expected_enums, type.enumerations.last
+        expected_enums = [EnumerationValue.new('ship'), EnumerationValue.new('bill')]
+        assert_includes expected_enums, type.enumeration_values.first
+        assert_includes expected_enums, type.enumeration_values.last
       end
 
       def test_example_5_complex_type_simple_content

@@ -2,11 +2,11 @@ require 'test_helper'
 
 require 'wsdl_mapper/schema/parser'
 require 'wsdl_mapper/generation/context'
-require 'wsdl_mapper/generation/generator'
+require 'wsdl_mapper/generation/schema_generator'
 
 module GenerationTests
   module GeneratorTests
-    class SimpleTest < Minitest::Test
+    class SimpleClassGeneratorTest < Minitest::Test
       def setup
         @tmp_path = TestHelper.get_tmp_path
       end
@@ -18,7 +18,7 @@ module GenerationTests
       def test_simple_class_generation
         schema = TestHelper.parse_schema 'example_1.xsd'
         context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-        generator = WsdlMapper::Generation::Generator.new context
+        generator = WsdlMapper::Generation::SchemaGenerator.new context
 
         result = generator.generate schema
 
@@ -36,7 +36,7 @@ RUBY
       def test_simple_class_generation_with_modules
         schema = TestHelper.parse_schema 'example_1.xsd'
         context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-        generator = WsdlMapper::Generation::Generator.new context, namer: WsdlMapper::Naming::DefaultNamer.new(module_path: %w[NotesApi Types])
+        generator = WsdlMapper::Generation::SchemaGenerator.new context, namer: WsdlMapper::Naming::DefaultNamer.new(module_path: %w[NotesApi Types])
 
         result = generator.generate schema
 

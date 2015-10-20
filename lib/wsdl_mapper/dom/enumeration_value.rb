@@ -2,7 +2,7 @@ require 'wsdl_mapper/dom/type_base'
 
 module WsdlMapper
   module Dom
-    class Enumeration < TypeBase
+    class EnumerationValue < TypeBase
       def value
         name
       end

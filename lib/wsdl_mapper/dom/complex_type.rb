@@ -27,10 +27,6 @@ module WsdlMapper
       def each_attribute &block
         attributes.values.each &block
       end
-
-      def self.to_proc
-        -> (obj) { obj.is_a? self }
-      end
     end
   end
 end

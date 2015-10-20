@@ -2,7 +2,7 @@ require 'test_helper'
 
 require 'wsdl_mapper/schema/parser'
 require 'wsdl_mapper/generation/context'
-require 'wsdl_mapper/generation/generator'
+require 'wsdl_mapper/generation/schema_generator'
 require 'wsdl_mapper/generation/simple_ctr_generator'
 
 require 'wsdl_mapper/dom/property'
@@ -24,7 +24,7 @@ module GenerationTests
       def test_simple_class_generation
         schema = TestHelper.parse_schema 'example_1.xsd'
         context = Context.new @tmp_path.to_s
-        generator = Generator.new context, ctr_generator_factory: SimpleCtrGenerator
+        generator = SchemaGenerator.new context, ctr_generator_factory: SimpleCtrGenerator
 
         result = generator.generate schema
 

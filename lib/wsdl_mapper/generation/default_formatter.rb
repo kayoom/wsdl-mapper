@@ -37,10 +37,26 @@ module WsdlMapper
         inc_indent
       end
 
+      def begin_sub_class name, super_name
+        statement "class #{name} < #{super_name}"
+        inc_indent
+      end
+
       def begin_def name, args = []
         next_statement
         statement method_definition(name, args)
         inc_indent
+      end
+
+      def literal_array values
+        statement "Values = ["
+        inc_indent
+        values[0..-2].each do |value|
+          statement "#{value},"
+        end
+        statement values.last
+        dec_indent
+        statement "]"
       end
 
       def end
