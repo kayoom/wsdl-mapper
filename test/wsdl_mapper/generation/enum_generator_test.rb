@@ -15,7 +15,7 @@ module GenerationTests
         @tmp_path.unlink
       end
 
-      def test_simple_class_generation
+      def test_simple_enum_generation
         schema = TestHelper.parse_schema 'example_4.xsd'
         context = WsdlMapper::Generation::Context.new @tmp_path.to_s
         generator = WsdlMapper::Generation::SchemaGenerator.new context
@@ -41,4 +41,3 @@ RUBY
     end
   end
 end
-
