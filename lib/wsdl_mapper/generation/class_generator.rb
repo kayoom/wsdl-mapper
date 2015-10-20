@@ -26,6 +26,8 @@ module WsdlMapper
 
       protected
       def generate_attributes f, property_names
+        return unless property_names.any?
+
         f.attr_accessor *property_names.map(&:attr_name)
       end
 

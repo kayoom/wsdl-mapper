@@ -15,6 +15,23 @@ module GenerationTests
         @tmp_path.unlink
       end
 
+      def test_empty_properties
+        schema = TestHelper.parse_schema 'example_11.xsd'
+        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
+        generator = WsdlMapper::Generation::SchemaGenerator.new context
+
+        result = generator.generate schema
+
+        expected_file = @tmp_path.join("note_type.rb")
+        assert File.exists? expected_file
+
+        generated_class = File.read expected_file
+        assert_equal <<RUBY, generated_class
+class NoteType
+end
+RUBY
+      end
+
       def test_simple_class_generation
         schema = TestHelper.parse_schema 'example_1.xsd'
         context = WsdlMapper::Generation::Context.new @tmp_path.to_s
