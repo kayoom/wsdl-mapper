@@ -28,4 +28,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'byebug'
 
   spec.add_dependency "nokogiri"
+  spec.add_dependency "thor"
 end

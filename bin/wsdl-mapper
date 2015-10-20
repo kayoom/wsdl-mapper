@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+
+require 'wsdl_mapper/cli/cli'
+
+WsdlMapper::Cli::Cli.start(ARGV)
