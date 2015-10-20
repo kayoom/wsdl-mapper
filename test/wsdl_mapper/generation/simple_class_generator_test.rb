@@ -98,6 +98,28 @@ RUBY
 require "notes_api/types"
 RUBY
       end
+
+      def test_simple_class_generation_with_require_of_property_types
+        schema = TestHelper.parse_schema 'example_10.xsd'
+        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
+        generator = WsdlMapper::Generation::SchemaGenerator.new context, namer: WsdlMapper::Naming::DefaultNamer.new(module_path: %w[OrdersApi Types])
+
+        result = generator.generate schema
+        expected_file = @tmp_path.join("orders_api", "types", "order_type.rb")
+
+        generated_class = File.read expected_file
+        assert_equal <<RUBY, generated_class
+require "orders_api/types/address_type"
+
+module OrdersApi
+  module Types
+    class OrderType
+      attr_accessor :name, :street, :type
+    end
+  end
+end
+RUBY
+      end
     end
   end
 end

@@ -14,11 +14,12 @@ module WsdlMapper
         end
       end
 
-      attr_reader :files, :module_tree
+      attr_reader :files, :module_tree, :schema
 
-      def initialize
+      def initialize schema
         @files = []
         @module_tree = []
+        @schema = schema
       end
 
       def add_type type_name

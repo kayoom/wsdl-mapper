@@ -36,7 +36,7 @@ module WsdlMapper
       end
 
       def generate schema
-        result = Result.new
+        result = Result.new schema
 
         generate_complex_types schema, result
         generate_enumerations schema, result

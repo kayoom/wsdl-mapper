@@ -72,6 +72,10 @@ module WsdlMapper
         types.values.each &block
       end
 
+      def self.builtin? name
+        return name.ns == NAMESPACE
+      end
+
       # def self.int? name
       #   return false unless name.ns == NAMESPACE
       #

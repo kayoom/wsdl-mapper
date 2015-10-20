@@ -1,4 +1,5 @@
 require 'wsdl_mapper/generation/generator_base'
+require 'wsdl_mapper/dom/builtin_type'
 
 module WsdlMapper
   module Generation
@@ -11,7 +12,7 @@ module WsdlMapper
         File.open file_name, 'w' do |io|
           f = @generator.get_formatter io
 
-          write_requires f, get_requires(ttg.type)
+          write_requires f, get_requires(ttg.type, result.schema)
           open_modules f, modules
           open_class f, ttg
           generate_attributes f, property_names
@@ -32,11 +33,28 @@ module WsdlMapper
         @generator.ctr_generator.generate ttg, f, result
       end
 
-      def get_requires type
-        return [] unless type.base
+      def get_requires type, schema
+        requires = []
+        add_base_require requires, type
+        type.each_property do |prop|
+          add_property_require requires, prop, schema
+        end
+        requires
+      end
+
+      def add_property_require requires, prop, schema
+        return if WsdlMapper::Dom::BuiltinType.builtin? prop.type_name
+
+        type = schema.get_type prop.type_name
+        type_name = @generator.namer.get_type_name type
+        requires << type_name.require_path
+      end
+
+      def add_base_require requires, type
+        return unless type.base
 
         base_name = @generator.namer.get_type_name type.base
-        [base_name.require_path]
+        requires << base_name.require_path
       end
 
       def close_class f, ttg
