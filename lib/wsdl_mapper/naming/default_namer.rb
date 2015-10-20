@@ -22,7 +22,7 @@ module WsdlMapper
         PropertyName.new get_attribute_name(property.name.name), get_var_name(property.name.name)
       end
 
-      def get_enumeration_value_name enum_value
+      def get_enumeration_value_name type, enum_value
         EnumerationValueName.new get_constant_name(enum_value.value), get_key_name(enum_value.value)
       end
 

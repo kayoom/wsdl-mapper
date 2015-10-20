@@ -9,6 +9,9 @@ module WsdlMapper
       def next_statement
         append "\n"
       end
+      alias_method :blank_line, :next_statement
+      alias_method :after_requires, :next_statement
+      alias_method :after_constants, :next_statement
 
       def statement statement
         indent
@@ -18,7 +21,7 @@ module WsdlMapper
 
       def require path
         # TODO: escape
-        statement "require '#{path}'"
+        statement %[require #{path.inspect}]
       end
 
       def attr_accessor *attrs

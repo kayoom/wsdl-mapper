@@ -33,6 +33,26 @@ end
 RUBY
       end
 
+      def test_sub_class_generation
+        schema = TestHelper.parse_schema 'example_3.xsd'
+        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
+        generator = WsdlMapper::Generation::SchemaGenerator.new context
+
+        result = generator.generate schema
+
+        expected_file = @tmp_path.join("fancy_note_type.rb")
+        assert File.exists? expected_file
+
+        generated_class = File.read expected_file
+        assert_equal <<RUBY, generated_class
+require "note_type"
+
+class FancyNoteType < ::NoteType
+  attr_accessor :attachments
+end
+RUBY
+      end
+
       def test_simple_class_generation_with_modules
         schema = TestHelper.parse_schema 'example_1.xsd'
         context = WsdlMapper::Generation::Context.new @tmp_path.to_s
@@ -67,7 +87,7 @@ RUBY
 
         generated_file = File.read expected_file
         assert_equal <<RUBY, generated_file
-require 'notes_api/types/note_type'
+require "notes_api/types/note_type"
 RUBY
 
         expected_file = @tmp_path.join("notes_api.rb")
@@ -75,7 +95,7 @@ RUBY
 
         generated_file = File.read expected_file
         assert_equal <<RUBY, generated_file
-require 'notes_api/types'
+require "notes_api/types"
 RUBY
       end
     end
