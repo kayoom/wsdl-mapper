@@ -9,6 +9,8 @@ module WsdlMapper
 
       def initialize
         @types = {}
+        @builtin_types = {}
+        @soap_encoding_types = {}
       end
 
       def add_type type
@@ -17,9 +19,9 @@ module WsdlMapper
 
       def get_type name
         if name.ns == BuiltinType::NAMESPACE
-          BuiltinType.types[name]
+          @builtin_types[name] ||= BuiltinType.types[name]
         elsif name.ns == SoapEncodingType::NAMESPACE
-          SoapEncodingType.types[name]
+          @soap_encoding_types[name] ||= SoapEncodingType.types[name]
         else
           @types[name]
         end
@@ -27,6 +29,14 @@ module WsdlMapper
 
       def each_type &block
         @types.values.each &block
+      end
+
+      def each_builtin_type &block
+        @builtin_types.values.each &block
+      end
+
+      def each_soap_encoding_type &block
+        @soap_encoding_types.values.each &block
       end
     end
   end
