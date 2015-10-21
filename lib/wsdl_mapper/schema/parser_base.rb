@@ -33,8 +33,7 @@ module WsdlMapper
 
       protected
       def parse_base node, type
-        base_type_name = parse_name node.attributes['base'].value
-        type.base = @base.schema.get_type base_type_name
+        type.base_type_name = parse_name node.attributes['base'].value
       end
 
       def log_msg node, msg

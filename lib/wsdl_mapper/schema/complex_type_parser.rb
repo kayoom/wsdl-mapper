@@ -2,7 +2,7 @@ require 'wsdl_mapper/schema/parser_base'
 require 'wsdl_mapper/dom/complex_type'
 require 'wsdl_mapper/dom/property'
 require 'wsdl_mapper/dom/attribute'
-require 'wsdl_mapper/schema/soap_encoding'
+require 'wsdl_mapper/dom/soap_encoding_type'
 require 'wsdl_mapper/schema/wsdl'
 
 module WsdlMapper

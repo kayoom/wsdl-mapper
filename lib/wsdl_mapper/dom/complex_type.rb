@@ -4,7 +4,7 @@ module WsdlMapper
   module Dom
     class ComplexType < WsdlMapper::Dom::TypeBase
       attr_reader :properties, :attributes
-      attr_accessor :base
+      attr_accessor :base_type_name, :base
 
       def initialize name
         super
@@ -13,10 +13,12 @@ module WsdlMapper
       end
 
       def add_attribute attribute
+        attribute.containing_type = self
         @attributes[attribute.name] = attribute
       end
 
       def add_property property
+        property.containing_type = self
         @properties[property.name] = property
       end
 

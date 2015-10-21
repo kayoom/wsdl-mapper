@@ -1,4 +1,5 @@
 require 'wsdl_mapper/dom/builtin_type'
+require 'wsdl_mapper/dom/soap_encoding_type'
 
 module WsdlMapper
   module Dom
@@ -17,6 +18,8 @@ module WsdlMapper
       def get_type name
         if name.ns == BuiltinType::NAMESPACE
           BuiltinType.types[name]
+        elsif name.ns == SoapEncodingType::NAMESPACE
+          SoapEncodingType.types[name]
         else
           @types[name]
         end

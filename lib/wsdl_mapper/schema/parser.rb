@@ -46,18 +46,50 @@ module WsdlMapper
           parse_node node
         end
 
+        link_types
+
         @schema
       end
 
       def log_msg node, msg = '', source = self
-        msg = LogMsg.new(node, source, msg)
-        log_msgs << msg
-        puts msg.to_s
+        log_msg = LogMsg.new(node, source, msg)
+        log_msgs << log_msg
+        puts node.inspect
+        puts msg
         puts caller
         puts "\n\n"
       end
 
       protected
+      def link_types
+        link_base_types
+        link_property_types
+      end
+
+      def link_property_types
+        @schema.each_type do |type|
+          next unless type.is_a? WsdlMapper::Dom::ComplexType
+          type.each_property do |prop|
+            prop.type = @schema.get_type prop.type_name
+
+            unless prop.type
+              log_msg prop, :missing_property_type
+            end
+          end
+        end
+      end
+
+      def link_base_types
+        @schema.each_type do |type|
+          next unless type.base_type_name
+
+          type.base = @schema.get_type type.base_type_name
+          unless type.base
+            log_msg type, :missing_base_type
+          end
+        end
+      end
+
       def parse_target_namespace node
         attr = node.attributes[TARGET_NS]
         if attr

@@ -26,7 +26,7 @@ module WsdlMapper
         EnumerationValueName.new get_constant_name(enum_value.value), get_key_name(enum_value.value)
       end
 
-      private
+      protected
       def make_parents path
         return if path.empty?
         mod, path = path.last, path[0...-1]
