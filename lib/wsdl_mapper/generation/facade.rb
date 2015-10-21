@@ -3,6 +3,7 @@ require 'nokogiri'
 require 'wsdl_mapper/naming/default_namer'
 require 'wsdl_mapper/generation/context'
 require 'wsdl_mapper/generation/schema_generator'
+require 'wsdl_mapper/generation/simple_ctr_generator'
 require 'wsdl_mapper/schema/parser'
 
 module WsdlMapper
@@ -17,7 +18,9 @@ module WsdlMapper
       def generate
         context = WsdlMapper::Generation::Context.new @out
         namer = WsdlMapper::Naming::DefaultNamer.new module_path: @module_path
-        generator = WsdlMapper::Generation::SchemaGenerator.new context, namer: namer
+        generator = WsdlMapper::Generation::SchemaGenerator.new context,
+          namer: namer,
+          ctr_generator_factory: SimpleCtrGenerator
 
         file_content = File.read @file
         xml_doc = Nokogiri::XML::Document.parse file_content

@@ -15,6 +15,7 @@ module WsdlMapper
 
         generator = WsdlMapper::Generation::Facade.new file: xsd_file, out: out, module_path: module_path
 
+        FileUtils.rmtree out
         generator.generate
       end
     end
