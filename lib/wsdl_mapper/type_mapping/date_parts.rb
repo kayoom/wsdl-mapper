@@ -7,10 +7,6 @@ module WsdlMapper
   module TypeMapping
     module DateParts
       Day = Base.new do
-        register_ruby_types [
-          WsdlMapper::CoreExt::TimeDuration
-        ]
-
         register_xml_types %w[
           gDay
         ]
@@ -25,10 +21,6 @@ module WsdlMapper
       end
 
       Month = Base.new do
-        register_ruby_types [
-          WsdlMapper::CoreExt::TimeDuration
-        ]
-
         register_xml_types %w[
           gMonth
         ]
@@ -43,10 +35,6 @@ module WsdlMapper
       end
 
       Year = Base.new do
-        register_ruby_types [
-            WsdlMapper::CoreExt::TimeDuration
-          ]
-
         register_xml_types %w[
           gYear
         ]
@@ -61,10 +49,6 @@ module WsdlMapper
       end
 
       YearMonth = Base.new do
-        register_ruby_types [
-            WsdlMapper::CoreExt::TimeDuration
-          ]
-
         register_xml_types %w[
           gYearMonth
         ]
@@ -80,10 +64,6 @@ module WsdlMapper
       end
 
       MonthDay = Base.new do
-        register_ruby_types [
-            WsdlMapper::CoreExt::TimeDuration
-          ]
-
         register_xml_types %w[
           gMonthDay
         ]

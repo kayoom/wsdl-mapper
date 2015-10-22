@@ -5,24 +5,7 @@ require 'wsdl_mapper/type_mapping/base'
 module TypeMappingTests
   class BaseTest < ::Minitest::Test
     TestMapping = WsdlMapper::TypeMapping::Base.new do
-
-      register_ruby_types [
-        Integer
-      ]
-
       register_xml_types %w[int integer]
-    end
-
-    def test_recognition_of_integer_class
-      assert TestMapping.maps? Integer
-    end
-
-    def test_recognition_of_integer_subclass
-      assert TestMapping.maps? Fixnum
-    end
-
-    def test_recognition_of_integer_instance
-      assert TestMapping.maps? 1
     end
 
     def test_recognition_of_xml_type_name

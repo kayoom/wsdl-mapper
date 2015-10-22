@@ -6,11 +6,6 @@ require 'bigdecimal'
 module WsdlMapper
   module TypeMapping
     Boolean = Base.new do
-      register_ruby_types [
-          TrueClass,
-          FalseClass
-        ]
-
       register_xml_types %w[
         boolean
       ]

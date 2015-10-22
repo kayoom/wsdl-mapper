@@ -6,10 +6,6 @@ require 'stringio'
 module WsdlMapper
   module TypeMapping
     HexBinary = Base.new do
-      register_ruby_types [
-          IO
-        ]
-
       register_xml_types %w[
         hexBinary
       ]

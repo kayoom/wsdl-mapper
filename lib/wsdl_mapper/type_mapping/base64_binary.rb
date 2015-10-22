@@ -7,10 +7,6 @@ require 'stringio'
 module WsdlMapper
   module TypeMapping
     Base64Binary = Base.new do
-      register_ruby_types [
-          IO
-        ]
-
       register_xml_types %w[
         base64Binary
       ]

@@ -6,10 +6,6 @@ require 'bigdecimal'
 module WsdlMapper
   module TypeMapping
     Decimal = Base.new do
-      register_ruby_types [
-          BigDecimal
-        ]
-
       register_xml_types %w[
         decimal
       ]

@@ -6,11 +6,6 @@ require 'uri'
 module WsdlMapper
   module TypeMapping
     Uri = Base.new do
-      register_ruby_types [
-        String,
-        URI
-      ]
-
       register_xml_types %w[
         anyURI
       ]

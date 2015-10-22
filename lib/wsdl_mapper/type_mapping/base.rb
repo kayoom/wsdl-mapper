@@ -10,32 +10,19 @@ module WsdlMapper
         self.class.type_mappings << self
       end
 
-      def register_ruby_types types
-        self.ruby_types ||= []
-        self.ruby_types.concat(types).uniq!
-      end
-
-      def register_xml_types types
+      def register_xml_types names
         self.xml_types ||= []
-        types.each do |type|
-          if type.is_a?(WsdlMapper::Dom::Name)
-            self.xml_types << type
-          else
-            self.xml_types << WsdlMapper::Dom::BuiltinType[type].name
-          end
+        names.each do |name_or_qname|
+          qname = name_or_qname.is_a?(WsdlMapper::Dom::Name) ? name_or_qname : WsdlMapper::Dom::BuiltinType[name_or_qname].name
+          self.xml_types << qname
         end
       end
 
-      # TODO: maybe maps?(Ruby Type) is never needed
       def maps? t
         if t.is_a?(WsdlMapper::Dom::Name)
           xml_types.include? t
         elsif t.is_a?(WsdlMapper::Dom::TypeBase)
           xml_types.include? t.name
-        elsif t.is_a?(Class)
-          ruby_types.any? { |rt| t <= rt }
-        else
-          ruby_types.any? { |rt| rt === t }
         end
       end
 

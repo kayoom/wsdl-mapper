@@ -4,11 +4,6 @@ require 'wsdl_mapper/dom/builtin_type'
 module WsdlMapper
   module TypeMapping
     Time = Base.new do
-      register_ruby_types [
-          ::DateTime,
-          ::Time
-        ]
-
       register_xml_types %w[
         time
       ]

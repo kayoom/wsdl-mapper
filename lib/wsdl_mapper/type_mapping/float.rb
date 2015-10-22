@@ -4,11 +4,6 @@ require 'wsdl_mapper/dom/builtin_type'
 module WsdlMapper
   module TypeMapping
     Float = Base.new do
-      register_ruby_types [
-          ::Float,
-          Rational
-        ]
-
       register_xml_types %w[
         float
         double

@@ -6,10 +6,6 @@ require 'wsdl_mapper/core_ext/time_duration'
 module WsdlMapper
   module TypeMapping
     Duration = Base.new do
-      register_ruby_types [
-        WsdlMapper::CoreExt::TimeDuration
-      ]
-
       register_xml_types %w[
         duration
       ]

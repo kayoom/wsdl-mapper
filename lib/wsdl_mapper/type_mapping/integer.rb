@@ -4,10 +4,6 @@ require 'wsdl_mapper/dom/builtin_type'
 module WsdlMapper
   module TypeMapping
     Integer = Base.new do
-      register_ruby_types [
-        Integer
-      ]
-
       register_xml_types %w[
         byte
         int
