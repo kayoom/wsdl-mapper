@@ -5,9 +5,9 @@ module WsdlMapper
   module TypeMapping
     String = Base.new do
       register_ruby_types [
-          String,
-          Symbol
-        ]
+        String,
+        Symbol
+      ]
 
       register_xml_types %w[
         ENTITIES
