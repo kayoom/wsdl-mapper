@@ -14,7 +14,55 @@ module WsdlMapper
       end
 
       def negative?
-        @negative
+        !!@negative
+      end
+
+      def hash
+        [negative?, years, months, days, hours, minutes, seconds].hash
+      end
+
+      def eql? other
+        return false unless other.is_a?(TimeDuration)
+
+        negative? == other.negative? &&
+          years == other.years &&
+          months == other.months &&
+          days == other.days &&
+          hours == other.hours &&
+          minutes == other.minutes &&
+          seconds == other.seconds
+      end
+
+      def == other
+        eql? other
+      end
+
+      def <=> other
+        return -1 if negative? and !other.negative?
+        return 1 if !negative? and other.negative?
+
+        fields = [:years, :months, :days, :hours, :minutes, :seconds]
+        fields.each do |field|
+          c = send(field) <=> other.send(field)
+          return c if c != 0
+        end
+        return 0
+      end
+
+      def > other
+        (self <=> other) > 0
+      end
+
+      def >= other
+        (self <=> other) >= 0
+      end
+
+      def < other
+        (self <=> other) < 0
+      end
+
+      def <= other
+        (self <=> other) <= 0
       end
     end
   end
