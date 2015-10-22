@@ -17,6 +17,10 @@ module WsdlMapper
         @cache[type]
       end
 
+      def self.default
+        @default ||= MappingSet.new
+      end
+
       protected
       def get_mapping type
         @list.find { |m| m.maps? type }

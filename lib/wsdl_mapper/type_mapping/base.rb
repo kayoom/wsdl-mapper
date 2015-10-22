@@ -8,7 +8,7 @@ module WsdlMapper
 
       def initialize &block
         instance_exec &block
-        self.class.mapping_set << self
+        MappingSet.default << self
       end
 
       def register_xml_types names
@@ -33,14 +33,6 @@ module WsdlMapper
 
       def to_xml object
         raise NotImplementedError
-      end
-
-      def self.mapping_set
-        @mapping_set ||= MappingSet.new
-      end
-
-      def self.get_mapping type
-        @mapping_set.find type
       end
     end
   end

@@ -61,7 +61,7 @@ module TypeMappingTests
       end
 
       xsd_types.each do |type|
-        refute_nil Base.get_mapping(type), "Missing type mapping for #{type.name}."
+        refute_nil MappingSet.default.find(type), "Missing type mapping for #{type.name}."
       end
     end
   end
