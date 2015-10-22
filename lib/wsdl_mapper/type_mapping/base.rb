@@ -26,6 +26,7 @@ module WsdlMapper
         end
       end
 
+      # TODO: maybe maps?(Ruby Type) is never needed
       def maps? t
         if t.is_a?(WsdlMapper::Dom::Name)
           xml_types.include? t

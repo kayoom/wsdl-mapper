@@ -54,6 +54,7 @@ module WsdlMapper
       def log_msg node, msg = '', source = self
         log_msg = LogMsg.new(node, source, msg)
         log_msgs << log_msg
+        # TODO: remove debugging output
         puts node.inspect
         puts msg
         puts caller
