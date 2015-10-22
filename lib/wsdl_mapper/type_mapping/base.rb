@@ -1,4 +1,5 @@
 require 'wsdl_mapper/dom/builtin_type'
+require 'wsdl_mapper/type_mapping/mapping_set'
 
 module WsdlMapper
   module TypeMapping
@@ -7,7 +8,7 @@ module WsdlMapper
 
       def initialize &block
         instance_exec &block
-        self.class.type_mappings << self
+        self.class.mapping_set << self
       end
 
       def register_xml_types names
@@ -34,12 +35,12 @@ module WsdlMapper
         raise NotImplementedError
       end
 
-      def self.type_mappings
-        @type_mappings ||= []
+      def self.mapping_set
+        @mapping_set ||= MappingSet.new
       end
 
       def self.get_mapping type
-        @type_mappings.find { |tm| tm.maps? type }
+        @mapping_set.find type
       end
     end
   end
