@@ -14,6 +14,30 @@ module WsdlMapper
         @fixed = fixed
         @form = form
       end
+
+      def default?
+        !!@default
+      end
+
+      def fixed?
+        !!@fixed
+      end
+
+      def array?
+        @bounds.max.nil?
+      end
+
+      def single?
+        @bounds.min == 1 && @bounds.max == 1
+      end
+
+      def optional?
+        @bounds.min == 0 && @bounds.max == 1
+      end
+
+      def required?
+        @bounds.min > 0
+      end
     end
   end
 end

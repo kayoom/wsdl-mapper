@@ -11,17 +11,26 @@ module WsdlMapper
 
       def generate ttg, f, result
         props = ttg.type.each_property
-        kw_args = props.map do |p|
-          name = @generator.namer.get_property_name p
-          "#{name.attr_name}: nil"
-        end
 
-        f.begin_def 'initialize', kw_args
-        props.each do |p|
-          name = @generator.namer.get_property_name p
-          f.statement "#{name.var_name} = #{name.attr_name}"
-        end
+        f.begin_def 'initialize', get_kw_args(props)
+        f.assignment *get_assigns(props)
         f.end
+      end
+
+      protected
+      def get_kw_args props
+        props.map do |p|
+          name = @generator.namer.get_property_name p
+          default = @generator.ctr_defaults_generator.generate p
+          "#{name.attr_name}: #{default}"
+        end
+      end
+
+      def get_assigns props
+        props.map do |p|
+          name = @generator.namer.get_property_name p
+          [name.var_name, name.attr_name]
+        end
       end
     end
   end

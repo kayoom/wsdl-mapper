@@ -13,7 +13,9 @@ module GenerationTests
 
       def assert_evalable origin, type
         evalable = ValueGenerator.new.send "generate_#{type}", origin
+        assert_equal origin, eval(evalable)
 
+        evalable = ValueGenerator.new.generate origin
         assert_equal origin, eval(evalable)
       end
 
@@ -58,6 +60,12 @@ module GenerationTests
 
       def test_time_duration
         assert_evalable TimeDuration.new(years: 2, days: 3, minutes: 4), :time_duration
+      end
+
+      def test_nil
+        evalable = ValueGenerator.new.generate_nil
+
+        assert_equal nil, eval(evalable)
       end
     end
   end

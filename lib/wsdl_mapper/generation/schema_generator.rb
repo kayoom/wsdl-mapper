@@ -5,7 +5,9 @@ require 'wsdl_mapper/generation/result'
 require 'wsdl_mapper/generation/class_generator'
 require 'wsdl_mapper/generation/module_generator'
 require 'wsdl_mapper/generation/no_ctr_generator'
+require 'wsdl_mapper/generation/ctr_defaults_generator'
 require 'wsdl_mapper/generation/enum_generator'
+require 'wsdl_mapper/generation/value_generator'
 
 require 'wsdl_mapper/dom/complex_type'
 require 'wsdl_mapper/dom/simple_type'
@@ -18,7 +20,7 @@ module WsdlMapper
     class SchemaGenerator
       attr_reader :context, :namer
 
-      attr_reader :class_generator, :module_generator, :ctr_generator, :enum_generator, :type_mapping
+      attr_reader :class_generator, :module_generator, :ctr_generator, :enum_generator, :type_mapping, :ctr_defaults_generator, :value_generator
 
       def initialize context,
           formatter_class: DefaultFormatter,
@@ -27,7 +29,9 @@ module WsdlMapper
           module_generator_factory: ModuleGenerator,
           ctr_generator_factory: NoCtrGenerator,
           enum_generator_factory: EnumGenerator,
-          type_mapping: WsdlMapper::TypeMapping::DEFAULT
+          type_mapping: WsdlMapper::TypeMapping::DEFAULT,
+          ctr_defaults_generator_factory: WsdlMapper::Generation::CtrDefaultsGenerator,
+          value_generator: WsdlMapper::Generation::ValueGenerator.new
 
         @formatter_class = formatter_class
         @context = context
@@ -37,6 +41,8 @@ module WsdlMapper
         @ctr_generator = ctr_generator_factory.new self
         @enum_generator = enum_generator_factory.new self
         @type_mapping = type_mapping
+        @ctr_defaults_generator = ctr_defaults_generator_factory.new self
+        @value_generator = value_generator
       end
 
       def generate schema

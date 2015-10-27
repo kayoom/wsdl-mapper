@@ -45,7 +45,10 @@ RUBY
         generated_class = File.read expected_file
         assert_equal <<RUBY, generated_class
 class NoteType
-  attr_accessor :to, :from, :heading, :body
+  attr_accessor :to
+  attr_accessor :from
+  attr_accessor :heading
+  attr_accessor :body
 end
 RUBY
       end
@@ -86,7 +89,10 @@ RUBY
 module NotesApi
   module Types
     class NoteType
-      attr_accessor :to, :from, :heading, :body
+      attr_accessor :to
+      attr_accessor :from
+      attr_accessor :heading
+      attr_accessor :body
     end
   end
 end
@@ -131,7 +137,9 @@ require "orders_api/types/address_type"
 module OrdersApi
   module Types
     class OrderType
-      attr_accessor :name, :street, :type
+      attr_accessor :name
+      attr_accessor :street
+      attr_accessor :type
     end
   end
 end
