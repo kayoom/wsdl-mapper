@@ -1,8 +1,12 @@
+require 'wsdl_mapper/generation/abstract_formatter'
+
 module WsdlMapper
   module Generation
-    class DefaultFormatter
+    # Default implementation for the ruby formatter interface. This class should be considered as a reference for
+    # custom implementations. All public methods are mandatory.
+    class DefaultFormatter < AbstractFormatter
       def initialize io
-        @io = io
+        super
         @i = 0
       end
 
@@ -25,9 +29,12 @@ module WsdlMapper
       end
 
       def attr_accessor *attrs
+        return if attrs.empty?
         # TODO: check/escape
-        attrs = attrs.map { |a| ":#{a}" } * ", "
-        statement "attr_accessor #{attrs}"
+        attrs = attrs.map { |a| ":#{a}" }
+        attrs.each do |attr|
+          statement "attr_accessor #{attr}"
+        end
       end
 
       def begin_module name
@@ -60,6 +67,12 @@ module WsdlMapper
         statement values.last
         dec_indent
         statement "]"
+      end
+
+      def assignment *assigns
+        assigns.each do |(var_name, value)|
+          statement "#{var_name} = #{value}"
+        end
       end
 
       def end
