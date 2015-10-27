@@ -11,12 +11,14 @@ require 'wsdl_mapper/dom/complex_type'
 require 'wsdl_mapper/dom/simple_type'
 require 'wsdl_mapper/generation/type_to_generate'
 
+require 'wsdl_mapper/type_mapping'
+
 module WsdlMapper
   module Generation
     class SchemaGenerator
       attr_reader :context, :namer
 
-      attr_reader :class_generator, :module_generator, :ctr_generator
+      attr_reader :class_generator, :module_generator, :ctr_generator, :enum_generator, :type_mapping
 
       def initialize context,
           formatter_class: DefaultFormatter,
@@ -24,7 +26,8 @@ module WsdlMapper
           class_generator_factory: ClassGenerator,
           module_generator_factory: ModuleGenerator,
           ctr_generator_factory: NoCtrGenerator,
-          enum_generator_factory: EnumGenerator
+          enum_generator_factory: EnumGenerator,
+          type_mapping: WsdlMapper::TypeMapping::DEFAULT
 
         @formatter_class = formatter_class
         @context = context
@@ -33,6 +36,7 @@ module WsdlMapper
         @module_generator = module_generator_factory.new self
         @ctr_generator = ctr_generator_factory.new self
         @enum_generator = enum_generator_factory.new self
+        @type_mapping = type_mapping
       end
 
       def generate schema

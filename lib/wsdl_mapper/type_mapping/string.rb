@@ -21,6 +21,7 @@ module WsdlMapper
         token
       ]
 
+      # TODO: non UTF-8 encodings
       def to_ruby string
         string.to_s
       end

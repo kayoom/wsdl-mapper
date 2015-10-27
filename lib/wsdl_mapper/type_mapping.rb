@@ -1,3 +1,4 @@
+require 'wsdl_mapper/type_mapping/mapping_set'
 require 'wsdl_mapper/type_mapping/base'
 require 'wsdl_mapper/type_mapping/base64_binary'
 require 'wsdl_mapper/type_mapping/boolean'
@@ -12,3 +13,9 @@ require 'wsdl_mapper/type_mapping/integer'
 require 'wsdl_mapper/type_mapping/string'
 require 'wsdl_mapper/type_mapping/time'
 require 'wsdl_mapper/type_mapping/uri'
+
+module WsdlMapper
+  module TypeMapping
+    DEFAULT = MappingSet.default
+  end
+end

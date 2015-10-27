@@ -17,8 +17,34 @@ module WsdlMapper
         @cache[type]
       end
 
+      def find! type
+        find(type) || raise(ArgumentError.new("Unknown type: #{type}"))
+      end
+
+      def dup
+        other = self.class.new
+        @list.each do |mapping|
+          other << mapping
+        end
+        other
+      end
+
+      # TODO: test
+      def remove mapping
+        @list.delete mapping
+        @cache.delete_if { |_, m| m == mapping }
+      end
+
       def self.default
         @default ||= MappingSet.new
+      end
+
+      def to_ruby type, value
+        find!(type).to_ruby value
+      end
+
+      def to_xml type, value
+        find!(type).to_xml value
       end
 
       protected
