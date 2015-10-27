@@ -1,3 +1,4 @@
+require 'wsdl_mapper/dom/name'
 require 'wsdl_mapper/dom/builtin_type'
 require 'wsdl_mapper/type_mapping/mapping_set'
 

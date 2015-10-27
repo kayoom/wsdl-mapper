@@ -1,3 +1,7 @@
+require 'bigdecimal'
+
+require 'wsdl_mapper/core_ext/time_duration'
+
 module WsdlMapper
   module Generation
     class ValueGenerator

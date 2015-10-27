@@ -1,3 +1,5 @@
+require 'wsdl_mapper/dom/documentation'
+
 module WsdlMapper
   module Dom
     class TypeBase
