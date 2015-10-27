@@ -1,0 +1,64 @@
+require 'test_helper'
+
+require 'wsdl_mapper/generation/value_generator'
+require 'wsdl_mapper/core_ext/time_duration'
+
+require 'bigdecimal'
+
+module GenerationTests
+  module GeneratorTests
+    class ValueGeneratorTest < ::Minitest::Test
+      include WsdlMapper::Generation
+      include WsdlMapper::CoreExt
+
+      def assert_evalable origin, type
+        evalable = ValueGenerator.new.send "generate_#{type}", origin
+
+        assert_equal origin, eval(evalable)
+      end
+
+      def test_simple_string
+        assert_evalable "foo bar", :string
+        assert_evalable "foo\tb\"ar\n", :string
+        assert_evalable "foo\u00B6bar\u040E\u0601", :string
+      end
+
+      def test_simple_integer
+        assert_evalable 1, :integer
+        assert_evalable -1, :integer
+        assert_evalable 12345667890123, :integer
+      end
+
+      def test_simple_decimal
+        assert_evalable BigDecimal.new("-123.45"), :big_decimal
+      end
+
+      def test_date
+        assert_evalable Date.new(1999, 10, 9), :date
+      end
+
+      def test_date_time
+        assert_evalable DateTime.new(1999, 10, 9, 8, 7, 6, "+03:00"), :date_time
+        assert_evalable DateTime.new(1999, 10, 9, 8, 7, 6), :date_time
+      end
+
+      def test_time
+        assert_evalable Time.new(1999, 10, 9, 8, 7, 6, "+03:00"), :time
+        assert_evalable Time.new(1999, 10, 9, 8, 7, 6), :time
+      end
+
+      def test_float
+        assert_evalable -123.456789, :float
+      end
+
+      def test_boolean
+        assert_evalable true, :boolean
+        assert_evalable false, :boolean
+      end
+
+      def test_time_duration
+        assert_evalable TimeDuration.new(years: 2, days: 3, minutes: 4), :time_duration
+      end
+    end
+  end
+end
