@@ -12,11 +12,13 @@ module WsdlMapper
       end
 
       def [] name
-        types[name.to_s]
+        n = name.is_a?(WsdlMapper::Dom::Name) ? name.name : name
+        types[name]
       end
 
       def build name
-        new Name.new(namespace, name.to_s)
+        n = name.is_a?(WsdlMapper::Dom::Name) ? name : Name.new(namespace, name)
+        new n
       end
 
       include Enumerable

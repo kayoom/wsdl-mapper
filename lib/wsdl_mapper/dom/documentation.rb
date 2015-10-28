@@ -7,6 +7,10 @@ module WsdlMapper
       def initialize text = nil
         @default = text
       end
+
+      def present?
+        !@default.nil?
+      end
     end
   end
 end

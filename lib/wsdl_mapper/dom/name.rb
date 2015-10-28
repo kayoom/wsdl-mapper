@@ -4,7 +4,7 @@ module WsdlMapper
       attr_reader :ns, :name
 
       def initialize ns, name
-        @ns, @name = ns, name
+        @ns, @name = ns, name.to_s
       end
 
       def eql? other
@@ -20,8 +20,6 @@ module WsdlMapper
       end
 
       def to_s
-        name unless ns
-
         "#{ns}##{name}"
       end
     end

@@ -6,7 +6,7 @@ require 'wsdl_mapper/generation/schema_generator'
 
 module GenerationTests
   module GeneratorTests
-    class SimpleClassGeneratorTest < Minitest::Test
+    class DefaultClassGeneratorTest < Minitest::Test
       def setup
         @tmp_path = TestHelper.get_tmp_path
       end
