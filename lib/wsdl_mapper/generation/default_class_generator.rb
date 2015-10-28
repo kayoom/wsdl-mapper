@@ -7,6 +7,7 @@ module WsdlMapper
       def generate ttg, result
         file_name = @generator.context.path_for ttg.name
         property_names = ttg.type.each_property.map { |p| @generator.namer.get_property_name p }
+        attribute_names = ttg.type.each_attribute.map { |a| @generator.namer.get_attribute_name a }
         # TODO: attributes for attributes
         modules = ttg.name.parents.reverse
 
@@ -17,6 +18,7 @@ module WsdlMapper
           open_modules f, modules
           open_class f, ttg
           generate_property_attributes f, property_names
+          generate_attribute_attributes f, attribute_names
           generate_ctr f, ttg, result
           close_class f, ttg
           close_modules f, modules
@@ -26,6 +28,12 @@ module WsdlMapper
       end
 
       protected
+      def generate_attribute_attributes f, attribute_names
+        return unless attribute_names.any?
+
+        f.attr_accessor *attribute_names.map(&:attr_name)
+      end
+
       def generate_property_attributes f, property_names
         return unless property_names.any?
 

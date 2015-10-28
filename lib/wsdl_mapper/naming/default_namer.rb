@@ -19,7 +19,11 @@ module WsdlMapper
       end
 
       def get_property_name property
-        PropertyName.new get_attribute_name(property.name.name), get_var_name(property.name.name)
+        PropertyName.new get_accessor_name(property.name.name), get_var_name(property.name.name)
+      end
+
+      def get_attribute_name attribute
+        PropertyName.new get_accessor_name(attribute.name), get_var_name(attribute.name)
       end
 
       def get_enumeration_value_name type, enum_value
@@ -43,12 +47,12 @@ module WsdlMapper
         underscore name
       end
 
-      def get_attribute_name name
+      def get_accessor_name name
         underscore name
       end
 
       def get_var_name name
-        "@#{get_attribute_name(name)}"
+        "@#{get_accessor_name(name)}"
       end
 
       def get_class_name name

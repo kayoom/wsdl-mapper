@@ -53,6 +53,29 @@ end
 RUBY
       end
 
+      def test_simple_class_generation_with_attributes
+        schema = TestHelper.parse_schema 'example_16.xsd'
+        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
+        generator = WsdlMapper::Generation::SchemaGenerator.new context
+
+        result = generator.generate schema
+
+        expected_file = @tmp_path.join("note_type.rb")
+        assert File.exists? expected_file
+
+        generated_class = File.read expected_file
+        assert_equal <<RUBY, generated_class
+class NoteType
+  attr_accessor :to
+  attr_accessor :from
+  attr_accessor :heading
+  attr_accessor :body
+
+  attr_accessor :uuid
+end
+RUBY
+      end
+
       def test_simple_class_generation_with_requires
         schema = TestHelper.parse_schema 'example_15.xsd'
         context = WsdlMapper::Generation::Context.new @tmp_path.to_s

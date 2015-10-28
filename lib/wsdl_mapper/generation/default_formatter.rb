@@ -12,10 +12,17 @@ module WsdlMapper
 
       def next_statement
         append "\n"
+        @blank_line = false
       end
-      alias_method :blank_line, :next_statement
-      alias_method :after_requires, :next_statement
-      alias_method :after_constants, :next_statement
+
+      def blank_line
+        # Prevent double blank lines
+        append "\n" unless @blank_line
+        @blank_line = true
+      end
+
+      alias_method :after_requires, :blank_line
+      alias_method :after_constants, :blank_line
 
       def statement statement
         indent
@@ -35,6 +42,7 @@ module WsdlMapper
         attrs.each do |attr|
           statement "attr_accessor #{attr}"
         end
+        blank_line
       end
 
       def begin_module name
@@ -53,7 +61,7 @@ module WsdlMapper
       end
 
       def begin_def name, args = []
-        next_statement
+        blank_line
         statement method_definition(name, args)
         inc_indent
       end
@@ -77,6 +85,9 @@ module WsdlMapper
 
       def end
         dec_indent
+        if @blank_line
+          @io.seek -1, IO::SEEK_CUR
+        end
         statement "end"
       end
 
