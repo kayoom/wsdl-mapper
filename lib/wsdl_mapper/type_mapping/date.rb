@@ -15,6 +15,14 @@ module WsdlMapper
       def to_xml object
         object.strftime "%F%:z"
       end
+
+      def ruby_type
+        ::DateTime
+      end
+
+      def requires
+        ['date']
+      end
     end
   end
 end

@@ -4,7 +4,7 @@ require 'wsdl_mapper/core_ext/time_duration'
 
 module WsdlMapper
   module Generation
-    class ValueGenerator
+    class DefaultValueGenerator
       def generate_string string
         string.to_s.inspect
       end

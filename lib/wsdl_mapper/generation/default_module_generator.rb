@@ -1,6 +1,6 @@
 module WsdlMapper
   module Generation
-    class ModuleGenerator
+    class DefaultModuleGenerator
       def initialize generator
         @generator = generator
       end

@@ -1,0 +1,24 @@
+require 'wsdl_mapper/naming/type_name'
+require 'wsdl_mapper/naming/property_name'
+require 'wsdl_mapper/naming/enumeration_value_name'
+require 'wsdl_mapper/naming/inflector'
+
+module WsdlMapper
+  module Naming
+    # @abstract
+    class AbstractNamer
+      def get_type_name type
+        raise NotImplementedError
+      end
+
+      def get_property_name property
+        raise NotImplementedError
+      end
+
+      def get_enumeration_value_name type, enum_value
+        raise NotImplementedError
+      end
+    end
+  end
+end
+

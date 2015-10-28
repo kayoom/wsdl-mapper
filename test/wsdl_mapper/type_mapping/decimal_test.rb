@@ -13,5 +13,9 @@ module TypeMappingTests
     def test_to_xml
       assert_equal "-123.45", Decimal.to_xml(BigDecimal.new("-123.45"))
     end
+
+    def test_ruby_type
+      assert_equal BigDecimal, Decimal.ruby_type
+    end
   end
 end

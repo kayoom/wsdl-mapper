@@ -16,5 +16,9 @@ module TypeMappingTests
       assert_equal "1", String.to_xml(1)
       assert_equal "1.23", String.to_xml(1.23)
     end
+
+    def test_ruby_type
+      assert_equal ::String, String.ruby_type
+    end
   end
 end

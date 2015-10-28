@@ -5,7 +5,7 @@ require 'wsdl_mapper/type_mapping/mapping_set'
 module WsdlMapper
   module TypeMapping
     class Base
-      attr_accessor :ruby_types, :xml_types
+      attr_accessor :xml_types
 
       def initialize &block
         instance_exec &block
@@ -34,6 +34,14 @@ module WsdlMapper
 
       def to_xml object
         raise NotImplementedError
+      end
+
+      def ruby_type
+        raise NotImplementedError
+      end
+
+      def requires
+        []
       end
     end
   end

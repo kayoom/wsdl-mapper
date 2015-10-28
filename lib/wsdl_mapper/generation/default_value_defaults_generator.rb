@@ -1,6 +1,6 @@
 module WsdlMapper
   module Generation
-    class CtrDefaultsGenerator
+    class DefaultValueDefaultsGenerator
       def initialize generator
         @generator = generator
       end

@@ -17,6 +17,14 @@ module WsdlMapper
       def to_xml object
         object.to_s 'F'
       end
+
+      def ruby_type
+        BigDecimal
+      end
+
+      def requires
+        ['bigdecimal']
+      end
     end
   end
 end

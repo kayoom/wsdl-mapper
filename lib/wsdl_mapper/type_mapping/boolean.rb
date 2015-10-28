@@ -22,6 +22,10 @@ module WsdlMapper
       def to_xml object
         object ? "true" : "false"
       end
+
+      def ruby_type
+        nil
+      end
     end
   end
 end

@@ -1,7 +1,9 @@
 require 'bundler/setup'
 
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start do
+  add_filter 'abstract_.*\.rb'
+end
 
 require 'minitest/autorun'
 

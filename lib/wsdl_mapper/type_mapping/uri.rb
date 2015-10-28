@@ -11,6 +11,7 @@ module WsdlMapper
       ]
 
       def to_ruby string
+        URI(string)
       end
 
       def to_xml object
@@ -20,6 +21,14 @@ module WsdlMapper
         else
           URI.escape object.to_s
         end
+      end
+
+      def ruby_type
+        ::String
+      end
+
+      def requires
+        ['uri']
       end
     end
   end

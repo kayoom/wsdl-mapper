@@ -29,6 +29,10 @@ module WsdlMapper
       def to_xml object
         object.to_s
       end
+
+      def ruby_type
+        ::String
+      end
     end
   end
 end

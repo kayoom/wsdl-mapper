@@ -21,6 +21,10 @@ module WsdlMapper
           object.to_f.to_s
         end
       end
+
+      def ruby_type
+        ::Float
+      end
     end
   end
 end

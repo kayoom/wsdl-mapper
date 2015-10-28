@@ -2,7 +2,7 @@ require 'wsdl_mapper/generation/generator_base'
 
 module WsdlMapper
   module Generation
-    class EnumGenerator < GeneratorBase
+    class DefaultEnumGenerator < GeneratorBase
       def initialize generator
         @generator = generator
       end

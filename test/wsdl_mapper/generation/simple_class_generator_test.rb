@@ -53,6 +53,30 @@ end
 RUBY
       end
 
+      def test_simple_class_generation_with_requires
+        schema = TestHelper.parse_schema 'example_15.xsd'
+        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
+        generator = WsdlMapper::Generation::SchemaGenerator.new context
+
+        result = generator.generate schema
+
+        expected_file = @tmp_path.join("note_type.rb")
+        assert File.exists? expected_file
+
+        generated_class = File.read expected_file
+        assert_equal <<RUBY, generated_class
+require "date"
+
+class NoteType
+  attr_accessor :to
+  attr_accessor :from
+  attr_accessor :date
+  attr_accessor :heading
+  attr_accessor :body
+end
+RUBY
+      end
+
       def test_sub_class_generation
         schema = TestHelper.parse_schema 'example_3.xsd'
         context = WsdlMapper::Generation::Context.new @tmp_path.to_s
@@ -142,6 +166,39 @@ module OrdersApi
       attr_accessor :type
     end
   end
+end
+RUBY
+      end
+
+      def test_simple_class_generation_with_simple_types
+        schema = TestHelper.parse_schema 'example_14.xsd'
+        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
+        generator = WsdlMapper::Generation::SchemaGenerator.new context
+
+        result = generator.generate schema
+
+        expected_file = @tmp_path.join("note_type.rb")
+        assert File.exists? expected_file
+
+        generated_class = File.read expected_file
+        assert_equal <<RUBY, generated_class
+require "email_address_type"
+
+class NoteType
+  attr_accessor :to
+  attr_accessor :from
+  attr_accessor :heading
+  attr_accessor :body
+end
+RUBY
+
+        expected_file = @tmp_path.join("email_address_type.rb")
+        assert File.exists? expected_file
+
+        generated_class = File.read expected_file
+        assert_equal <<RUBY, generated_class
+class EmailAddressType
+  attr_accessor :value
 end
 RUBY
       end

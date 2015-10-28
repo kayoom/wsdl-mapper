@@ -17,6 +17,14 @@ module WsdlMapper
       def to_xml io
         io.read.unpack("H*").first
       end
+
+      def ruby_type
+        ::StringIO
+      end
+
+      def requires
+        ['stringio']
+      end
     end
   end
 end

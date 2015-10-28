@@ -10,6 +10,7 @@ module TypeMappingTests
       io = Base64Binary.to_ruby "VGhpcyBpcyBhIHRlc3Q=\n"
 
       assert_equal "This is a test", io.read
+      assert_equal Encoding::ASCII_8BIT, io.external_encoding
     end
 
     def test_to_xml
@@ -17,6 +18,10 @@ module TypeMappingTests
       encoded = Base64Binary.to_xml io
 
       assert_equal "VGhpcyBpcyBhIHRlc3Q=\n", encoded
+    end
+
+    def test_ruby_type
+      assert_equal ::StringIO, Base64Binary.ruby_type
     end
   end
 end

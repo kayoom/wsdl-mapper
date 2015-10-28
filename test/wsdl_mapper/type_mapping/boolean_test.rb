@@ -17,5 +17,9 @@ module TypeMappingTests
       assert_equal "true", Boolean.to_xml(true)
       assert_equal "false", Boolean.to_xml(false)
     end
+
+    def test_ruby_type
+      assert_nil Boolean.ruby_type
+    end
   end
 end

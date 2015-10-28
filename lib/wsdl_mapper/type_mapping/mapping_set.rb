@@ -47,6 +47,14 @@ module WsdlMapper
         find!(type).to_xml value
       end
 
+      def ruby_type type
+        find!(type).ruby_type
+      end
+
+      def requires type
+        find!(type).requires
+      end
+
       protected
       def get_mapping type
         @list.find { |m| m.maps? type }

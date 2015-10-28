@@ -15,5 +15,9 @@ module TypeMappingTests
       assert_equal "2002-05-30+00:00", Date.to_xml(::DateTime.new(2002, 5, 30))
       assert_equal "2002-05-30-06:00", Date.to_xml(::DateTime.new(2002, 5, 30, 0, 0, 0, '-6'))
     end
+
+    def test_ruby_type
+      assert_equal ::DateTime, Date.ruby_type
+    end
   end
 end

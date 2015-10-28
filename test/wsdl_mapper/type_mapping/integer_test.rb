@@ -28,5 +28,9 @@ module TypeMappingTests
       assert_equal "1", Integer.to_xml(1.23)
       assert_equal "1", Integer.to_xml("1.23")
     end
+
+    def test_ruby_type
+      assert_equal ::Fixnum, Integer.ruby_type
+    end
   end
 end

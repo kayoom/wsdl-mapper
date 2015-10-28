@@ -27,6 +27,10 @@ module WsdlMapper
       def to_xml int
         int.to_i.to_s
       end
+
+      def ruby_type
+        ::Fixnum
+      end
     end
   end
 end

@@ -18,6 +18,14 @@ module WsdlMapper
       def to_xml io
         Base64.encode64 io.read
       end
+
+      def ruby_type
+        ::StringIO
+      end
+
+      def requires
+        ['stringio']
+      end
     end
   end
 end

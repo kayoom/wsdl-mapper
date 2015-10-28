@@ -4,6 +4,15 @@ require 'wsdl_mapper/type_mapping/date_parts'
 
 module TypeMappingTests
   module DatePartsTest
+    class BaseTest < ::Minitest::Test
+      include WsdlMapper::TypeMapping::DateParts
+      include WsdlMapper::CoreExt
+
+      def test_ruby_type
+        assert_equal TimeDuration, Day.ruby_type
+      end
+    end
+
     class DayTest < ::Minitest::Test
       include WsdlMapper::TypeMapping::DateParts
       include WsdlMapper::CoreExt

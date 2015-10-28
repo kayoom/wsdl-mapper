@@ -15,6 +15,10 @@ module TypeMappingTests
       assert_equal "0.3", Float.to_xml('3/10'.to_r)
       assert_equal "3", Float.to_xml(3)
     end
+
+    def test_ruby_type
+      assert_equal ::Float, Float.ruby_type
+    end
   end
 end
 

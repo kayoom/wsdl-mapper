@@ -1,21 +1,20 @@
 require 'test_helper'
 
-require 'wsdl_mapper/generation/value_generator'
-require 'wsdl_mapper/core_ext/time_duration'
+require 'wsdl_mapper/generation/default_value_generator'
 
 require 'bigdecimal'
 
 module GenerationTests
   module GeneratorTests
-    class ValueGeneratorTest < ::Minitest::Test
+    class DefaultValueGeneratorTest < ::Minitest::Test
       include WsdlMapper::Generation
       include WsdlMapper::CoreExt
 
       def assert_evalable origin, type
-        evalable = ValueGenerator.new.send "generate_#{type}", origin
+        evalable = DefaultValueGenerator.new.send "generate_#{type}", origin
         assert_equal origin, eval(evalable)
 
-        evalable = ValueGenerator.new.generate origin
+        evalable = DefaultValueGenerator.new.generate origin
         assert_equal origin, eval(evalable)
       end
 
@@ -63,7 +62,7 @@ module GenerationTests
       end
 
       def test_nil
-        evalable = ValueGenerator.new.generate_nil
+        evalable = DefaultValueGenerator.new.generate_nil
 
         assert_equal nil, eval(evalable)
       end

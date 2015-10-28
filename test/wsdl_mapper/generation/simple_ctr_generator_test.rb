@@ -3,7 +3,7 @@ require 'test_helper'
 require 'wsdl_mapper/schema/parser'
 require 'wsdl_mapper/generation/context'
 require 'wsdl_mapper/generation/schema_generator'
-require 'wsdl_mapper/generation/simple_ctr_generator'
+require 'wsdl_mapper/generation/default_ctr_generator'
 
 require 'wsdl_mapper/dom/property'
 
@@ -24,7 +24,7 @@ module GenerationTests
       def test_simple_class_generation
         schema = TestHelper.parse_schema 'example_1.xsd'
         context = Context.new @tmp_path.to_s
-        generator = SchemaGenerator.new context, ctr_generator_factory: SimpleCtrGenerator
+        generator = SchemaGenerator.new context, ctr_generator_factory: DefaultCtrGenerator
 
         result = generator.generate schema
 
@@ -51,7 +51,7 @@ RUBY
       def test_simple_class_generation_with_default_values
         schema = TestHelper.parse_schema 'example_12.xsd'
         context = Context.new @tmp_path.to_s
-        generator = SchemaGenerator.new context, ctr_generator_factory: SimpleCtrGenerator
+        generator = SchemaGenerator.new context, ctr_generator_factory: DefaultCtrGenerator
 
         result = generator.generate schema
 
@@ -59,6 +59,8 @@ RUBY
 
         generated_class = File.read expected_file
         assert_equal <<RUBY, generated_class
+require "date"
+
 class NoteType
   attr_accessor :to
   attr_accessor :from
@@ -80,7 +82,7 @@ RUBY
       def test_simple_class_generation_with_required_single_value
         schema = TestHelper.parse_schema 'example_13.xsd'
         context = Context.new @tmp_path.to_s
-        generator = SchemaGenerator.new context, ctr_generator_factory: SimpleCtrGenerator
+        generator = SchemaGenerator.new context, ctr_generator_factory: DefaultCtrGenerator
 
         result = generator.generate schema
 

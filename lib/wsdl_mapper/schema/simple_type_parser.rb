@@ -37,6 +37,8 @@ module WsdlMapper
           case get_name(child)
           when ENUMERATION
             parse_simple_type_enumeration child, type
+          else
+            log_msg node, :unknown
           end
         end
       end

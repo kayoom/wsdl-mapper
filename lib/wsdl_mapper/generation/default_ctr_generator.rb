@@ -3,7 +3,7 @@ require 'bigdecimal'
 
 module WsdlMapper
   module Generation
-    class SimpleCtrGenerator
+    class DefaultCtrGenerator
       def initialize generator
         @generator = generator
         @builtin_types = WsdlMapper::Dom::BuiltinType
@@ -14,6 +14,12 @@ module WsdlMapper
 
         f.begin_def 'initialize', get_kw_args(props)
         f.assignment *get_assigns(props)
+        f.end
+      end
+
+      def generate_wrapping ttg, f, result, var_name, par_name
+        f.begin_def "initialize", [par_name]
+        f.assignment [var_name, par_name]
         f.end
       end
 

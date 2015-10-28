@@ -6,6 +6,16 @@ require 'wsdl_mapper/core_ext/time_duration'
 module WsdlMapper
   module TypeMapping
     module DateParts
+      class Base < WsdlMapper::TypeMapping::Base
+        def ruby_type
+          WsdlMapper::CoreExt::TimeDuration
+        end
+
+        def requires
+          ['wsdl_mapper/core_ext/time_duration']
+        end
+      end
+
       Day = Base.new do
         register_xml_types %w[
           gDay

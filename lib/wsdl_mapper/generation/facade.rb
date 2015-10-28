@@ -20,7 +20,7 @@ module WsdlMapper
         namer = WsdlMapper::Naming::DefaultNamer.new module_path: @module_path
         generator = WsdlMapper::Generation::SchemaGenerator.new context,
           namer: namer,
-          ctr_generator_factory: SimpleCtrGenerator
+          ctr_generator_factory: DefaultCtrGenerator
 
         file_content = File.read @file
         xml_doc = Nokogiri::XML::Document.parse file_content

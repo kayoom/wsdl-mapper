@@ -61,7 +61,9 @@ module TypeMappingTests
       end
 
       xsd_types.each do |type|
-        refute_nil MappingSet.default.find(type), "Missing type mapping for #{type.name}."
+        mapping = MappingSet.default.find!(type)
+        refute_nil mapping, "Missing type mapping for #{type.name}."
+        assert_kind_of Class, mapping.ruby_type unless mapping.ruby_type.nil?
       end
     end
   end

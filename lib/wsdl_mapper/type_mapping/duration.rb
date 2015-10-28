@@ -61,6 +61,14 @@ module WsdlMapper
         buf
       end
 
+      def ruby_type
+        WsdlMapper::CoreExt::TimeDuration
+      end
+
+      def requires
+        ['wsdl_mapper/core_ext/time_duration']
+      end
+
       def add_period buf, d
         buf << "-" if d.negative?
         buf << "P"
