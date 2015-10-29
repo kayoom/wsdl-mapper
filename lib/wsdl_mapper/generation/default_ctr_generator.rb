@@ -1,12 +1,10 @@
 require 'wsdl_mapper/dom/builtin_type'
-require 'bigdecimal'
 
 module WsdlMapper
   module Generation
     class DefaultCtrGenerator
       def initialize generator
         @generator = generator
-        @builtin_types = WsdlMapper::Dom::BuiltinType
       end
 
       def generate ttg, f, result

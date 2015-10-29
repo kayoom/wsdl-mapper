@@ -46,18 +46,18 @@ module WsdlMapper
       end
 
       def blank_line
-        @formatter.statement "#"
+        @formatter.blank_comment
         self
       end
 
       def tag tag, text
         line "@#{tag} #{text}"
-        self
       end
 
-      def type_tag tag, type, text
-        line "@#{tag} [#{type}] #{text}"
-        self
+      def type_tag tag, type, text = nil
+        buf = "@#{tag} [#{type}]"
+        buf << " #{text}" if text
+        line buf
       end
 
       def attribute! name, type, text, &block
@@ -66,7 +66,19 @@ module WsdlMapper
         type_tag "return", type, strip(text)
         block.call
         dec_indent
-        self
+      end
+
+      def param name, type, text = nil
+        buf = "@param #{name} [#{type}]"
+        buf << " #{text}" if text
+        line buf
+      end
+
+      def params *params
+        params.each do |p|
+          param *p
+        end
+        blank_line
       end
 
       protected

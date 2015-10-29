@@ -13,12 +13,20 @@ module WsdlMapper
       def next_statement
         append "\n"
         @blank_line = false
+        self
       end
 
       def blank_line
         # Prevent double blank lines
         append "\n" unless @blank_line
         @blank_line = true
+        self
+      end
+
+      def blank_comment
+        statement "#"
+        @blank_line = true
+        self
       end
 
       alias_method :after_requires, :blank_line

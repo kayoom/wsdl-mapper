@@ -16,6 +16,8 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
+      <xs:element name="heading" type="xs:string"/>
+      <xs:element name="body" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

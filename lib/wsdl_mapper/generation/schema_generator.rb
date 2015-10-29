@@ -21,7 +21,7 @@ module WsdlMapper
     class SchemaGenerator
       attr_reader :context, :namer
 
-      attr_reader :class_generator, :module_generator, :ctr_generator, :enum_generator, :type_mapping, :ctr_defaults_generator, :value_generator
+      attr_reader :class_generator, :module_generator, :ctr_generator, :enum_generator, :type_mapping, :ctr_defaults_generator, :value_generator, :wrapping_type_generator
 
       def initialize context,
           formatter_class: DefaultFormatter,
@@ -31,7 +31,7 @@ module WsdlMapper
           ctr_generator_factory: NullCtrGenerator,
           enum_generator_factory: DefaultEnumGenerator,
           ctr_defaults_generator_factory: DefaultValueDefaultsGenerator,
-          simple_type_generator_factory: DefaultWrappingTypeGenerator,
+          wrapping_type_generator_factory: DefaultWrappingTypeGenerator,
           type_mapping: WsdlMapper::TypeMapping::DEFAULT,
           value_generator: DefaultValueGenerator.new
 
@@ -43,7 +43,7 @@ module WsdlMapper
         @ctr_generator = ctr_generator_factory.new self
         @enum_generator = enum_generator_factory.new self
         @ctr_defaults_generator = ctr_defaults_generator_factory.new self
-        @simple_type_generator = simple_type_generator_factory.new self
+        @wrapping_type_generator = wrapping_type_generator_factory.new self
         @type_mapping = type_mapping
         @value_generator = value_generator
       end
@@ -66,6 +66,14 @@ module WsdlMapper
         @formatter_class.new io
       end
 
+      def get_ruby_type_name type
+        if WsdlMapper::Dom::BuiltinType.builtin? type.name
+          type_mapping.ruby_type type.name
+        else
+          namer.get_type_name(type).name
+        end
+      end
+
       protected
       def generate_restrictions schema, result
         types = schema.each_type.select(&WsdlMapper::Dom::SimpleType).reject(&:enumeration?).to_a
@@ -76,7 +84,7 @@ module WsdlMapper
         end
 
         types_to_generate.each do |ttg|
-          @simple_type_generator.generate ttg, result
+          @wrapping_type_generator.generate ttg, result
           result.add_type ttg.name
         end
       end

@@ -7,6 +7,7 @@ require 'wsdl_mapper/generation/default_ctr_generator'
 require 'wsdl_mapper/schema/parser'
 require 'wsdl_mapper/generation/documented_class_generator'
 require 'wsdl_mapper/generation/default_class_generator'
+require 'wsdl_mapper/generation/documented_ctr_generator'
 
 module WsdlMapper
   module Generation
@@ -22,10 +23,11 @@ module WsdlMapper
         context = Context.new @out
         namer = WsdlMapper::Naming::DefaultNamer.new module_path: @module_path
         class_generator = @docs ? DocumentedClassGenerator : DefaultClassGenerator
+        ctr_generator = @docs ? DocumentedCtrGenerator : DefaultCtrGenerator
 
         generator = SchemaGenerator.new context,
           namer: namer,
-          ctr_generator_factory: DefaultCtrGenerator,
+          ctr_generator_factory: ctr_generator,
           class_generator_factory: class_generator
 
         file_content = File.read @file

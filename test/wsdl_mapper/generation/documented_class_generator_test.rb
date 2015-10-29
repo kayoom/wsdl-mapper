@@ -104,6 +104,16 @@ class NoteType
   #   @return [String] the sender of this note
   #   @xml_name from
   attr_accessor :from
+
+  # @!attribute heading
+  #   @return [String]
+  #   @xml_name heading
+  attr_accessor :heading
+
+  # @!attribute body
+  #   @return [String]
+  #   @xml_name body
+  attr_accessor :body
 end
 RUBY
       end

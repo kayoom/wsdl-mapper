@@ -19,11 +19,7 @@ module WsdlMapper
 
         properties.each do |p|
           name = @generator.namer.get_property_name p
-          type = if WsdlMapper::Dom::BuiltinType.builtin? p.type.name
-            @generator.type_mapping.ruby_type p.type.name
-          else
-            @generator.namer.get_type_name(p.type).name
-          end
+          type = @generator.get_ruby_type_name p.type
 
           yard.attribute! name.attr_name, type, p.documentation.default do
             yard.tag :xml_name, p.name.name
