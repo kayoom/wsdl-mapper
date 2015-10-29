@@ -46,8 +46,17 @@ module WsdlMapper
       def parse_simple_type_enumeration node, type
         value = node.attributes['value'].value
 
-        enum = EnumerationValue.new value
-        type.enumeration_values << enum
+        enum_value = EnumerationValue.new value
+        type.enumeration_values << enum_value
+
+        each_element node do |child|
+          case get_name(child)
+          when ANNOTATION
+            parse_annotation child, enum_value
+          else
+            log_msg node, :unknown
+          end
+        end
       end
     end
   end

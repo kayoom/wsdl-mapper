@@ -7,19 +7,8 @@ module WsdlMapper
 
       protected
       def open_class f, ttg
-        if ttg.type.documentation.present?
-          doc = ttg.type.documentation.default
-          yard = YardDocFormatter.new f
-
-          doc = doc.strip.gsub(/^[\t ]+/, '')
-          yard.text doc
-          yard.blank_line
-          yard.tag :xml_name, ttg.type.name.name
-
-          if ttg.type.name.ns
-            yard.tag :xml_namespace, ttg.type.name.ns
-          end
-        end
+        yard = YardDocFormatter.new f
+        yard.class_doc ttg.type
 
         super
       end

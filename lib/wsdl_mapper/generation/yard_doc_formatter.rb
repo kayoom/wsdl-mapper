@@ -24,8 +24,20 @@ module WsdlMapper
         self
       end
 
+      def class_doc type
+        if type.documentation.present?
+          text type.documentation.default
+          blank_line
+        end
+        tag :xml_name, type.name.name
+
+        if type.name.ns
+          tag :xml_namespace, type.name.ns
+        end
+      end
+
       def text text
-        lines = text.split("\n")
+        lines = text.strip.split("\n")
 
         lines.each do |l|
           line l

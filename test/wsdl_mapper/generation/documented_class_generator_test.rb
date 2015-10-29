@@ -93,6 +93,7 @@ RUBY
 
         generated_class = File.read expected_file
         assert_equal <<RUBY, generated_class
+# @xml_name noteType
 class NoteType
   # @!attribute to
   #   @return [String] the recipient of this note
