@@ -3,8 +3,10 @@ require 'wsdl_mapper/generation/generator_base'
 module WsdlMapper
   module Generation
     class DefaultEnumGenerator < GeneratorBase
-      def initialize generator
+      def initialize generator, base: '::String', values_const_name: 'Values'
         @generator = generator
+        @base = base
+        @values_const_name = values_const_name
       end
 
       def generate ttg, result
@@ -33,7 +35,7 @@ module WsdlMapper
       end
 
       def generate_values_array f, values_to_generate
-        f.literal_array values_to_generate.map { |vtg| vtg.name.constant_name }
+        f.literal_array @values_const_name, values_to_generate.map { |vtg| vtg.name.constant_name }
       end
 
       def generate_constant_assignments f, values_to_generate
@@ -51,7 +53,7 @@ module WsdlMapper
       end
 
       def open_class f, ttg
-        f.begin_sub_class ttg.name.class_name, '::String'
+        f.begin_sub_class ttg.name.class_name, @base
       end
 
       def value_constant_assignment vtg

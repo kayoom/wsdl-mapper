@@ -66,8 +66,8 @@ module WsdlMapper
         inc_indent
       end
 
-      def literal_array values
-        statement "Values = ["
+      def literal_array name, values
+        statement "#{name} = ["
         inc_indent
         values[0..-2].each do |value|
           statement "#{value},"
