@@ -65,6 +65,7 @@ module WsdlMapper
       def link_types
         link_base_types
         link_property_types
+        link_attribute_types
       end
 
       def link_property_types
@@ -75,6 +76,19 @@ module WsdlMapper
 
             unless prop.type
               log_msg prop, :missing_property_type
+            end
+          end
+        end
+      end
+
+      def link_attribute_types
+        @schema.each_type do |type|
+          next unless type.is_a? WsdlMapper::Dom::ComplexType
+          type.each_attribute do |attr|
+            attr.type = @schema.get_type attr.type_name
+
+            unless attr.type
+              log_msg attr, :missing_attribute_type
             end
           end
         end

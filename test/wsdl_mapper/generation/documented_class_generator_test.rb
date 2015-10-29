@@ -114,6 +114,11 @@ class NoteType
   #   @return [String]
   #   @xml_name body
   attr_accessor :body
+
+  # @!attribute uuid
+  #   @return [String] a unique identifier
+  #   @xml_name uuid
+  attr_accessor :uuid
 end
 RUBY
       end

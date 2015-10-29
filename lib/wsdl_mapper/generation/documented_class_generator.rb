@@ -27,6 +27,21 @@ module WsdlMapper
           f.attr_accessor name.attr_name
         end
       end
+
+      def generate_attribute_attributes f, attributes
+        return unless attributes.any?
+        yard = YardDocFormatter.new f
+
+        attributes.each do |a|
+          name = @generator.namer.get_attribute_name a
+          type = @generator.get_ruby_type_name a.type
+
+          yard.attribute! name.attr_name, type, a.documentation.default do
+            yard.tag :xml_name, a.name
+          end
+          f.attr_accessor name.attr_name
+        end
+      end
     end
   end
 end

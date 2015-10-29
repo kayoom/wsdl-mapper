@@ -5,7 +5,24 @@ module WsdlMapper
         @generator = generator
       end
 
-      def generate property
+      def generate_for_attribute attribute
+        if attribute.default?
+          xml_val = attribute.default
+          return @generator.value_generator.generate_nil unless xml_val
+
+          ruby_val = @generator.type_mapping.to_ruby attribute.type_name, xml_val
+          @generator.value_generator.generate ruby_val
+        elsif attribute.fixed?
+          xml_val = attribute.fixed
+
+          ruby_val = @generator.type_mapping.to_ruby attribute.type_name, xml_val
+          @generator.value_generator.generate ruby_val
+        else
+          @generator.value_generator.generate_nil
+        end
+      end
+
+      def generate_for_property property
         if property.default? && !property.array?
           xml_val = property.default
           return @generator.value_generator.generate_nil unless xml_val
