@@ -19,5 +19,12 @@
       <xs:element name="heading" type="xs:string"/>
       <xs:element name="body" type="xs:string"/>
     </xs:sequence>
+    <xs:attribute name="uuid" type="xs:token">
+      <xs:annotation>
+        <xs:documentation>
+          a unique identifier
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
   </xs:complexType>
 </xs:schema>

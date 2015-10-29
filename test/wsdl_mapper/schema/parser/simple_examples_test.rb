@@ -9,7 +9,7 @@ module SchemaTests
       include WsdlMapper::Dom
 
       def test_example_1_complex_type
-        schema = TestHelper.parse_schema 'example_1.xsd'
+        schema = TestHelper.parse_schema 'basic_note_type.xsd'
 
         assert_equal 1, schema.types.count
 
@@ -22,14 +22,14 @@ module SchemaTests
       end
 
       def test_example_2_complex_type_w_documentation
-        schema = TestHelper.parse_schema 'example_2.xsd'
+        schema = TestHelper.parse_schema 'basic_note_type_with_documentation_and_bounds.xsd'
         type = schema.types.values.first
 
         assert_equal "This is some documentation for type.", type.documentation.default
       end
 
       def test_example_1_properties_sequence
-        schema = TestHelper.parse_schema 'example_1.xsd'
+        schema = TestHelper.parse_schema 'basic_note_type.xsd'
         type = schema.types.values.first
 
         assert_equal 4, type.properties.count
@@ -54,7 +54,7 @@ module SchemaTests
       end
 
       def test_example_2_unbounded_property
-        schema = TestHelper.parse_schema 'example_2.xsd'
+        schema = TestHelper.parse_schema 'basic_note_type_with_documentation_and_bounds.xsd'
         type = schema.types.values.first
 
         prop = type.properties.values.first
@@ -64,7 +64,7 @@ module SchemaTests
       end
 
       def test_example_2_optional_property
-        schema = TestHelper.parse_schema 'example_2.xsd'
+        schema = TestHelper.parse_schema 'basic_note_type_with_documentation_and_bounds.xsd'
         type = schema.types.values.first
 
         prop = type.properties.values[2]
@@ -74,7 +74,7 @@ module SchemaTests
       end
 
       def test_example_2_property_wo_documentation
-        schema = TestHelper.parse_schema 'example_2.xsd'
+        schema = TestHelper.parse_schema 'basic_note_type_with_documentation_and_bounds.xsd'
         type = schema.types.values.first
 
         prop = type.properties.values[1]
@@ -84,7 +84,7 @@ module SchemaTests
       end
 
       def test_example_2_property_w_documentation
-        schema = TestHelper.parse_schema 'example_2.xsd'
+        schema = TestHelper.parse_schema 'basic_note_type_with_documentation_and_bounds.xsd'
         type = schema.types.values.first
 
         prop = type.properties.values[3]
@@ -96,7 +96,7 @@ module SchemaTests
       end
 
       def test_example_4_simple_enum
-        schema = TestHelper.parse_schema 'example_4.xsd'
+        schema = TestHelper.parse_schema 'address_type_enumeration.xsd'
         type = schema.types.values.first
 
         assert_instance_of SimpleType, type
@@ -113,7 +113,7 @@ module SchemaTests
       end
 
       def test_example_5_complex_type_simple_content
-        schema = TestHelper.parse_schema 'example_5.xsd'
+        schema = TestHelper.parse_schema 'simple_money_type_with_currency_attribute.xsd'
         type = schema.types.values.first
 
         assert_instance_of ComplexType, type
@@ -127,7 +127,7 @@ module SchemaTests
       end
 
       def test_example_6_complex_type_properties_all
-        schema = TestHelper.parse_schema 'example_6.xsd'
+        schema = TestHelper.parse_schema 'basic_credentials_type.xsd'
         type = schema.types.values.first
 
         assert_equal 2, type.properties.count

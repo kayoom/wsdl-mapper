@@ -9,7 +9,7 @@ module SchemaTests
       include WsdlMapper::Dom
 
       def test_example_3_simple_extension
-        schema = TestHelper.parse_schema 'example_3.xsd'
+        schema = TestHelper.parse_schema 'basic_note_type_and_fancy_note_type_extension.xsd'
 
         assert_equal 2, schema.types.count
 
@@ -24,7 +24,7 @@ module SchemaTests
       end
 
       def test_example_3_simple_extension_with_ns
-        schema = TestHelper.parse_schema 'example_3_with_ns.xsd'
+        schema = TestHelper.parse_schema 'basic_note_type_and_fancy_note_type_extension_with_namespace.xsd'
         ns = 'example.org/example_3'
 
         assert_equal ns, schema.target_namespace

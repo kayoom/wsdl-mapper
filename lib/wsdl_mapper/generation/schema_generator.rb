@@ -21,7 +21,7 @@ module WsdlMapper
     class SchemaGenerator
       attr_reader :context, :namer
 
-      attr_reader :class_generator, :module_generator, :ctr_generator, :enum_generator, :type_mapping, :ctr_defaults_generator, :value_generator, :wrapping_type_generator
+      attr_reader :class_generator, :module_generator, :ctr_generator, :enum_generator, :type_mapping, :value_defaults_generator, :value_generator, :wrapping_type_generator
 
       def initialize context,
           formatter_class: DefaultFormatter,
@@ -30,7 +30,7 @@ module WsdlMapper
           module_generator_factory: DefaultModuleGenerator,
           ctr_generator_factory: NullCtrGenerator,
           enum_generator_factory: DefaultEnumGenerator,
-          ctr_defaults_generator_factory: DefaultValueDefaultsGenerator,
+          value_defaults_generator_factory: DefaultValueDefaultsGenerator,
           wrapping_type_generator_factory: DefaultWrappingTypeGenerator,
           type_mapping: WsdlMapper::TypeMapping::DEFAULT,
           value_generator: DefaultValueGenerator.new
@@ -42,7 +42,7 @@ module WsdlMapper
         @module_generator = module_generator_factory.new self
         @ctr_generator = ctr_generator_factory.new self
         @enum_generator = enum_generator_factory.new self
-        @ctr_defaults_generator = ctr_defaults_generator_factory.new self
+        @value_defaults_generator = value_defaults_generator_factory.new self
         @wrapping_type_generator = wrapping_type_generator_factory.new self
         @type_mapping = type_mapping
         @value_generator = value_generator

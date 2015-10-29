@@ -22,7 +22,7 @@ module GenerationTests
       end
 
       def test_simple_class_generation
-        schema = TestHelper.parse_schema 'example_1.xsd'
+        schema = TestHelper.parse_schema 'basic_note_type.xsd'
         context = Context.new @tmp_path.to_s
         generator = SchemaGenerator.new context, ctr_generator_factory: DefaultCtrGenerator
 
@@ -49,7 +49,7 @@ RUBY
       end
 
       def test_simple_class_generation_with_default_values
-        schema = TestHelper.parse_schema 'example_12.xsd'
+        schema = TestHelper.parse_schema 'basic_note_type_with_defaults.xsd'
         context = Context.new @tmp_path.to_s
         generator = SchemaGenerator.new context, ctr_generator_factory: DefaultCtrGenerator
 
@@ -80,7 +80,7 @@ RUBY
       end
 
       def test_simple_class_generation_with_required_single_value
-        schema = TestHelper.parse_schema 'example_13.xsd'
+        schema = TestHelper.parse_schema 'basic_order_type_with_required_address_type_enum.xsd'
         context = Context.new @tmp_path.to_s
         generator = SchemaGenerator.new context, ctr_generator_factory: DefaultCtrGenerator
 
