@@ -22,7 +22,7 @@ module GenerationTests
       end
 
       def test_simple_class_generation
-        schema = TestHelper.parse_schema 'example_19.xsd'
+        schema = TestHelper.parse_schema 'basic_note_type_with_property_and_attribute_documentation.xsd'
         context = Context.new @tmp_path.to_s
         generator = SchemaGenerator.new context, ctr_generator_factory: DocumentedCtrGenerator
 

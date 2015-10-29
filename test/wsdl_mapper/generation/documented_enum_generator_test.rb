@@ -19,7 +19,7 @@ module GenerationTests
       end
 
       def test_class_documentation
-        schema = TestHelper.parse_schema 'example_20.xsd'
+        schema = TestHelper.parse_schema 'address_type_enumeration_with_documentation.xsd'
         context = Context.new @tmp_path.to_s
         generator = SchemaGenerator.new context, enum_generator_factory: DocumentedEnumGenerator
 
@@ -49,7 +49,7 @@ RUBY
       end
 
       def test_value_documentation
-        schema = TestHelper.parse_schema 'example_21.xsd'
+        schema = TestHelper.parse_schema 'address_type_enumeration_with_value_documentation.xsd'
         context = Context.new @tmp_path.to_s
         generator = SchemaGenerator.new context, enum_generator_factory: DocumentedEnumGenerator
 

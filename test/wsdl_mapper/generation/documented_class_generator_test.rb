@@ -19,7 +19,7 @@ module GenerationTests
       end
 
       def test_class_documentation
-        schema = TestHelper.parse_schema 'example_17.xsd'
+        schema = TestHelper.parse_schema 'empty_note_type_with_multiline_documentation.xsd'
         context = Context.new @tmp_path.to_s
         generator = SchemaGenerator.new context, class_generator_factory: DocumentedClassGenerator
 
@@ -40,7 +40,7 @@ RUBY
       end
 
 #       def test_class_documentation_with_superclass
-#         schema = TestHelper.parse_schema 'example_20.xsd'
+#         schema = TestHelper.parse_schema 'address_type_enumeration_with_documentation.xsd'
 #         context = Context.new @tmp_path.to_s
 #         generator = SchemaGenerator.new context, class_generator_factory: DocumentedClassGenerator
 #
@@ -61,7 +61,7 @@ RUBY
 #       end
 
       def test_class_documentation_with_namespace
-        schema = TestHelper.parse_schema 'example_18.xsd'
+        schema = TestHelper.parse_schema 'empty_note_with_documentaion_and_target_namespace.xsd'
         context = Context.new @tmp_path.to_s
         generator = SchemaGenerator.new context, class_generator_factory: DocumentedClassGenerator
 
@@ -82,7 +82,7 @@ RUBY
       end
 
       def test_property_documentation
-        schema = TestHelper.parse_schema 'example_19.xsd'
+        schema = TestHelper.parse_schema 'basic_note_type_with_property_and_attribute_documentation.xsd'
         context = Context.new @tmp_path.to_s
         generator = SchemaGenerator.new context, class_generator_factory: DocumentedClassGenerator
 

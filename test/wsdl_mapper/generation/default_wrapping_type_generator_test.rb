@@ -19,7 +19,7 @@ module GenerationTests
       end
 
       def test_generation
-        schema = TestHelper.parse_schema 'example_22.xsd'
+        schema = TestHelper.parse_schema 'simple_email_address_type.xsd'
         context = Context.new @tmp_path.to_s
         generator = SchemaGenerator.new context
 
