@@ -54,10 +54,15 @@ module WsdlMapper
         line "@#{tag} #{text}"
       end
 
-      def type_tag tag, type, text = nil
-        buf = "@#{tag} [#{type}]"
-        buf << " #{text}" if text
-        line buf
+      def type_tag tag_name, type = nil, text = nil
+        return if type.nil? && text.nil?
+        if type.nil?
+          tag tag_name, text
+        else
+          buf = "@#{tag_name} [#{type}]"
+          buf << " #{text}" if text
+          line buf
+        end
       end
 
       def attribute! name, type, text, &block
