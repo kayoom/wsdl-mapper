@@ -11,6 +11,20 @@ module NamingTests
     class TestProperty < Struct.new(:name)
     end
 
+    def test_numeric_enum_value_name
+      enum_value1 = WsdlMapper::Dom::EnumerationValue.new '1'
+      enum_value2 = WsdlMapper::Dom::EnumerationValue.new '1foo'
+
+      namer = WsdlMapper::Naming::DefaultNamer.new
+      enum_value_name1 = namer.get_enumeration_value_name nil, enum_value1
+      enum_value_name2 = namer.get_enumeration_value_name nil, enum_value2
+
+      assert_equal 'VALUE_1', enum_value_name1.constant_name
+      assert_equal 'VALUE_1FOO', enum_value_name2.constant_name
+      assert_equal 'value_1', enum_value_name1.key_name
+      assert_equal 'value_1foo', enum_value_name2.key_name
+    end
+
     def test_simple_enum_value_name
       enum_value1 = WsdlMapper::Dom::EnumerationValue.new 'ship_option'
       enum_value2 = WsdlMapper::Dom::EnumerationValue.new 'shipOption'

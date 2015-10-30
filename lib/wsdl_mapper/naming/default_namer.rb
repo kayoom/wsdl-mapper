@@ -40,15 +40,15 @@ module WsdlMapper
       end
 
       def get_constant_name name
-        underscore(name).upcase
+        get_key_name(name).upcase
       end
 
       def get_key_name name
-        underscore name
+        underscore sanitize name
       end
 
       def get_accessor_name name
-        underscore name
+        get_key_name name
       end
 
       def get_var_name name
@@ -67,6 +67,18 @@ module WsdlMapper
         path.map do |m|
           underscore m
         end
+      end
+
+      def sanitize name
+        if valid_symbol? name
+          name
+        else
+          "value_#{name}"
+        end
+      end
+
+      def valid_symbol? name
+        name =~ /^[a-zA-Z]/
       end
     end
   end
