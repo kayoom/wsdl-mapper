@@ -1,4 +1,4 @@
-require 'wsdl_mapper/generation/documented_ctr_generator'
+require 'wsdl_mapper/generation/default_ctr_generator'
 require 'wsdl_mapper/generation/yard_doc_formatter'
 
 module WsdlMapper
@@ -27,8 +27,9 @@ module WsdlMapper
         yard.params *prop_params
         yard.params *attr_params
 
-        f.begin_def 'initialize', get_prop_kw_args(props)
+        f.begin_def 'initialize', get_prop_kw_args(props) + get_attr_kw_args(attrs)
         f.assignment *get_prop_assigns(props)
+        f.assignment *get_attr_assigns(attrs)
         f.end
       end
 

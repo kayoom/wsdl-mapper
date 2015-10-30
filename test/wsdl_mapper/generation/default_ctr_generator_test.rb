@@ -73,6 +73,7 @@ class NoteType
     @from = from
     @heading = heading
     @body = body
+
     @uuid = uuid
   end
 end

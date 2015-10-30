@@ -89,6 +89,7 @@ module WsdlMapper
         assigns.each do |(var_name, value)|
           statement "#{var_name} = #{value}"
         end
+        blank_line
       end
 
       def end

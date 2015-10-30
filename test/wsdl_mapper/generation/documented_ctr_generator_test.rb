@@ -49,11 +49,13 @@ class NoteType
   #
   # @param uuid [String] a unique identifier
   #
-  def initialize(to: nil, from: nil, heading: nil, body: nil)
+  def initialize(to: nil, from: nil, heading: nil, body: nil, uuid: nil)
     @to = to
     @from = from
     @heading = heading
     @body = body
+
+    @uuid = uuid
   end
 end
 RUBY
