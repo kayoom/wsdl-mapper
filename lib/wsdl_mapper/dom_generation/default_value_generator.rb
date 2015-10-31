@@ -3,7 +3,7 @@ require 'bigdecimal'
 require 'wsdl_mapper/core_ext/time_duration'
 
 module WsdlMapper
-  module Generation
+  module DomGeneration
     class DefaultValueGenerator
       def generate_string string
         string.to_s.inspect

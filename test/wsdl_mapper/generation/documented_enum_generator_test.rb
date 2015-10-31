@@ -1,14 +1,14 @@
 require 'test_helper'
 
 require 'wsdl_mapper/schema/parser'
-require 'wsdl_mapper/generation/context'
-require 'wsdl_mapper/generation/schema_generator'
-require 'wsdl_mapper/generation/documented_enum_generator'
+require 'wsdl_mapper/dom_generation/context'
+require 'wsdl_mapper/dom_generation/schema_generator'
+require 'wsdl_mapper/dom_generation/documented_enum_generator'
 
-module GenerationTests
+module DomGenerationTests
   module GeneratorTests
     class DocumentedEnumGeneratorTest < Minitest::Test
-      include WsdlMapper::Generation
+      include WsdlMapper::DomGeneration
 
       def setup
         @tmp_path = TestHelper.get_tmp_path

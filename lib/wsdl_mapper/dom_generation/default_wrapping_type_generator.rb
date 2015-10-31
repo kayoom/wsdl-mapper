@@ -1,7 +1,7 @@
-require 'wsdl_mapper/generation/generator_base'
+require 'wsdl_mapper/dom_generation/generator_base'
 
 module WsdlMapper
-  module Generation
+  module DomGeneration
     class DefaultWrappingTypeGenerator < GeneratorBase
 
       def generate ttg, result

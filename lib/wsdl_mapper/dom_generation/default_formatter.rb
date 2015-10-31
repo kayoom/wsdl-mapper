@@ -1,7 +1,7 @@
-require 'wsdl_mapper/generation/abstract_formatter'
+require 'wsdl_mapper/dom_generation/abstract_formatter'
 
 module WsdlMapper
-  module Generation
+  module DomGeneration
     # Default implementation for the ruby formatter interface. This class should be considered as a reference for
     # custom implementations. All public methods are mandatory.
     class DefaultFormatter < AbstractFormatter

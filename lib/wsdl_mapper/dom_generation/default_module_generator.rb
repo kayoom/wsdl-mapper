@@ -1,5 +1,5 @@
 module WsdlMapper
-  module Generation
+  module DomGeneration
     class DefaultModuleGenerator
       def initialize generator
         @generator = generator

@@ -1,5 +1,5 @@
 module WsdlMapper
-  module Generation
+  module DomGeneration
     class TypeToGenerate
       attr_reader :type, :name
 

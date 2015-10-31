@@ -1,10 +1,10 @@
 require 'test_helper'
 
 require 'wsdl_mapper/schema/parser'
-require 'wsdl_mapper/generation/context'
-require 'wsdl_mapper/generation/schema_generator'
+require 'wsdl_mapper/dom_generation/context'
+require 'wsdl_mapper/dom_generation/schema_generator'
 
-module GenerationTests
+module DomGenerationTests
   module GeneratorTests
     class DefaultClassGeneratorTest < Minitest::Test
       def setup
@@ -17,8 +17,8 @@ module GenerationTests
 
       def test_empty_properties
         schema = TestHelper.parse_schema 'empty_note_type.xsd'
-        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-        generator = WsdlMapper::Generation::SchemaGenerator.new context
+        context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context
 
         result = generator.generate schema
 
@@ -34,8 +34,8 @@ RUBY
 
       def test_simple_class_generation
         schema = TestHelper.parse_schema 'basic_note_type.xsd'
-        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-        generator = WsdlMapper::Generation::SchemaGenerator.new context
+        context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context
 
         result = generator.generate schema
 
@@ -55,8 +55,8 @@ RUBY
 
       def test_simple_class_generation_with_attributes
         schema = TestHelper.parse_schema 'baisc_note_type_with_attribute.xsd'
-        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-        generator = WsdlMapper::Generation::SchemaGenerator.new context
+        context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context
 
         result = generator.generate schema
 
@@ -78,8 +78,8 @@ RUBY
 
       def test_simple_class_generation_with_requires
         schema = TestHelper.parse_schema 'basic_note_type_with_date.xsd'
-        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-        generator = WsdlMapper::Generation::SchemaGenerator.new context
+        context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context
 
         result = generator.generate schema
 
@@ -102,8 +102,8 @@ RUBY
 
       def test_sub_class_generation
         schema = TestHelper.parse_schema 'basic_note_type_and_fancy_note_type_extension.xsd'
-        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-        generator = WsdlMapper::Generation::SchemaGenerator.new context
+        context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context
 
         result = generator.generate schema
 
@@ -122,8 +122,8 @@ RUBY
 
       def test_simple_class_generation_with_modules
         schema = TestHelper.parse_schema 'basic_note_type.xsd'
-        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-        generator = WsdlMapper::Generation::SchemaGenerator.new context, namer: WsdlMapper::Naming::DefaultNamer.new(module_path: %w[NotesApi Types])
+        context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context, namer: WsdlMapper::Naming::DefaultNamer.new(module_path: %w[NotesApi Types])
 
         result = generator.generate schema
 
@@ -171,8 +171,8 @@ RUBY
 
       def test_simple_class_generation_with_require_of_property_types
         schema = TestHelper.parse_schema 'basic_order_type_with_referenced_address_type_enum.xsd'
-        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-        generator = WsdlMapper::Generation::SchemaGenerator.new context, namer: WsdlMapper::Naming::DefaultNamer.new(module_path: %w[OrdersApi Types])
+        context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context, namer: WsdlMapper::Naming::DefaultNamer.new(module_path: %w[OrdersApi Types])
 
         result = generator.generate schema
         expected_file = @tmp_path.join("orders_api", "types", "order_type.rb")
@@ -195,8 +195,8 @@ RUBY
 
       def test_simple_class_generation_with_simple_types
         schema = TestHelper.parse_schema 'basic_note_type_with_referenced_simple_email_address_type.xsd'
-        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-        generator = WsdlMapper::Generation::SchemaGenerator.new context
+        context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context
 
         result = generator.generate schema
 

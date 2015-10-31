@@ -1,7 +1,7 @@
-require 'wsdl_mapper/generation/default_wrapping_type_generator'
+require 'wsdl_mapper/dom_generation/default_wrapping_type_generator'
 
 module WsdlMapper
-  module Generation
+  module DomGeneration
     class DocumentedWrappingTypeGenerator < DefaultWrappingTypeGenerator
 
       protected

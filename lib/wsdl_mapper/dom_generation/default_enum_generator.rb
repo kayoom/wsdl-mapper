@@ -1,7 +1,7 @@
-require 'wsdl_mapper/generation/generator_base'
+require 'wsdl_mapper/dom_generation/generator_base'
 
 module WsdlMapper
-  module Generation
+  module DomGeneration
     class DefaultEnumGenerator < GeneratorBase
       def initialize generator, base: '::String', values_const_name: 'Values'
         @generator = generator

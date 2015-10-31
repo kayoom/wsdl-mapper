@@ -1,5 +1,5 @@
 module WsdlMapper
-  module Generation
+  module DomGeneration
     class YardDocFormatter
       def initialize formatter
         @formatter = formatter

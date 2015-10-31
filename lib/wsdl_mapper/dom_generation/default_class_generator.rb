@@ -1,8 +1,8 @@
-require 'wsdl_mapper/generation/generator_base'
+require 'wsdl_mapper/dom_generation/generator_base'
 require 'wsdl_mapper/dom/builtin_type'
 
 module WsdlMapper
-  module Generation
+  module DomGeneration
     class DefaultClassGenerator < GeneratorBase
       def generate ttg, result
         file_name = @generator.context.path_for ttg.name

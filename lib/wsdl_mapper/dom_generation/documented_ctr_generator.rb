@@ -1,8 +1,8 @@
-require 'wsdl_mapper/generation/default_ctr_generator'
-require 'wsdl_mapper/generation/yard_doc_formatter'
+require 'wsdl_mapper/dom_generation/default_ctr_generator'
+require 'wsdl_mapper/dom_generation/yard_doc_formatter'
 
 module WsdlMapper
-  module Generation
+  module DomGeneration
     class DocumentedCtrGenerator < DefaultCtrGenerator
       def generate ttg, f, result
         yard = YardDocFormatter.new f

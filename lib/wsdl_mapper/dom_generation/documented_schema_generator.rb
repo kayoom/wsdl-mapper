@@ -1,11 +1,11 @@
-require 'wsdl_mapper/generation/schema_generator'
-require 'wsdl_mapper/generation/documented_wrapping_type_generator'
-require 'wsdl_mapper/generation/documented_class_generator'
-require 'wsdl_mapper/generation/documented_ctr_generator'
-require 'wsdl_mapper/generation/documented_enum_generator'
+require 'wsdl_mapper/dom_generation/schema_generator'
+require 'wsdl_mapper/dom_generation/documented_wrapping_type_generator'
+require 'wsdl_mapper/dom_generation/documented_class_generator'
+require 'wsdl_mapper/dom_generation/documented_ctr_generator'
+require 'wsdl_mapper/dom_generation/documented_enum_generator'
 
 module WsdlMapper
-  module Generation
+  module DomGeneration
     class DocumentedSchemaGenerator < SchemaGenerator
 
       def initialize context,

@@ -1,7 +1,7 @@
 require 'wsdl_mapper/dom/builtin_type'
 
 module WsdlMapper
-  module Generation
+  module DomGeneration
     class DefaultCtrGenerator
       def initialize generator
         @generator = generator

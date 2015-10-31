@@ -1,13 +1,13 @@
 require 'nokogiri'
 
 require 'wsdl_mapper/naming/default_namer'
-require 'wsdl_mapper/generation/context'
-require 'wsdl_mapper/generation/schema_generator'
-require 'wsdl_mapper/generation/documented_schema_generator'
+require 'wsdl_mapper/dom_generation/context'
+require 'wsdl_mapper/dom_generation/schema_generator'
+require 'wsdl_mapper/dom_generation/documented_schema_generator'
 require 'wsdl_mapper/schema/parser'
 
 module WsdlMapper
-  module Generation
+  module DomGeneration
     class Facade
       def initialize(file:, out:, module_path:, docs: false)
         @file = file

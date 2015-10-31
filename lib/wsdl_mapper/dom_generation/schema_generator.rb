@@ -1,15 +1,15 @@
 require 'wsdl_mapper/naming/default_namer'
 
-require 'wsdl_mapper/generation/result'
-require 'wsdl_mapper/generation/default_formatter'
-require 'wsdl_mapper/generation/default_class_generator'
-require 'wsdl_mapper/generation/default_module_generator'
-require 'wsdl_mapper/generation/null_ctr_generator'
-require 'wsdl_mapper/generation/default_value_defaults_generator'
-require 'wsdl_mapper/generation/default_enum_generator'
-require 'wsdl_mapper/generation/default_wrapping_type_generator'
-require 'wsdl_mapper/generation/default_value_generator'
-require 'wsdl_mapper/generation/type_to_generate'
+require 'wsdl_mapper/dom_generation/result'
+require 'wsdl_mapper/dom_generation/default_formatter'
+require 'wsdl_mapper/dom_generation/default_class_generator'
+require 'wsdl_mapper/dom_generation/default_module_generator'
+require 'wsdl_mapper/dom_generation/null_ctr_generator'
+require 'wsdl_mapper/dom_generation/default_value_defaults_generator'
+require 'wsdl_mapper/dom_generation/default_enum_generator'
+require 'wsdl_mapper/dom_generation/default_wrapping_type_generator'
+require 'wsdl_mapper/dom_generation/default_value_generator'
+require 'wsdl_mapper/dom_generation/type_to_generate'
 
 require 'wsdl_mapper/dom/complex_type'
 require 'wsdl_mapper/dom/simple_type'
@@ -17,7 +17,7 @@ require 'wsdl_mapper/dom/simple_type'
 require 'wsdl_mapper/type_mapping'
 
 module WsdlMapper
-  module Generation
+  module DomGeneration
     class SchemaGenerator
       attr_reader :context, :namer
 

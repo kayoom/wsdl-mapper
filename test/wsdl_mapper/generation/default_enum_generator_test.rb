@@ -1,10 +1,10 @@
 require 'test_helper'
 
 require 'wsdl_mapper/schema/parser'
-require 'wsdl_mapper/generation/context'
-require 'wsdl_mapper/generation/schema_generator'
+require 'wsdl_mapper/dom_generation/context'
+require 'wsdl_mapper/dom_generation/schema_generator'
 
-module GenerationTests
+module DomGenerationTests
   module GeneratorTests
     class DefaultEnumGeneratorTest < Minitest::Test
       def setup
@@ -17,8 +17,8 @@ module GenerationTests
 
       def test_simple_enum_generation
         schema = TestHelper.parse_schema 'address_type_enumeration.xsd'
-        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-        generator = WsdlMapper::Generation::SchemaGenerator.new context
+        context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context
 
         result = generator.generate schema
 

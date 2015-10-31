@@ -1,14 +1,14 @@
 require 'test_helper'
 
 require 'wsdl_mapper/schema/parser'
-require 'wsdl_mapper/generation/context'
-require 'wsdl_mapper/generation/schema_generator'
-require 'wsdl_mapper/generation/documented_class_generator'
+require 'wsdl_mapper/dom_generation/context'
+require 'wsdl_mapper/dom_generation/schema_generator'
+require 'wsdl_mapper/dom_generation/documented_class_generator'
 
-module GenerationTests
+module DomGenerationTests
   module GeneratorTests
     class DocumentedClassGeneratorTest < Minitest::Test
-      include WsdlMapper::Generation
+      include WsdlMapper::DomGeneration
 
       def setup
         @tmp_path = TestHelper.get_tmp_path

@@ -1,13 +1,13 @@
 require 'test_helper'
 
-require 'wsdl_mapper/generation/default_value_generator'
+require 'wsdl_mapper/dom_generation/default_value_generator'
 
 require 'bigdecimal'
 
-module GenerationTests
+module DomGenerationTests
   module GeneratorTests
     class DefaultValueGeneratorTest < ::Minitest::Test
-      include WsdlMapper::Generation
+      include WsdlMapper::DomGeneration
       include WsdlMapper::CoreExt
 
       def assert_evalable origin, type
