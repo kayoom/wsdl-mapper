@@ -37,7 +37,7 @@ module WsdlMapper
       end
 
       def text text
-        lines = text.strip.split("\n")
+        lines = process(text).strip.split("\n")
 
         lines.each do |l|
           line l
@@ -54,21 +54,17 @@ module WsdlMapper
         line "@#{tag} #{text}"
       end
 
-      def type_tag tag_name, type = nil, text = nil
-        return if type.nil? && text.nil?
-        if type.nil?
-          tag tag_name, text
-        else
-          buf = "@#{tag_name} [#{type}]"
-          buf << " #{text}" if text
-          line buf
-        end
+      def type_tag tag_name, type, text = nil
+        buf = "@#{tag_name} [#{type}]"
+        buf << " #{text}" if text
+        line buf
       end
 
-      def attribute! name, type, text, &block
+      def attribute! name, type, doc, &block
         tag "!attribute", name
         inc_indent
-        type_tag "return", type, strip(text)
+        text doc if doc
+        type_tag "return", type
         block.call
         dec_indent
       end
@@ -80,6 +76,7 @@ module WsdlMapper
       end
 
       def params *params
+        return if params.empty?
         params.each do |p|
           param *p
         end
@@ -90,6 +87,10 @@ module WsdlMapper
       def strip text
         return "" if text.nil?
         text.gsub(/[\n\r]/, " ").gsub(/\s+/, " ").strip
+      end
+
+      def process doc
+        doc
       end
     end
   end

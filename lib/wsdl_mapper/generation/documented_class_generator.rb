@@ -19,8 +19,19 @@ module WsdlMapper
 
         properties.each do |p|
           name = @generator.namer.get_property_name p
-          type = @generator.get_ruby_type_name p.type
 
+          type = if p.type.name == WsdlMapper::Dom::BuiltinType[:boolean].name
+            "true, false"
+          else
+            @generator.get_ruby_type_name p.type
+          end
+          type ||= "Object"
+
+          if p.array?
+            type = "Array<#{type}>"
+          end
+
+          # TODO: more xml info? (bounds etc), e.g. # @xml_bounds min: 0, max: unbounded
           yard.attribute! name.attr_name, type, p.documentation.default do
             yard.tag :xml_name, p.name.name
           end

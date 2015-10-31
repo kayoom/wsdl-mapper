@@ -20,8 +20,9 @@ module WsdlMapper
       end
 
       def add_base_require requires, type, schema
-        return unless type.base_type_name
-        add_type_require requires, type.base_type_name, schema
+        if type.base_type_name && @generator.get_ruby_type_name(type.base)
+          add_type_require requires, type.base_type_name, schema
+        end
       end
 
       def write_requires f, requires

@@ -20,7 +20,11 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+    $ wsdl-mapper generate some-schema.xsd --docs --module RootModule
+    
+## TODOs
+
+* Support for linked schemas (`xs:import`)
 
 ## Contributing
 

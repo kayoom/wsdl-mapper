@@ -14,7 +14,17 @@ module WsdlMapper
         yard.blank_line
         prop_params = props.map do |prop|
           name = @generator.namer.get_property_name(prop).attr_name
-          type = @generator.get_ruby_type_name prop.type
+          type = if prop.type.name == WsdlMapper::Dom::BuiltinType[:boolean].name
+            "true, false"
+          else
+            @generator.get_ruby_type_name prop.type
+          end
+          type ||= "Object"
+
+          if prop.array?
+            type = "Array<#{type}>"
+          end
+
           [name, type, prop.documentation.default]
         end
 

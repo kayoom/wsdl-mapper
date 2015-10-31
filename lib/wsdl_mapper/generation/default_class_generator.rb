@@ -6,7 +6,6 @@ module WsdlMapper
     class DefaultClassGenerator < GeneratorBase
       def generate ttg, result
         file_name = @generator.context.path_for ttg.name
-        # TODO: attributes for attributes
         modules = ttg.name.parents.reverse
 
         File.open file_name, 'w' do |io|
@@ -51,7 +50,7 @@ module WsdlMapper
         type.each_property do |prop|
           add_type_require requires, prop.type_name, schema
         end
-        # TODO: collect requires from ctr generator
+        # TODO: collect requires from ctr generator?
         requires.uniq
       end
 
@@ -60,9 +59,8 @@ module WsdlMapper
       end
 
       def open_class f, ttg
-        if ttg.type.base
-          base_name = @generator.namer.get_type_name ttg.type.base
-          f.begin_sub_class ttg.name.class_name, base_name.name
+        if ttg.type.base && base_name = @generator.get_ruby_type_name(ttg.type.base)
+          f.begin_sub_class ttg.name.class_name, base_name
         else
           f.begin_class ttg.name.class_name
         end

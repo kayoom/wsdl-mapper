@@ -96,7 +96,38 @@ module WsdlMapper
 
       def parse_complex_content_restriction node, type
         parse_base node, type
-        # TODO
+
+        case type.base_type_name
+        when SoapEncodingType['Array'].name
+          parse_soap_array node, type
+        else
+          log_msg node, :unknown
+        end
+      end
+
+      def parse_soap_array node, type
+        each_element node do |child|
+          case get_name child
+          when ATTRIBUTE
+            parse_soap_array_attribute child, type
+          else
+            log_msg child, :unknown
+          end
+        end
+      end
+
+      def parse_soap_array_attribute node, type
+        ref = node.attributes['ref'].value
+
+        if parse_name(ref) != SoapEncodingType['arrayType'].name
+          raise StandardError.new("Invalid ref attribute for SOAP array node: #{parse_name(ref)}")
+        end
+
+        type_name = parse_name node.attribute_with_ns(Wsdl::ARRAY_TYPE.name, Wsdl::ARRAY_TYPE.ns).value
+        value_type_name = Name.new type_name.ns, type_name.name[0..-3]
+
+        property = Property.new Name.new(nil, 'values'), value_type_name, bounds: Bounds.new(min: 0)
+        type.add_property property
       end
 
       def parse_extension node, type
@@ -131,6 +162,7 @@ module WsdlMapper
 
       def parse_complex_type_property node, type, i, container
         name_str = node.attributes['name'].value
+        # TODO: targetns?
         name = Name.new nil, name_str
 
         type_name_str = node.attributes['type'].value

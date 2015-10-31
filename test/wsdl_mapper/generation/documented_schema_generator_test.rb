@@ -58,7 +58,6 @@ class NoteType
   # @param heading [String]
   # @param body [String]
   #
-  #
   def initialize(to: nil, from: nil, heading: nil, body: nil)
     @to = to
     @from = from

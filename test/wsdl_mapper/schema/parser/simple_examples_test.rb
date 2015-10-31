@@ -21,6 +21,19 @@ module SchemaTests
         refute_nil type.documentation
       end
 
+      def test_example_with_soap_array
+        schema = TestHelper.parse_schema 'basic_note_type_with_soap_array.xsd'
+
+        assert_equal 3, schema.types.count
+
+        array_type = schema.types.values.last
+
+        assert_equal Name.new(nil, 'attachmentsArray'), array_type.name
+
+        values_property = array_type.each_property.first
+        assert_equal Name.new(nil, 'attachment'), values_property.type.name
+      end
+
       def test_example_2_complex_type_w_documentation
         schema = TestHelper.parse_schema 'basic_note_type_with_documentation_and_bounds.xsd'
         type = schema.types.values.first
