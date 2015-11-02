@@ -26,12 +26,7 @@ module WsdlMapper
       end
 
       def write_requires f, requires
-        if requires.any?
-          requires.each do |req|
-            f.require req
-          end
-          f.after_requires
-        end
+        f.requires *requires
       end
 
       def close_modules f, modules

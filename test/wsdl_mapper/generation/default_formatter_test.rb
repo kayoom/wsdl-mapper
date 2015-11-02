@@ -1,11 +1,11 @@
 require 'test_helper'
 
-require 'wsdl_mapper/dom_generation/default_formatter'
+require 'wsdl_mapper/generation/default_formatter'
 
-module DomGenerationTests
+module GenerationTests
   class DefaultFormatterTest < ::Minitest::Test
     def formatter
-      @formatter ||= WsdlMapper::DomGeneration::DefaultFormatter.new stream
+      @formatter ||= WsdlMapper::Generation::DefaultFormatter.new stream
     end
 
     def stream

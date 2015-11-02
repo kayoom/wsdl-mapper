@@ -1,5 +1,5 @@
 module WsdlMapper
-  module DomGeneration
+  module Generation
     # @abstract
     class AbstractFormatter
       def initialize io

@@ -1,8 +1,11 @@
 require 'wsdl_mapper/dom_generation/generator_base'
+require 'wsdl_mapper/generation/default_formatter'
 
 module WsdlMapper
   module DomGeneration
     class DefaultEnumGenerator < GeneratorBase
+      include WsdlMapper::Generation
+
       def initialize generator, base: '::String', values_const_name: 'Values'
         @generator = generator
         @base = base

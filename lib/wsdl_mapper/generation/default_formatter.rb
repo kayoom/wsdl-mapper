@@ -1,7 +1,7 @@
-require 'wsdl_mapper/dom_generation/abstract_formatter'
+require 'wsdl_mapper/generation/abstract_formatter'
 
 module WsdlMapper
-  module DomGeneration
+  module Generation
     # Default implementation for the ruby formatter interface. This class should be considered as a reference for
     # custom implementations. All public methods are mandatory.
     class DefaultFormatter < AbstractFormatter
@@ -38,9 +38,30 @@ module WsdlMapper
         next_statement
       end
 
+      def block statement, block_args
+        indent
+        buf = statement.dup
+        buf << " do"
+        args = block_args.join ", "
+        buf << " |#{args}|" if block_args.any?
+        @io << buf
+        next_statement
+        inc_indent
+        yield
+        self.end
+      end
+
       def require path
         # TODO: escape
         statement %[require #{path.inspect}]
+      end
+
+      def requires *paths
+        return unless paths.any?
+        paths.each do |path|
+          require path
+        end
+        after_requires
       end
 
       def attr_accessor *attrs

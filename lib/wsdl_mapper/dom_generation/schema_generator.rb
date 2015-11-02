@@ -1,7 +1,7 @@
 require 'wsdl_mapper/naming/default_namer'
 
-require 'wsdl_mapper/dom_generation/result'
-require 'wsdl_mapper/dom_generation/default_formatter'
+require 'wsdl_mapper/generation/result'
+require 'wsdl_mapper/generation/default_formatter'
 require 'wsdl_mapper/dom_generation/default_class_generator'
 require 'wsdl_mapper/dom_generation/default_module_generator'
 require 'wsdl_mapper/dom_generation/null_ctr_generator'
@@ -9,7 +9,7 @@ require 'wsdl_mapper/dom_generation/default_value_defaults_generator'
 require 'wsdl_mapper/dom_generation/default_enum_generator'
 require 'wsdl_mapper/dom_generation/default_wrapping_type_generator'
 require 'wsdl_mapper/dom_generation/default_value_generator'
-require 'wsdl_mapper/dom_generation/type_to_generate'
+require 'wsdl_mapper/generation/type_to_generate'
 
 require 'wsdl_mapper/dom/complex_type'
 require 'wsdl_mapper/dom/simple_type'
@@ -19,12 +19,14 @@ require 'wsdl_mapper/type_mapping'
 module WsdlMapper
   module DomGeneration
     class SchemaGenerator
+      include WsdlMapper::Generation
+
       attr_reader :context, :namer
 
       attr_reader :class_generator, :module_generator, :ctr_generator, :enum_generator, :type_mapping, :value_defaults_generator, :value_generator, :wrapping_type_generator
 
       def initialize context,
-          formatter_class: DefaultFormatter,
+          formatter_factory: DefaultFormatter,
           namer: WsdlMapper::Naming::DefaultNamer.new,
           class_generator_factory: DefaultClassGenerator,
           module_generator_factory: DefaultModuleGenerator,
@@ -35,7 +37,7 @@ module WsdlMapper
           type_mapping: WsdlMapper::TypeMapping::DEFAULT,
           value_generator: DefaultValueGenerator.new
 
-        @formatter_class = formatter_class
+        @formatter_factory = formatter_factory
         @context = context
         @namer = namer
         @class_generator = class_generator_factory.new self
@@ -63,7 +65,7 @@ module WsdlMapper
       end
 
       def get_formatter io
-        @formatter_class.new io
+        @formatter_factory.new io
       end
 
       def get_ruby_type_name type

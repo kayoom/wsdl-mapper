@@ -9,7 +9,7 @@ module WsdlMapper
     class DocumentedSchemaGenerator < SchemaGenerator
 
       def initialize context,
-          formatter_class: DefaultFormatter,
+          formatter_factory: DefaultFormatter,
           namer: WsdlMapper::Naming::DefaultNamer.new,
           class_generator_factory: DocumentedClassGenerator,
           module_generator_factory: DefaultModuleGenerator,

@@ -1,5 +1,5 @@
 module WsdlMapper
-  module DomGeneration
+  module Generation
     class Result
       class ModuleTreeNode
         attr_reader :type_name, :children
