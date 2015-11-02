@@ -15,6 +15,10 @@ module WsdlMapper
       def enumeration?
         @enumeration_values.any?
       end
+
+      def root
+        @base ? @base.root : self
+      end
     end
   end
 end

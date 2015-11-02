@@ -8,6 +8,10 @@ module WsdlMapper
 
       extend ShallowSchema
       self.namespace = NAMESPACE
+
+      def root
+        self
+      end
     end
   end
 end
