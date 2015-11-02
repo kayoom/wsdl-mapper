@@ -18,6 +18,12 @@ module WsdlMapper
         type_name
       end
 
+      def get_s8r_name type
+        type_name = TypeName.new get_s8r_class_name(type.name.name), @module_path, get_s8r_file_name(type.name.name), get_file_path(@module_path)
+        type_name.parent = make_parents @module_path
+        type_name
+      end
+
       def get_property_name property
         PropertyName.new get_accessor_name(property.name.name), get_var_name(property.name.name)
       end
@@ -37,6 +43,14 @@ module WsdlMapper
         type_name = TypeName.new mod, path, get_file_name(mod), get_file_path(path)
         type_name.parent = make_parents path
         type_name
+      end
+
+      def get_s8r_file_name name
+        underscore(name) + "_serializer.rb"
+      end
+
+      def get_s8r_class_name name
+        get_class_name(name) + "Serializer"
       end
 
       def get_constant_name name
