@@ -33,16 +33,7 @@ module WsdlMapper
           ttg = TypeToGenerate.new type, name
 
           open_class f, ttg
-          # def_ctr f, ttg
           def_build_method f, ttg
-
-          # props = type.each_property
-          # props.each do |prop|
-          #   prop_name = @namer.get_property_name prop
-          #   ptg = TypeToGenerate.new prop, prop_name
-          #   def_prop f, ptg
-          # end
-
           close_class f, ttg
         end
       end
@@ -52,18 +43,6 @@ module WsdlMapper
       end
 
       protected
-      # def def_prop f, ptg
-      #   f.begin_def ptg.name.attr_name
-      #   f.statement "@tm.to_ruby(::WsdlMapper::Dom::BuiltinType[#{ptg.type.type_name.name.inspect}], @obj.#{ptg.name.attr_name})"
-      #   f.end
-      # end
-
-      # def def_ctr f, ttg
-      #   f.begin_def "initialize", [:base]
-      #   f.assignment ["@base", "base"]
-      #   f.end
-      # end
-
       def def_simple_build_method_body f, ttg
         tag = tag_string_for_name ttg.type.name
         f.block "x.simple(#{tag})", ["x"] do
@@ -73,11 +52,22 @@ module WsdlMapper
       end
 
       def def_complex_build_method_body f, ttg
+        f.literal_array "attributes", collect_attributes(ttg)
         tag = tag_string_for_name ttg.type.name
-        f.block "x.complex(#{tag})", ["x"] do
+        f.block "x.complex(#{tag}, attributes)", ["x"] do
           ttg.type.each_property do |prop|
             write_property_statement f, prop
           end
+        end
+      end
+
+      def collect_attributes ttg
+        ttg.type.each_attribute.map do |attr|
+          name = attr.name
+          attr_name = @namer.get_attribute_name(attr).attr_name
+          type = attr.type.root.name.name
+
+          %<[#{name.inspect}, obj.#{attr_name}, #{type.inspect}]>
         end
       end
 

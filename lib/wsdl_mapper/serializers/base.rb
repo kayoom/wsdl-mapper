@@ -18,8 +18,8 @@ module WsdlMapper
         @resolver.resolve serializer_name
       end
 
-      def complex tag
-        @x.send tag do |x|
+      def complex tag, attributes = []
+        @x.send tag, eval_attributes(attributes) do |x|
           yield self
         end
       end
@@ -38,6 +38,11 @@ module WsdlMapper
         @x.send tag, builtin_to_xml(type, value)
       end
 
+      def to_xml
+        @doc.to_xml
+      end
+
+      protected
       def builtin name
         ::WsdlMapper::Dom::BuiltinType[name]
       end
@@ -46,8 +51,15 @@ module WsdlMapper
         @tm.to_xml builtin(type), value
       end
 
-      def to_xml
-        @doc.to_xml
+      def eval_attributes attributes
+        attributes.each_with_object({}) do |attr, hsh|
+          key = attr[0]
+          value = attr[1]
+          type = attr[2]
+          next if value.nil?
+
+          hsh[key] = @tm.to_xml builtin(type), value
+        end
       end
     end
   end

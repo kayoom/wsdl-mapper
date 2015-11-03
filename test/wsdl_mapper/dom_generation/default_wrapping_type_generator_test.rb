@@ -18,6 +18,8 @@ module DomGenerationTests
         @tmp_path.unlink
       end
 
+      # TODO: complex type with simple content!
+
       def test_generation
         schema = TestHelper.parse_schema 'simple_email_address_type.xsd'
         context = Context.new @tmp_path.to_s
@@ -31,7 +33,7 @@ module DomGenerationTests
         generated_class = File.read expected_file
         assert_equal <<RUBY, generated_class
 class EmailAddressType
-  attr_accessor :value
+  attr_accessor :content
 end
 RUBY
       end

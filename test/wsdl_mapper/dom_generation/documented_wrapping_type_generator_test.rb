@@ -34,7 +34,7 @@ module DomGenerationTests
 #
 # @xml_name emailAddressType
 class EmailAddressType
-  attr_accessor :value
+  attr_accessor :content
 end
 RUBY
       end

@@ -119,5 +119,45 @@ XML
 </noteType>
 XML
     end
+
+    def test_nil_attribute
+      base = Base.new resolver: nil
+
+      attributes = [
+        ["uuid", nil, "token"]
+      ]
+      base.complex 'noteType', attributes do |x|
+        x.value_builtin :to, "to@example.org", :string
+        x.value_builtin :from, "from@example.org", :string
+      end
+
+      assert_equal <<XML, base.to_xml
+<?xml version="1.0" encoding="UTF-8"?>
+<noteType>
+  <to>to@example.org</to>
+  <from>from@example.org</from>
+</noteType>
+XML
+    end
+
+    def test_simple_example_with_attributes
+      base = Base.new resolver: nil
+
+      attributes = [
+        ["uuid", "12345", "token"]
+      ]
+      base.complex 'noteType', attributes do |x|
+        x.value_builtin :to, "to@example.org", :string
+        x.value_builtin :from, "from@example.org", :string
+      end
+
+      assert_equal <<XML, base.to_xml
+<?xml version="1.0" encoding="UTF-8"?>
+<noteType uuid="12345">
+  <to>to@example.org</to>
+  <from>from@example.org</from>
+</noteType>
+XML
+    end
   end
 end

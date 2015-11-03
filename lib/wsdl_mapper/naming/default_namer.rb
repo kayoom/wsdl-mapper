@@ -8,8 +8,9 @@ module WsdlMapper
     class DefaultNamer
       include Inflector
 
-      def initialize module_path: []
+      def initialize module_path: [], content_attribute_name: 'content'
         @module_path = module_path
+        @content_attribute_name = content_attribute_name
       end
 
       def get_type_name type
@@ -34,6 +35,10 @@ module WsdlMapper
 
       def get_enumeration_value_name type, enum_value
         EnumerationValueName.new get_constant_name(enum_value.value), get_key_name(enum_value.value)
+      end
+
+      def get_content_name type
+        @content_name ||= PropertyName.new get_accessor_name(@content_attribute_name), get_var_name(@content_attribute_name)
       end
 
       protected

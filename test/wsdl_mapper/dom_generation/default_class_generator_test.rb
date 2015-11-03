@@ -54,7 +54,7 @@ RUBY
       end
 
       def test_simple_class_generation_with_attributes
-        schema = TestHelper.parse_schema 'baisc_note_type_with_attribute.xsd'
+        schema = TestHelper.parse_schema 'basic_note_type_with_attribute.xsd'
         context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
         generator = WsdlMapper::DomGeneration::SchemaGenerator.new context
 
@@ -193,6 +193,59 @@ end
 RUBY
       end
 
+      def test_soap_array_generation
+        schema = TestHelper.parse_schema 'basic_note_type_with_soap_array.xsd'
+        context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context
+
+        result = generator.generate schema
+
+        expected_file = @tmp_path.join("note_type.rb")
+        assert File.exists? expected_file
+
+        generated_class = File.read expected_file
+        assert_equal <<RUBY, generated_class
+require "attachments_array"
+
+class NoteType
+  attr_accessor :to
+  attr_accessor :from
+  attr_accessor :heading
+  attr_accessor :body
+  attr_accessor :attachments
+end
+RUBY
+
+        expected_file = @tmp_path.join("attachments_array.rb")
+        assert File.exists? expected_file
+
+        generated_class = File.read expected_file
+        assert_equal <<RUBY, generated_class
+class AttachmentsArray < ::Array
+end
+RUBY
+      end
+
+      def test_complex_type_with_simple_content_generation
+        schema = TestHelper.parse_schema 'simple_money_type_with_currency_attribute.xsd'
+        context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context
+
+        result = generator.generate schema
+
+        expected_file = @tmp_path.join("money_type.rb")
+        assert File.exists? expected_file
+
+        generated_class = File.read expected_file
+        assert_equal <<RUBY, generated_class
+class MoneyType
+  attr_accessor :content
+
+  attr_accessor :currency
+end
+RUBY
+      end
+
       def test_simple_class_generation_with_simple_types
         schema = TestHelper.parse_schema 'basic_note_type_with_referenced_simple_email_address_type.xsd'
         context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
@@ -221,7 +274,7 @@ RUBY
         generated_class = File.read expected_file
         assert_equal <<RUBY, generated_class
 class EmailAddressType
-  attr_accessor :value
+  attr_accessor :content
 end
 RUBY
       end

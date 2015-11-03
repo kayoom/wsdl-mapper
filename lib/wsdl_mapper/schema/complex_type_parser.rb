@@ -48,6 +48,7 @@ module WsdlMapper
       end
 
       def parse_simple_content node, type
+        type.simple_content = true
         each_element node do |child|
           case get_name child
           when EXTENSION
@@ -106,6 +107,7 @@ module WsdlMapper
       end
 
       def parse_soap_array node, type
+        type.soap_array = true
         each_element node do |child|
           case get_name child
           when ATTRIBUTE
@@ -124,10 +126,7 @@ module WsdlMapper
         end
 
         type_name = parse_name node.attribute_with_ns(Wsdl::ARRAY_TYPE.name, Wsdl::ARRAY_TYPE.ns).value
-        value_type_name = Name.new type_name.ns, type_name.name[0..-3]
-
-        property = Property.new Name.new(nil, 'values'), value_type_name, bounds: Bounds.new(min: 0)
-        type.add_property property
+        type.soap_array_type = Name.new type_name.ns, type_name.name[0..-3]
       end
 
       def parse_extension node, type

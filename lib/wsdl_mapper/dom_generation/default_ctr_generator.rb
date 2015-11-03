@@ -17,6 +17,16 @@ module WsdlMapper
         f.end
       end
 
+      def generate_simple ttg, f, result
+        attrs = ttg.type.each_attribute
+        content_name = @generator.namer.get_content_name ttg.type
+
+        f.begin_def 'initialize', [content_name.attr_name] + get_attr_kw_args(attrs)
+        f.assignment [content_name.var_name, content_name.attr_name]
+        f.assignment *get_attr_assigns(attrs)
+        f.end
+      end
+
       def generate_wrapping ttg, f, result, var_name, par_name
         f.begin_def "initialize", [par_name]
         f.assignment [var_name, par_name]

@@ -49,7 +49,7 @@ RUBY
       end
 
       def test_simple_class_generation_with_attributes
-        schema = TestHelper.parse_schema 'baisc_note_type_with_attribute.xsd'
+        schema = TestHelper.parse_schema 'basic_note_type_with_attribute.xsd'
         context = Context.new @tmp_path.to_s
         generator = SchemaGenerator.new context, ctr_generator_factory: DefaultCtrGenerator
 
@@ -133,6 +133,32 @@ class OrderType
     @name = name
     @street = street
     @type = type
+  end
+end
+RUBY
+      end
+
+      def test_complex_type_with_simple_content_generation
+        schema = TestHelper.parse_schema 'simple_money_type_with_currency_attribute.xsd'
+        context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context, ctr_generator_factory: DefaultCtrGenerator
+
+        result = generator.generate schema
+
+        expected_file = @tmp_path.join("money_type.rb")
+        assert File.exists? expected_file
+
+        generated_class = File.read expected_file
+        assert_equal <<RUBY, generated_class
+class MoneyType
+  attr_accessor :content
+
+  attr_accessor :currency
+
+  def initialize(content, currency: nil)
+    @content = content
+
+    @currency = currency
   end
 end
 RUBY

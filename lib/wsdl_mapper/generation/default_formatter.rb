@@ -96,6 +96,11 @@ module WsdlMapper
       end
 
       def literal_array name, values
+        if values.empty?
+          statement "#{name} = []"
+          return
+        end
+
         statement "#{name} = ["
         inc_indent
         values[0..-2].each do |value|

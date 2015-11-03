@@ -29,9 +29,7 @@ module SchemaTests
         array_type = schema.types.values.last
 
         assert_equal Name.new(nil, 'attachmentsArray'), array_type.name
-
-        values_property = array_type.each_property.first
-        assert_equal Name.new(nil, 'attachment'), values_property.type.name
+        assert_equal Name.new(nil, 'attachment'), array_type.soap_array_type
       end
 
       def test_example_2_complex_type_w_documentation
@@ -130,6 +128,7 @@ module SchemaTests
         type = schema.types.values.first
 
         assert_instance_of ComplexType, type
+        assert type.simple_content?
 
         base_type = schema.get_type Name.new(Xsd::NS, 'float')
 

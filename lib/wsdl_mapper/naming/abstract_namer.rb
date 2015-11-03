@@ -18,6 +18,18 @@ module WsdlMapper
       def get_enumeration_value_name type, enum_value
         raise NotImplementedError
       end
+
+      def get_s8r_name type
+        raise NotImplementedError
+      end
+
+      def get_attribute_name attribute
+        raise NotImplementedError
+      end
+
+      def get_content_name type
+        raise NotImplementedError
+      end
     end
   end
 end

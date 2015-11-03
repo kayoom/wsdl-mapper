@@ -30,7 +30,37 @@ module S8rGenerationTests
 class NoteTypeSerializer
 
   def build(x, obj)
-    x.complex("noteType") do |x|
+    attributes = []
+    x.complex("noteType", attributes) do |x|
+    end
+  end
+end
+RUBY
+      end
+
+      def test_basic_type_with_attribute
+        schema = TestHelper.parse_schema 'basic_note_type_with_property_and_attribute.xsd'
+        context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+        generator = WsdlMapper::S8rGeneration::Generator.new context
+
+        result = generator.generate schema
+
+        expected_file = @tmp_path.join("note_type_serializer.rb")
+        assert File.exists? expected_file
+
+        generated_class = File.read expected_file
+        assert_equal <<RUBY, generated_class
+class NoteTypeSerializer
+
+  def build(x, obj)
+    attributes = [
+      ["uuid", obj.uuid, "token"]
+    ]
+    x.complex("noteType", attributes) do |x|
+      x.value_builtin("to", obj.to, "string")
+      x.value_builtin("from", obj.from, "string")
+      x.value_builtin("heading", obj.heading, "string")
+      x.value_builtin("body", obj.body, "string")
     end
   end
 end
@@ -75,7 +105,8 @@ RUBY
 class NoteTypeSerializer
 
   def build(x, obj)
-    x.complex("noteType") do |x|
+    attributes = []
+    x.complex("noteType", attributes) do |x|
       x.get("email_address_type_serializer").build(x, obj.to)
       x.get("email_address_type_serializer").build(x, obj.from)
       x.value_builtin("heading", obj.heading, "string")
@@ -116,7 +147,8 @@ RUBY
 class NoteTypeSerializer
 
   def build(x, obj)
-    x.complex("noteType") do |x|
+    attributes = []
+    x.complex("noteType", attributes) do |x|
       x.value_builtin("to", obj.to, "string")
       x.value_builtin("from", obj.from, "string")
       x.value_builtin("heading", obj.heading, "string")

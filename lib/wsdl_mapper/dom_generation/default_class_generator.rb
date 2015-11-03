@@ -14,6 +14,7 @@ module WsdlMapper
           write_requires f, get_requires(ttg.type, result.schema)
           open_modules f, modules
           open_class f, ttg
+          generate_content_attribute f, ttg if ttg.type.simple_content?
           generate_property_attributes f, ttg.type.each_property
           generate_attribute_attributes f, ttg.type.each_attribute
           generate_ctr f, ttg, result
@@ -25,6 +26,11 @@ module WsdlMapper
       end
 
       protected
+      def generate_content_attribute f, ttg
+        name = @generator.namer.get_content_name(ttg.type)
+        f.attr_accessor name.attr_name
+      end
+
       def generate_attribute_attributes f, attributes
         return unless attributes.any?
         attribute_names = attributes.map { |a| @generator.namer.get_attribute_name a }
@@ -41,7 +47,11 @@ module WsdlMapper
       end
 
       def generate_ctr f, ttg, result
-        @generator.ctr_generator.generate ttg, f, result
+        if ttg.type.simple_content?
+          @generator.ctr_generator.generate_simple ttg, f, result
+        else
+          @generator.ctr_generator.generate ttg, f, result
+        end
       end
 
       def get_requires type, schema
@@ -59,7 +69,7 @@ module WsdlMapper
       end
 
       def open_class f, ttg
-        if ttg.type.base && base_name = @generator.get_ruby_type_name(ttg.type.base)
+        if ttg.type.base && !ttg.type.simple_content? && base_name = @generator.get_ruby_type_name(ttg.type.base)
           f.begin_sub_class ttg.name.class_name, base_name
         else
           f.begin_class ttg.name.class_name

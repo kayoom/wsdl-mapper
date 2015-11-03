@@ -72,6 +72,7 @@ module WsdlMapper
         if WsdlMapper::Dom::BuiltinType.builtin? type.name
           type_mapping.ruby_type type.name
         elsif WsdlMapper::Dom::SoapEncodingType.builtin? type.name
+          "::Array"
         else
           namer.get_type_name(type).name
         end

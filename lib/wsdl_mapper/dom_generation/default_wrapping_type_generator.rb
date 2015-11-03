@@ -8,6 +8,7 @@ module WsdlMapper
         file_name = @generator.context.path_for ttg.name
 
         modules = ttg.name.parents.reverse
+        content_name = @generator.namer.get_content_name ttg.type
 
         File.open file_name, 'w' do |io|
           f = @generator.get_formatter io
@@ -15,8 +16,8 @@ module WsdlMapper
           write_requires f, get_requires(ttg.type, result.schema)
           open_modules f, modules
           open_class f, ttg
-          generate_accessor f, ttg
-          generate_ctr f, ttg, result
+          generate_accessor f, ttg, content_name
+          generate_ctr f, ttg, result, content_name
           close_class f, ttg
           close_modules f, modules
         end
@@ -40,12 +41,12 @@ module WsdlMapper
         f.end
       end
 
-      def generate_ctr f, ttg, result
-        @generator.ctr_generator.generate_wrapping ttg, f, result, '@value', 'value'
+      def generate_ctr f, ttg, result, content_name
+        @generator.ctr_generator.generate_wrapping ttg, f, result, content_name.var_name, content_name.attr_name
       end
 
-      def generate_accessor f, ttg
-        f.attr_accessor 'value'
+      def generate_accessor f, ttg, content_name
+        f.attr_accessor content_name.attr_name
       end
     end
   end

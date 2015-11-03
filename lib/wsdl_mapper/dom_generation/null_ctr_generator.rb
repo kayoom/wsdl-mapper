@@ -8,6 +8,9 @@ module WsdlMapper
       def generate ttg, f, result
       end
 
+      def generate_simple ttg, f, result
+      end
+
       def generate_wrapping ttg, f, result, var_name, par_name
       end
     end

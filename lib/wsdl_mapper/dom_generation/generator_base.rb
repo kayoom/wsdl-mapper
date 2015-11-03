@@ -12,6 +12,7 @@ module WsdlMapper
           @generator.type_mapping.requires(type_name).each do |req|
             requires << req
           end
+        elsif WsdlMapper::Dom::SoapEncodingType.builtin? type_name
         else
           type = schema.get_type type_name
           name = @generator.namer.get_type_name type

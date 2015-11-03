@@ -50,7 +50,7 @@ module WsdlMapper
         raise NotImplementedError
       end
 
-      def literal_array values
+      def literal_array name, values
         raise NotImplementedError
       end
 
