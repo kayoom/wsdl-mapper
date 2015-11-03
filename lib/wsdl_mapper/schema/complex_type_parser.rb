@@ -126,7 +126,7 @@ module WsdlMapper
         end
 
         type_name = parse_name node.attribute_with_ns(Wsdl::ARRAY_TYPE.name, Wsdl::ARRAY_TYPE.ns).value
-        type.soap_array_type = Name.new type_name.ns, type_name.name[0..-3]
+        type.soap_array_type_name = Name.new type_name.ns, type_name.name[0..-3]
       end
 
       def parse_extension node, type

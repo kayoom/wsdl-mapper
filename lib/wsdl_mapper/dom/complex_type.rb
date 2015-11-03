@@ -4,7 +4,7 @@ module WsdlMapper
   module Dom
     class ComplexType < WsdlMapper::Dom::TypeBase
       attr_reader :properties, :attributes
-      attr_accessor :base_type_name, :base, :simple_content, :soap_array, :soap_array_type
+      attr_accessor :base_type_name, :base, :simple_content, :soap_array, :soap_array_type, :soap_array_type_name
 
       def initialize name
         super

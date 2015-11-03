@@ -64,6 +64,7 @@ module WsdlMapper
       protected
       def link_types
         link_base_types
+        link_soap_array_types
         link_property_types
         link_attribute_types
       end
@@ -101,6 +102,18 @@ module WsdlMapper
           type.base = @schema.get_type type.base_type_name
           unless type.base
             log_msg type, :missing_base_type
+          end
+        end
+      end
+
+      def link_soap_array_types
+        @schema.each_type do |type|
+          next unless type.is_a? WsdlMapper::Dom::ComplexType
+          next unless type.soap_array?
+
+          type.soap_array_type = @schema.get_type type.soap_array_type_name
+          unless type.soap_array_type
+            log_msg type, :missing_soap_array_type
           end
         end
       end

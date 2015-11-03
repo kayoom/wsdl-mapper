@@ -132,6 +132,59 @@ end
 RUBY
       end
 
+      def test_soap_array
+        schema = TestHelper.parse_schema 'basic_note_type_with_soap_array.xsd'
+        context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+        generator = WsdlMapper::S8rGeneration::Generator.new context
+
+        result = generator.generate schema
+        expected_file = @tmp_path.join("attachments_array_serializer.rb")
+        assert File.exists? expected_file
+
+        generated_class = File.read expected_file
+        assert_equal <<RUBY, generated_class
+class AttachmentsArraySerializer
+
+  def build(x, obj)
+    attributes = [
+      [[x.soap_env, "arrayType"], "attachment[\#{obj.length}]", "string"]
+    ]
+    x.complex("attachmentsArray", attributes) do |x|
+      obj.each do |itm|
+        x.get("attachment_serializer").build(x, itm)
+      end
+    end
+  end
+end
+RUBY
+      end
+
+      def test_complex_type_with_simple_content
+        schema = TestHelper.parse_schema 'simple_money_type_with_currency_attribute.xsd'
+        context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+        generator = WsdlMapper::S8rGeneration::Generator.new context
+
+        result = generator.generate schema
+
+        expected_file = @tmp_path.join("money_type_serializer.rb")
+        assert File.exists? expected_file
+
+        generated_class = File.read expected_file
+        assert_equal <<RUBY, generated_class
+class MoneyTypeSerializer
+
+  def build(x, obj)
+    attributes = [
+      ["currency", obj.currency, "token"]
+    ]
+    x.complex("moneyType", attributes) do |x|
+      x.text_builtin(obj.content, "float")
+    end
+  end
+end
+RUBY
+      end
+
       def test_basic_type_with_properties
         schema = TestHelper.parse_schema 'basic_note_type.xsd'
         context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s

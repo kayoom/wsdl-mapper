@@ -29,7 +29,7 @@ module SchemaTests
         array_type = schema.types.values.last
 
         assert_equal Name.new(nil, 'attachmentsArray'), array_type.name
-        assert_equal Name.new(nil, 'attachment'), array_type.soap_array_type
+        assert_equal Name.new(nil, 'attachment'), array_type.soap_array_type_name
       end
 
       def test_example_2_complex_type_w_documentation

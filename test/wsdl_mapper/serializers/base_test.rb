@@ -120,6 +120,34 @@ XML
 XML
     end
 
+    def test_soap_array
+      base = Base.new resolver: nil
+
+      attributes = [
+        [[base.soap_enc, "arrayType"], "attachment[2]", "string"]
+      ]
+      base.complex "attachments", attributes do |x|
+        x.complex "attachment" do |x|
+          x.value_builtin :name, "This is an attachment", :string
+        end
+        x.complex "attachment" do |x|
+          x.value_builtin :name, "This is another attachment", :string
+        end
+      end
+
+      assert_equal <<XML, base.to_xml
+<?xml version="1.0" encoding="UTF-8"?>
+<attachments xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" soapenc:arrayType="attachment[2]">
+  <attachment>
+    <name>This is an attachment</name>
+  </attachment>
+  <attachment>
+    <name>This is another attachment</name>
+  </attachment>
+</attachments>
+XML
+    end
+
     def test_nil_attribute
       base = Base.new resolver: nil
 

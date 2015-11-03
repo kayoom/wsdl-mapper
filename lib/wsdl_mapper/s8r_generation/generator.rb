@@ -55,20 +55,55 @@ module WsdlMapper
         f.literal_array "attributes", collect_attributes(ttg)
         tag = tag_string_for_name ttg.type.name
         f.block "x.complex(#{tag}, attributes)", ["x"] do
-          ttg.type.each_property do |prop|
-            write_property_statement f, prop
+          if ttg.type.simple_content?
+            write_content_statement f, ttg
+          elsif ttg.type.soap_array?
+            write_soap_array_statements f, ttg
+          else
+            write_property_statements f, ttg
           end
         end
       end
 
-      def collect_attributes ttg
-        ttg.type.each_attribute.map do |attr|
-          name = attr.name
-          attr_name = @namer.get_attribute_name(attr).attr_name
-          type = attr.type.root.name.name
+      def write_content_statement f, ttg
+        content_name = @namer.get_content_name ttg.type
+        type = ttg.type.base.name.name
+        f.statement "x.text_builtin(obj.#{content_name.attr_name}, #{type.inspect})"
+      end
 
-          %<[#{name.inspect}, obj.#{attr_name}, #{type.inspect}]>
+      def write_property_statements f, ttg
+        ttg.type.each_property do |prop|
+          write_property_statement f, prop
         end
+      end
+
+      def collect_attributes ttg
+        if ttg.type.soap_array?
+          soap_array_attributes(ttg)
+        else
+          ttg.type.each_attribute.map do |attr|
+            name = attr.name
+            attr_name = @namer.get_attribute_name(attr).attr_name
+            type = attr.type.root.name.name
+
+            %<[#{name.inspect}, obj.#{attr_name}, #{type.inspect}]>
+          end
+        end
+      end
+
+      def write_soap_array_statements f, ttg
+        s8r_name = @namer.get_s8r_name ttg.type.soap_array_type
+        f.block "obj.each", ["itm"] do
+          f.statement "x.get(#{s8r_name.require_path.inspect}).build(x, itm)"
+        end
+      end
+
+      def soap_array_attributes ttg
+        # Use String#inspect to get the proper escaping, but cut off the last quotemark and append the array length
+        name = ttg.type.soap_array_type_name.name.inspect[0..-2] + "[\#{obj.length}]\""
+        [
+          %<[[x.soap_env, "arrayType"], #{name}, "string"]>
+        ]
       end
 
       def write_property_statement f, prop
