@@ -7,7 +7,7 @@ require 'wsdl_mapper/dom/simple_type'
 
 module WsdlMapper
   module S8rGeneration
-    class Generator
+    class S8rGenerator
       include WsdlMapper::Generation
 
       def initialize context, namer: WsdlMapper::Naming::DefaultNamer.new, formatter_factory: DefaultFormatter
