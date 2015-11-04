@@ -3,80 +3,67 @@ require 'nokogiri'
 require 'wsdl_mapper/type_mapping'
 require 'wsdl_mapper/dom/builtin_type'
 require 'wsdl_mapper/dom/soap_encoding_type'
+require 'wsdl_mapper/dom/namespaces'
 
 module WsdlMapper
   module Serializers
     class Serializer
-      def initialize resolver:
+      def initialize resolver:, namespaces: WsdlMapper::Dom::Namespaces.new, default_namespace: nil
         @doc = ::Nokogiri::XML::Document.new
         @doc.encoding = "UTF-8"
         @x = ::Nokogiri::XML::Builder.with @doc
         @tm = ::WsdlMapper::TypeMapping::DEFAULT
         @resolver = resolver
+        @namespaces = namespaces
+        if default_namespace
+          @namespaces.default = default_namespace
+        end
+        # @current_prefix = nil
       end
 
       def get serializer_name
         @resolver.resolve serializer_name
       end
 
-      def complex tag, attributes = []
-        @x.send tag, eval_attributes(attributes) do |x|
+      def complex ns, tag, attributes
+        @x.send expand_tag(ns, tag), eval_attributes(attributes) do |x|
           yield self
         end
-        add_namespaces
       end
 
-      def simple tag
-        @x.send tag do |x|
+      def simple ns, tag
+        @x.send expand_tag(ns, tag) do |x|
           yield self
         end
-        add_namespaces
       end
 
       def text_builtin value, type
         @x.text builtin_to_xml(type, value)
       end
 
-      def value_builtin tag, value, type
-        @x.send tag, builtin_to_xml(type, value)
-        add_namespaces
+      def value_builtin ns, tag, value, type
+        @x.send expand_tag(ns, tag), builtin_to_xml(type, value)
       end
 
       def to_xml
+        @namespaces.each do |(prefix, url)|
+          @doc.root.add_namespace prefix, url
+        end
         @doc.to_xml
       end
 
       def soap_enc
-        @soap_enc ||= begin
-          add_namespace :soapenc, ::WsdlMapper::Dom::SoapEncodingType::NAMESPACE
-          :soapenc
-        end
+        @soap_enc ||= ::WsdlMapper::Dom::SoapEncodingType::NAMESPACE
       end
 
       def xsd
-        @xsd ||= begin
-          add_namespace :xsd, ::WsdlMapper::Dom::BuiltinType::NAMESPACE
-          :xsd
-        end
-      end
-
-      def add_namespace prefix, url
-        if @doc.root
-          @doc.root.add_namespace prefix.to_s, url
-        else
-          @namespaces ||= {}
-          @namespaces[prefix] = url
-        end
-        self
+        @xsd ||= ::WsdlMapper::Dom::BuiltinType::NAMESPACE
       end
 
       protected
-      def add_namespaces
-        return unless @namespaces
-        @namespaces.each do |prefix, url|
-          @doc.root.add_namespace prefix.to_s, url
-        end
-        @namespaces = nil
+      def expand_tag ns, tag
+        prefix = @namespaces.prefix_for ns
+        prefix ? "#{prefix}:#{tag}" : tag
       end
 
       def builtin name
@@ -89,12 +76,14 @@ module WsdlMapper
 
       def eval_attributes attributes
         attributes.each_with_object({}) do |attr, hsh|
-          key = attr[0]
-          if key.is_a? ::Array
-            key = "#{key[0]}:#{key[1]}"
+          ns = attr[0]
+          key = attr[1]
+          if ns
+            prefix = @namespaces.prefix_for ns
+            key = "#{prefix}:#{key}"
           end
-          value = attr[1]
-          type = attr[2]
+          value = attr[2]
+          type = attr[3]
           next if value.nil?
 
           hsh[key] = @tm.to_xml builtin(type), value

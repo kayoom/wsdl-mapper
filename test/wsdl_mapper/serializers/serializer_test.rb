@@ -32,7 +32,7 @@ module SerializersTests
 
     class NoteTypeSerializer
       def build x, obj
-        x.complex 'noteType' do |x|
+        x.complex nil, 'noteType', [] do |x|
           obj.attachments.each do |attachment|
             x.get('serializers/attachment_serializer').build(x, attachment)
           end
@@ -42,7 +42,7 @@ module SerializersTests
 
     class AttachmentSerializer
       def build x, obj
-        x.simple 'attachment' do |x|
+        x.simple nil, 'attachment' do |x|
           x.text_builtin obj, "string"
         end
       end
@@ -66,16 +66,93 @@ module SerializersTests
 XML
     end
 
+    def test_simple_example_with_namespace
+      base = Serializer.new resolver: nil
+
+      base.complex 'urn:WsdlMapper', 'noteType', [] do |x|
+        x.value_builtin 'urn:WsdlMapper', :to, "to@example.org", :string
+        x.value_builtin 'urn:WsdlMapper', :from, "from@example.org", :string
+        x.value_builtin 'urn:WsdlMapper', :date, DateTime.new(2010, 11, 10, 9, 8, 7, "+02:00"), :dateTime
+        x.value_builtin 'urn:WsdlMapper', :valid_for, TimeDuration.new(days: 20), :gDay
+        x.value_builtin 'urn:WsdlMapper', :heading, "Important Note!", :string
+        x.value_builtin 'urn:WsdlMapper', :body, "Just kidding", :string
+      end
+
+      assert_equal <<XML, base.to_xml
+<?xml version="1.0" encoding="UTF-8"?>
+<ns0:noteType xmlns:ns0="urn:WsdlMapper">
+  <ns0:to>to@example.org</ns0:to>
+  <ns0:from>from@example.org</ns0:from>
+  <ns0:date>2010-11-10T09:08:07+02:00</ns0:date>
+  <ns0:valid_for>20</ns0:valid_for>
+  <ns0:heading>Important Note!</ns0:heading>
+  <ns0:body>Just kidding</ns0:body>
+</ns0:noteType>
+XML
+    end
+
+    def test_simple_example_with_namespace_and_default
+      base = Serializer.new resolver: nil, default_namespace: 'urn:WsdlMapper'
+
+      base.complex 'urn:WsdlMapper', 'noteType', [] do |x|
+        x.value_builtin 'urn:WsdlMapper', :to, "to@example.org", :string
+        x.value_builtin 'urn:WsdlMapper', :from, "from@example.org", :string
+        x.value_builtin 'urn:WsdlMapper', :date, DateTime.new(2010, 11, 10, 9, 8, 7, "+02:00"), :dateTime
+        x.value_builtin 'urn:WsdlMapper', :valid_for, TimeDuration.new(days: 20), :gDay
+        x.value_builtin 'urn:WsdlMapper', :heading, "Important Note!", :string
+        x.value_builtin 'urn:WsdlMapper', :body, "Just kidding", :string
+      end
+
+      assert_equal <<XML, base.to_xml
+<?xml version="1.0" encoding="UTF-8"?>
+<noteType xmlns="urn:WsdlMapper">
+  <to>to@example.org</to>
+  <from>from@example.org</from>
+  <date>2010-11-10T09:08:07+02:00</date>
+  <valid_for>20</valid_for>
+  <heading>Important Note!</heading>
+  <body>Just kidding</body>
+</noteType>
+XML
+    end
+
+    def test_simple_example_with_namespace_and_custom_prefix
+      namespaces = WsdlMapper::Dom::Namespaces.new
+      namespaces[:wm] = 'urn:WsdlMapper'
+      base = Serializer.new resolver: nil, namespaces: namespaces
+
+      base.complex 'urn:WsdlMapper', 'noteType', [] do |x|
+        x.value_builtin 'urn:WsdlMapper', :to, "to@example.org", :string
+        x.value_builtin 'urn:WsdlMapper', :from, "from@example.org", :string
+        x.value_builtin 'urn:WsdlMapper', :date, DateTime.new(2010, 11, 10, 9, 8, 7, "+02:00"), :dateTime
+        x.value_builtin 'urn:WsdlMapper', :valid_for, TimeDuration.new(days: 20), :gDay
+        x.value_builtin 'urn:WsdlMapper', :heading, "Important Note!", :string
+        x.value_builtin 'urn:WsdlMapper', :body, "Just kidding", :string
+      end
+
+      assert_equal <<XML, base.to_xml
+<?xml version="1.0" encoding="UTF-8"?>
+<wm:noteType xmlns:wm="urn:WsdlMapper">
+  <wm:to>to@example.org</wm:to>
+  <wm:from>from@example.org</wm:from>
+  <wm:date>2010-11-10T09:08:07+02:00</wm:date>
+  <wm:valid_for>20</wm:valid_for>
+  <wm:heading>Important Note!</wm:heading>
+  <wm:body>Just kidding</wm:body>
+</wm:noteType>
+XML
+    end
+
     def test_simple_example
       base = Serializer.new resolver: nil
 
-      base.complex 'noteType' do |x|
-        x.value_builtin :to, "to@example.org", :string
-        x.value_builtin :from, "from@example.org", :string
-        x.value_builtin :date, DateTime.new(2010, 11, 10, 9, 8, 7, "+02:00"), :dateTime
-        x.value_builtin :valid_for, TimeDuration.new(days: 20), :gDay
-        x.value_builtin :heading, "Important Note!", :string
-        x.value_builtin :body, "Just kidding", :string
+      base.complex nil, 'noteType', [] do |x|
+        x.value_builtin nil, :to, "to@example.org", :string
+        x.value_builtin nil, :from, "from@example.org", :string
+        x.value_builtin nil, :date, DateTime.new(2010, 11, 10, 9, 8, 7, "+02:00"), :dateTime
+        x.value_builtin nil, :valid_for, TimeDuration.new(days: 20), :gDay
+        x.value_builtin nil, :heading, "Important Note!", :string
+        x.value_builtin nil, :body, "Just kidding", :string
       end
 
       assert_equal <<XML, base.to_xml
@@ -91,18 +168,43 @@ XML
 XML
     end
 
+    def test_simple_example_with_default_namespace
+      base = Serializer.new resolver: nil, default_namespace: "http://example.org/schema"
+
+      base.complex nil, 'noteType', [] do |x|
+        x.value_builtin nil, :to, "to@example.org", :string
+        x.value_builtin nil, :from, "from@example.org", :string
+        x.value_builtin nil, :date, DateTime.new(2010, 11, 10, 9, 8, 7, "+02:00"), :dateTime
+        x.value_builtin nil, :valid_for, TimeDuration.new(days: 20), :gDay
+        x.value_builtin nil, :heading, "Important Note!", :string
+        x.value_builtin nil, :body, "Just kidding", :string
+      end
+
+      assert_equal <<XML, base.to_xml
+<?xml version="1.0" encoding="UTF-8"?>
+<noteType xmlns="http://example.org/schema">
+  <to>to@example.org</to>
+  <from>from@example.org</from>
+  <date>2010-11-10T09:08:07+02:00</date>
+  <valid_for>20</valid_for>
+  <heading>Important Note!</heading>
+  <body>Just kidding</body>
+</noteType>
+XML
+    end
+
     def test_nested_example
       base = Serializer.new resolver: nil
 
-      base.complex 'noteType' do |x|
-        x.complex 'noteHeader' do |x|
-          x.value_builtin :to, "to@example.org", :string
-          x.value_builtin :from, "from@example.org", :string
-          x.value_builtin :date, DateTime.new(2010, 11, 10, 9, 8, 7, "+02:00"), :dateTime
-          x.value_builtin :valid_for, TimeDuration.new(days: 20), :gDay
-          x.value_builtin :heading, "Important Note!", :string
+      base.complex nil, 'noteType', [] do |x|
+        x.complex nil, 'noteHeader', [] do |x|
+          x.value_builtin nil, :to, "to@example.org", :string
+          x.value_builtin nil, :from, "from@example.org", :string
+          x.value_builtin nil, :date, DateTime.new(2010, 11, 10, 9, 8, 7, "+02:00"), :dateTime
+          x.value_builtin nil, :valid_for, TimeDuration.new(days: 20), :gDay
+          x.value_builtin nil, :heading, "Important Note!", :string
         end
-        x.value_builtin :body, "Just kidding", :string
+        x.value_builtin nil, :body, "Just kidding", :string
       end
 
       assert_equal <<XML, base.to_xml
@@ -124,20 +226,20 @@ XML
       base = Serializer.new resolver: nil
 
       attributes = [
-        [[base.soap_enc, "arrayType"], "attachment[2]", "string"]
+        [base.soap_enc, "arrayType", "attachment[2]", "string"]
       ]
-      base.complex "attachments", attributes do |x|
-        x.complex "attachment" do |x|
-          x.value_builtin :name, "This is an attachment", :string
+      base.complex nil, "attachments", attributes do |x|
+        x.complex nil, "attachment", [] do |x|
+          x.value_builtin nil, :name, "This is an attachment", :string
         end
-        x.complex "attachment" do |x|
-          x.value_builtin :name, "This is another attachment", :string
+        x.complex nil, "attachment", [] do |x|
+          x.value_builtin nil, :name, "This is another attachment", :string
         end
       end
 
       assert_equal <<XML, base.to_xml
 <?xml version="1.0" encoding="UTF-8"?>
-<attachments xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" soapenc:arrayType="attachment[2]">
+<attachments xmlns:ns0="http://schemas.xmlsoap.org/soap/encoding/" ns0:arrayType="attachment[2]">
   <attachment>
     <name>This is an attachment</name>
   </attachment>
@@ -152,11 +254,11 @@ XML
       base = Serializer.new resolver: nil
 
       attributes = [
-        ["uuid", nil, "token"]
+        [nil, "uuid", nil, "token"]
       ]
-      base.complex 'noteType', attributes do |x|
-        x.value_builtin :to, "to@example.org", :string
-        x.value_builtin :from, "from@example.org", :string
+      base.complex nil, 'noteType', attributes do |x|
+        x.value_builtin nil, :to, "to@example.org", :string
+        x.value_builtin nil, :from, "from@example.org", :string
       end
 
       assert_equal <<XML, base.to_xml
@@ -172,11 +274,11 @@ XML
       base = Serializer.new resolver: nil
 
       attributes = [
-        ["uuid", "12345", "token"]
+        [nil, "uuid", "12345", "token"]
       ]
-      base.complex 'noteType', attributes do |x|
-        x.value_builtin :to, "to@example.org", :string
-        x.value_builtin :from, "from@example.org", :string
+      base.complex nil, 'noteType', attributes do |x|
+        x.value_builtin nil, :to, "to@example.org", :string
+        x.value_builtin nil, :from, "from@example.org", :string
       end
 
       assert_equal <<XML, base.to_xml

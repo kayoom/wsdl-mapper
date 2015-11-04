@@ -45,7 +45,7 @@ module WsdlMapper
       protected
       def def_simple_build_method_body f, ttg
         tag = tag_string_for_name ttg.type.name
-        f.block "x.simple(#{tag})", ["x"] do
+        f.block "x.simple(nil, #{tag})", ["x"] do
           root_type = ttg.type.root.name.name
           f.statement "x.text_builtin(obj, #{root_type.inspect})"
         end
@@ -54,7 +54,7 @@ module WsdlMapper
       def def_complex_build_method_body f, ttg
         f.literal_array "attributes", collect_attributes(ttg)
         tag = tag_string_for_name ttg.type.name
-        f.block "x.complex(#{tag}, attributes)", ["x"] do
+        f.block "x.complex(nil, #{tag}, attributes)", ["x"] do
           if ttg.type.simple_content?
             write_content_statement f, ttg
           elsif ttg.type.soap_array?
@@ -86,7 +86,7 @@ module WsdlMapper
             attr_name = @namer.get_attribute_name(attr).attr_name
             type = attr.type.root.name.name
 
-            %<[#{name.inspect}, obj.#{attr_name}, #{type.inspect}]>
+            %<[nil, #{name.inspect}, obj.#{attr_name}, #{type.inspect}]>
           end
         end
       end
@@ -102,7 +102,7 @@ module WsdlMapper
         # Use String#inspect to get the proper escaping, but cut off the last quotemark and append the array length
         name = ttg.type.soap_array_type_name.name.inspect[0..-2] + "[\#{obj.length}]\""
         [
-          %<[[x.soap_env, "arrayType"], #{name}, "string"]>
+          %<[x.soap_enc, "arrayType", #{name}, "string"]>
         ]
       end
 
@@ -133,16 +133,16 @@ module WsdlMapper
         tag = tag_string_for_name prop.name
         name = @namer.get_property_name(prop).attr_name
         type = prop.type_name.name.inspect
-        f.statement "x.value_builtin(#{tag}, obj.#{name}, #{type})"
+        f.statement "x.value_builtin(nil, #{tag}, obj.#{name}, #{type})"
       end
 
-      def def_build_method f, ttg
+      def def_build_method f, ttg, result
         f.begin_def "build", [:x, :obj]
         case ttg.type
         when ::WsdlMapper::Dom::ComplexType
-          def_complex_build_method_body f, ttg
+          def_complex_build_method_body f, ttg, result
         when ::WsdlMapper::Dom::SimpleType
-          def_simple_build_method_body f, ttg
+          def_simple_build_method_body f, ttg, result
         end
         f.end
       end
