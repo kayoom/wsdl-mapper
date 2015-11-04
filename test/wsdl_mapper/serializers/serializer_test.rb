@@ -1,11 +1,11 @@
 require 'test_helper'
 
 require 'wsdl_mapper/dom/name'
-require 'wsdl_mapper/serializers/base'
+require 'wsdl_mapper/serializers/serializer'
 require 'wsdl_mapper/core_ext/time_duration'
 
 module SerializersTests
-  class BaseTest < ::Minitest::Test
+  class SerializerTest < ::Minitest::Test
     include WsdlMapper::CoreExt
     include WsdlMapper::Serializers
     include WsdlMapper::Dom
@@ -52,7 +52,7 @@ module SerializersTests
       resolver = MockResolver.new
       resolver.serializers['serializers/attachment_serializer'] = AttachmentSerializer.new
 
-      base = Base.new resolver: resolver
+      base = Serializer.new resolver: resolver
 
       obj = NoteType.new([Attachment.new("This is an attachment.")])
 
@@ -67,7 +67,7 @@ XML
     end
 
     def test_simple_example
-      base = Base.new resolver: nil
+      base = Serializer.new resolver: nil
 
       base.complex 'noteType' do |x|
         x.value_builtin :to, "to@example.org", :string
@@ -92,7 +92,7 @@ XML
     end
 
     def test_nested_example
-      base = Base.new resolver: nil
+      base = Serializer.new resolver: nil
 
       base.complex 'noteType' do |x|
         x.complex 'noteHeader' do |x|
@@ -121,7 +121,7 @@ XML
     end
 
     def test_soap_array
-      base = Base.new resolver: nil
+      base = Serializer.new resolver: nil
 
       attributes = [
         [[base.soap_enc, "arrayType"], "attachment[2]", "string"]
@@ -149,7 +149,7 @@ XML
     end
 
     def test_nil_attribute
-      base = Base.new resolver: nil
+      base = Serializer.new resolver: nil
 
       attributes = [
         ["uuid", nil, "token"]
@@ -169,7 +169,7 @@ XML
     end
 
     def test_simple_example_with_attributes
-      base = Base.new resolver: nil
+      base = Serializer.new resolver: nil
 
       attributes = [
         ["uuid", "12345", "token"]

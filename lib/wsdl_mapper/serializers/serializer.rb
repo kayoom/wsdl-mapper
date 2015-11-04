@@ -6,7 +6,7 @@ require 'wsdl_mapper/dom/soap_encoding_type'
 
 module WsdlMapper
   module Serializers
-    class Base
+    class Serializer
       def initialize resolver:
         @doc = ::Nokogiri::XML::Document.new
         @doc.encoding = "UTF-8"

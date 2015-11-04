@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.org/schema">
+  <xs:complexType name="noteType">
+    <xs:sequence>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
