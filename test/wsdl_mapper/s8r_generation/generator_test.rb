@@ -116,31 +116,94 @@ end
 RUBY
     end
 
-#     def test_basic_type_with_import
-#       schema = TestHelper.parse_schema 'basic_note_type_with_import.xsd'
-#       context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
-#       generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
-#
-#       result = generator.generate schema
-#       expected_file = @tmp_path.join("note_type_serializer.rb")
-#       assert File.exists? expected_file
-#
-#       generated_class = File.read expected_file
-#       assert_equal <<RUBY, generated_class
-# class NoteTypeSerializer
-#
-#   def build(x, obj)
-#     attributes = []
-#     x.complex("http://example.org/notes", "noteType", attributes) do |x|
-#       x.value_builtin(nil, "to", obj.to, "string")
-#       x.value_builtin(nil, "from", obj.from, "string")
-#       x.value_builtin(nil, "heading", obj.heading, "string")
-#       x.value_builtin(nil, "body", obj.body, "string")
-#     end
-#   end
-# end
-# RUBY
-#     end
+    def test_basic_type_with_import
+      schema = TestHelper.parse_schema 'basic_note_type_with_import.xsd'
+      context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+      generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
+
+      result = generator.generate schema
+      expected_file = @tmp_path.join("note_type_serializer.rb")
+      assert File.exists? expected_file
+
+      generated_class = File.read expected_file
+      assert_equal <<RUBY, generated_class
+class NoteTypeSerializer
+
+  def build(x, obj)
+    attributes = []
+    x.complex("http://example.org/notes", "noteType", attributes) do |x|
+      x.value_builtin("http://example.org/notes", "to", obj.to, "string")
+      x.value_builtin("http://example.org/notes", "from", obj.from, "string")
+      x.value_builtin("http://example.org/notes", "heading", obj.heading, "string")
+      x.value_builtin("http://example.org/notes", "body", obj.body, "string")
+      obj.attachments.each do |itm|
+        x.get("attachment_type_serializer").build(x, itm)
+      end
+    end
+  end
+end
+RUBY
+    end
+
+    def test_basic_type_with_array
+      schema = TestHelper.parse_schema 'basic_note_type_with_attachments.xsd'
+      context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+      generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
+
+      result = generator.generate schema
+
+      expected_file = @tmp_path.join("note_type_serializer.rb")
+      assert File.exists? expected_file
+
+      generated_class = File.read expected_file
+      assert_equal <<RUBY, generated_class
+class NoteTypeSerializer
+
+  def build(x, obj)
+    attributes = []
+    x.complex(nil, "noteType", attributes) do |x|
+      x.value_builtin(nil, "to", obj.to, "string")
+      x.value_builtin(nil, "from", obj.from, "string")
+      x.value_builtin(nil, "heading", obj.heading, "string")
+      x.value_builtin(nil, "body", obj.body, "string")
+      obj.attachments.each do |itm|
+        x.value_builtin(nil, "attachments", itm, "string")
+      end
+    end
+  end
+end
+RUBY
+    end
+
+    def test_basic_type_with_array_simple_type
+      schema = TestHelper.parse_schema 'basic_note_type_with_attachments_simple_type.xsd'
+      context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+      generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
+
+      result = generator.generate schema
+
+      expected_file = @tmp_path.join("note_type_serializer.rb")
+      assert File.exists? expected_file
+
+      generated_class = File.read expected_file
+      assert_equal <<RUBY, generated_class
+class NoteTypeSerializer
+
+  def build(x, obj)
+    attributes = []
+    x.complex(nil, "noteType", attributes) do |x|
+      x.value_builtin(nil, "to", obj.to, "string")
+      x.value_builtin(nil, "from", obj.from, "string")
+      x.value_builtin(nil, "heading", obj.heading, "string")
+      x.value_builtin(nil, "body", obj.body, "string")
+      obj.attachments.each do |itm|
+        x.get("attachment_type_serializer").build(x, itm)
+      end
+    end
+  end
+end
+RUBY
+    end
 
     def test_basic_type_with_reference
       schema = TestHelper.parse_schema 'basic_note_type_with_referenced_simple_email_address_type.xsd'

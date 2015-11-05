@@ -75,7 +75,11 @@ module WsdlMapper
 
       def write_property_statements f, ttg
         ttg.type.each_property do |prop|
-          write_property_statement f, prop
+          if prop.array?
+            write_property_array_statement f, prop
+          else
+            write_property_statement f, prop
+          end
         end
       end
 
@@ -108,35 +112,47 @@ module WsdlMapper
         ]
       end
 
-      def write_property_statement f, prop
-        case prop.type
-        when ::WsdlMapper::Dom::BuiltinType
-          write_builtin_property_statement f, prop
-        when ::WsdlMapper::Dom::ComplexType
-          write_complex_property_statement f, prop
-        when ::WsdlMapper::Dom::SimpleType
-          write_simple_property_statement f, prop
+      def write_property_array_statement f, prop
+        name = "obj.#{@namer.get_property_name(prop).attr_name}.each"
+        f.block name, ["itm"] do
+          case prop.type
+          when ::WsdlMapper::Dom::BuiltinType
+            write_builtin_property_statement f, prop, "itm"
+          when ::WsdlMapper::Dom::ComplexType
+            write_complex_property_statement f, prop, "itm"
+          when ::WsdlMapper::Dom::SimpleType
+            write_simple_property_statement f, prop, "itm"
+          end
         end
       end
 
-      def write_simple_property_statement f, prop
-        s8r_name = @namer.get_s8r_name prop.type
-        name = @namer.get_property_name(prop).attr_name
-        f.statement "x.get(#{s8r_name.require_path.inspect}).build(x, obj.#{name})"
+      def write_property_statement f, prop
+        name = "obj.#{@namer.get_property_name(prop).attr_name}"
+        case prop.type
+        when ::WsdlMapper::Dom::BuiltinType
+          write_builtin_property_statement f, prop, name
+        when ::WsdlMapper::Dom::ComplexType
+          write_complex_property_statement f, prop, name
+        when ::WsdlMapper::Dom::SimpleType
+          write_simple_property_statement f, prop, name
+        end
       end
 
-      def write_complex_property_statement f, prop
+      def write_simple_property_statement f, prop, name
         s8r_name = @namer.get_s8r_name prop.type
-        name = @namer.get_property_name(prop).attr_name
-        f.statement "x.get(#{s8r_name.require_path.inspect}).build(x, obj.#{name})"
+        f.statement "x.get(#{s8r_name.require_path.inspect}).build(x, #{name})"
       end
 
-      def write_builtin_property_statement f, prop
+      def write_complex_property_statement f, prop, name
+        s8r_name = @namer.get_s8r_name prop.type
+        f.statement "x.get(#{s8r_name.require_path.inspect}).build(x, #{name})"
+      end
+
+      def write_builtin_property_statement f, prop, name
         tag = tag_string_for_name prop.name
-        name = @namer.get_property_name(prop).attr_name
         ns = prop.name.ns.inspect
         type = prop.type_name.name.inspect
-        f.statement "x.value_builtin(#{ns}, #{tag}, obj.#{name}, #{type})"
+        f.statement "x.value_builtin(#{ns}, #{tag}, #{name}, #{type})"
       end
 
       def def_build_method f, ttg
