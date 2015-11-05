@@ -14,7 +14,7 @@ module DomGenerationTests
       def teardown
         @tmp_path.unlink
       end
-
+      
       def test_empty_properties
         schema = TestHelper.parse_schema 'empty_note_type.xsd'
         context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
@@ -117,55 +117,6 @@ require "note_type"
 class FancyNoteType < ::NoteType
   attr_accessor :attachments
 end
-RUBY
-      end
-
-      def test_simple_class_generation_with_modules
-        schema = TestHelper.parse_schema 'basic_note_type.xsd'
-        context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
-        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context, namer: WsdlMapper::Naming::DefaultNamer.new(module_path: %w[NotesApi Types])
-
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("notes_api", "types", "note_type.rb")
-        assert File.exists? expected_file
-        assert_includes result.files, expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
-module NotesApi
-  module Types
-    class NoteType
-      attr_accessor :to
-      attr_accessor :from
-      attr_accessor :heading
-      attr_accessor :body
-    end
-  end
-end
-RUBY
-
-        root_node = result.module_tree.first
-        assert_equal "NotesApi", root_node.type_name.module_name
-        middle_node = root_node.children.first
-        assert_equal "Types", middle_node.type_name.module_name
-        type_node = middle_node.children.first
-        assert_equal "NoteType", type_node.type_name.class_name
-
-        expected_file = @tmp_path.join("notes_api", "types.rb")
-        assert File.exists? expected_file
-
-        generated_file = File.read expected_file
-        assert_equal <<RUBY, generated_file
-require "notes_api/types/note_type"
-RUBY
-
-        expected_file = @tmp_path.join("notes_api.rb")
-        assert File.exists? expected_file
-
-        generated_file = File.read expected_file
-        assert_equal <<RUBY, generated_file
-require "notes_api/types"
 RUBY
       end
 
