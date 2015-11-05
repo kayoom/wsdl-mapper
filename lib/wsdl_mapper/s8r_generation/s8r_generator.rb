@@ -139,13 +139,13 @@ module WsdlMapper
         f.statement "x.value_builtin(#{ns}, #{tag}, obj.#{name}, #{type})"
       end
 
-      def def_build_method f, ttg, result
+      def def_build_method f, ttg
         f.begin_def "build", [:x, :obj]
         case ttg.type
         when ::WsdlMapper::Dom::ComplexType
-          def_complex_build_method_body f, ttg, result
+          def_complex_build_method_body f, ttg
         when ::WsdlMapper::Dom::SimpleType
-          def_simple_build_method_body f, ttg, result
+          def_simple_build_method_body f, ttg
         end
         f.end
       end
