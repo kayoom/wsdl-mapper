@@ -326,5 +326,60 @@ class NoteTypeSerializer
 end
 RUBY
     end
+
+    def test_simple_s8r_generation_with_modules
+      schema = TestHelper.parse_schema 'basic_note_type.xsd'
+      context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+      generator = WsdlMapper::S8rGeneration::S8rGenerator.new context, namer: WsdlMapper::Naming::DefaultNamer.new(module_path: %w[NotesApi S8r])
+
+      result = generator.generate schema
+
+      expected_file = @tmp_path.join("notes_api", "s8r", "note_type_serializer.rb")
+      assert File.exists? expected_file
+      assert_includes result.files, expected_file
+
+      generated_class = File.read expected_file
+      assert_equal <<RUBY, generated_class
+module NotesApi
+  module S8r
+    class NoteTypeSerializer
+
+      def build(x, obj)
+        attributes = []
+        x.complex(nil, "noteType", attributes) do |x|
+          x.value_builtin(nil, "to", obj.to, "string")
+          x.value_builtin(nil, "from", obj.from, "string")
+          x.value_builtin(nil, "heading", obj.heading, "string")
+          x.value_builtin(nil, "body", obj.body, "string")
+        end
+      end
+    end
+  end
+end
+RUBY
+
+      root_node = result.module_tree.first
+      assert_equal "NotesApi", root_node.type_name.module_name
+      middle_node = root_node.children.first
+      assert_equal "S8r", middle_node.type_name.module_name
+      type_node = middle_node.children.first
+      assert_equal "NoteTypeSerializer", type_node.type_name.class_name
+
+      expected_file = @tmp_path.join("notes_api", "s8r.rb")
+      assert File.exists? expected_file
+
+      generated_file = File.read expected_file
+      assert_equal <<RUBY, generated_file
+require "notes_api/s8r/note_type_serializer"
+RUBY
+
+      expected_file = @tmp_path.join("notes_api.rb")
+      assert File.exists? expected_file
+
+      generated_file = File.read expected_file
+      assert_equal <<RUBY, generated_file
+require "notes_api/s8r"
+RUBY
+    end
   end
 end
