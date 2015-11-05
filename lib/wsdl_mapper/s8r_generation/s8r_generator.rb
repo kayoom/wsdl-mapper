@@ -44,8 +44,9 @@ module WsdlMapper
 
       protected
       def def_simple_build_method_body f, ttg
+        ns = ttg.type.name.ns.inspect
         tag = tag_string_for_name ttg.type.name
-        f.block "x.simple(nil, #{tag})", ["x"] do
+        f.block "x.simple(#{ns}, #{tag})", ["x"] do
           root_type = ttg.type.root.name.name
           f.statement "x.text_builtin(obj, #{root_type.inspect})"
         end
@@ -53,8 +54,9 @@ module WsdlMapper
 
       def def_complex_build_method_body f, ttg
         f.literal_array "attributes", collect_attributes(ttg)
+        ns = ttg.type.name.ns.inspect
         tag = tag_string_for_name ttg.type.name
-        f.block "x.complex(nil, #{tag}, attributes)", ["x"] do
+        f.block "x.complex(#{ns}, #{tag}, attributes)", ["x"] do
           if ttg.type.simple_content?
             write_content_statement f, ttg
           elsif ttg.type.soap_array?
@@ -132,8 +134,9 @@ module WsdlMapper
       def write_builtin_property_statement f, prop
         tag = tag_string_for_name prop.name
         name = @namer.get_property_name(prop).attr_name
+        ns = prop.name.ns.inspect
         type = prop.type_name.name.inspect
-        f.statement "x.value_builtin(nil, #{tag}, obj.#{name}, #{type})"
+        f.statement "x.value_builtin(#{ns}, #{tag}, obj.#{name}, #{type})"
       end
 
       def def_build_method f, ttg, result

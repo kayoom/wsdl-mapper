@@ -89,6 +89,29 @@ end
 RUBY
     end
 
+    def test_basic_type_with_target_namespace
+      schema = TestHelper.parse_schema 'empty_note_type_with_target_namespace.xsd'
+      context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+      generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
+
+      result = generator.generate schema
+
+      expected_file = @tmp_path.join("note_type_serializer.rb")
+      assert File.exists? expected_file
+
+      generated_class = File.read expected_file
+      assert_equal <<RUBY, generated_class
+class NoteTypeSerializer
+
+  def build(x, obj)
+    attributes = []
+    x.complex("http://example.org/schema", "noteType", attributes) do |x|
+    end
+  end
+end
+RUBY
+    end
+
     def test_basic_type_with_reference
       schema = TestHelper.parse_schema 'basic_note_type_with_referenced_simple_email_address_type.xsd'
       context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
