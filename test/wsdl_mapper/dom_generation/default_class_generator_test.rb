@@ -246,6 +246,33 @@ end
 RUBY
       end
 
+      def test_imported_schema
+        schema = TestHelper.parse_schema 'basic_note_type_with_import.xsd'
+        context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context
+
+        result = generator.generate schema
+
+        expected_file = @tmp_path.join("note_type.rb")
+        assert File.exists? expected_file
+
+        generated_class = File.read expected_file
+        assert_equal <<RUBY, generated_class
+require "attachment_type"
+
+class NoteType
+  attr_accessor :to
+  attr_accessor :from
+  attr_accessor :heading
+  attr_accessor :body
+  attr_accessor :attachments
+end
+RUBY
+
+        expected_file = @tmp_path.join("attachment_type.rb")
+        assert File.exists? expected_file
+      end
+
       def test_simple_class_generation_with_simple_types
         schema = TestHelper.parse_schema 'basic_note_type_with_referenced_simple_email_address_type.xsd'
         context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
