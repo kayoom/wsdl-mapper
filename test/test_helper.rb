@@ -11,6 +11,8 @@ require 'nokogiri'
 
 require 'byebug'
 
+require 'wsdl_mapper/schema/simple_import_resolver'
+
 module TestHelper
   extend self
 
@@ -23,8 +25,9 @@ module TestHelper
     Nokogiri::XML::Document.parse get_fixture name
   end
 
-  def parse_schema(name)
-    WsdlMapper::Schema::Parser.new.parse get_xml_doc name
+  def parse_schema(name, import_resolver: nil)
+    import_resolver ||= ::WsdlMapper::Schema::SimpleImportResolver.new File.join("test", "fixtures")
+    WsdlMapper::Schema::Parser.new(import_resolver: import_resolver).parse get_xml_doc name
   end
 
   class TmpPath

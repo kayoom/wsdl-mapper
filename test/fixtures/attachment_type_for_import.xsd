@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.org/attachments">
+  <xs:complexType name="attachmentType">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="content" type="xs:hexBinary"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

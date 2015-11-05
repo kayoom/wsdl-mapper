@@ -161,8 +161,7 @@ module WsdlMapper
 
       def parse_complex_type_property node, type, i, container
         name_str = node.attributes['name'].value
-        # TODO: targetns?
-        name = Name.new nil, name_str
+        name = parse_name name_str #Name.new @base.schema.target_namespace, name_str
 
         type_name_str = node.attributes['type'].value
         type_name = parse_name type_name_str

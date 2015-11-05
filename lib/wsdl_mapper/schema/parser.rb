@@ -16,9 +16,9 @@ module WsdlMapper
       class InvalidRootException < ParserException ; end
       class InvalidNsException < ParserException ; end
 
-      attr_reader :schema, :parsers, :namespaces, :target_namespace, :default_namespace, :log_msgs
+      attr_reader :schema, :parsers, :namespaces, :target_namespace, :default_namespace, :log_msgs, :import_resolver
 
-      def initialize
+      def initialize import_resolver: nil
         @base = self
         @schema = WsdlMapper::Dom::Schema.new
 
@@ -29,6 +29,7 @@ module WsdlMapper
           IMPORT        => ImportParser.new(self)
         }
 
+        @import_resolver = import_resolver
         @namespaces = {}
         @target_namespace = nil
         @default_namespace = nil
@@ -40,7 +41,7 @@ module WsdlMapper
 
         schema_node = get_schema_node doc
 
-        parse_target_namespace schema_node
+        parse_attributes schema_node
 
         each_element schema_node do |node|
           parse_node node
@@ -61,7 +62,31 @@ module WsdlMapper
         puts "\n\n"
       end
 
+      def dup
+        self.class.new import_resolver: @import_resolver
+      end
+
       protected
+      def parse_attributes schema_node
+        parse_target_namespace schema_node
+        parse_element_form_default schema_node
+        parse_attribute_form_default schema_node
+      end
+
+      def parse_attribute_form_default node
+        attr = node.attributes[ATTRIBUTE_FORM_DEFAULT]
+        if attr && attr.value == "qualified"
+          @schema.qualified_attributes = true
+        end
+      end
+
+      def parse_element_form_default node
+        attr = node.attributes[ELEMENT_FORM_DEFAULT]
+        if attr && attr.value == "qualified"
+          @schema.qualified_elements = true
+        end
+      end
+
       def link_types
         link_base_types
         link_soap_array_types

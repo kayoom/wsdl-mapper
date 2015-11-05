@@ -28,6 +28,9 @@ module WsdlMapper
       NS_DECL_PREFIX = 'xmlns'
       TARGET_NS = 'targetNamespace'
 
+      ELEMENT_FORM_DEFAULT = "elementFormDefault"
+      ATTRIBUTE_FORM_DEFAULT = "attributeFormDefault"
+
       DEFAULT_BOUNDS = {
         SEQUENCE  => Bounds.new(min: 1, max: 1),
         ALL       => Bounds.new(min: 0, max: 1)

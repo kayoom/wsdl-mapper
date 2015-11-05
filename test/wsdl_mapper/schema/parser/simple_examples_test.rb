@@ -157,22 +157,12 @@ module SchemaTests
         assert_equal 1, password_prop.bounds.max
       end
 
-      # def test_sandbox
-      #   doc = TestHelper.get_xml_doc 'ebaySvc.xsd'
-      #
-      #   names = []
-      #   doc.root.traverse do |node|
-      #     ns = node.namespace && node.namespace.href
-      #     name = Name.new ns, node.name
-      #
-      #     names << name
-      #   end
-      #
-      #   names.uniq!
-      #   names.sort_by! &:to_s
-      #
-      #   puts names
-      # end
+      def test_importing_schemas
+        schema = TestHelper.parse_schema 'basic_note_type_with_import.xsd'
+
+        assert_equal 1, schema.imports.count
+        assert_equal 2, schema.each_type.count
+      end
     end
   end
 end

@@ -159,7 +159,6 @@ module WsdlMapper
       end
 
       def tag_for_name name
-        # TODO: respect namespaces
         name.name
       end
 
