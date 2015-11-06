@@ -13,7 +13,7 @@ module WsdlMapper
       attr_accessor :default
 
       def set prefix, url
-        @namespaces[prefix.to_s] = url.to_s
+        @namespaces[prefix.to_s] = url
       end
       alias_method :[]=, :set
 

@@ -4,7 +4,8 @@ module WsdlMapper
       attr_reader :ns, :name
 
       def initialize ns, name
-        @ns, @name = ns, name.to_s
+        name = name.to_s unless name.is_a? String
+        @ns, @name = ns, name
       end
 
       def eql? other
