@@ -4,8 +4,8 @@ module WsdlMapper
       attr_reader :ns, :name
 
       def initialize ns, name
-        name = name.to_s unless name.is_a? String
         @ns, @name = ns, name
+        @hash = [ns, name].hash
       end
 
       def eql? other
@@ -17,11 +17,22 @@ module WsdlMapper
       end
 
       def hash
-        [ns, name].hash
+        @hash
       end
 
       def to_s
         "#{ns}##{name}"
+      end
+
+      def self.get ns, name
+        @cache ||= Hash.new do |h, k|
+          h[k] = Hash.new do |h2, k2|
+            h2[k2] = new k, k2
+          end
+        end
+
+        name = name.to_s unless name.is_a?(String)
+        @cache[ns][name]
       end
     end
   end

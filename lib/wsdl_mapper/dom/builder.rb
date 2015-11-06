@@ -47,7 +47,7 @@ module WsdlMapper
       end
 
       def build_name qname
-        Name.new qname.namespace, qname.name
+        Name.get qname.namespace, qname.name
       end
 
       def get_bounds xsd_element

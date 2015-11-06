@@ -17,7 +17,7 @@ module WsdlMapper
       end
 
       def build name
-        n = name.is_a?(WsdlMapper::Dom::Name) ? name : Name.new(namespace, name)
+        n = name.is_a?(WsdlMapper::Dom::Name) ? name : Name.get(namespace, name)
         new n
       end
 

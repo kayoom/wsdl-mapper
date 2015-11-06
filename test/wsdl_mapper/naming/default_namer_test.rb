@@ -40,7 +40,7 @@ module NamingTests
     end
 
     def test_simple_type_name
-      name = WsdlMapper::Dom::Name.new nil, 'noteType'
+      name = WsdlMapper::Dom::Name.get nil, 'noteType'
       type = TestType.new name
 
       namer = WsdlMapper::Naming::DefaultNamer.new
@@ -54,7 +54,7 @@ module NamingTests
     end
 
     def test_simple_type_name_with_module_path
-      name = WsdlMapper::Dom::Name.new nil, 'noteType'
+      name = WsdlMapper::Dom::Name.get nil, 'noteType'
       type = TestType.new name
 
       namer = WsdlMapper::Naming::DefaultNamer.new module_path: %w[NotesApi Types]
@@ -82,7 +82,7 @@ module NamingTests
     end
 
     def test_simple_property_name
-      name = WsdlMapper::Dom::Name.new nil, 'subject'
+      name = WsdlMapper::Dom::Name.get nil, 'subject'
       prop = TestProperty.new name
 
       namer = WsdlMapper::Naming::DefaultNamer.new

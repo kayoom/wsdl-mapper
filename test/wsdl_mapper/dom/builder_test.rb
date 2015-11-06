@@ -27,7 +27,7 @@ require 'test_helper'
 #       type = schema.types.values.first
 #
 #       assert_kind_of ComplexType, type
-#       assert_equal Name.new(nil, 'noteType'), type.name
+#       assert_equal Name.get(nil, 'noteType'), type.name
 #     end
 #
 #     def test_complex_type_properties

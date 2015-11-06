@@ -8,15 +8,15 @@ module DomTests
     include WsdlMapper::Dom
 
     def test_root_self
-      a = SimpleType.new Name.new(nil, 'a')
+      a = SimpleType.new Name.get(nil, 'a')
 
       assert_equal a, a.root
     end
 
     def test_root
-      a = SimpleType.new Name.new(nil, 'a')
-      b = SimpleType.new Name.new(nil, 'b')
-      c = SimpleType.new Name.new(nil, 'c')
+      a = SimpleType.new Name.get(nil, 'a')
+      b = SimpleType.new Name.get(nil, 'b')
+      c = SimpleType.new Name.get(nil, 'c')
       a.base = b
       b.base = c
 

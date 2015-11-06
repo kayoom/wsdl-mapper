@@ -12,8 +12,8 @@ module DomTests
 
     def test_invalid_root_of_simple_types
       schema = Schema.new
-      a = SimpleType.new Name.new(nil, 'a')
-      b = SimpleType.new Name.new(nil, 'b')
+      a = SimpleType.new Name.get(nil, 'a')
+      b = SimpleType.new Name.get(nil, 'b')
       a.base = b
       schema.add_type a
       schema.add_type b

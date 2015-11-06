@@ -26,7 +26,7 @@ module WsdlMapper
         ns = node.namespace ? node.namespace.href : nil
         name = node.name
 
-        Name.new ns, name
+        Name.get ns, name
       end
 
       include Xsd
@@ -123,7 +123,7 @@ module WsdlMapper
         name, ns_code = name_str.split(':').reverse
         ns = ns_code.nil? ? @base.target_namespace : @base.namespaces[ns_code.to_s]
 
-        Name.new ns, name
+        Name.get ns, name
       end
     end
   end

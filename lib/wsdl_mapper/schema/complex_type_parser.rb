@@ -61,7 +61,7 @@ module WsdlMapper
 
       def parse_attribute node, type
         name = node.attributes['name'].value
-        # TODO:  -> Name.new ?
+        # TODO:  -> Name.get ?
         type_name = parse_name node.attributes['type'].value
 
         attr = Attribute.new name, type_name,
@@ -126,7 +126,7 @@ module WsdlMapper
         end
 
         type_name = parse_name node.attribute_with_ns(Wsdl::ARRAY_TYPE.name, Wsdl::ARRAY_TYPE.ns).value
-        type.soap_array_type_name = Name.new type_name.ns, type_name.name[0..-3]
+        type.soap_array_type_name = Name.get type_name.ns, type_name.name[0..-3]
       end
 
       def parse_extension node, type
@@ -161,7 +161,7 @@ module WsdlMapper
 
       def parse_complex_type_property node, type, i, container
         name_str = node.attributes['name'].value
-        name = parse_name name_str #Name.new @base.schema.target_namespace, name_str
+        name = parse_name name_str #Name.get @base.schema.target_namespace, name_str
 
         type_name_str = node.attributes['type'].value
         type_name = parse_name type_name_str

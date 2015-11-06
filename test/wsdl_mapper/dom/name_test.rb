@@ -7,10 +7,10 @@ module DomTests
     include WsdlMapper::Dom
 
     def test_equality
-      name1 = Name.new 'foo', 'bar'
-      name2 = Name.new 'foo', 'baz'
-      name3 = Name.new nil, 'bar'
-      name4 = Name.new 'foo', 'bar'
+      name1 = Name.get 'foo', 'bar'
+      name2 = Name.get 'foo', 'baz'
+      name3 = Name.get nil, 'bar'
+      name4 = Name.get 'foo', 'bar'
 
       refute_equal name1, name2
       refute_equal name1, name3
@@ -18,8 +18,8 @@ module DomTests
     end
 
     def test_hash_key_equality
-      name1 = Name.new 'foo', 'bar'
-      name2 = Name.new 'foo', 'bar'
+      name1 = Name.get 'foo', 'bar'
+      name2 = Name.get 'foo', 'bar'
 
       hash = {
         name1 => 'bam'

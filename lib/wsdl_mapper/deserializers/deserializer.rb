@@ -3,6 +3,7 @@ require 'nokogiri'
 require 'wsdl_mapper/dom/name'
 require 'wsdl_mapper/dom/namespaces'
 require 'wsdl_mapper/type_mapping'
+require 'wsdl_mapper/dom/directory'
 
 module WsdlMapper
   module Deserializers
@@ -27,13 +28,33 @@ module WsdlMapper
         end
       end
 
+      class PropMapping < AttrMapping
+        def initialize *args, array: false
+          super(*args)
+          @array = array
+        end
+
+        def array?
+          !!@array
+        end
+
+        def set obj, value
+          if array?
+            obj.send setter, obj.send(getter) || []
+            obj.send(getter) << value
+          else
+            super
+          end
+        end
+      end
+
       class Mapping
         attr_reader :attributes, :properties
 
         def initialize cls, &block
           @cls = cls
-          @attributes = {}
-          @properties = {}
+          @attributes = ::WsdlMapper::Dom::Directory.new
+          @properties = ::WsdlMapper::Dom::Directory.new
           instance_exec &block
         end
 
@@ -41,8 +62,8 @@ module WsdlMapper
           @attributes[name] = AttrMapping.new(accessor, name, type)
         end
 
-        def register_prop accessor, name, type
-          @properties[name] = AttrMapping.new(accessor, name, type)
+        def register_prop accessor, name, type, array: false
+          @properties[name] = PropMapping.new(accessor, name, type, array: array)
         end
 
         def start base, frame
@@ -54,18 +75,30 @@ module WsdlMapper
           set_properties base, frame
         end
 
+        def get_type name
+          @properties[name].type_name
+        rescue NoMethodError
+          raise ArgumentError.new("Property #{name} not found in #{@cls} mapping.")
+        end
+
+        protected
         def set_properties base, frame
           frame.children.each do |child|
             name = child.name
             prop_mapping = properties[name]
-            ruby_value = base.to_ruby prop_mapping.type_name, child.text
-            prop_mapping.set frame.object, ruby_value
+
+            if WsdlMapper::Dom::BuiltinType.builtin? prop_mapping.type_name
+              ruby_value = base.to_ruby prop_mapping.type_name, child.text
+              prop_mapping.set frame.object, ruby_value
+            else
+              prop_mapping.set frame.object, child.object
+            end
           end
         end
 
         def set_attributes base, frame
           frame.attrs.each do |attr|
-            name = WsdlMapper::Dom::Name.new attr.uri, attr.localname
+            name = WsdlMapper::Dom::Name.get attr.uri, attr.localname
             attr_mapping = attributes[name]
             ruby_value = base.to_ruby attr_mapping.type_name, attr.value
             attr_mapping.set frame.object, ruby_value
@@ -74,28 +107,35 @@ module WsdlMapper
       end
 
       class Frame
-        attr_reader :name, :parent, :attrs, :base, :deserializer, :namespaces, :children
+        attr_reader :name, :parent, :attrs, :base, :mapping, :namespaces, :children
         attr_accessor :text, :object
 
         def initialize name, attrs, parent, namespaces, base
           @name = name
+          # TODO: xsi:type
+          @type_name = if parent
+            parent.mapping.get_type name
+          else
+            # root element -> (tag-)name == type name
+            name
+          end
           @parent = parent
           @attrs = attrs
           @namespaces = namespaces
           @base = base
-          @deserializer = @base.get name
+          @mapping = @base.get @type_name
           @children = []
         end
 
         def start
-          if @deserializer
-            @deserializer.start @base, self
+          if @mapping
+            @mapping.start @base, self
           end
         end
 
         def end
-          if @deserializer
-            @deserializer.end @base, self
+          if @mapping
+            @mapping.end @base, self
           end
         end
       end
@@ -111,7 +151,7 @@ module WsdlMapper
 
         def start_element_namespace name, attrs = [], prefix = nil, uri = nil, ns = []
           @buffer = ""
-          name = Name.new uri, name
+          name = Name.get uri, name
           namespaces = Namespaces.new
           ns.each do |namespace|
             namespaces.set *namespace
@@ -139,13 +179,13 @@ module WsdlMapper
         end
 
         def characters text
-          @buffer += text
+          @buffer << text
         end
       end
 
       def initialize
         @tm = ::WsdlMapper::TypeMapping::DEFAULT
-        @deserializers = {}
+        @mappings = ::WsdlMapper::Dom::Directory.new
       end
 
       def from_xml xml
@@ -155,12 +195,12 @@ module WsdlMapper
         doc.object
       end
 
-      def register name, deserializer
-        @deserializers[name] = deserializer
+      def register name, mapping
+        @mappings[name] = mapping
       end
 
-      def get name
-        @deserializers[name]
+      def get type_name
+        @mappings[type_name]
       end
 
       def to_ruby type, value

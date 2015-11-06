@@ -7,7 +7,7 @@ module WsdlMapper
 
       NS = 'http://schemas.xmlsoap.org/wsdl/'.freeze
 
-      ARRAY_TYPE = Name.new NS, 'arrayType'
+      ARRAY_TYPE = Name.get NS, 'arrayType'
     end
   end
 end

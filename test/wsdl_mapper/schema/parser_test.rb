@@ -27,7 +27,7 @@ module SchemaTests
       type = schema.types.values.first
 
       assert_kind_of ComplexType, type
-      assert_equal Name.new(nil, 'noteType'), type.name
+      assert_equal Name.get(nil, 'noteType'), type.name
 
       refute_nil type.documentation
     end
@@ -39,8 +39,8 @@ module SchemaTests
 
       array_type = schema.types.values.last
 
-      assert_equal Name.new(nil, 'attachmentsArray'), array_type.name
-      assert_equal Name.new(nil, 'attachment'), array_type.soap_array_type_name
+      assert_equal Name.get(nil, 'attachmentsArray'), array_type.name
+      assert_equal Name.get(nil, 'attachment'), array_type.soap_array_type_name
     end
 
     def test_example_2_complex_type_w_documentation
@@ -123,7 +123,7 @@ module SchemaTests
 
       assert_instance_of SimpleType, type
 
-      base_type = schema.get_type Name.new(Xsd::NS, 'token')
+      base_type = schema.get_type Name.get(Xsd::NS, 'token')
 
       assert_equal base_type, type.base
 
@@ -141,7 +141,7 @@ module SchemaTests
       assert_instance_of ComplexType, type
       assert type.simple_content?
 
-      base_type = schema.get_type Name.new(Xsd::NS, 'float')
+      base_type = schema.get_type Name.get(Xsd::NS, 'float')
 
       assert_equal base_type, type.base
 
@@ -183,8 +183,8 @@ module SchemaTests
       base_type = schema.types.values.first
       extended_type = schema.types.values.last
 
-      assert_equal Name.new(nil, 'noteType'), base_type.name
-      assert_equal Name.new(nil, 'fancyNoteType'), extended_type.name
+      assert_equal Name.get(nil, 'noteType'), base_type.name
+      assert_equal Name.get(nil, 'fancyNoteType'), extended_type.name
       assert_equal base_type, extended_type.base
 
       assert_equal 1, extended_type.properties.count
@@ -201,8 +201,8 @@ module SchemaTests
       base_type = schema.types.values.first
       extended_type = schema.types.values.last
 
-      assert_equal Name.new(ns, 'noteType'), base_type.name
-      assert_equal Name.new(ns, 'fancyNoteType'), extended_type.name
+      assert_equal Name.get(ns, 'noteType'), base_type.name
+      assert_equal Name.get(ns, 'fancyNoteType'), extended_type.name
       assert_equal base_type, extended_type.base
 
       assert_equal 1, extended_type.properties.count
