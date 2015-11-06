@@ -1,8 +1,10 @@
 require 'nokogiri'
 
+require 'wsdl_mapper/schema/abstract_resolver'
+
 module WsdlMapper
   module Schema
-    class SimpleImportResolver
+    class LocalFileResolver < AbstractResolver
       def initialize path
         @path = path
       end

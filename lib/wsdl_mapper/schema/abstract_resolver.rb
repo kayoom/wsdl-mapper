@@ -1,5 +1,5 @@
 module WsdlMapper
-  module Serializers
+  module Schema
     # @abstract
     class AbstractResolver
       def resolve name

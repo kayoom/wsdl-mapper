@@ -14,7 +14,7 @@ module DomGenerationTests
       def teardown
         @tmp_path.unlink
       end
-      
+
       def test_empty_properties
         schema = TestHelper.parse_schema 'empty_note_type.xsd'
         context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
