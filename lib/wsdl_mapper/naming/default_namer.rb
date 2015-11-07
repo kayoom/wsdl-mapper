@@ -29,7 +29,15 @@ module WsdlMapper
       # @return [TypeName]
       def get_type_name type
         type_name = TypeName.new get_class_name(type), get_class_module_path(type), get_class_file_name(type), get_class_file_path(type)
-        type_name.parent = make_parents @module_path
+        type_name.parent = make_parents get_class_module_path(type)
+        type_name
+      end
+
+      # @param [String] name
+      # @return [TypeName]
+      def get_support_name name
+        type_name = TypeName.new get_support_class_name(name), get_support_module_path(name), get_support_file_name(name), get_support_file_path(name)
+        type_name.parent = make_parents get_support_module_path(name)
         type_name
       end
 
@@ -37,7 +45,7 @@ module WsdlMapper
       # @return [TypeName]
       def get_s8r_name type
         type_name = TypeName.new get_s8r_class_name(type), get_s8r_module_path(type), get_s8r_file_name(type), get_s8r_file_path(type)
-        type_name.parent = make_parents @module_path
+        type_name.parent = make_parents get_s8r_module_path(type)
         type_name
       end
 
@@ -45,7 +53,7 @@ module WsdlMapper
       # @return [TypeName]
       def get_d10r_name type
         type_name = TypeName.new get_d10r_class_name(type), get_d10r_module_path(type), get_d10r_file_name(type), get_d10r_file_path(type)
-        type_name.parent = make_parents @module_path
+        type_name.parent = make_parents get_d10r_module_path(type)
         type_name
       end
 
@@ -108,6 +116,22 @@ module WsdlMapper
 
       def get_s8r_class_name type
         get_camelized_name(type.name.name) + "Serializer"
+      end
+
+      def get_support_class_name name
+        get_camelized_name name
+      end
+
+      def get_support_module_path name
+        @module_path
+      end
+
+      def get_support_file_path name
+        get_file_path get_support_module_path name
+      end
+
+      def get_support_file_name name
+        get_file_name name
       end
 
       def get_class_name type
