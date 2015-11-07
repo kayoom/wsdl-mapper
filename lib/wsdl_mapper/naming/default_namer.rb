@@ -2,10 +2,11 @@ require 'wsdl_mapper/naming/type_name'
 require 'wsdl_mapper/naming/property_name'
 require 'wsdl_mapper/naming/enumeration_value_name'
 require 'wsdl_mapper/naming/inflector'
+require 'wsdl_mapper/naming/abstract_namer'
 
 module WsdlMapper
   module Naming
-    class DefaultNamer
+    class DefaultNamer < AbstractNamer
       include Inflector
 
       def initialize module_path: [], content_attribute_name: 'content'

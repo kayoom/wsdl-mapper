@@ -23,6 +23,10 @@ module WsdlMapper
         raise NotImplementedError
       end
 
+      def get_d10r_name type
+        raise NotImplementedError
+      end
+
       def get_attribute_name attribute
         raise NotImplementedError
       end
