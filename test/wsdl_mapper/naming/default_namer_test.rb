@@ -53,6 +53,32 @@ module NamingTests
       assert_nil type_name.parent
     end
 
+    def test_simple_s8r_name_with_module_path
+      name = WsdlMapper::Dom::Name.get nil, 'noteType'
+      type = TestType.new name
+
+      namer = WsdlMapper::Naming::DefaultNamer.new module_path: %w[NotesApi Types]
+      type_name = namer.get_s8r_name type
+
+      assert_equal 'NoteTypeSerializer', type_name.class_name
+      assert_equal 'note_type_serializer.rb', type_name.file_name
+      assert_equal %w[NotesApi Types], type_name.module_path
+      assert_equal %w[notes_api types], type_name.file_path
+    end
+
+    def test_simple_d10r_name_with_module_path
+      name = WsdlMapper::Dom::Name.get nil, 'noteType'
+      type = TestType.new name
+
+      namer = WsdlMapper::Naming::DefaultNamer.new module_path: %w[NotesApi Types]
+      type_name = namer.get_d10r_name type
+
+      assert_equal 'NoteTypeDeserializer', type_name.class_name
+      assert_equal 'note_type_deserializer.rb', type_name.file_name
+      assert_equal %w[NotesApi Types], type_name.module_path
+      assert_equal %w[notes_api types], type_name.file_path
+    end
+
     def test_simple_type_name_with_module_path
       name = WsdlMapper::Dom::Name.get nil, 'noteType'
       type = TestType.new name

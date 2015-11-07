@@ -14,13 +14,19 @@ module WsdlMapper
       end
 
       def get_type_name type
-        type_name = TypeName.new get_class_name(type.name.name), @module_path, get_file_name(type.name.name), get_file_path(@module_path)
+        type_name = TypeName.new get_class_name(type), get_class_module_path(type), get_class_file_name(type), get_class_file_path(type)
         type_name.parent = make_parents @module_path
         type_name
       end
 
       def get_s8r_name type
-        type_name = TypeName.new get_s8r_class_name(type.name.name), @module_path, get_s8r_file_name(type.name.name), get_file_path(@module_path)
+        type_name = TypeName.new get_s8r_class_name(type), get_s8r_module_path(type), get_s8r_file_name(type), get_s8r_file_path(type)
+        type_name.parent = make_parents @module_path
+        type_name
+      end
+
+      def get_d10r_name type
+        type_name = TypeName.new get_d10r_class_name(type), get_d10r_module_path(type), get_d10r_file_name(type), get_d10r_file_path(type)
         type_name.parent = make_parents @module_path
         type_name
       end
@@ -42,6 +48,18 @@ module WsdlMapper
       end
 
       protected
+      def get_class_module_path type
+        @module_path
+      end
+      alias_method :get_s8r_module_path, :get_class_module_path
+      alias_method :get_d10r_module_path, :get_class_module_path
+
+      def get_class_file_path type
+        get_file_path get_class_module_path type
+      end
+      alias_method :get_s8r_file_path, :get_class_file_path
+      alias_method :get_d10r_file_path, :get_class_file_path
+
       def make_parents path
         return if path.empty?
         mod, path = path.last, path[0...-1]
@@ -50,12 +68,28 @@ module WsdlMapper
         type_name
       end
 
-      def get_s8r_file_name name
-        underscore(name) + "_serializer.rb"
+      def get_d10r_file_name type
+        underscore(type.name.name) + "_deserializer.rb"
       end
 
-      def get_s8r_class_name name
-        get_class_name(name) + "Serializer"
+      def get_d10r_class_name type
+        get_camelized_name(type.name.name) + "Deserializer"
+      end
+
+      def get_s8r_file_name type
+        underscore(type.name.name) + "_serializer.rb"
+      end
+
+      def get_s8r_class_name type
+        get_camelized_name(type.name.name) + "Serializer"
+      end
+
+      def get_class_name type
+        get_camelized_name type.name.name
+      end
+
+      def get_class_file_name type
+        get_file_name type.name.name
       end
 
       def get_constant_name name
@@ -74,7 +108,7 @@ module WsdlMapper
         "@#{get_accessor_name(name)}"
       end
 
-      def get_class_name name
+      def get_camelized_name name
         camelize name
       end
 
