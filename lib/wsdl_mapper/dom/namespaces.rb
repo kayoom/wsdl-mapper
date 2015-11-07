@@ -43,6 +43,14 @@ module WsdlMapper
 
         block_given? ? enum.each(&block) : enum
       end
+
+      def self.for hash
+        ns = new
+        hash.each do |prefix, url|
+          ns[prefix] = url
+        end
+        ns
+      end
     end
   end
 end

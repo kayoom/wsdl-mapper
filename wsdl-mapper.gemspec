@@ -29,6 +29,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'yard'
   spec.add_development_dependency 'redcarpet'
 
+  spec.add_development_dependency 'ruby-prof'
+
   spec.add_dependency "nokogiri"
   spec.add_dependency "thor"
 end
