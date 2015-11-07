@@ -1,7 +1,7 @@
 require 'test_helper'
 
 require 'wsdl_mapper/schema/parser'
-require 'wsdl_mapper/dom_generation/context'
+require 'wsdl_mapper/generation/context'
 require 'wsdl_mapper/s8r_generation/s8r_generator'
 
 module S8rGenerationTests
@@ -16,7 +16,7 @@ module S8rGenerationTests
 
     def test_basic_empty_type
       schema = TestHelper.parse_schema 'empty_note_type.xsd'
-      context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+      context = WsdlMapper::Generation::Context.new @tmp_path.to_s
       generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
 
       result = generator.generate schema
@@ -39,7 +39,7 @@ RUBY
 
     def test_basic_type_with_attribute
       schema = TestHelper.parse_schema 'basic_note_type_with_property_and_attribute.xsd'
-      context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+      context = WsdlMapper::Generation::Context.new @tmp_path.to_s
       generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
 
       result = generator.generate schema
@@ -68,7 +68,7 @@ RUBY
 
     def test_simple_type
       schema = TestHelper.parse_schema 'address_type_enumeration.xsd'
-      context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+      context = WsdlMapper::Generation::Context.new @tmp_path.to_s
       generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
 
       result = generator.generate schema
@@ -91,7 +91,7 @@ RUBY
 
     def test_basic_type_with_target_namespace
       schema = TestHelper.parse_schema 'basic_note_type_with_target_namespace.xsd'
-      context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+      context = WsdlMapper::Generation::Context.new @tmp_path.to_s
       generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
 
       result = generator.generate schema
@@ -118,7 +118,7 @@ RUBY
 
     def test_basic_type_with_import
       schema = TestHelper.parse_schema 'basic_note_type_with_import.xsd'
-      context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+      context = WsdlMapper::Generation::Context.new @tmp_path.to_s
       generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
 
       result = generator.generate schema
@@ -147,7 +147,7 @@ RUBY
 
     def test_basic_type_with_array
       schema = TestHelper.parse_schema 'basic_note_type_with_attachments.xsd'
-      context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+      context = WsdlMapper::Generation::Context.new @tmp_path.to_s
       generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
 
       result = generator.generate schema
@@ -177,7 +177,7 @@ RUBY
 
     def test_basic_type_with_array_simple_type
       schema = TestHelper.parse_schema 'basic_note_type_with_attachments_simple_type.xsd'
-      context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+      context = WsdlMapper::Generation::Context.new @tmp_path.to_s
       generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
 
       result = generator.generate schema
@@ -207,7 +207,7 @@ RUBY
 
     def test_basic_type_with_reference
       schema = TestHelper.parse_schema 'basic_note_type_with_referenced_simple_email_address_type.xsd'
-      context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+      context = WsdlMapper::Generation::Context.new @tmp_path.to_s
       generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
 
       result = generator.generate schema
@@ -249,7 +249,7 @@ RUBY
 
     def test_soap_array
       schema = TestHelper.parse_schema 'basic_note_type_with_soap_array.xsd'
-      context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+      context = WsdlMapper::Generation::Context.new @tmp_path.to_s
       generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
 
       result = generator.generate schema
@@ -276,7 +276,7 @@ RUBY
 
     def test_complex_type_with_simple_content
       schema = TestHelper.parse_schema 'simple_money_type_with_currency_attribute.xsd'
-      context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+      context = WsdlMapper::Generation::Context.new @tmp_path.to_s
       generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
 
       result = generator.generate schema
@@ -302,7 +302,7 @@ RUBY
 
     def test_basic_type_with_properties
       schema = TestHelper.parse_schema 'basic_note_type.xsd'
-      context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+      context = WsdlMapper::Generation::Context.new @tmp_path.to_s
       generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
 
       result = generator.generate schema
@@ -329,7 +329,7 @@ RUBY
 
     def test_simple_s8r_generation_with_modules
       schema = TestHelper.parse_schema 'basic_note_type.xsd'
-      context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+      context = WsdlMapper::Generation::Context.new @tmp_path.to_s
       generator = WsdlMapper::S8rGeneration::S8rGenerator.new context, namer: WsdlMapper::Naming::DefaultNamer.new(module_path: %w[NotesApi S8r])
 
       result = generator.generate schema

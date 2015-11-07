@@ -1,7 +1,7 @@
 require 'test_helper'
 
 require 'wsdl_mapper/schema/parser'
-require 'wsdl_mapper/dom_generation/context'
+require 'wsdl_mapper/generation/context'
 require 'wsdl_mapper/dom_generation/schema_generator'
 require 'wsdl_mapper/dom_generation/default_ctr_generator'
 
@@ -10,6 +10,7 @@ require 'wsdl_mapper/dom/property'
 module DomGenerationTests
   module GeneratorTests
     class DefaultCtrGeneratorTest < Minitest::Test
+      include WsdlMapper::Generation
       include WsdlMapper::DomGeneration
       include WsdlMapper::Dom
 
@@ -140,7 +141,7 @@ RUBY
 
       def test_complex_type_with_simple_content_generation
         schema = TestHelper.parse_schema 'simple_money_type_with_currency_attribute.xsd'
-        context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
         generator = WsdlMapper::DomGeneration::SchemaGenerator.new context, ctr_generator_factory: DefaultCtrGenerator
 
         result = generator.generate schema

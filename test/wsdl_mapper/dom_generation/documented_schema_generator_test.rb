@@ -1,12 +1,13 @@
 require 'test_helper'
 
 require 'wsdl_mapper/schema/parser'
-require 'wsdl_mapper/dom_generation/context'
+require 'wsdl_mapper/generation/context'
 require 'wsdl_mapper/dom_generation/documented_schema_generator'
 
 module DomGenerationTests
   module GeneratorTests
     class DocumentedSchemaGeneratorTest < Minitest::Test
+      include WsdlMapper::Generation
       include WsdlMapper::DomGeneration
 
       def setup

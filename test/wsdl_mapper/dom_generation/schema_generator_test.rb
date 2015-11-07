@@ -1,7 +1,7 @@
 require 'test_helper'
 
 require 'wsdl_mapper/schema/parser'
-require 'wsdl_mapper/dom_generation/context'
+require 'wsdl_mapper/generation/context'
 require 'wsdl_mapper/dom_generation/schema_generator'
 
 module DomGenerationTests
@@ -17,7 +17,7 @@ module DomGenerationTests
 
       def test_simple_class_generation_with_modules
         schema = TestHelper.parse_schema 'basic_note_type.xsd'
-        context = WsdlMapper::DomGeneration::Context.new @tmp_path.to_s
+        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
         generator = WsdlMapper::DomGeneration::SchemaGenerator.new context, namer: WsdlMapper::Naming::DefaultNamer.new(module_path: %w[NotesApi Types])
 
         result = generator.generate schema

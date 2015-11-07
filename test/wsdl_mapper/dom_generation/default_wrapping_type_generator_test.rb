@@ -1,13 +1,14 @@
 require 'test_helper'
 
 require 'wsdl_mapper/schema/parser'
-require 'wsdl_mapper/dom_generation/context'
+require 'wsdl_mapper/generation/context'
 require 'wsdl_mapper/dom_generation/schema_generator'
 require 'wsdl_mapper/dom_generation/default_ctr_generator'
 
 module DomGenerationTests
   module GeneratorTests
     class DefaultWrappingTypeGeneratorTest < Minitest::Test
+      include WsdlMapper::Generation
       include WsdlMapper::DomGeneration
 
       def setup

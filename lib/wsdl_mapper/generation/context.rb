@@ -1,5 +1,5 @@
 module WsdlMapper
-  module DomGeneration
+  module Generation
     class Context
       def initialize target_path
         @target_path = target_path
