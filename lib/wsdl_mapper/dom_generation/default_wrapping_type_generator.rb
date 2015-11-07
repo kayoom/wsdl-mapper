@@ -46,7 +46,7 @@ module WsdlMapper
       end
 
       def generate_accessor f, ttg, content_name
-        f.attr_accessor content_name.attr_name
+        f.attr_accessors content_name.attr_name
       end
     end
   end

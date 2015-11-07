@@ -26,11 +26,11 @@ module WsdlMapper
         raise NotImplementedError
       end
 
-      def require path
+      def requires path
         raise NotImplementedError
       end
 
-      def attr_accessor *attrs
+      def attr_accessors *attrs
         raise NotImplementedError
       end
 
@@ -54,7 +54,7 @@ module WsdlMapper
         raise NotImplementedError
       end
 
-      def assignment *assigns
+      def assignments *assigns
         raise NotImplementedError
       end
 

@@ -12,8 +12,8 @@ module WsdlMapper
         attrs = ttg.type.each_attribute
 
         f.begin_def 'initialize', get_prop_kw_args(props) + get_attr_kw_args(attrs)
-        f.assignment *get_prop_assigns(props)
-        f.assignment *get_attr_assigns(attrs)
+        f.assignments *get_prop_assigns(props)
+        f.assignments *get_attr_assigns(attrs)
         f.end
       end
 
@@ -22,14 +22,14 @@ module WsdlMapper
         content_name = @generator.namer.get_content_name ttg.type
 
         f.begin_def 'initialize', [content_name.attr_name] + get_attr_kw_args(attrs)
-        f.assignment [content_name.var_name, content_name.attr_name]
-        f.assignment *get_attr_assigns(attrs)
+        f.assignments [content_name.var_name, content_name.attr_name]
+        f.assignments *get_attr_assigns(attrs)
         f.end
       end
 
       def generate_wrapping ttg, f, result, var_name, par_name
         f.begin_def "initialize", [par_name]
-        f.assignment [var_name, par_name]
+        f.assignments [var_name, par_name]
         f.end
       end
 

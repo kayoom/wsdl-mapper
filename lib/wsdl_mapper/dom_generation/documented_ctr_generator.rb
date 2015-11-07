@@ -38,14 +38,14 @@ module WsdlMapper
         yard.params *attr_params
 
         f.begin_def 'initialize', get_prop_kw_args(props) + get_attr_kw_args(attrs)
-        f.assignment *get_prop_assigns(props)
-        f.assignment *get_attr_assigns(attrs)
+        f.assignments *get_prop_assigns(props)
+        f.assignments *get_attr_assigns(attrs)
         f.end
       end
 
       def generate_wrapping ttg, f, result, var_name, par_name
         f.begin_def "initialize", [par_name]
-        f.assignment [var_name, par_name]
+        f.assignments [var_name, par_name]
         f.end
       end
     end

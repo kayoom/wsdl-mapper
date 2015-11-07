@@ -28,14 +28,14 @@ module WsdlMapper
       protected
       def generate_content_attribute f, ttg
         name = @generator.namer.get_content_name(ttg.type)
-        f.attr_accessor name.attr_name
+        f.attr_accessors name.attr_name
       end
 
       def generate_attribute_attributes f, attributes
         return unless attributes.any?
         attribute_names = attributes.map { |a| @generator.namer.get_attribute_name a }
 
-        f.attr_accessor *attribute_names.map(&:attr_name)
+        f.attr_accessors *attribute_names.map(&:attr_name)
       end
 
       def generate_property_attributes f, properties
@@ -43,7 +43,7 @@ module WsdlMapper
         property_names = properties.map { |p| @generator.namer.get_property_name p }
 
         # TODO: readonly?
-        f.attr_accessor *property_names.map(&:attr_name)
+        f.attr_accessors *property_names.map(&:attr_name)
       end
 
       def generate_ctr f, ttg, result

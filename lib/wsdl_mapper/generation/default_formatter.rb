@@ -64,7 +64,7 @@ module WsdlMapper
         after_requires
       end
 
-      def attr_accessor *attrs
+      def attr_accessors *attrs
         return if attrs.empty?
         # TODO: check/escape
         attrs = attrs.map { |a| ":#{a}" }
@@ -111,7 +111,7 @@ module WsdlMapper
         statement "]"
       end
 
-      def assignment *assigns
+      def assignments *assigns
         assigns.each do |(var_name, value)|
           statement "#{var_name} = #{value}"
         end

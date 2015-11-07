@@ -35,7 +35,7 @@ module WsdlMapper
           yard.attribute! name.attr_name, type, p.documentation.default do
             yard.tag :xml_name, p.name.name
           end
-          f.attr_accessor name.attr_name
+          f.attr_accessors name.attr_name
         end
       end
 
@@ -50,7 +50,7 @@ module WsdlMapper
           yard.attribute! name.attr_name, type, a.documentation.default do
             yard.tag :xml_name, a.name
           end
-          f.attr_accessor name.attr_name
+          f.attr_accessors name.attr_name
         end
       end
     end
