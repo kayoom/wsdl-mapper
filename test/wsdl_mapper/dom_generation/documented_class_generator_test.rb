@@ -7,30 +7,19 @@ require 'wsdl_mapper/dom_generation/documented_class_generator'
 
 module DomGenerationTests
   module GeneratorTests
-    class DocumentedClassGeneratorTest < Minitest::Test
-      include WsdlMapper::Generation
+    class DocumentedClassGeneratorTest < GenerationTestCase
       include WsdlMapper::DomGeneration
 
-      def setup
-        @tmp_path = TestHelper.get_tmp_path
-      end
-
-      def teardown
-        @tmp_path.unlink
+      def generate name
+        schema = TestHelper.parse_schema name        
+        generator = SchemaGenerator.new context, class_generator_factory: DocumentedClassGenerator
+        generator.generate schema
       end
 
       def test_class_documentation
-        schema = TestHelper.parse_schema 'empty_note_type_with_multiline_documentation.xsd'
-        context = Context.new @tmp_path.to_s
-        generator = SchemaGenerator.new context, class_generator_factory: DocumentedClassGenerator
+        generate 'empty_note_type_with_multiline_documentation.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("note_type.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "note_type.rb", <<RUBY
 # This is some documentation for noteType.
 # With multiple lines.
 #
@@ -41,17 +30,9 @@ RUBY
       end
 
       def test_class_documentation_with_namespace
-        schema = TestHelper.parse_schema 'empty_note_with_documentaion_and_target_namespace.xsd'
-        context = Context.new @tmp_path.to_s
-        generator = SchemaGenerator.new context, class_generator_factory: DocumentedClassGenerator
+        generate 'empty_note_with_documentaion_and_target_namespace.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("note_type.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "note_type.rb", <<RUBY
 # This is some documentation for noteType.
 #
 # @xml_name noteType
@@ -62,17 +43,9 @@ RUBY
       end
 
       def test_property_documentation_with_array
-        schema = TestHelper.parse_schema 'basic_note_type_with_attachments.xsd'
-        context = Context.new @tmp_path.to_s
-        generator = SchemaGenerator.new context, class_generator_factory: DocumentedClassGenerator
+        generate 'basic_note_type_with_attachments.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("note_type.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "note_type.rb", <<RUBY
 # @xml_name noteType
 class NoteType
   # @!attribute to
@@ -104,17 +77,9 @@ RUBY
       end
 
       def test_property_documentation
-        schema = TestHelper.parse_schema 'basic_note_type_with_property_and_attribute_documentation.xsd'
-        context = Context.new @tmp_path.to_s
-        generator = SchemaGenerator.new context, class_generator_factory: DocumentedClassGenerator
+        generate 'basic_note_type_with_property_and_attribute_documentation.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("note_type.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "note_type.rb", <<RUBY
 # @xml_name noteType
 class NoteType
   # @!attribute to
@@ -149,17 +114,9 @@ RUBY
       end
 
       def test_property_documentation_with_boolean
-        schema = TestHelper.parse_schema 'basic_note_type_with_boolean_property.xsd'
-        context = Context.new @tmp_path.to_s
-        generator = SchemaGenerator.new context, class_generator_factory: DocumentedClassGenerator
+        generate 'basic_note_type_with_boolean_property.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("note_type.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "note_type.rb", <<RUBY
 # @xml_name noteType
 class NoteType
   # @!attribute to

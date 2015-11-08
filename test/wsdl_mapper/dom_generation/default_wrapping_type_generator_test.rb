@@ -7,32 +7,21 @@ require 'wsdl_mapper/dom_generation/default_ctr_generator'
 
 module DomGenerationTests
   module GeneratorTests
-    class DefaultWrappingTypeGeneratorTest < Minitest::Test
-      include WsdlMapper::Generation
+    class DefaultWrappingTypeGeneratorTest < GenerationTestCase
       include WsdlMapper::DomGeneration
 
-      def setup
-        @tmp_path = TestHelper.get_tmp_path
-      end
-
-      def teardown
-        @tmp_path.unlink
+      def generate name
+        schema = TestHelper.parse_schema name        
+        generator = SchemaGenerator.new context
+        generator.generate schema
       end
 
       # TODO: complex type with simple content!
 
       def test_generation
-        schema = TestHelper.parse_schema 'simple_email_address_type.xsd'
-        context = Context.new @tmp_path.to_s
-        generator = SchemaGenerator.new context
+        generate 'simple_email_address_type.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("email_address_type.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "email_address_type.rb", <<RUBY
 class EmailAddressType
   attr_accessor :content
 end

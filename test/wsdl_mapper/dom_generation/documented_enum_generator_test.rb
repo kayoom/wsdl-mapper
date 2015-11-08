@@ -7,30 +7,19 @@ require 'wsdl_mapper/dom_generation/documented_enum_generator'
 
 module DomGenerationTests
   module GeneratorTests
-    class DocumentedEnumGeneratorTest < Minitest::Test
-      include WsdlMapper::Generation
+    class DocumentedEnumGeneratorTest < GenerationTestCase
       include WsdlMapper::DomGeneration
-
-      def setup
-        @tmp_path = TestHelper.get_tmp_path
-      end
-
-      def teardown
-        @tmp_path.unlink
+      
+      def generate name
+        schema = TestHelper.parse_schema name
+        generator = SchemaGenerator.new context, enum_generator_factory: DocumentedEnumGenerator
+        generator.generate schema
       end
 
       def test_class_documentation
-        schema = TestHelper.parse_schema 'address_type_enumeration_with_documentation.xsd'
-        context = Context.new @tmp_path.to_s
-        generator = SchemaGenerator.new context, enum_generator_factory: DocumentedEnumGenerator
+        generate 'address_type_enumeration_with_documentation.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("address_type.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "address_type.rb", <<RUBY
 # This is some documentation for addressType.
 #
 # @xml_name addressType
@@ -50,17 +39,9 @@ RUBY
       end
 
       def test_value_documentation
-        schema = TestHelper.parse_schema 'address_type_enumeration_with_value_documentation.xsd'
-        context = Context.new @tmp_path.to_s
-        generator = SchemaGenerator.new context, enum_generator_factory: DocumentedEnumGenerator
+        generate 'address_type_enumeration_with_value_documentation.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("address_type.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "address_type.rb", <<RUBY
 # @xml_name addressType
 class AddressType < ::String
   # This is some documentation for ship.

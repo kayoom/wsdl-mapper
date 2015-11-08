@@ -5,27 +5,17 @@ require 'wsdl_mapper/generation/context'
 require 'wsdl_mapper/s8r_generation/s8r_generator'
 
 module S8rGenerationTests
-  class S8rGeneratorTests < ::Minitest::Test
-    def setup
-      @tmp_path = TestHelper.get_tmp_path
-    end
-
-    def teardown
-      @tmp_path.unlink
+  class S8rGeneratorTests < GenerationTestCase
+    def generate name
+      schema = get_schema name
+      generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
+      generator.generate schema
     end
 
     def test_basic_empty_type
-      schema = TestHelper.parse_schema 'empty_note_type.xsd'
-      context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-      generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
+      generate 'empty_note_type.xsd'
 
-      result = generator.generate schema
-
-      expected_file = @tmp_path.join("note_type_serializer.rb")
-      assert File.exists? expected_file
-
-      generated_class = File.read expected_file
-      assert_equal <<RUBY, generated_class
+      assert_file_is "note_type_serializer.rb", <<RUBY
 class NoteTypeSerializer
 
   def build(x, obj)
@@ -38,17 +28,9 @@ RUBY
     end
 
     def test_basic_type_with_attribute
-      schema = TestHelper.parse_schema 'basic_note_type_with_property_and_attribute.xsd'
-      context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-      generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
+      generate 'basic_note_type_with_property_and_attribute.xsd'
 
-      result = generator.generate schema
-
-      expected_file = @tmp_path.join("note_type_serializer.rb")
-      assert File.exists? expected_file
-
-      generated_class = File.read expected_file
-      assert_equal <<RUBY, generated_class
+      assert_file_is "note_type_serializer.rb", <<RUBY
 class NoteTypeSerializer
 
   def build(x, obj)
@@ -67,17 +49,9 @@ RUBY
     end
 
     def test_simple_type
-      schema = TestHelper.parse_schema 'address_type_enumeration.xsd'
-      context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-      generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
+      generate 'address_type_enumeration.xsd'
 
-      result = generator.generate schema
-
-      expected_file = @tmp_path.join("address_type_serializer.rb")
-      assert File.exists? expected_file
-
-      generated_class = File.read expected_file
-      assert_equal <<RUBY, generated_class
+      assert_file_is "address_type_serializer.rb", <<RUBY
 class AddressTypeSerializer
 
   def build(x, obj)
@@ -90,17 +64,9 @@ RUBY
     end
 
     def test_basic_type_with_target_namespace
-      schema = TestHelper.parse_schema 'basic_note_type_with_target_namespace.xsd'
-      context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-      generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
+      generate 'basic_note_type_with_target_namespace.xsd'
 
-      result = generator.generate schema
-
-      expected_file = @tmp_path.join("note_type_serializer.rb")
-      assert File.exists? expected_file
-
-      generated_class = File.read expected_file
-      assert_equal <<RUBY, generated_class
+      assert_file_is "note_type_serializer.rb", <<RUBY
 class NoteTypeSerializer
 
   def build(x, obj)
@@ -117,16 +83,8 @@ RUBY
     end
 
     def test_basic_type_with_import
-      schema = TestHelper.parse_schema 'basic_note_type_with_import.xsd'
-      context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-      generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
-
-      result = generator.generate schema
-      expected_file = @tmp_path.join("note_type_serializer.rb")
-      assert File.exists? expected_file
-
-      generated_class = File.read expected_file
-      assert_equal <<RUBY, generated_class
+      generate 'basic_note_type_with_import.xsd'
+      assert_file_is "note_type_serializer.rb", <<RUBY
 class NoteTypeSerializer
 
   def build(x, obj)
@@ -146,17 +104,9 @@ RUBY
     end
 
     def test_basic_type_with_array
-      schema = TestHelper.parse_schema 'basic_note_type_with_attachments.xsd'
-      context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-      generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
+      generate 'basic_note_type_with_attachments.xsd'
 
-      result = generator.generate schema
-
-      expected_file = @tmp_path.join("note_type_serializer.rb")
-      assert File.exists? expected_file
-
-      generated_class = File.read expected_file
-      assert_equal <<RUBY, generated_class
+      assert_file_is "note_type_serializer.rb", <<RUBY
 class NoteTypeSerializer
 
   def build(x, obj)
@@ -176,17 +126,9 @@ RUBY
     end
 
     def test_basic_type_with_array_simple_type
-      schema = TestHelper.parse_schema 'basic_note_type_with_attachments_simple_type.xsd'
-      context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-      generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
+      generate 'basic_note_type_with_attachments_simple_type.xsd'
 
-      result = generator.generate schema
-
-      expected_file = @tmp_path.join("note_type_serializer.rb")
-      assert File.exists? expected_file
-
-      generated_class = File.read expected_file
-      assert_equal <<RUBY, generated_class
+      assert_file_is "note_type_serializer.rb", <<RUBY
 class NoteTypeSerializer
 
   def build(x, obj)
@@ -206,17 +148,9 @@ RUBY
     end
 
     def test_basic_type_with_reference
-      schema = TestHelper.parse_schema 'basic_note_type_with_referenced_simple_email_address_type.xsd'
-      context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-      generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
+      generate 'basic_note_type_with_referenced_simple_email_address_type.xsd'
 
-      result = generator.generate schema
-
-      expected_file = @tmp_path.join("note_type_serializer.rb")
-      assert File.exists? expected_file
-
-      generated_class = File.read expected_file
-      assert_equal <<RUBY, generated_class
+      assert_file_is "note_type_serializer.rb", <<RUBY
 class NoteTypeSerializer
 
   def build(x, obj)
@@ -231,11 +165,7 @@ class NoteTypeSerializer
 end
 RUBY
 
-      expected_file = @tmp_path.join("email_address_type_serializer.rb")
-      assert File.exists? expected_file
-
-      generated_class = File.read expected_file
-      assert_equal <<RUBY, generated_class
+      assert_file_is "email_address_type_serializer.rb", <<RUBY
 class EmailAddressTypeSerializer
 
   def build(x, obj)
@@ -248,16 +178,8 @@ RUBY
     end
 
     def test_soap_array
-      schema = TestHelper.parse_schema 'basic_note_type_with_soap_array.xsd'
-      context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-      generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
-
-      result = generator.generate schema
-      expected_file = @tmp_path.join("attachments_array_serializer.rb")
-      assert File.exists? expected_file
-
-      generated_class = File.read expected_file
-      assert_equal <<RUBY, generated_class
+      generate 'basic_note_type_with_soap_array.xsd'
+      assert_file_is "attachments_array_serializer.rb", <<RUBY
 class AttachmentsArraySerializer
 
   def build(x, obj)
@@ -275,17 +197,9 @@ RUBY
     end
 
     def test_complex_type_with_simple_content
-      schema = TestHelper.parse_schema 'simple_money_type_with_currency_attribute.xsd'
-      context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-      generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
+      generate 'simple_money_type_with_currency_attribute.xsd'
 
-      result = generator.generate schema
-
-      expected_file = @tmp_path.join("money_type_serializer.rb")
-      assert File.exists? expected_file
-
-      generated_class = File.read expected_file
-      assert_equal <<RUBY, generated_class
+      assert_file_is "money_type_serializer.rb", <<RUBY
 class MoneyTypeSerializer
 
   def build(x, obj)
@@ -301,17 +215,9 @@ RUBY
     end
 
     def test_basic_type_with_properties
-      schema = TestHelper.parse_schema 'basic_note_type.xsd'
-      context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-      generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
+      generate 'basic_note_type.xsd'
 
-      result = generator.generate schema
-
-      expected_file = @tmp_path.join("note_type_serializer.rb")
-      assert File.exists? expected_file
-
-      generated_class = File.read expected_file
-      assert_equal <<RUBY, generated_class
+      assert_file_is "note_type_serializer.rb", <<RUBY
 class NoteTypeSerializer
 
   def build(x, obj)

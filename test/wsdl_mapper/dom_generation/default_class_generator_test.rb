@@ -6,44 +6,26 @@ require 'wsdl_mapper/dom_generation/schema_generator'
 
 module DomGenerationTests
   module GeneratorTests
-    class DefaultClassGeneratorTest < Minitest::Test
-      def setup
-        @tmp_path = TestHelper.get_tmp_path
-      end
-
-      def teardown
-        @tmp_path.unlink
+    class DefaultClassGeneratorTest < GenerationTestCase
+      def generate name
+        schema = get_schema name
+        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context
+        generator.generate schema
       end
 
       def test_empty_properties
-        schema = TestHelper.parse_schema 'empty_note_type.xsd'
-        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context
+        generate 'empty_note_type.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("note_type.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "note_type.rb", <<RUBY
 class NoteType
 end
 RUBY
       end
 
       def test_simple_class_generation
-        schema = TestHelper.parse_schema 'basic_note_type.xsd'
-        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context
+        generate 'basic_note_type.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("note_type.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "note_type.rb", <<RUBY
 class NoteType
   attr_accessor :to
   attr_accessor :from
@@ -54,17 +36,9 @@ RUBY
       end
 
       def test_simple_class_generation_with_attributes
-        schema = TestHelper.parse_schema 'basic_note_type_with_attribute.xsd'
-        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context
+        generate 'basic_note_type_with_attribute.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("note_type.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "note_type.rb", <<RUBY
 class NoteType
   attr_accessor :to
   attr_accessor :from
@@ -77,17 +51,9 @@ RUBY
       end
 
       def test_simple_class_generation_with_requires
-        schema = TestHelper.parse_schema 'basic_note_type_with_date.xsd'
-        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context
+        generate 'basic_note_type_with_date.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("note_type.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "note_type.rb", <<RUBY
 require "date"
 
 class NoteType
@@ -101,17 +67,9 @@ RUBY
       end
 
       def test_sub_class_generation
-        schema = TestHelper.parse_schema 'basic_note_type_and_fancy_note_type_extension.xsd'
-        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context
+        generate 'basic_note_type_and_fancy_note_type_extension.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("fancy_note_type.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "fancy_note_type.rb", <<RUBY
 require "note_type"
 
 class FancyNoteType < ::NoteType
@@ -126,10 +84,7 @@ RUBY
         generator = WsdlMapper::DomGeneration::SchemaGenerator.new context, namer: WsdlMapper::Naming::DefaultNamer.new(module_path: %w[OrdersApi Types])
 
         result = generator.generate schema
-        expected_file = @tmp_path.join("orders_api", "types", "order_type.rb")
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "orders_api", "types", "order_type.rb", <<RUBY
 require "orders_api/types/address_type"
 
 module OrdersApi
@@ -145,17 +100,9 @@ RUBY
       end
 
       def test_soap_array_generation
-        schema = TestHelper.parse_schema 'basic_note_type_with_soap_array.xsd'
-        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context
+        generate 'basic_note_type_with_soap_array.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("note_type.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "note_type.rb", <<RUBY
 require "attachments_array"
 
 class NoteType
@@ -167,28 +114,16 @@ class NoteType
 end
 RUBY
 
-        expected_file = @tmp_path.join("attachments_array.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "attachments_array.rb", <<RUBY
 class AttachmentsArray < ::Array
 end
 RUBY
       end
 
       def test_complex_type_with_simple_content_generation
-        schema = TestHelper.parse_schema 'simple_money_type_with_currency_attribute.xsd'
-        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context
+        generate 'simple_money_type_with_currency_attribute.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("money_type.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "money_type.rb", <<RUBY
 class MoneyType
   attr_accessor :content
 
@@ -198,17 +133,9 @@ RUBY
       end
 
       def test_imported_schema
-        schema = TestHelper.parse_schema 'basic_note_type_with_import.xsd'
-        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context
+        generate 'basic_note_type_with_import.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("note_type.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "note_type.rb", <<RUBY
 require "attachment_type"
 
 class NoteType
@@ -225,17 +152,9 @@ RUBY
       end
 
       def test_simple_class_generation_with_simple_types
-        schema = TestHelper.parse_schema 'basic_note_type_with_referenced_simple_email_address_type.xsd'
-        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context
+        generate 'basic_note_type_with_referenced_simple_email_address_type.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("note_type.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "note_type.rb", <<RUBY
 require "email_address_type"
 
 class NoteType
@@ -246,11 +165,7 @@ class NoteType
 end
 RUBY
 
-        expected_file = @tmp_path.join("email_address_type.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "email_address_type.rb", <<RUBY
 class EmailAddressType
   attr_accessor :content
 end

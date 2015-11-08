@@ -9,30 +9,21 @@ require 'wsdl_mapper/dom/property'
 
 module DomGenerationTests
   module GeneratorTests
-    class DefaultCtrGeneratorTest < Minitest::Test
+    class DefaultCtrGeneratorTest < GenerationTestCase
       include WsdlMapper::Generation
       include WsdlMapper::DomGeneration
       include WsdlMapper::Dom
 
-      def setup
-        @tmp_path = TestHelper.get_tmp_path
-      end
-
-      def teardown
-        @tmp_path.unlink
+      def generate name
+        schema = TestHelper.parse_schema name        
+        generator = SchemaGenerator.new context, ctr_generator_factory: DefaultCtrGenerator
+        generator.generate schema
       end
 
       def test_simple_class_generation
-        schema = TestHelper.parse_schema 'basic_note_type.xsd'
-        context = Context.new @tmp_path.to_s
-        generator = SchemaGenerator.new context, ctr_generator_factory: DefaultCtrGenerator
+        generate 'basic_note_type.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("note_type.rb")
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "note_type.rb", <<RUBY
 class NoteType
   attr_accessor :to
   attr_accessor :from
@@ -50,17 +41,9 @@ RUBY
       end
 
       def test_simple_class_generation_with_attributes
-        schema = TestHelper.parse_schema 'basic_note_type_with_attribute.xsd'
-        context = Context.new @tmp_path.to_s
-        generator = SchemaGenerator.new context, ctr_generator_factory: DefaultCtrGenerator
+        generate 'basic_note_type_with_attribute.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("note_type.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "note_type.rb", <<RUBY
 class NoteType
   attr_accessor :to
   attr_accessor :from
@@ -82,16 +65,9 @@ RUBY
       end
 
       def test_simple_class_generation_with_default_values
-        schema = TestHelper.parse_schema 'basic_note_type_with_defaults.xsd'
-        context = Context.new @tmp_path.to_s
-        generator = SchemaGenerator.new context, ctr_generator_factory: DefaultCtrGenerator
+        generate 'basic_note_type_with_defaults.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("note_type.rb")
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "note_type.rb", <<RUBY
 require "date"
 
 class NoteType
@@ -113,16 +89,9 @@ RUBY
       end
 
       def test_simple_class_generation_with_required_single_value
-        schema = TestHelper.parse_schema 'basic_order_type_with_required_address_type_enum.xsd'
-        context = Context.new @tmp_path.to_s
-        generator = SchemaGenerator.new context, ctr_generator_factory: DefaultCtrGenerator
+        generate 'basic_order_type_with_required_address_type_enum.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("order_type.rb")
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "order_type.rb", <<RUBY
 require "address_type"
 
 class OrderType
@@ -140,17 +109,9 @@ RUBY
       end
 
       def test_complex_type_with_simple_content_generation
-        schema = TestHelper.parse_schema 'simple_money_type_with_currency_attribute.xsd'
-        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context, ctr_generator_factory: DefaultCtrGenerator
+        generate 'simple_money_type_with_currency_attribute.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("money_type.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "money_type.rb", <<RUBY
 class MoneyType
   attr_accessor :content
 

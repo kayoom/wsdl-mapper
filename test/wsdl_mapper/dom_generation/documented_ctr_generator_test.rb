@@ -9,31 +9,20 @@ require 'wsdl_mapper/dom/property'
 
 module DomGenerationTests
   module GeneratorTests
-    class DocumentedCtrGeneratorTest < Minitest::Test
-      include WsdlMapper::Generation
-      include WsdlMapper::DomGeneration
+    class DocumentedCtrGeneratorTest < GenerationTestCase
       include WsdlMapper::Dom
+      include WsdlMapper::DomGeneration
 
-      def setup
-        @tmp_path = TestHelper.get_tmp_path
-      end
-
-      def teardown
-        @tmp_path.unlink
+      def generate name
+        schema = TestHelper.parse_schema name        
+        generator = SchemaGenerator.new context, ctr_generator_factory: DocumentedCtrGenerator
+        generator.generate schema
       end
 
       def test_documentation_with_array
-        schema = TestHelper.parse_schema 'basic_note_type_with_attachments.xsd'
-        context = Context.new @tmp_path.to_s
-        generator = SchemaGenerator.new context, ctr_generator_factory: DocumentedCtrGenerator
+        generate 'basic_note_type_with_attachments.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("note_type.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "note_type.rb", <<RUBY
 class NoteType
   attr_accessor :to
   attr_accessor :from
@@ -61,16 +50,9 @@ RUBY
       end
 
       def test_simple_class_generation
-        schema = TestHelper.parse_schema 'basic_note_type_with_boolean_property_and_documentation.xsd'
-        context = Context.new @tmp_path.to_s
-        generator = SchemaGenerator.new context, ctr_generator_factory: DocumentedCtrGenerator
+        generate 'basic_note_type_with_boolean_property_and_documentation.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("note_type.rb")
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "note_type.rb", <<RUBY
 class NoteType
   attr_accessor :to
   attr_accessor :from

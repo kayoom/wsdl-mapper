@@ -6,28 +6,21 @@ require 'wsdl_mapper/dom_generation/schema_generator'
 
 module DomGenerationTests
   module GeneratorTests
-    class SchemaGeneratorTest < Minitest::Test
-      def setup
-        @tmp_path = TestHelper.get_tmp_path
-      end
-
-      def teardown
-        @tmp_path.unlink
+    class SchemaGeneratorTest < GenerationTestCase
+      include WsdlMapper::DomGeneration
+      
+      def generate name, module_path
+        schema = TestHelper.parse_schema name
+        generator = SchemaGenerator.new context, namer: WsdlMapper::Naming::DefaultNamer.new(module_path: module_path)
+        generator.generate schema
       end
 
       def test_simple_class_generation_with_modules
-        schema = TestHelper.parse_schema 'basic_note_type.xsd'
-        context = WsdlMapper::Generation::Context.new @tmp_path.to_s
-        generator = WsdlMapper::DomGeneration::SchemaGenerator.new context, namer: WsdlMapper::Naming::DefaultNamer.new(module_path: %w[NotesApi Types])
+        result = generate 'basic_note_type.xsd', %w[NotesApi Types]
 
-        result = generator.generate schema
+        assert_includes result.files, path_for("notes_api", "types", "note_type.rb")
 
-        expected_file = @tmp_path.join("notes_api", "types", "note_type.rb")
-        assert File.exists? expected_file
-        assert_includes result.files, expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "notes_api", "types", "note_type.rb", <<RUBY
 module NotesApi
   module Types
     class NoteType
@@ -47,19 +40,11 @@ RUBY
         type_node = middle_node.children.first
         assert_equal "NoteType", type_node.type_name.class_name
 
-        expected_file = @tmp_path.join("notes_api", "types.rb")
-        assert File.exists? expected_file
-
-        generated_file = File.read expected_file
-        assert_equal <<RUBY, generated_file
+        assert_file_is "notes_api", "types.rb", <<RUBY
 require "notes_api/types/note_type"
 RUBY
 
-        expected_file = @tmp_path.join("notes_api.rb")
-        assert File.exists? expected_file
-
-        generated_file = File.read expected_file
-        assert_equal <<RUBY, generated_file
+        assert_file_is "notes_api.rb", <<RUBY
 require "notes_api/types"
 RUBY
       end

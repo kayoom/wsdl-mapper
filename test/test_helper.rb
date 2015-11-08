@@ -53,3 +53,44 @@ module TestHelper
     TmpPath.new
   end
 end
+
+class SchemaTestCase < Minitest::Test
+  def get_schema name
+    TestHelper.parse_schema name
+  end
+end
+
+class GenerationTestCase < SchemaTestCase
+  def setup
+    @tmp_path = TestHelper.get_tmp_path
+  end
+
+  def teardown
+    @tmp_path.unlink
+  end
+
+  def tmp_path
+    @tmp_path
+  end
+
+  def path_for *name
+    tmp_path.join *name
+  end
+
+  def assert_file_exists *name
+    assert File.exist? tmp_path.join *name
+  end
+
+  def assert_file_is *name, expected
+    assert_file_exists *name
+    assert_equal expected, file(*name)
+  end
+
+  def file *name
+    File.read tmp_path.join *name
+  end
+
+  def context
+    @context ||= WsdlMapper::Generation::Context.new @tmp_path.to_s
+  end
+end

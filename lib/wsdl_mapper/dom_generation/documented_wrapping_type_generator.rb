@@ -1,4 +1,5 @@
 require 'wsdl_mapper/dom_generation/default_wrapping_type_generator'
+require 'wsdl_mapper/dom_generation/yard_doc_formatter'
 
 module WsdlMapper
   module DomGeneration

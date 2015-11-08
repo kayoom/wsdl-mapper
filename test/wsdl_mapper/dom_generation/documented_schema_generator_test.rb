@@ -6,30 +6,19 @@ require 'wsdl_mapper/dom_generation/documented_schema_generator'
 
 module DomGenerationTests
   module GeneratorTests
-    class DocumentedSchemaGeneratorTest < Minitest::Test
-      include WsdlMapper::Generation
+    class DocumentedSchemaGeneratorTest < GenerationTestCase
       include WsdlMapper::DomGeneration
-
-      def setup
-        @tmp_path = TestHelper.get_tmp_path
-      end
-
-      def teardown
-        @tmp_path.unlink
+      
+      def generate name
+        schema = TestHelper.parse_schema name
+        generator = DocumentedSchemaGenerator.new context
+        generator.generate schema
       end
 
       def test_class_documentation
-        schema = TestHelper.parse_schema 'basic_note_type.xsd'
-        context = Context.new @tmp_path.to_s
-        generator = DocumentedSchemaGenerator.new context
+        generate 'basic_note_type.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("note_type.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "note_type.rb", <<RUBY
 # @xml_name noteType
 class NoteType
   # @!attribute to
@@ -68,11 +57,7 @@ class NoteType
 end
 RUBY
 
-        expected_file = @tmp_path.join(".yardopts")
-        assert File.exists? expected_file
-
-        generated_file = File.read expected_file
-        assert_equal <<SH, generated_file
+        assert_file_is ".yardopts", <<SH
 --tag xml_name:"XML Name"
 --tag xml_namespace:"XML Namespace"
 --tag xml_value:"XML Value"

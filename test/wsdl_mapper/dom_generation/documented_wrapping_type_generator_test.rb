@@ -7,30 +7,19 @@ require 'wsdl_mapper/dom_generation/documented_wrapping_type_generator'
 
 module DomGenerationTests
   module GeneratorTests
-    class DocumentedWrappingTypeGeneratorTest < Minitest::Test
-      include WsdlMapper::Generation
+    class DocumentedWrappingTypeGeneratorTest < GenerationTestCase
       include WsdlMapper::DomGeneration
-
-      def setup
-        @tmp_path = TestHelper.get_tmp_path
-      end
-
-      def teardown
-        @tmp_path.unlink
+      
+      def generate name
+        schema = TestHelper.parse_schema name
+        generator = SchemaGenerator.new context, wrapping_type_generator_factory: DocumentedWrappingTypeGenerator
+        generator.generate schema
       end
 
       def test_generation
-        schema = TestHelper.parse_schema 'simple_email_address_type_with_documentation.xsd'
-        context = Context.new @tmp_path.to_s
-        generator = SchemaGenerator.new context, wrapping_type_generator_factory: DocumentedWrappingTypeGenerator
+        generate 'simple_email_address_type_with_documentation.xsd'
 
-        result = generator.generate schema
-
-        expected_file = @tmp_path.join("email_address_type.rb")
-        assert File.exists? expected_file
-
-        generated_class = File.read expected_file
-        assert_equal <<RUBY, generated_class
+        assert_file_is "email_address_type.rb", <<RUBY
 # This is some documentation.
 #
 # @xml_name emailAddressType
