@@ -30,5 +30,83 @@ NoteTypeDeserializer = ::DeserializerFactory.register(nil, "noteType", ::NoteTyp
 end
 RUBY
     end
+
+    def test_basic_type
+      generate 'basic_note_type.xsd'
+
+      assert_file_is "note_type_deserializer.rb", <<RUBY
+require "deserializer_factory"
+require "note_type"
+
+NoteTypeDeserializer = ::DeserializerFactory.register(nil, "noteType", ::NoteType) do
+  register_prop :to, ::WsdlMapper::Dom::Name.get(nil, "to"), ::WsdlMapper::Dom::Name.get("http://www.w3.org/2001/XMLSchema", "string")
+  register_prop :from, ::WsdlMapper::Dom::Name.get(nil, "from"), ::WsdlMapper::Dom::Name.get("http://www.w3.org/2001/XMLSchema", "string")
+  register_prop :heading, ::WsdlMapper::Dom::Name.get(nil, "heading"), ::WsdlMapper::Dom::Name.get("http://www.w3.org/2001/XMLSchema", "string")
+  register_prop :body, ::WsdlMapper::Dom::Name.get(nil, "body"), ::WsdlMapper::Dom::Name.get("http://www.w3.org/2001/XMLSchema", "string")
+end
+RUBY
+    end
+
+    def test_basic_type_with_array
+      generate 'basic_note_type_with_attachments.xsd'
+
+      assert_file_is "note_type_deserializer.rb", <<RUBY
+require "deserializer_factory"
+require "note_type"
+
+NoteTypeDeserializer = ::DeserializerFactory.register(nil, "noteType", ::NoteType) do
+  register_prop :to, ::WsdlMapper::Dom::Name.get(nil, "to"), ::WsdlMapper::Dom::Name.get("http://www.w3.org/2001/XMLSchema", "string")
+  register_prop :from, ::WsdlMapper::Dom::Name.get(nil, "from"), ::WsdlMapper::Dom::Name.get("http://www.w3.org/2001/XMLSchema", "string")
+  register_prop :heading, ::WsdlMapper::Dom::Name.get(nil, "heading"), ::WsdlMapper::Dom::Name.get("http://www.w3.org/2001/XMLSchema", "string")
+  register_prop :body, ::WsdlMapper::Dom::Name.get(nil, "body"), ::WsdlMapper::Dom::Name.get("http://www.w3.org/2001/XMLSchema", "string")
+  register_prop :attachments, ::WsdlMapper::Dom::Name.get(nil, "attachments"), ::WsdlMapper::Dom::Name.get("http://www.w3.org/2001/XMLSchema", "string"), array: true
+end
+RUBY
+    end
+
+    def test_basic_type_with_array_simple_type
+      generate 'basic_note_type_with_attachments_simple_type.xsd'
+
+      assert_file_is "note_type_deserializer.rb", <<RUBY
+require "deserializer_factory"
+require "note_type"
+
+NoteTypeDeserializer = ::DeserializerFactory.register(nil, "noteType", ::NoteType) do
+  register_prop :to, ::WsdlMapper::Dom::Name.get(nil, "to"), ::WsdlMapper::Dom::Name.get("http://www.w3.org/2001/XMLSchema", "string")
+  register_prop :from, ::WsdlMapper::Dom::Name.get(nil, "from"), ::WsdlMapper::Dom::Name.get("http://www.w3.org/2001/XMLSchema", "string")
+  register_prop :heading, ::WsdlMapper::Dom::Name.get(nil, "heading"), ::WsdlMapper::Dom::Name.get("http://www.w3.org/2001/XMLSchema", "string")
+  register_prop :body, ::WsdlMapper::Dom::Name.get(nil, "body"), ::WsdlMapper::Dom::Name.get("http://www.w3.org/2001/XMLSchema", "string")
+  register_prop :attachments, ::WsdlMapper::Dom::Name.get(nil, "attachments"), ::WsdlMapper::Dom::Name.get("http://www.w3.org/2001/XMLSchema", "string"), array: true
+end
+RUBY
+    end
+
+    def test_basic_type_with_array_complex_type
+      generate 'basic_note_type_with_complex_attachments.xsd'
+
+      assert_file_is "note_type_deserializer.rb", <<RUBY
+require "deserializer_factory"
+require "note_type"
+
+NoteTypeDeserializer = ::DeserializerFactory.register(nil, "noteType", ::NoteType) do
+  register_attr :uuid, ::WsdlMapper::Dom::Name.get(nil, "uuid"), ::WsdlMapper::Dom::Name.get("http://www.w3.org/2001/XMLSchema", "string")
+  register_prop :to, ::WsdlMapper::Dom::Name.get(nil, "to"), ::WsdlMapper::Dom::Name.get("http://www.w3.org/2001/XMLSchema", "string")
+  register_prop :from, ::WsdlMapper::Dom::Name.get(nil, "from"), ::WsdlMapper::Dom::Name.get("http://www.w3.org/2001/XMLSchema", "string")
+  register_prop :heading, ::WsdlMapper::Dom::Name.get(nil, "heading"), ::WsdlMapper::Dom::Name.get("http://www.w3.org/2001/XMLSchema", "string")
+  register_prop :body, ::WsdlMapper::Dom::Name.get(nil, "body"), ::WsdlMapper::Dom::Name.get("http://www.w3.org/2001/XMLSchema", "string")
+  register_prop :attachments, ::WsdlMapper::Dom::Name.get(nil, "attachments"), ::WsdlMapper::Dom::Name.get(nil, "attachmentType"), array: true
+end
+RUBY
+
+      assert_file_is "attachment_type_deserializer.rb", <<RUBY
+require "deserializer_factory"
+require "attachment_type"
+
+AttachmentTypeDeserializer = ::DeserializerFactory.register(nil, "attachmentType", ::AttachmentType) do
+  register_prop :name, ::WsdlMapper::Dom::Name.get(nil, "name"), ::WsdlMapper::Dom::Name.get("http://www.w3.org/2001/XMLSchema", "string")
+  register_prop :body, ::WsdlMapper::Dom::Name.get(nil, "body"), ::WsdlMapper::Dom::Name.get("http://www.w3.org/2001/XMLSchema", "string")
+end
+RUBY
+    end
   end
 end

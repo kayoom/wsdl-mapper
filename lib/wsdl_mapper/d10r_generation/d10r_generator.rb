@@ -59,6 +59,13 @@ module WsdlMapper
       end
 
       def generate_type type, result
+        case type
+        when WsdlMapper::Dom::ComplexType
+          generate_complex type, result
+        end
+      end
+
+      def generate_complex type, result
         type_name = @namer.get_type_name type
         name = @namer.get_d10r_name type
         file_name = @context.path_for name
@@ -69,8 +76,7 @@ module WsdlMapper
           f.requires @factory_name.require_path, type_name.require_path
 
           open_modules f, modules
-          f.block "#{name.class_name} = #{@factory_name.name}.register(#{type.name.ns.inspect}, #{type.name.name.inspect}, #{type_name.name})", [] do
-          end
+          register_type f, name, type, type_name
           close_modules f, modules
         end
 
@@ -78,19 +84,45 @@ module WsdlMapper
         result.files << file_name
       end
 
+      def register_type f, name, type, type_name
+        f.block "#{name.class_name} = #{@factory_name.name}.register(#{type.name.ns.inspect}, #{type.name.name.inspect}, #{type_name.name})", [] do
+          register_attributes f, type
+          register_properties f, type
+        end
+      end
+
+      def register_attributes f, containing_type
+        containing_type.each_attribute do |attr|
+          acc_name = @namer.get_attribute_name attr
+          type = attr.type.root
+          name = ::WsdlMapper::Dom::Name.get containing_type.name.ns, attr.name
+          f.statement "register_attr :#{acc_name.attr_name}, #{inspect_name(name)}, #{inspect_name(type.name)}"
+        end
+      end
+
+      def register_properties f, containing_type
+        containing_type.each_property do |prop|
+          acc_name = @namer.get_property_name prop
+          type = prop.type.is_a?(WsdlMapper::Dom::SimpleType) ? prop.type.root : prop.type
+          f.statement "register_prop :#{acc_name.attr_name}, #{inspect_name(prop.name)}, #{inspect_name(type.name)}#{inspect_prop_options(prop)}"
+        end
+      end
+
       def get_formatter io
         @formatter_factory.new io
       end
 
       protected
-      # def tag_for_name name
-      #   name.name
-      # end
-      #
-      # def tag_string_for_name name
-      #   tag_for_name(name).inspect
-      # end
-      #
+      def inspect_prop_options prop
+        opts = ""
+        opts << ", array: true" if prop.array?
+        opts
+      end
+
+      def inspect_name name
+        "::WsdlMapper::Dom::Name.get(#{name.ns.inspect}, #{name.name.inspect})"
+      end
+
       def close_modules f, modules
         modules.each { f.end }
       end
