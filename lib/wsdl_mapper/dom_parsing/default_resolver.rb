@@ -1,10 +1,10 @@
-require 'wsdl_mapper/schema/abstract_resolver'
+require 'wsdl_mapper/dom_parsing/abstract_resolver'
 
-require 'wsdl_mapper/schema/local_file_resolver'
-require 'wsdl_mapper/schema/url_resolver'
+require 'wsdl_mapper/dom_parsing/local_file_resolver'
+require 'wsdl_mapper/dom_parsing/url_resolver'
 
 module WsdlMapper
-  module Schema
+  module DomParsing
     class DefaultResolver < AbstractResolver
 
       def initialize path

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-require 'wsdl_mapper/schema/parser'
+require 'wsdl_mapper/dom_parsing/parser'
 require 'wsdl_mapper/generation/context'
 require 'wsdl_mapper/dom_generation/schema_generator'
 

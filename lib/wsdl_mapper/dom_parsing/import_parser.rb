@@ -1,8 +1,8 @@
-require 'wsdl_mapper/schema/parser_base'
+require 'wsdl_mapper/dom_parsing/parser_base'
 require 'wsdl_mapper/dom/soap_encoding_type'
 
 module WsdlMapper
-  module Schema
+  module DomParsing
     class ImportParser < ParserBase
       def parse node
         # TODO: namespace attribute is optional

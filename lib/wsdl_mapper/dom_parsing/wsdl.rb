@@ -1,7 +1,7 @@
 require 'wsdl_mapper/dom/name'
 
 module WsdlMapper
-  module Schema
+  module DomParsing
     module Wsdl
       include WsdlMapper::Dom
 

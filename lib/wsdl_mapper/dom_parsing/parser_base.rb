@@ -1,9 +1,9 @@
-require 'wsdl_mapper/schema/xsd'
+require 'wsdl_mapper/dom_parsing/xsd'
 require 'wsdl_mapper/dom/documentation'
 require 'wsdl_mapper/dom/bounds'
 
 module WsdlMapper
-  module Schema
+  module DomParsing
     class ParserBase
       class LogMsg
         def initialize node, source, msg = ''

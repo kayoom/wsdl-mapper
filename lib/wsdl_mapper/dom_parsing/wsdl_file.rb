@@ -1,7 +1,7 @@
 require 'wsdl/parser'
 
 module WsdlMapper
-  module Schema
+  module DomParsing
     class WsdlFile
       attr_reader :root
 

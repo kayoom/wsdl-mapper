@@ -1,16 +1,16 @@
-require 'wsdl_mapper/schema/parser_base'
+require 'wsdl_mapper/dom_parsing/parser_base'
 
-require 'wsdl_mapper/schema/complex_type_parser'
-require 'wsdl_mapper/schema/simple_type_parser'
-require 'wsdl_mapper/schema/annotation_parser'
-require 'wsdl_mapper/schema/import_parser'
+require 'wsdl_mapper/dom_parsing/complex_type_parser'
+require 'wsdl_mapper/dom_parsing/simple_type_parser'
+require 'wsdl_mapper/dom_parsing/annotation_parser'
+require 'wsdl_mapper/dom_parsing/import_parser'
 
 require 'wsdl_mapper/dom/schema'
 
 module WsdlMapper
-  module Schema
+  module DomParsing
     class Parser < ParserBase
-      include WsdlMapper::Schema::Xsd
+      include WsdlMapper::DomParsing::Xsd
 
       class ParserException < StandardError ; end
       class InvalidRootException < ParserException ; end

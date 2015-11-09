@@ -1,6 +1,6 @@
 require 'test_helper'
 
-require 'wsdl_mapper/schema/parser'
+require 'wsdl_mapper/dom_parsing/parser'
 require 'wsdl_mapper/generation/context'
 require 'wsdl_mapper/dom_generation/schema_generator'
 require 'wsdl_mapper/dom_generation/documented_enum_generator'
@@ -9,7 +9,7 @@ module DomGenerationTests
   module GeneratorTests
     class DocumentedEnumGeneratorTest < GenerationTestCase
       include WsdlMapper::DomGeneration
-      
+
       def generate name
         schema = TestHelper.parse_schema name
         generator = SchemaGenerator.new context, enum_generator_factory: DocumentedEnumGenerator

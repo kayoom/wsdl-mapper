@@ -1,7 +1,7 @@
-require 'wsdl_mapper/schema/parser_base'
+require 'wsdl_mapper/dom_parsing/parser_base'
 
 module WsdlMapper
-  module Schema
+  module DomParsing
     class AnnotationParser < ParserBase
       def parse node
         return Documentation.new(nil) unless node

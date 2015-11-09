@@ -1,12 +1,12 @@
-require 'wsdl_mapper/schema/parser_base'
+require 'wsdl_mapper/dom_parsing/parser_base'
 require 'wsdl_mapper/dom/complex_type'
 require 'wsdl_mapper/dom/property'
 require 'wsdl_mapper/dom/attribute'
 require 'wsdl_mapper/dom/soap_encoding_type'
-require 'wsdl_mapper/schema/wsdl'
+require 'wsdl_mapper/dom_parsing/wsdl'
 
 module WsdlMapper
-  module Schema
+  module DomParsing
     class ComplexTypeParser < ParserBase
 
       def parse node

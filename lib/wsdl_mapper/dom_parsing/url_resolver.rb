@@ -1,10 +1,10 @@
 require 'nokogiri'
 
-require 'wsdl_mapper/schema/abstract_resolver'
+require 'wsdl_mapper/dom_parsing/abstract_resolver'
 require 'uri'
 
 module WsdlMapper
-  module Schema
+  module DomParsing
     class UrlResolver < AbstractResolver
       def resolve url
         uri = URI.parse url

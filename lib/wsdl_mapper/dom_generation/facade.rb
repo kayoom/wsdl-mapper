@@ -4,7 +4,7 @@ require 'wsdl_mapper/naming/default_namer'
 require 'wsdl_mapper/generation/context'
 require 'wsdl_mapper/dom_generation/schema_generator'
 require 'wsdl_mapper/dom_generation/documented_schema_generator'
-require 'wsdl_mapper/schema/parser'
+require 'wsdl_mapper/dom_parsing/parser'
 
 module WsdlMapper
   module DomGeneration
@@ -26,7 +26,7 @@ module WsdlMapper
 
         file_content = File.read @file
         xml_doc = Nokogiri::XML::Document.parse file_content
-        parser = WsdlMapper::Schema::Parser.new
+        parser = WsdlMapper::DomParsing::Parser.new
         schema = parser.parse xml_doc
 
         generator.generate schema

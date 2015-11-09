@@ -1,7 +1,7 @@
 require 'wsdl/xmlSchema/parser'
 
 module WsdlMapper
-  module Schema
+  module DomParsing
     class XsdFile
       attr_reader :schema, :complex_types, :simple_types
 

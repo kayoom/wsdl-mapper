@@ -1,6 +1,6 @@
 require 'test_helper'
 
-require 'wsdl_mapper/schema/parser'
+require 'wsdl_mapper/dom_parsing/parser'
 require 'wsdl_mapper/generation/context'
 require 'wsdl_mapper/dom_generation/schema_generator'
 
@@ -8,7 +8,7 @@ module DomGenerationTests
   module GeneratorTests
     class SchemaGeneratorTest < GenerationTestCase
       include WsdlMapper::DomGeneration
-      
+
       def generate name, module_path
         schema = TestHelper.parse_schema name
         generator = SchemaGenerator.new context, namer: WsdlMapper::Naming::DefaultNamer.new(module_path: module_path)

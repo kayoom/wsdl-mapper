@@ -7,7 +7,7 @@ require 'test_helper'
 #     include WsdlMapper::Dom
 #
 #     def build_from_fixture name
-#       xsd_file = WsdlMapper::Schema::XsdFile.new TestHelper.get_fixture("#{name}.xsd")
+#       xsd_file = WsdlMapper::DomParsing::XsdFile.new TestHelper.get_fixture("#{name}.xsd")
 #       builder = Builder.new xsd_file
 #
 #       builder.build

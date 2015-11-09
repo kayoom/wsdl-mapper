@@ -1,8 +1,8 @@
-require 'wsdl_mapper/schema/parser_base'
+require 'wsdl_mapper/dom_parsing/parser_base'
 require 'wsdl_mapper/dom/simple_type'
 
 module WsdlMapper
-  module Schema
+  module DomParsing
     class SimpleTypeParser < ParserBase
 
       def parse node

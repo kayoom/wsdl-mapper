@@ -11,7 +11,7 @@ require 'nokogiri'
 
 require 'byebug'
 
-require 'wsdl_mapper/schema/default_resolver'
+require 'wsdl_mapper/dom_parsing/default_resolver'
 
 module TestHelper
   extend self
@@ -26,8 +26,8 @@ module TestHelper
   end
 
   def parse_schema(name, import_resolver: nil)
-    import_resolver ||= ::WsdlMapper::Schema::DefaultResolver.new File.join("test", "fixtures")
-    WsdlMapper::Schema::Parser.new(import_resolver: import_resolver).parse get_xml_doc name
+    import_resolver ||= ::WsdlMapper::DomParsing::DefaultResolver.new File.join("test", "fixtures")
+    WsdlMapper::DomParsing::Parser.new(import_resolver: import_resolver).parse get_xml_doc name
   end
 
   class TmpPath

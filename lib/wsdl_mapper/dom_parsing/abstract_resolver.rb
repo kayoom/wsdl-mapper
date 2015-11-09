@@ -1,5 +1,5 @@
 module WsdlMapper
-  module Schema
+  module DomParsing
     # @abstract
     class AbstractResolver
       def resolve name

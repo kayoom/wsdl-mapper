@@ -1,10 +1,10 @@
 require 'test_helper'
 
-require 'wsdl_mapper/schema/parser'
+require 'wsdl_mapper/dom_parsing/parser'
 
 module SchemaTests
   class ParserTest < Minitest::Test
-    include WsdlMapper::Schema
+    include WsdlMapper::DomParsing
     include WsdlMapper::Dom
 
     def test_raise_error_on_invalid_root_node

@@ -1,9 +1,9 @@
 require 'nokogiri'
 
-require 'wsdl_mapper/schema/abstract_resolver'
+require 'wsdl_mapper/dom_parsing/abstract_resolver'
 
 module WsdlMapper
-  module Schema
+  module DomParsing
     class LocalFileResolver < AbstractResolver
       def initialize path
         @path = path

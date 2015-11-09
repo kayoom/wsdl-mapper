@@ -2,7 +2,7 @@ require 'wsdl_mapper/dom/name'
 require 'wsdl_mapper/dom/bounds'
 
 module WsdlMapper
-  module Schema
+  module DomParsing
     module Xsd
       include WsdlMapper::Dom
 
