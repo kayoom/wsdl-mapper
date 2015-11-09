@@ -24,7 +24,7 @@ module SchemaTests
 
       assert_equal 1, schema.types.count
 
-      type = schema.types.values.first
+      type = schema.each_type.first
 
       assert_kind_of ComplexType, type
       assert_equal Name.get(nil, 'noteType'), type.name
@@ -37,7 +37,7 @@ module SchemaTests
 
       assert_equal 3, schema.types.count
 
-      array_type = schema.types.values.last
+      array_type = schema.each_type.to_a.last
 
       assert_equal Name.get(nil, 'attachmentsArray'), array_type.name
       assert_equal Name.get(nil, 'attachment'), array_type.soap_array_type_name
@@ -45,14 +45,14 @@ module SchemaTests
 
     def test_example_2_complex_type_w_documentation
       schema = TestHelper.parse_schema 'basic_note_type_with_documentation_and_bounds.xsd'
-      type = schema.types.values.first
+      type = schema.each_type.first
 
       assert_equal "This is some documentation for type.", type.documentation.default
     end
 
     def test_example_1_properties_sequence
       schema = TestHelper.parse_schema 'basic_note_type.xsd'
-      type = schema.types.values.first
+      type = schema.each_type.first
 
       assert_equal 4, type.properties.count
 
@@ -77,7 +77,7 @@ module SchemaTests
 
     def test_example_2_unbounded_property
       schema = TestHelper.parse_schema 'basic_note_type_with_documentation_and_bounds.xsd'
-      type = schema.types.values.first
+      type = schema.each_type.first
 
       prop = type.properties.values.first
 
@@ -87,7 +87,7 @@ module SchemaTests
 
     def test_example_2_optional_property
       schema = TestHelper.parse_schema 'basic_note_type_with_documentation_and_bounds.xsd'
-      type = schema.types.values.first
+      type = schema.each_type.first
 
       prop = type.properties.values[2]
 
@@ -97,7 +97,7 @@ module SchemaTests
 
     def test_example_2_property_wo_documentation
       schema = TestHelper.parse_schema 'basic_note_type_with_documentation_and_bounds.xsd'
-      type = schema.types.values.first
+      type = schema.each_type.first
 
       prop = type.properties.values[1]
 
@@ -107,7 +107,7 @@ module SchemaTests
 
     def test_example_2_property_w_documentation
       schema = TestHelper.parse_schema 'basic_note_type_with_documentation_and_bounds.xsd'
-      type = schema.types.values.first
+      type = schema.each_type.first
 
       prop = type.properties.values[3]
 
@@ -119,7 +119,7 @@ module SchemaTests
 
     def test_example_4_simple_enum
       schema = TestHelper.parse_schema 'address_type_enumeration.xsd'
-      type = schema.types.values.first
+      type = schema.each_type.first
 
       assert_instance_of SimpleType, type
 
@@ -136,7 +136,7 @@ module SchemaTests
 
     def test_example_5_complex_type_simple_content
       schema = TestHelper.parse_schema 'simple_money_type_with_currency_attribute.xsd'
-      type = schema.types.values.first
+      type = schema.each_type.first
 
       assert_instance_of ComplexType, type
       assert type.simple_content?
@@ -151,7 +151,7 @@ module SchemaTests
 
     def test_example_6_complex_type_properties_all
       schema = TestHelper.parse_schema 'basic_credentials_type.xsd'
-      type = schema.types.values.first
+      type = schema.each_type.first
 
       assert_equal 2, type.properties.count
 
@@ -180,8 +180,8 @@ module SchemaTests
 
       assert_equal 2, schema.types.count
 
-      base_type = schema.types.values.first
-      extended_type = schema.types.values.last
+      base_type = schema.each_type.first
+      extended_type = schema.each_type.to_a.last
 
       assert_equal Name.get(nil, 'noteType'), base_type.name
       assert_equal Name.get(nil, 'fancyNoteType'), extended_type.name
@@ -198,8 +198,8 @@ module SchemaTests
 
       assert_equal 2, schema.types.count
 
-      base_type = schema.types.values.first
-      extended_type = schema.types.values.last
+      base_type = schema.each_type.first
+      extended_type = schema.each_type.to_a.last
 
       assert_equal Name.get(ns, 'noteType'), base_type.name
       assert_equal Name.get(ns, 'fancyNoteType'), extended_type.name

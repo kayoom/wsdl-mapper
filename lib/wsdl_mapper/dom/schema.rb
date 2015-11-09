@@ -1,16 +1,19 @@
 require 'wsdl_mapper/dom/builtin_type'
 require 'wsdl_mapper/dom/soap_encoding_type'
+require 'wsdl_mapper/dom/directory'
 
 module WsdlMapper
   module Dom
     class Schema
+      include WsdlMapper::Dom
+
       attr_reader :types, :imports
       attr_accessor :target_namespace, :qualified_elements, :qualified_attributes
 
       def initialize
-        @types = {}
-        @builtin_types = {}
-        @soap_encoding_types = {}
+        @types = Directory.new
+        @builtin_types = Directory.new
+        @soap_encoding_types = Directory.new
         @qualified_elements = false
         @qualified_attributes = false
         @imports = []
@@ -38,7 +41,7 @@ module WsdlMapper
 
       def each_type &block
         enum = Enumerator.new do |y|
-          @types.values.each do |t|
+          @types.each do |(n, t)|
             y << t
           end
           @imports.each do |i|
