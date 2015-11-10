@@ -1,11 +1,14 @@
 require 'bundler/setup'
 
-require 'simplecov'
-SimpleCov.start do
-  add_filter 'abstract_.*\.rb'
+if ENV['cov']
+  require 'simplecov'
+  SimpleCov.start do
+    add_filter 'abstract_.*\.rb'
+  end
 end
 
 require 'minitest/autorun'
+require 'minitest/focus'
 
 require 'nokogiri'
 
@@ -28,6 +31,10 @@ module TestHelper
   def parse_schema(name, import_resolver: nil)
     import_resolver ||= ::WsdlMapper::DomParsing::DefaultResolver.new File.join("test", "fixtures")
     WsdlMapper::DomParsing::Parser.new(import_resolver: import_resolver).parse get_xml_doc name
+  end
+
+  def parse_wsdl name
+    WsdlMapper::SvcDescParsing::Parser.new.parse get_xml_doc name
   end
 
   class TmpPath

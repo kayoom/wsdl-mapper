@@ -1,11 +1,14 @@
 require 'wsdl_mapper/dom_parsing/parser_base'
 
+require 'wsdl_mapper/dom_parsing/xsd'
 require 'wsdl_mapper/dom_parsing/complex_type_parser'
 require 'wsdl_mapper/dom_parsing/simple_type_parser'
 require 'wsdl_mapper/dom_parsing/annotation_parser'
 require 'wsdl_mapper/dom_parsing/import_parser'
+require 'wsdl_mapper/dom_parsing/element_parser'
 
 require 'wsdl_mapper/dom/schema'
+require 'wsdl_mapper/dom/namespaces'
 
 module WsdlMapper
   module DomParsing
@@ -18,6 +21,7 @@ module WsdlMapper
 
       attr_reader :schema, :parsers, :namespaces, :target_namespace, :default_namespace, :log_msgs, :import_resolver
 
+      # @param [WsdlMapper::DomParsing::AbstractResolver] import_resolver
       def initialize import_resolver: nil
         @base = self
         @schema = WsdlMapper::Dom::Schema.new
@@ -26,32 +30,31 @@ module WsdlMapper
           COMPLEX_TYPE  => ComplexTypeParser.new(self),
           ANNOTATION    => AnnotationParser.new(self),
           SIMPLE_TYPE   => SimpleTypeParser.new(self),
-          IMPORT        => ImportParser.new(self)
+          IMPORT        => ImportParser.new(self),
+          ELEMENT       => ElementParser.new(self)
         }
 
         @import_resolver = import_resolver
-        @namespaces = {}
+        @namespaces = Namespaces.new
         @target_namespace = nil
         @default_namespace = nil
         @log_msgs = []
       end
 
+      # @param [Nokogiri::XML::Document] doc
+      # @return [WsdlMapper::Dom::Schema]
       def parse doc
-        parse_namespaces doc
+        # Phase 1: Parsing
+        parse_doc doc
 
-        schema_node = get_schema_node doc
-
-        parse_attributes schema_node
-
-        each_element schema_node do |node|
-          parse_node node
-        end
-
+        # Phase 2: Linking
         link_types
 
         @schema
       end
 
+      # @param [Nokogiri::XML::Node] node
+      # @param [String, Symbol] msg
       def log_msg node, msg = '', source = self
         log_msg = LogMsg.new(node, source, msg)
         log_msgs << log_msg
@@ -62,17 +65,30 @@ module WsdlMapper
         puts "\n\n"
       end
 
+      # @return [WsdlMapper::DomParsing::Parser]
       def dup
         self.class.new import_resolver: @import_resolver
       end
 
       protected
+      # @param [Nokogiri::XML::Document] doc
+      def parse_doc doc
+        parse_namespaces doc
+        schema_node = get_schema_node doc
+        parse_attributes schema_node
+        each_element schema_node do |node|
+          parse_node node
+        end
+      end
+
+      # @param [Nokogiri::XML::Node] schema_node
       def parse_attributes schema_node
-        parse_target_namespace schema_node
+        @schema.target_namespace = parse_target_namespace schema_node
         parse_element_form_default schema_node
         parse_attribute_form_default schema_node
       end
 
+      # @param [Nokogiri::XML::Node] node
       def parse_attribute_form_default node
         attr = node.attributes[ATTRIBUTE_FORM_DEFAULT]
         if attr && attr.value == "qualified"
@@ -80,6 +96,7 @@ module WsdlMapper
         end
       end
 
+      # @param [Nokogiri::XML::Node] node
       def parse_element_form_default node
         attr = node.attributes[ELEMENT_FORM_DEFAULT]
         if attr && attr.value == "qualified"
@@ -92,6 +109,17 @@ module WsdlMapper
         link_soap_array_types
         link_property_types
         link_attribute_types
+        link_element_types
+      end
+
+      def link_element_types
+        @schema.each_element do |element|
+          element.type = @schema.get_type element.type_name
+
+          unless element.type
+            log_msg prop, :missing_element_type
+          end
+        end
       end
 
       def link_property_types
@@ -143,25 +171,7 @@ module WsdlMapper
         end
       end
 
-      def parse_target_namespace node
-        attr = node.attributes[TARGET_NS]
-        if attr
-          @target_namespace = attr.value
-          @schema.target_namespace = @target_namespace
-        end
-      end
-
-      def parse_namespaces doc
-        doc.namespaces.each do |key, ns|
-          if key == NS_DECL_PREFIX
-            @default_namespace = ns
-          else
-            code = key.sub /^#{NS_DECL_PREFIX}\:/, ''
-            @namespaces[code] = ns
-          end
-        end
-      end
-
+      # @param [Nokogiri::XML::Document] doc
       def get_schema_node doc
         schema_node = first_element doc
 

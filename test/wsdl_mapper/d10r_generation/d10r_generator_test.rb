@@ -108,5 +108,9 @@ AttachmentTypeDeserializer = ::DeserializerFactory.register(nil, "attachmentType
 end
 RUBY
     end
+
+    def test_soap_array
+      skip # TODO: soap array
+    end
   end
 end

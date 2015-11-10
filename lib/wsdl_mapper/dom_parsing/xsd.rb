@@ -25,9 +25,6 @@ module WsdlMapper
       ATTRIBUTE = Name.get NS, 'attribute'
       ALL = Name.get NS, 'all'
 
-      NS_DECL_PREFIX = 'xmlns'
-      TARGET_NS = 'targetNamespace'
-
       ELEMENT_FORM_DEFAULT = "elementFormDefault"
       ATTRIBUTE_FORM_DEFAULT = "attributeFormDefault"
 

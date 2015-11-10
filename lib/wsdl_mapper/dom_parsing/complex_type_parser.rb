@@ -3,7 +3,7 @@ require 'wsdl_mapper/dom/complex_type'
 require 'wsdl_mapper/dom/property'
 require 'wsdl_mapper/dom/attribute'
 require 'wsdl_mapper/dom/soap_encoding_type'
-require 'wsdl_mapper/dom_parsing/wsdl'
+require 'wsdl_mapper/svc_desc_parsing/wsdl11'
 
 module WsdlMapper
   module DomParsing
@@ -125,7 +125,7 @@ module WsdlMapper
           raise StandardError.new("Invalid ref attribute for SOAP array node: #{parse_name(ref)}")
         end
 
-        type_name = parse_name node.attribute_with_ns(Wsdl::ARRAY_TYPE.name, Wsdl::ARRAY_TYPE.ns).value
+        type_name = parse_name node.attribute_with_ns(WsdlMapper::SvcDescParsing::Wsdl11::ARRAY_TYPE.name, WsdlMapper::SvcDescParsing::Wsdl11::ARRAY_TYPE.ns).value
         type.soap_array_type_name = Name.get type_name.ns, type_name.name[0..-3]
       end
 

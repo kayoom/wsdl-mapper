@@ -17,12 +17,16 @@ module WsdlMapper
         end
       end
 
+      # @param [WsdlMapper::Dom::Name] name
+      # @return [Object]
       def get name
         hsh = @data[name.ns]
         hsh ? hsh[name.name] : nil
       end
       alias_method :[], :get
 
+      # @param [WsdlMapper::Dom::Name] name
+      # @param [Object] value
       def set name, value
         @data[name.ns] ||= {}
         @data[name.ns][name.name] = value
@@ -34,6 +38,17 @@ module WsdlMapper
           @data.each do |ns, data|
             data.each do |name, value|
               y << [WsdlMapper::Dom::Name.get(ns, name), value]
+            end
+          end
+        end
+        block_given? ? enum.each(&block) : enum.each
+      end
+
+      def each_value &block
+        enum = Enumerator.new do |y|
+          @data.each do |ns, data|
+            data.each do |name, value|
+              y << value
             end
           end
         end
