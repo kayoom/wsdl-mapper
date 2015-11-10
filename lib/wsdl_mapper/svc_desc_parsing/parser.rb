@@ -28,6 +28,7 @@ module WsdlMapper
           SERVICE => ServiceParser.new(self),
           BINDING => BindingParser.new(self),
           TYPES => TypesParser.new(self)
+          # TODO: import
         }
 
         @namespaces = Namespaces.new
@@ -66,6 +67,7 @@ module WsdlMapper
         parse_namespaces doc
         root = get_root doc
         @description.target_namespace = parse_target_namespace root
+        @description.name = fetch_attribute_value 'name', root
         each_element root do |node|
           parse_node node
         end
@@ -87,18 +89,10 @@ module WsdlMapper
               op.input.header.message = @description.get_message op.input.header.message_name
               op.input.header.part = op.input.header.message.get_part op.input.header.part_name
             end
-            if op.input.body.message_name
-              op.input.body.message = @description.get_message op.input.body.message_name
-              op.input.body.part = op.input.body.message.get_part op.input.body.part_name
-            end
 
             if op.output.header.message_name
               op.output.header.message = @description.get_message op.output.header.message_name
               op.output.header.part = op.output.header.message.get_part op.output.header.part_name
-            end
-            if op.output.body.message_name
-              op.output.body.message = @description.get_message op.output.body.message_name
-              op.output.body.part = op.output.body.message.get_part op.output.body.part_name
             end
           end
         end

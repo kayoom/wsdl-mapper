@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions
+<wsdl:definitions name="MyWsdl"
         xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
         xmlns:xs="http://www.w3.org/2001/XMLSchema"
         xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
@@ -52,6 +52,21 @@
       <wsdlsoap:operation soapAction="MySoapAction"/>
       <wsdl:input>
         <wsdlsoap:header use="literal" message="ns:HeaderMsg" part="HeaderPart"/>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:header use="literal" message="ns:HeaderMsg" part="HeaderPart"/>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+
+  <wsdl:binding name="MyBindingRPC" type="ns:MyPortType">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="SomeOperation">
+      <wsdlsoap:operation soapAction="MySoapAction"/>
+      <wsdl:input>
+        <wsdlsoap:header use="encoded" message="ns:HeaderMsg" part="HeaderPart"/>
         <wsdlsoap:body use="literal"/>
       </wsdl:input>
       <wsdl:output>

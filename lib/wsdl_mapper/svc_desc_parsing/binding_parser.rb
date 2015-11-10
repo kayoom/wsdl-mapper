@@ -53,6 +53,7 @@ module WsdlMapper
           parse_operation_output node, operation
         when Soap::OPERATION
           parse_operation_soap_action node, operation
+        # TODO: fault
         else
           log_msg node, :unknown
         end
@@ -75,20 +76,29 @@ module WsdlMapper
       def parse_input_output_child node, in_out
         case get_name node
         when Soap::HEADER
-          in_out.header = parse_header_body node
+          in_out.header = parse_header node
         when Soap::BODY
-          in_out.body = parse_header_body node
+          in_out.body = parse_body node
+        # TODO: headerfault
         else
           log_msg node, :unknown
         end
       end
 
-      def parse_header_body node
-        hb = Binding::HeaderBody.new
-        hb.use = fetch_attribute_value 'use', node
-        hb.message_name = parse_name_in_attribute 'message', node
-        hb.part_name = parse_name_in_attribute 'part', node
-        hb
+      def parse_body node
+        b = Binding::Body.new
+        b.use = fetch_attribute_value 'use', node
+        # TODO: encodingStyle, namespace, parts
+        b
+      end
+
+      def parse_header node
+        h = Binding::Header.new
+        h.use = fetch_attribute_value 'use', node
+        h.message_name = parse_name_in_attribute 'message', node
+        h.part_name = parse_name_in_attribute 'part', node
+        # TODO: encodingStyle, namespace
+        h
       end
 
       def parse_operation_output node, operation

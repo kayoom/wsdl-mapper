@@ -9,6 +9,12 @@ module SvcDescParsingTests
 
     NS = "http://example.org/schema"
 
+    def test_name
+      desc = TestHelper.parse_wsdl 'simple_service.wsdl'
+
+      assert_equal 'MyWsdl', desc.name
+    end
+
     def test_messages
       desc = TestHelper.parse_wsdl 'simple_service.wsdl'
 

@@ -12,9 +12,22 @@ module WsdlMapper
           attr_accessor :header, :body
         end
 
-        class HeaderBody
+        class Header
           attr_accessor :use, :message_name, :part_name
-          attr_accessor :message, :part
+          attr_accessor :message, :part, :namespace, :encoding_styles
+
+          def encoded?
+            @use == 'encoded'
+          end
+
+          def literal?
+            !encoded?
+          end
+        end
+
+        class Body
+          attr_accessor :use, :part_names
+          attr_accessor :parts, :namespace, :encoding_styles
 
           def encoded?
             @use == 'encoded'

@@ -6,8 +6,7 @@ module WsdlMapper
       class Description
         include WsdlMapper::Dom
 
-        attr_reader :name
-        attr_accessor :target_namespace, :schema
+        attr_accessor :target_namespace, :schema, :name
 
         def initialize
           @name = nil
