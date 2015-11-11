@@ -43,6 +43,7 @@
     <wsdl:operation name="SomeOperation">
       <wsdl:input message="ns:OperationInputMsg"/>
       <wsdl:output message="ns:OperationOutputMsg"/>
+      <wsdl:fault name="StandardFault" message="ns:OperationOutputMsg"/>
     </wsdl:operation>
   </wsdl:portType>
 
@@ -51,13 +52,18 @@
     <wsdl:operation name="SomeOperation">
       <wsdlsoap:operation soapAction="MySoapAction"/>
       <wsdl:input>
-        <wsdlsoap:header use="literal" message="ns:HeaderMsg" part="HeaderPart"/>
+        <wsdlsoap:header use="literal" message="ns:HeaderMsg" part="HeaderPart">
+          <wsdlsoap:headerfault message="ns:OperationInputMsg" part="OperationInputPart" use="literal"/>
+        </wsdlsoap:header>
         <wsdlsoap:body use="literal"/>
       </wsdl:input>
       <wsdl:output>
         <wsdlsoap:header use="literal" message="ns:HeaderMsg" part="HeaderPart"/>
         <wsdlsoap:body use="literal"/>
       </wsdl:output>
+      <wsdl:fault name="StandardFault">
+        <wsdlsoap:fault name="StandardFault" use="literal"/>
+      </wsdl:fault>
     </wsdl:operation>
   </wsdl:binding>
 
@@ -67,12 +73,15 @@
       <wsdlsoap:operation soapAction="MySoapAction"/>
       <wsdl:input>
         <wsdlsoap:header use="encoded" message="ns:HeaderMsg" part="HeaderPart"/>
-        <wsdlsoap:body use="literal"/>
+        <wsdlsoap:body parts="OperationInputPart" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://example.org/schema"/>
       </wsdl:input>
       <wsdl:output>
-        <wsdlsoap:header use="literal" message="ns:HeaderMsg" part="HeaderPart"/>
-        <wsdlsoap:body use="literal"/>
+        <wsdlsoap:header use="encoded" message="ns:HeaderMsg" part="HeaderPart"/>
+        <wsdlsoap:body parts="OperationOutputPart" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://example.org/schema"/>
       </wsdl:output>
+      <wsdl:fault name="StandardFault">
+        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://example.org/schema"/>
+      </wsdl:fault>
     </wsdl:operation>
   </wsdl:binding>
 

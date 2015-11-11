@@ -9,7 +9,7 @@ module WsdlMapper
         if block
           @data = Hash.new do |h, k|
             h[k] = Hash.new do |h2, k2|
-              h2[k2] = block[k, k2]
+              h2[k2] = block[WsdlMapper::Dom::Name.get(k, k2)]
             end
           end
         else

@@ -21,6 +21,7 @@ module WsdlMapper
       BINDING = Name.get NS, 'binding'
       SERVICE = Name.get NS, 'service'
       PORT = Name.get NS, 'port'
+      FAULT = Name.get NS, 'fault'
     end
   end
 end

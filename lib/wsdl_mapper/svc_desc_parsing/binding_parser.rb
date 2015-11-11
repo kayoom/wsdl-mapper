@@ -51,6 +51,8 @@ module WsdlMapper
           parse_operation_input node, operation
         when OUTPUT
           parse_operation_output node, operation
+        when FAULT
+          parse_operation_fault node, operation
         when Soap::OPERATION
           parse_operation_soap_action node, operation
         # TODO: fault
@@ -64,7 +66,8 @@ module WsdlMapper
       end
 
       def parse_operation_input node, operation
-        input = Binding::InputOutput.new
+        name = parse_name_in_attribute 'name', node
+        input = Binding::InputOutput.new name
 
         each_element node do |child|
           parse_input_output_child child, input
@@ -76,7 +79,7 @@ module WsdlMapper
       def parse_input_output_child node, in_out
         case get_name node
         when Soap::HEADER
-          in_out.header = parse_header node
+          in_out.add_header parse_header node
         when Soap::BODY
           in_out.body = parse_body node
         # TODO: headerfault
@@ -86,29 +89,85 @@ module WsdlMapper
       end
 
       def parse_body node
-        b = Binding::Body.new
-        b.use = fetch_attribute_value 'use', node
-        # TODO: encodingStyle, namespace, parts
-        b
+        body = Binding::Body.new
+        body.use = fetch_attribute_value 'use', node
+        body.encoding_styles = fetch_attribute_value('encodingStyle', node, "").split " "
+        body.namespace = fetch_attribute_value 'namespace', node
+        body.part_names = fetch_attribute_value('parts', node, "").split(" ").map { |s| parse_name(s) }
+        body
       end
 
       def parse_header node
-        h = Binding::Header.new
-        h.use = fetch_attribute_value 'use', node
-        h.message_name = parse_name_in_attribute 'message', node
-        h.part_name = parse_name_in_attribute 'part', node
-        # TODO: encodingStyle, namespace
-        h
+        header = Binding::Header.new
+        header.use = fetch_attribute_value 'use', node
+        header.message_name = parse_name_in_attribute 'message', node
+        header.part_name = parse_name_in_attribute 'part', node
+        header.encoding_styles = fetch_attribute_value('encodingStyle', node, "").split " "
+        header.namespace = fetch_attribute_value 'namespace', node
+
+        each_element node do |child|
+          parse_header_child child, header
+        end
+
+        header
+      end
+
+      def parse_header_child node, header
+        case get_name node
+        when Soap::HEADER_FAULT
+          parse_header_fault node, header
+        else
+          log_msg node, :unknown
+        end
+      end
+
+      def parse_header_fault node, header
+        header_fault = Binding::HeaderFault.new
+        header_fault.use = fetch_attribute_value 'use', node
+        header_fault.message_name = parse_name_in_attribute 'message', node
+        header_fault.part_name = parse_name_in_attribute 'part', node
+        header_fault.encoding_styles = fetch_attribute_value('encodingStyle', node, "").split " "
+        header_fault.namespace = fetch_attribute_value 'namespace', node
+
+        header.add_header_fault header_fault
       end
 
       def parse_operation_output node, operation
-        output = Binding::InputOutput.new
+        name = parse_name_in_attribute 'name', node
+        output = Binding::InputOutput.new name
 
         each_element node do |child|
           parse_input_output_child child, output
         end
 
         operation.output = output
+      end
+
+      def parse_operation_fault node, operation
+        name = parse_name_in_attribute 'name', node
+        fault = Binding::Fault.new name
+
+        each_element node do |child|
+          parse_fault_child child, fault
+        end
+
+        operation.add_fault fault
+      end
+
+      def parse_fault_child node, fault
+        case get_name node
+        when Soap::FAULT
+          parse_soap_fault node, fault
+        else
+          log_msg node, :unknown
+        end
+      end
+
+      def parse_soap_fault node, fault
+        name = parse_name_in_attribute 'name', node
+        soap_fault = Binding::SoapFault.new name
+        soap_fault.use = fetch_attribute_value 'use', node
+        fault.soap_fault = soap_fault
       end
     end
   end

@@ -11,6 +11,8 @@ module WsdlMapper
       HEADER = Name.get NS, 'header'
       BODY = Name.get NS, 'body'
       ADDRESS = Name.get NS, 'address'
+      FAULT = Name.get NS, 'fault'
+      HEADER_FAULT = Name.get NS, 'headerfault'
     end
   end
 end

@@ -80,11 +80,21 @@ module SvcDescParsingTests
       operation = operations.first
       assert_equal Name.get(NS, 'SomeOperation'), operation.name
 
-      assert_equal Name.get(NS, 'OperationInputMsg'), operation.input_message_name
-      assert_equal Name.get(NS, 'OperationInputMsg'), operation.input_message.name
-      assert_equal Name.get(NS, 'OperationOutputMsg'), operation.output_message_name
-      assert_equal Name.get(NS, 'OperationOutputMsg'), operation.output_message.name
-      assert_equal Name.get(NS, 'OperationOutputType'), operation.output_message.each_part.first.type.name
+      assert_equal Name.get(NS, 'OperationInputMsg'), operation.input.message_name
+      assert_equal Name.get(NS, 'OperationInputMsg'), operation.input.message.name
+
+      assert_equal Name.get(NS, 'OperationOutputMsg'), operation.output.message_name
+      assert_equal Name.get(NS, 'OperationOutputMsg'), operation.output.message.name
+      assert_equal Name.get(NS, 'OperationOutputType'), operation.output.message.each_part.first.type.name
+
+      assert_equal Name.get(NS, 'StandardFault'), operation.each_fault.first.name
+      assert_equal Name.get(NS, 'OperationOutputMsg'), operation.each_fault.first.message_name
+      assert_equal Name.get(NS, 'OperationOutputMsg'), operation.each_fault.first.message.name
+    end
+
+    def test_port_type_operation_overloads
+      skip
+      # TODO port type operation overloads and bindings
     end
 
     def test_services
@@ -111,11 +121,11 @@ module SvcDescParsingTests
       assert_equal Name.get(NS, 'MyBinding'), port.binding.name
     end
 
-    def test_bindings
+    def test_bindings_document
       desc = TestHelper.parse_wsdl 'simple_service.wsdl'
 
       bindings = desc.each_binding.to_a
-      assert_equal 1, bindings.count
+      assert_equal 2, bindings.count
       binding = bindings.first
 
       assert_equal Name.get(NS, 'MyBinding'), binding.name
@@ -125,7 +135,7 @@ module SvcDescParsingTests
       assert_equal Name.get(NS, 'MyPortType'), binding.type.name
     end
 
-    def test_binding_operations
+    def test_binding_document_operations
       desc = TestHelper.parse_wsdl 'simple_service.wsdl'
 
       bindings = desc.each_binding.to_a
@@ -139,20 +149,93 @@ module SvcDescParsingTests
       assert_equal "MySoapAction", operation.soap_action
 
       input = operation.input
-      assert_equal Name.get(NS, 'HeaderMsg'), input.header.message_name
-      assert_equal Name.get(NS, 'HeaderMsg'), input.header.message.name
-      assert_equal Name.get(NS, 'HeaderPart'), input.header.part_name
-      assert_equal Name.get(NS, 'HeaderPart'), input.header.part.name
-      assert_equal false, input.header.encoded?
+      refute_nil input.target
+      assert_equal Name.get(NS, 'HeaderMsg'), input.each_header.first.message_name
+      assert_equal Name.get(NS, 'HeaderMsg'), input.each_header.first.message.name
+      assert_equal Name.get(NS, 'HeaderPart'), input.each_header.first.part_name
+      assert_equal Name.get(NS, 'HeaderPart'), input.each_header.first.part.name
+      assert_equal false, input.each_header.first.encoded?
       assert_equal false, input.body.encoded?
 
       output = operation.output
-      assert_equal Name.get(NS, 'HeaderMsg'), output.header.message_name
-      assert_equal Name.get(NS, 'HeaderMsg'), output.header.message.name
-      assert_equal Name.get(NS, 'HeaderPart'), output.header.part_name
-      assert_equal Name.get(NS, 'HeaderPart'), output.header.part.name
-      assert_equal Name.get(NS, 'HeaderElement'), output.header.part.element.name
+      refute_nil output.target
+      assert_equal Name.get(NS, 'HeaderMsg'), output.each_header.first.message_name
+      assert_equal Name.get(NS, 'HeaderMsg'), output.each_header.first.message.name
+      assert_equal Name.get(NS, 'HeaderPart'), output.each_header.first.part_name
+      assert_equal Name.get(NS, 'HeaderPart'), output.each_header.first.part.name
+      assert_equal Name.get(NS, 'HeaderElement'), output.each_header.first.part.element.name
       assert_equal false, output.body.encoded?
+
+      fault = operation.each_fault.first
+      refute_nil fault.target
+      assert_equal Name.get(NS, 'StandardFault'), fault.name
+      assert_equal Name.get(NS, 'StandardFault'), fault.soap_fault.name
+      assert_equal false, fault.soap_fault.encoded?
+      assert_equal Name.get(NS, 'StandardFault'), fault.target.name
+
+      header_fault = input.each_header.first.each_header_fault.first
+      refute_nil header_fault
+      assert_equal Name.get(NS, 'OperationInputMsg'), header_fault.message_name
+      assert_equal Name.get(NS, 'OperationInputPart'), header_fault.part_name
+      assert_equal Name.get(NS, 'OperationInputMsg'), header_fault.message.name
+      assert_equal Name.get(NS, 'OperationInputPart'), header_fault.part.name
+      assert_equal false, header_fault.encoded?
+    end
+
+    def test_bindings_rpc
+      desc = TestHelper.parse_wsdl 'simple_service.wsdl'
+
+      bindings = desc.each_binding.to_a
+      assert_equal 2, bindings.count
+      binding = bindings.last
+
+      assert_equal Name.get(NS, 'MyBindingRPC'), binding.name
+      assert_equal Name.get(NS, 'MyPortType'), binding.type_name
+      assert_equal "rpc", binding.style
+      assert_equal SoapHttp::NS, binding.transport
+      assert_equal Name.get(NS, 'MyPortType'), binding.type.name
+    end
+
+    def test_binding_rpc_operations
+      desc = TestHelper.parse_wsdl 'simple_service.wsdl'
+
+      bindings = desc.each_binding.to_a
+      binding = bindings.last
+
+      operations = binding.each_operation.to_a
+      assert_equal 1, operations.count
+      operation = operations.first
+
+      assert_equal Name.get(NS, 'SomeOperation'), operation.name
+      assert_equal "MySoapAction", operation.soap_action
+      assert_equal desc.each_port_type.first.each_operation.first, operation.target
+
+      input = operation.input
+      assert_equal Name.get(NS, 'OperationInputMsg'), input.message.name
+      assert_equal Name.get(NS, 'HeaderMsg'), input.each_header.first.message_name
+      assert_equal Name.get(NS, 'HeaderMsg'), input.each_header.first.message.name
+      assert_equal Name.get(NS, 'HeaderPart'), input.each_header.first.part_name
+      assert_equal Name.get(NS, 'HeaderPart'), input.each_header.first.part.name
+      assert_equal true, input.each_header.first.encoded?
+      assert_equal true, input.body.encoded?
+      assert_equal "http://schemas.xmlsoap.org/soap/encoding/", input.body.encoding_styles.first
+      assert_equal "http://example.org/schema", input.body.namespace
+      assert_equal [Name.get(NS, 'OperationInputPart')], input.body.part_names
+      assert_equal Name.get(NS, 'OperationInputPart'), input.body.parts.first.name
+
+      output = operation.output
+      assert_equal Name.get(NS, 'OperationOutputMsg'), output.message.name
+      assert_equal Name.get(NS, 'HeaderMsg'), output.each_header.first.message_name
+      assert_equal Name.get(NS, 'HeaderMsg'), output.each_header.first.message.name
+      assert_equal Name.get(NS, 'HeaderPart'), output.each_header.first.part_name
+      assert_equal Name.get(NS, 'HeaderPart'), output.each_header.first.part.name
+      assert_equal Name.get(NS, 'HeaderElement'), output.each_header.first.part.element.name
+      assert_equal true, output.each_header.first.encoded?
+      assert_equal true, output.body.encoded?
+      assert_equal "http://schemas.xmlsoap.org/soap/encoding/", output.body.encoding_styles.first
+      assert_equal "http://example.org/schema", output.body.namespace
+      assert_equal [Name.get(NS, 'OperationOutputPart')], output.body.part_names
+      assert_equal Name.get(NS, 'OperationOutputPart'), output.body.parts.first.name
     end
 
     def test_embedded_schema

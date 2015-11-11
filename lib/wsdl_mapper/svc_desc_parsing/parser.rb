@@ -76,8 +76,8 @@ module WsdlMapper
       def link_types
         link_messages
         link_port_types
-        link_services
         link_bindings
+        link_services
       end
 
       def link_bindings
@@ -85,16 +85,58 @@ module WsdlMapper
           b.type = @description.get_port_type b.type_name
 
           b.each_operation do |op|
-            if op.input.header.message_name
-              op.input.header.message = @description.get_message op.input.header.message_name
-              op.input.header.part = op.input.header.message.get_part op.input.header.part_name
-            end
-
-            if op.output.header.message_name
-              op.output.header.message = @description.get_message op.output.header.message_name
-              op.output.header.part = op.output.header.message.get_part op.output.header.part_name
-            end
+            link_binding_operation b, op
           end
+        end
+      end
+
+      def link_binding_operation b, op
+        op.target = b.type.find_operation op.name, op.input.name, op.output.name
+
+        link_binding_operation_input op
+        link_binding_operation_output op
+        link_binding_operation_faults op
+      end
+
+      def link_binding_operation_faults op
+        op.each_fault do |fault|
+          fault.target = op.target.get_fault fault.name
+        end
+      end
+
+      def link_binding_operation_output op
+        op.output.target = op.target.output
+        op.output.message = op.target.output.message
+        op.output.each_header do |header|
+          if header.message_name
+            header.message = @description.get_message header.message_name
+            header.part = header.message.get_part header.part_name
+          end
+          header.each_header_fault do |header_fault|
+            header_fault.message = @description.get_message header_fault.message_name
+            header_fault.part = header_fault.message.get_part header_fault.part_name
+          end
+        end
+        op.output.body.parts = op.output.body.part_names.map do |pn|
+          op.output.message.get_part pn
+        end
+      end
+
+      def link_binding_operation_input op
+        op.input.target = op.target.input
+        op.input.message = op.target.input.message
+        op.input.each_header do |header|
+          if header.message_name
+            header.message = @description.get_message header.message_name
+            header.part = header.message.get_part header.part_name
+          end
+          header.each_header_fault do |header_fault|
+            header_fault.message = @description.get_message header_fault.message_name
+            header_fault.part = header_fault.message.get_part header_fault.part_name
+          end
+        end
+        op.input.body.parts = op.input.body.part_names.map do |pn|
+          op.input.message.get_part pn
         end
       end
 
@@ -109,8 +151,12 @@ module WsdlMapper
       def link_port_types
         @description.each_port_type do |pt|
           pt.each_operation do |op|
-            op.input_message = @description.get_message op.input_message_name
-            op.output_message = @description.get_message op.output_message_name
+            op.input.message = @description.get_message op.input.message_name
+            op.output.message = @description.get_message op.output.message_name
+
+            op.each_fault do |fault|
+              fault.message = @description.get_message fault.message_name
+            end
           end
         end
       end

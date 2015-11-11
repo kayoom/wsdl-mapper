@@ -43,17 +43,32 @@ module WsdlMapper
           parse_operation_input node, operation
         when OUTPUT
           parse_operation_output node, operation
+        when FAULT
+          parse_operation_fault node, operation
         else
           log_msg node, :unknown
         end
       end
 
       def parse_operation_input node, operation
-        operation.input_message_name = parse_name_in_attribute 'message', node
+        name = parse_name_in_attribute 'name', node
+        input = PortType::InputOutput.new name
+        input.message_name = parse_name_in_attribute 'message', node
+        operation.input = input
       end
 
       def parse_operation_output node, operation
-        operation.output_message_name = parse_name_in_attribute 'message', node
+        name = parse_name_in_attribute 'name', node
+        output = PortType::InputOutput.new name
+        output.message_name = parse_name_in_attribute 'message', node
+        operation.output = output
+      end
+
+      def parse_operation_fault node, operation
+        name = parse_name_in_attribute 'name', node
+        fault = PortType::InputOutput.new name
+        fault.message_name = parse_name_in_attribute 'message', node
+        operation.add_fault fault
       end
     end
   end
