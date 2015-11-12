@@ -15,11 +15,16 @@ module WsdlMapper
       end
 
       def import_schema node
-        ns = node.attributes['namespace'].value
-        location = node.attributes['schemaLocation'].value
-        doc = @base.import_resolver.resolve location
-        schema = @base.dup.parse doc
-        @base.schema.add_import ns, schema
+        ns = fetch_attribute_value 'namespace', node
+        location = fetch_attribute_value 'schemaLocation', node
+
+        if location.nil?
+          @base.schema.unresolved_imports << ns
+        else
+          doc = @base.import_resolver.resolve location
+          schema = @base.dup.parse doc
+          @base.schema.add_import ns, schema
+        end
       end
     end
   end

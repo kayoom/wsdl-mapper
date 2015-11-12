@@ -23,6 +23,8 @@ module WsdlMapper
           parse_binding_operation node, binding
         when Soap::BINDING
           parse_soap_binding node, binding
+        when DOCUMENTATION
+          @base.parse_documentation node, binding
         else
           log_msg node, :unknown
         end
@@ -55,7 +57,8 @@ module WsdlMapper
           parse_operation_fault node, operation
         when Soap::OPERATION
           parse_operation_soap_action node, operation
-        # TODO: fault
+        when DOCUMENTATION
+          @base.parse_documentation node, operation
         else
           log_msg node, :unknown
         end
@@ -82,7 +85,8 @@ module WsdlMapper
           in_out.add_header parse_header node
         when Soap::BODY
           in_out.body = parse_body node
-        # TODO: headerfault
+        when DOCUMENTATION
+          @base.parse_documentation node, in_out
         else
           log_msg node, :unknown
         end
@@ -93,7 +97,7 @@ module WsdlMapper
         body.use = fetch_attribute_value 'use', node
         body.encoding_styles = fetch_attribute_value('encodingStyle', node, "").split " "
         body.namespace = fetch_attribute_value 'namespace', node
-        body.part_names = fetch_attribute_value('parts', node, "").split(" ").map { |s| parse_name(s) }
+        body.part_names = fetch_attribute_value('parts', node, "").split(" ").map { |s| parse_name(s, node) }
         body
       end
 
@@ -116,6 +120,8 @@ module WsdlMapper
         case get_name node
         when Soap::HEADER_FAULT
           parse_header_fault node, header
+        when DOCUMENTATION
+          @base.parse_documentation node, header
         else
           log_msg node, :unknown
         end
@@ -158,6 +164,8 @@ module WsdlMapper
         case get_name node
         when Soap::FAULT
           parse_soap_fault node, fault
+        when DOCUMENTATION
+          @base.parse_documentation node, fault
         else
           log_msg node, :unknown
         end

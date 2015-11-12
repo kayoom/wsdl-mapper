@@ -80,7 +80,7 @@
         <wsdlsoap:body parts="OperationOutputPart" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://example.org/schema"/>
       </wsdl:output>
       <wsdl:fault name="StandardFault">
-        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://example.org/schema"/>
+        <wsdlsoap:fault use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://example.org/schema" name="StandardFault"/>
       </wsdl:fault>
     </wsdl:operation>
   </wsdl:binding>

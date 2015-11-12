@@ -20,6 +20,8 @@ module WsdlMapper
         case get_name(node)
         when OPERATION
           parse_operation node, port_type
+        when DOCUMENTATION
+          @base.parse_documentation node, operation
         else
           log_msg node, :unknown
         end
@@ -45,6 +47,8 @@ module WsdlMapper
           parse_operation_output node, operation
         when FAULT
           parse_operation_fault node, operation
+        when DOCUMENTATION
+          @base.parse_documentation node, operation
         else
           log_msg node, :unknown
         end

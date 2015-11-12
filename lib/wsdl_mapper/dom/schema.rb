@@ -7,7 +7,7 @@ module WsdlMapper
     class Schema
       include WsdlMapper::Dom
 
-      attr_reader :types, :imports, :elements
+      attr_reader :types, :imports, :elements, :unresolved_imports
       attr_accessor :target_namespace, :qualified_elements, :qualified_attributes
 
       def initialize
@@ -18,6 +18,7 @@ module WsdlMapper
         @qualified_elements = false
         @qualified_attributes = false
         @imports = []
+        @unresolved_imports = []
       end
 
       def add_import ns, schema
@@ -33,6 +34,8 @@ module WsdlMapper
       end
 
       def get_type name
+        return if name.nil?
+
         if name.ns == BuiltinType::NAMESPACE
           @builtin_types[name] ||= BuiltinType.types[name]
         elsif name.ns == SoapEncodingType::NAMESPACE

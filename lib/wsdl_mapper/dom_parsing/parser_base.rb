@@ -10,7 +10,7 @@ module WsdlMapper
 
       protected
       def parse_base node, type
-        type.base_type_name = parse_name node.attributes['base'].value
+        type.base_type_name = parse_name_in_attribute 'base', node
       end
 
       def parse_annotation node, type

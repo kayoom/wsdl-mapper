@@ -20,6 +20,8 @@ module WsdlMapper
         case get_name(node)
         when PART
           parse_part node, message
+        when DOCUMENTATION
+          @base.parse_documentation node, message
         else
           log_msg node, :unknown
         end

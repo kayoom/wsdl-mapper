@@ -6,8 +6,7 @@ module WsdlMapper
     class SimpleTypeParser < ParserBase
 
       def parse node
-        name_str = node.attributes['name'].value
-        name = parse_name name_str
+        name = parse_name_in_attribute 'name', node
 
         type = SimpleType.new name
 

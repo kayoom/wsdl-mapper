@@ -6,8 +6,7 @@ module WsdlMapper
     class ElementParser < ParserBase
       # @param [Nokogiri::XML::Node] node
       def parse node
-        name_str = node.attributes['name'].value
-        name = parse_name name_str
+        name = parse_name_in_attribute 'name', node
 
         element = Element.new name
 
@@ -17,7 +16,7 @@ module WsdlMapper
           log_msg node, :unknown
           return
         end
-        element.type_name = parse_name node.attributes['type'].value
+        element.type_name = parse_name_in_attribute 'type', node
 
         each_element node do |child|
           parse_element_child child, element

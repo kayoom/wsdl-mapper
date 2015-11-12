@@ -40,7 +40,7 @@ module SvcDescParsingTests
       assert_equal Name.get(NS, 'HeaderPart'), part.name
       assert_equal Name.get(NS, 'HeaderElement'), part.element_name
       refute_nil part.element
-      assert_equal desc.schema.get_element(Name.get(NS, 'HeaderElement')), part.element
+      assert_equal desc.get_element(Name.get(NS, 'HeaderElement')), part.element
     end
 
     def test_message_part_with_type
@@ -54,7 +54,7 @@ module SvcDescParsingTests
       assert_equal Name.get(NS, 'OperationInputPart'), part.name
       assert_equal Name.get(NS, 'OperationInputType'), part.type_name
       refute_nil part.type
-      assert_equal desc.schema.get_type(Name.get(NS, 'OperationInputType')), part.type
+      assert_equal desc.get_type(Name.get(NS, 'OperationInputType')), part.type
     end
 
     def test_port_types
@@ -240,7 +240,7 @@ module SvcDescParsingTests
 
     def test_embedded_schema
       desc = TestHelper.parse_wsdl 'simple_service.wsdl'
-      schema = desc.schema
+      schema = desc.each_schema.first
 
       assert_equal 3, schema.each_type.count
       assert_equal 1, schema.each_element.count

@@ -10,8 +10,7 @@ module WsdlMapper
     class ComplexTypeParser < ParserBase
 
       def parse node
-        name_str = node.attributes['name'].value
-        name = parse_name name_str
+        name = parse_name_in_attribute 'name', node
 
         type = ComplexType.new name
 
@@ -61,8 +60,7 @@ module WsdlMapper
 
       def parse_attribute node, type
         name = node.attributes['name'].value
-        # TODO:  -> Name.get ?
-        type_name = parse_name node.attributes['type'].value
+        type_name = parse_name_in_attribute 'type', node
 
         attr = Attribute.new name, type_name,
           default: fetch_attribute_value('default', node),
@@ -119,13 +117,13 @@ module WsdlMapper
       end
 
       def parse_soap_array_attribute node, type
-        ref = node.attributes['ref'].value
+        ref = parse_name_in_attribute 'ref', node
 
-        if parse_name(ref) != SoapEncodingType['arrayType'].name
-          raise StandardError.new("Invalid ref attribute for SOAP array node: #{parse_name(ref)}")
+        if ref != SoapEncodingType['arrayType'].name
+          raise StandardError.new("Invalid ref attribute for SOAP array node: #{ref}")
         end
 
-        type_name = parse_name node.attribute_with_ns(WsdlMapper::SvcDescParsing::Wsdl11::ARRAY_TYPE.name, WsdlMapper::SvcDescParsing::Wsdl11::ARRAY_TYPE.ns).value
+        type_name = parse_name node.attribute_with_ns(WsdlMapper::SvcDescParsing::Wsdl11::ARRAY_TYPE.name, WsdlMapper::SvcDescParsing::Wsdl11::ARRAY_TYPE.ns).value, node
         type.soap_array_type_name = Name.get type_name.ns, type_name.name[0..-3]
       end
 
@@ -160,11 +158,8 @@ module WsdlMapper
       end
 
       def parse_complex_type_property node, type, i, container
-        name_str = node.attributes['name'].value
-        name = parse_name name_str #Name.get @base.schema.target_namespace, name_str
-
-        type_name_str = node.attributes['type'].value
-        type_name = parse_name type_name_str
+        name = parse_name_in_attribute 'name', node
+        type_name = parse_name_in_attribute 'type', node
 
         bounds = parse_bounds node, container
 

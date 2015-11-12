@@ -6,7 +6,7 @@ module WsdlMapper
       class Description
         include WsdlMapper::Dom
 
-        attr_accessor :target_namespace, :schema, :name
+        attr_accessor :target_namespace, :name, :documentation
 
         def initialize
           @name = nil
@@ -14,6 +14,11 @@ module WsdlMapper
           @port_types = Directory.new
           @bindings = Directory.new
           @services = Directory.new
+          @schemas = []
+        end
+
+        def add_schema schema
+          @schemas << schema
         end
 
         def add_message message
@@ -30,6 +35,10 @@ module WsdlMapper
 
         def add_binding binding
           @bindings[binding.name] = binding
+        end
+
+        def each_schema &block
+          @schemas.each &block
         end
 
         def each_message &block
@@ -62,6 +71,14 @@ module WsdlMapper
 
         def get_service name
           @services[name]
+        end
+
+        def get_type name
+          @schemas.lazy.map { |s| s.get_type(name) }.reject(&:nil?).first
+        end
+
+        def get_element name
+          @schemas.lazy.map { |s| s.get_element(name) }.reject(&:nil?).first
         end
       end
     end

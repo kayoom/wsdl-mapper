@@ -1,30 +1,20 @@
 require 'nokogiri'
 
 require 'wsdl_mapper/dom/name'
+require 'wsdl_mapper/parsing/logging'
 
 module WsdlMapper
   module Parsing
     class Base
       include WsdlMapper::Dom
+      include Logging
 
       TARGET_NS = 'targetNamespace'
       NS_DECL_PREFIX = 'xmlns'
 
-      class LogMsg
-        def initialize node, source, msg = ''
-          @node = node
-          @source = source
-          @node_name = node && node.name
-          @msg = msg
-        end
-
-        def to_s
-          "#{@msg}: #{@node} - #{@source.class.name}"
-        end
-      end
-
       def initialize base
         @base = base
+        @log_msgs = []
       end
 
       # @param [Nokogiri::XML::Node] node
@@ -74,12 +64,6 @@ module WsdlMapper
       # @return [WsdlMapper::Dom::Name]
       def get_name node
         self.class.get_name node
-      end
-
-      # @param [Nokogiri::XML::Node] node
-      # @param [String, Symbol] msg
-      def log_msg node, msg
-        @base.log_msg node, msg, self
       end
 
       # @param [Nokogiri::XML::Node] node
@@ -142,14 +126,18 @@ module WsdlMapper
       def parse_name_in_attribute name, node
         val = fetch_attribute_value name, node
         return unless val
-        parse_name val
+        parse_name val, node
       end
 
       # @param [String] name
       # @return [WsdlMapper::Dom::Name]
-      def parse_name name_str
+      def parse_name name_str, node
         name, ns_code = name_str.split(':').reverse
-        ns = ns_code.nil? ? @base.target_namespace : @base.namespaces[ns_code.to_s]
+        ns = if ns_code.nil?
+          @base.target_namespace
+        else
+          node.namespaces["xmlns:#{ns_code}"]
+        end
 
         Name.get ns, name
       end

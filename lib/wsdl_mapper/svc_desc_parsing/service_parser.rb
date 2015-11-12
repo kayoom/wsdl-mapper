@@ -20,6 +20,8 @@ module WsdlMapper
         case get_name node
         when PORT
           parse_service_port node, service
+        when DOCUMENTATION
+          @base.parse_documentation node, service
         else
           log_msg node, :unknown
         end
@@ -42,6 +44,8 @@ module WsdlMapper
         case get_name node
         when Soap::ADDRESS
           parse_port_address node, port
+        when DOCUMENTATION
+          @base.parse_documentation node, port
         else
           log_msg node, :unknown
         end
