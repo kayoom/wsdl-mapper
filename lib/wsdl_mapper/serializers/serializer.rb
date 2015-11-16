@@ -10,7 +10,7 @@ module WsdlMapper
     class Serializer
       def initialize resolver:, namespaces: WsdlMapper::Dom::Namespaces.new, default_namespace: nil
         @doc = ::Nokogiri::XML::Document.new
-        @doc.encoding = "UTF-8"
+        @doc.encoding = 'UTF-8'
         @x = ::Nokogiri::XML::Builder.with @doc
         @tm = ::WsdlMapper::TypeMapping::DEFAULT
         @resolver = resolver
@@ -18,31 +18,32 @@ module WsdlMapper
         if default_namespace
           @namespaces.default = default_namespace
         end
-        # @current_prefix = nil
       end
 
       def get serializer_name
         @resolver.resolve serializer_name
       end
 
-      def complex ns, tag, attributes
-        @x.send expand_tag(ns, tag), eval_attributes(attributes) do |x|
+      def complex type_name, element_name, attributes
+        element_name ||= type_name
+        @x.send expand_tag(*element_name), eval_attributes(attributes) do |x|
           yield self
         end
       end
 
-      def simple ns, tag
-        @x.send expand_tag(ns, tag) do |x|
+      def simple type_name, element_name
+        element_name ||= type_name
+        @x.send expand_tag(*element_name) do |x|
           yield self
         end
       end
 
-      def text_builtin value, type
-        @x.text builtin_to_xml(type, value)
+      def text_builtin value, type_name
+        @x.text builtin_to_xml(type_name, value)
       end
 
-      def value_builtin ns, tag, value, type
-        @x.send expand_tag(ns, tag), builtin_to_xml(type, value)
+      def value_builtin element_name, value, type_name
+        @x.send expand_tag(*element_name), builtin_to_xml(type_name, value)
       end
 
       def to_xml
@@ -70,23 +71,24 @@ module WsdlMapper
         ::WsdlMapper::Dom::BuiltinType[name]
       end
 
-      def builtin_to_xml type, value
-        @tm.to_xml builtin(type), value
+      def builtin_to_xml type_name, value
+        @tm.to_xml builtin(type_name), value
       end
 
       def eval_attributes attributes
         attributes.each_with_object({}) do |attr, hsh|
-          ns = attr[0]
-          key = attr[1]
+          attr_name = attr[0]
+          ns = attr_name[0]
+          name = attr_name[1]
           if ns
             prefix = @namespaces.prefix_for ns
-            key = "#{prefix}:#{key}"
+            name = "#{prefix}:#{name}"
           end
-          value = attr[2]
-          type = attr[3]
+          value = attr[1]
+          type = attr[2]
           next if value.nil?
 
-          hsh[key] = @tm.to_xml builtin(type), value
+          hsh[name] = @tm.to_xml builtin(type), value
         end
       end
     end
