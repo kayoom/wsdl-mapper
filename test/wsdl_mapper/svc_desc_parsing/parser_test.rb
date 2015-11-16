@@ -7,7 +7,7 @@ module SvcDescParsingTests
     include WsdlMapper::SvcDescParsing
     include WsdlMapper::Dom
 
-    NS = "http://example.org/schema"
+    NS = 'http://example.org/schema'
 
     def test_name
       desc = TestHelper.parse_wsdl 'simple_service.wsdl'
@@ -115,9 +115,9 @@ module SvcDescParsingTests
       assert_equal 1, ports.count
       port = ports.first
 
-      assert_equal Name.get(NS, "MyPort"), port.name
-      assert_equal Name.get(NS, "MyBinding"), port.binding_name
-      assert_equal "http://example.org/api", port.address_location
+      assert_equal Name.get(NS, 'MyPort'), port.name
+      assert_equal Name.get(NS, 'MyBinding'), port.binding_name
+      assert_equal 'http://example.org/api', port.address_location
       assert_equal Name.get(NS, 'MyBinding'), port.binding.name
     end
 
@@ -130,7 +130,7 @@ module SvcDescParsingTests
 
       assert_equal Name.get(NS, 'MyBinding'), binding.name
       assert_equal Name.get(NS, 'MyPortType'), binding.type_name
-      assert_equal "document", binding.style
+      assert_equal 'document', binding.style
       assert_equal SoapHttp::NS, binding.transport
       assert_equal Name.get(NS, 'MyPortType'), binding.type.name
     end
@@ -146,7 +146,7 @@ module SvcDescParsingTests
       operation = operations.first
 
       assert_equal Name.get(NS, 'SomeOperation'), operation.name
-      assert_equal "MySoapAction", operation.soap_action
+      assert_equal 'MySoapAction', operation.soap_action
 
       input = operation.input
       refute_nil input.target
@@ -191,7 +191,7 @@ module SvcDescParsingTests
 
       assert_equal Name.get(NS, 'MyBindingRPC'), binding.name
       assert_equal Name.get(NS, 'MyPortType'), binding.type_name
-      assert_equal "rpc", binding.style
+      assert_equal 'rpc', binding.style
       assert_equal SoapHttp::NS, binding.transport
       assert_equal Name.get(NS, 'MyPortType'), binding.type.name
     end
@@ -207,7 +207,7 @@ module SvcDescParsingTests
       operation = operations.first
 
       assert_equal Name.get(NS, 'SomeOperation'), operation.name
-      assert_equal "MySoapAction", operation.soap_action
+      assert_equal 'MySoapAction', operation.soap_action
       assert_equal desc.each_port_type.first.each_operation.first, operation.target
 
       input = operation.input
@@ -218,8 +218,8 @@ module SvcDescParsingTests
       assert_equal Name.get(NS, 'HeaderPart'), input.each_header.first.part.name
       assert_equal true, input.each_header.first.encoded?
       assert_equal true, input.body.encoded?
-      assert_equal "http://schemas.xmlsoap.org/soap/encoding/", input.body.encoding_styles.first
-      assert_equal "http://example.org/schema", input.body.namespace
+      assert_equal 'http://schemas.xmlsoap.org/soap/encoding/', input.body.encoding_styles.first
+      assert_equal 'http://example.org/schema', input.body.namespace
       assert_equal [Name.get(NS, 'OperationInputPart')], input.body.part_names
       assert_equal Name.get(NS, 'OperationInputPart'), input.body.parts.first.name
 
@@ -232,8 +232,8 @@ module SvcDescParsingTests
       assert_equal Name.get(NS, 'HeaderElement'), output.each_header.first.part.element.name
       assert_equal true, output.each_header.first.encoded?
       assert_equal true, output.body.encoded?
-      assert_equal "http://schemas.xmlsoap.org/soap/encoding/", output.body.encoding_styles.first
-      assert_equal "http://example.org/schema", output.body.namespace
+      assert_equal 'http://schemas.xmlsoap.org/soap/encoding/', output.body.encoding_styles.first
+      assert_equal 'http://example.org/schema', output.body.namespace
       assert_equal [Name.get(NS, 'OperationOutputPart')], output.body.part_names
       assert_equal Name.get(NS, 'OperationOutputPart'), output.body.parts.first.name
     end

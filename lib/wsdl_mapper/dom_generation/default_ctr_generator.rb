@@ -28,7 +28,7 @@ module WsdlMapper
       end
 
       def generate_wrapping ttg, f, result, var_name, par_name
-        f.begin_def "initialize", [par_name]
+        f.begin_def 'initialize', [par_name]
         f.assignments [var_name, par_name]
         f.end
       end

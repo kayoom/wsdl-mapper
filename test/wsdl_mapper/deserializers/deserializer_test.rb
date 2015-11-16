@@ -44,12 +44,12 @@ module DeserializersTests
 XML
 
       deserializer = Deserializer.new
-      deserializer.register Name.get(nil, "noteType"), NoteTypeMapping
+      deserializer.register Name.get(nil, 'noteType'), NoteTypeMapping
 
       obj = deserializer.from_xml xml
       assert_kind_of NoteType, obj
-      assert_equal "ABCD-1234", obj.uuid
-      assert_equal "to@example.org", obj.to
+      assert_equal 'ABCD-1234', obj.uuid
+      assert_equal 'to@example.org', obj.to
       assert_equal ::DateTime.new(2002, 5, 30, 9, 30, 10, '-6'), obj.date_time
     end
 
@@ -67,15 +67,15 @@ XML
 XML
 
       deserializer = Deserializer.new
-      deserializer.register Name.get(nil, "noteType"), NoteTypeMapping
-      deserializer.register Name.get(nil, "attachmentType"), AttachmentTypeMapping
+      deserializer.register Name.get(nil, 'noteType'), NoteTypeMapping
+      deserializer.register Name.get(nil, 'attachmentType'), AttachmentTypeMapping
 
       obj = deserializer.from_xml xml
       assert_kind_of NoteType, obj
 
       att = obj.attachments.first
       assert_kind_of AttachmentType, att
-      assert_equal "This is an attachment.", att.name
+      assert_equal 'This is an attachment.', att.name
 
       assert_kind_of StringIO, att.content
       assert_equal <<TXT.strip, att.content.read
@@ -133,22 +133,22 @@ TXT
 XML
 
       deserializer = Deserializer.new
-      deserializer.register Name.get(nil, "noteType"), NoteTypeMapping
-      deserializer.register Name.get(nil, "attachmentType"), AttachmentTypeMapping
-      deserializer.register Name.get(nil, "userType"), UserMapping
-      deserializer.register Name.get(nil, "conversationType"), ConversationMapping
-      deserializer.register Name.get(nil, "caseType"), CaseMapping
+      deserializer.register Name.get(nil, 'noteType'), NoteTypeMapping
+      deserializer.register Name.get(nil, 'attachmentType'), AttachmentTypeMapping
+      deserializer.register Name.get(nil, 'userType'), UserMapping
+      deserializer.register Name.get(nil, 'conversationType'), ConversationMapping
+      deserializer.register Name.get(nil, 'caseType'), CaseMapping
 
       obj = deserializer.from_xml xml
       assert_kind_of Case, obj
 
       author = obj.author
       assert_kind_of User, author
-      assert_equal "Mr. Bean", author.name
+      assert_equal 'Mr. Bean', author.name
 
       supervisor = author.supervisor
       assert_kind_of User, supervisor
-      assert_equal "James Bond", supervisor.name
+      assert_equal 'James Bond', supervisor.name
 
       conv = obj.conversation
       assert_kind_of Conversation, conv
@@ -156,12 +156,12 @@ XML
       notes = conv.notes
       note = notes.first
       assert_kind_of NoteType, note
-      assert_equal "ABCD-1234", note.uuid
-      assert_equal "to@example.org", note.to
+      assert_equal 'ABCD-1234', note.uuid
+      assert_equal 'to@example.org', note.to
 
       att = note.attachments.first
       assert_kind_of AttachmentType, att
-      assert_equal "This is an attachment.", att.name
+      assert_equal 'This is an attachment.', att.name
 
       assert_kind_of StringIO, att.content
       assert_equal <<TXT.strip, att.content.read

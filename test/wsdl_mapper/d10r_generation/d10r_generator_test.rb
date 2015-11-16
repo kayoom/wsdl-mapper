@@ -15,14 +15,14 @@ module D10rGenerationTests
     def test_basic_empty_type
       generate 'empty_note_type.xsd'
 
-      assert_file_is "deserializer_factory.rb", <<RUBY
+      assert_file_is 'deserializer_factory.rb', <<RUBY
 require "wsdl_mapper/deserializers/deserializer_factory"
 
 DeserializerFactory = ::WsdlMapper::Deserializers::DeserializerFactory.new
 
 RUBY
 
-      assert_file_is "note_type_deserializer.rb", <<RUBY
+      assert_file_is 'note_type_deserializer.rb', <<RUBY
 require "deserializer_factory"
 require "note_type"
 
@@ -34,7 +34,7 @@ RUBY
     def test_basic_type
       generate 'basic_note_type.xsd'
 
-      assert_file_is "note_type_deserializer.rb", <<RUBY
+      assert_file_is 'note_type_deserializer.rb', <<RUBY
 require "deserializer_factory"
 require "note_type"
 
@@ -50,7 +50,7 @@ RUBY
     def test_basic_type_with_array
       generate 'basic_note_type_with_attachments.xsd'
 
-      assert_file_is "note_type_deserializer.rb", <<RUBY
+      assert_file_is 'note_type_deserializer.rb', <<RUBY
 require "deserializer_factory"
 require "note_type"
 
@@ -67,7 +67,7 @@ RUBY
     def test_basic_type_with_array_simple_type
       generate 'basic_note_type_with_attachments_simple_type.xsd'
 
-      assert_file_is "note_type_deserializer.rb", <<RUBY
+      assert_file_is 'note_type_deserializer.rb', <<RUBY
 require "deserializer_factory"
 require "note_type"
 
@@ -84,7 +84,7 @@ RUBY
     def test_basic_type_with_array_complex_type
       generate 'basic_note_type_with_complex_attachments.xsd'
 
-      assert_file_is "note_type_deserializer.rb", <<RUBY
+      assert_file_is 'note_type_deserializer.rb', <<RUBY
 require "deserializer_factory"
 require "note_type"
 
@@ -98,7 +98,7 @@ NoteTypeDeserializer = ::DeserializerFactory.register(nil, "noteType", ::NoteTyp
 end
 RUBY
 
-      assert_file_is "attachment_type_deserializer.rb", <<RUBY
+      assert_file_is 'attachment_type_deserializer.rb', <<RUBY
 require "deserializer_factory"
 require "attachment_type"
 
