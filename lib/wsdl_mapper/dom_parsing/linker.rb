@@ -52,11 +52,16 @@ module WsdlMapper
       def link_attribute_types
         @schema.each_type do |type|
           next unless type.is_a? WsdlMapper::Dom::ComplexType
-          type.each_attribute do |attr|
-            attr.type = @schema.get_type attr.type_name
 
-            unless attr.type
-              log_msg attr, :missing_attribute_type
+          type.each_attribute do |attr|
+            if attr.is_a?(WsdlMapper::Dom::Attribute::Ref)
+              type.add_attribute @schema.get_attribute attr.name
+            else
+              attr.type = @schema.get_type attr.type_name
+
+              unless attr.type
+                log_msg attr, :missing_attribute_type
+              end
             end
           end
         end

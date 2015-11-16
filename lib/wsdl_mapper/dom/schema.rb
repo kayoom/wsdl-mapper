@@ -7,13 +7,14 @@ module WsdlMapper
     class Schema
       include WsdlMapper::Dom
 
-      attr_reader :types, :imports, :elements, :unresolved_imports
+      attr_reader :types, :imports, :elements, :attributes, :unresolved_imports
       attr_accessor :target_namespace, :qualified_elements, :qualified_attributes
 
       def initialize
         @types = Directory.new
         @anon_types = []
         @elements = Directory.new
+        @attributes = Directory.new
         @builtin_types = Directory.new
         @soap_encoding_types = Directory.new
         @qualified_elements = false
@@ -39,6 +40,10 @@ module WsdlMapper
         @elements[element.name] = element
       end
 
+      def add_attribute attr
+        @attributes[attr.name] = attr
+      end
+
       def get_type name
         return if name.nil?
 
@@ -55,6 +60,10 @@ module WsdlMapper
 
       def get_element name
         @elements[name]
+      end
+
+      def get_attribute name
+        @attributes[name]
       end
 
       def each_type &block
@@ -77,6 +86,10 @@ module WsdlMapper
 
       def each_element &block
         recursive_each @elements, :each_element, &block
+      end
+
+      def each_attribute &block
+        recursive_each @attributes, :each_attribute, &block
       end
 
       def each_builtin_type &block

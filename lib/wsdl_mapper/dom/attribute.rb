@@ -1,8 +1,13 @@
 require 'wsdl_mapper/dom/bounds'
+require 'wsdl_mapper/dom/type_base'
 
 module WsdlMapper
   module Dom
     class Attribute
+      class Ref < TypeBase
+        attr_accessor :containing_type
+      end
+
       attr_reader :name, :type_name, :default, :use, :fixed, :form
       attr_accessor :type
       attr_accessor :documentation
