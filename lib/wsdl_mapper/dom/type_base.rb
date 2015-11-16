@@ -12,7 +12,7 @@ module WsdlMapper
       end
 
       def hash
-        [self.class, name].hash
+        name ? [self.class, name].hash : super
       end
 
       def == other
@@ -20,7 +20,7 @@ module WsdlMapper
       end
 
       def eql? other
-        self.class == other.class && name == other.name
+        name ? (self.class == other.class && name == other.name) : super
       end
 
       def self.to_proc
