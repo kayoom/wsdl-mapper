@@ -40,6 +40,10 @@ module WsdlMapper
         end
       end
 
+      def parse_attribute node, type
+        @base.parsers[ATTRIBUTE].parse_attribute node, type
+      end
+
       def parse_complex_type_all node, type
         each_element node do |child|
           parse_complex_type_property child, type, -1, ALL
@@ -54,27 +58,6 @@ module WsdlMapper
             parse_extension child, type
           else
             log_msg node, :unknown
-          end
-        end
-      end
-
-      def parse_attribute node, type
-        name = node.attributes['name'].value
-        type_name = parse_name_in_attribute 'type', node
-
-        attr = Attribute.new name, type_name,
-          default: fetch_attribute_value('default', node),
-          use: fetch_attribute_value('use', node, 'optional'),
-          fixed: fetch_attribute_value('fixed', node),
-          form: fetch_attribute_value('form', node)
-        type.add_attribute attr
-
-        each_element node do |child|
-          case get_name child
-          when ANNOTATION
-            parse_annotation child, attr
-          else
-            log_msg child, :unknown
           end
         end
       end

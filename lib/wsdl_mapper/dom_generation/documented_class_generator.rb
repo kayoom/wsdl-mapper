@@ -48,7 +48,7 @@ module WsdlMapper
           type = @generator.get_ruby_type_name a.type
 
           yard.attribute! name.attr_name, type, a.documentation.default do
-            yard.tag :xml_name, a.name
+            yard.tag :xml_name, a.name.name
           end
           f.attr_accessors name.attr_name
         end

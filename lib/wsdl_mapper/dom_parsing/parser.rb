@@ -6,6 +6,7 @@ require 'wsdl_mapper/dom_parsing/simple_type_parser'
 require 'wsdl_mapper/dom_parsing/annotation_parser'
 require 'wsdl_mapper/dom_parsing/import_parser'
 require 'wsdl_mapper/dom_parsing/element_parser'
+require 'wsdl_mapper/dom_parsing/attribute_parser'
 
 require 'wsdl_mapper/dom/schema'
 require 'wsdl_mapper/dom/namespaces'
@@ -32,7 +33,8 @@ module WsdlMapper
           ANNOTATION    => AnnotationParser.new(self),
           SIMPLE_TYPE   => SimpleTypeParser.new(self),
           IMPORT        => ImportParser.new(self),
-          ELEMENT       => ElementParser.new(self)
+          ELEMENT       => ElementParser.new(self),
+          ATTRIBUTE     => AttributeParser.new(self)
         }
 
         @import_resolver = import_resolver

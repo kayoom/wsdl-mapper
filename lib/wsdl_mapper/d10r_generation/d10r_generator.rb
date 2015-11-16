@@ -95,7 +95,7 @@ module WsdlMapper
         containing_type.each_attribute do |attr|
           acc_name = @namer.get_attribute_name attr
           type = attr.type.root
-          name = ::WsdlMapper::Dom::Name.get containing_type.name.ns, attr.name
+          name = attr.name
           f.statement "register_attr :#{acc_name.attr_name}, #{inspect_name(name)}, #{inspect_name(type.name)}"
         end
       end

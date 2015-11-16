@@ -66,7 +66,7 @@ module WsdlMapper
       # @param [WsdlMapper::Dom::Attribute] attribute
       # @return [PropertyName]
       def get_attribute_name attribute
-        PropertyName.new get_accessor_name(attribute.name), get_var_name(attribute.name)
+        PropertyName.new get_accessor_name(attribute.name.name), get_var_name(attribute.name.name)
       end
 
       # @param [WsdlMapper::Dom::SimpleType] type
