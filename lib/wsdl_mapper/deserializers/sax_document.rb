@@ -48,6 +48,7 @@ module WsdlMapper
           @current_frame.mapping.get_type name
         else
           # root element -> (tag-)name == type name
+          # TODO: thats wrong
           name
         end
       end

@@ -25,14 +25,12 @@ module WsdlMapper
       end
 
       def complex type_name, element_name, attributes
-        element_name ||= type_name
         @x.send expand_tag(*element_name), eval_attributes(attributes) do |x|
           yield self
         end
       end
 
       def simple type_name, element_name
-        element_name ||= type_name
         @x.send expand_tag(*element_name) do |x|
           yield self
         end

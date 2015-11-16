@@ -5,10 +5,11 @@ require 'wsdl_mapper/generation/type_to_generate'
 require 'wsdl_mapper/generation/default_module_generator'
 require 'wsdl_mapper/dom/complex_type'
 require 'wsdl_mapper/dom/simple_type'
+require 'wsdl_mapper/generation/base'
 
 module WsdlMapper
   module D10rGeneration
-    class D10rGenerator
+    class D10rGenerator < WsdlMapper::Generation::Base
       include WsdlMapper::Generation
 
       attr_reader :context
@@ -48,9 +49,9 @@ module WsdlMapper
 
         File.open file_name, 'w' do |io|
           f = get_formatter io
-          f.requires "wsdl_mapper/deserializers/deserializer_factory"
+          f.requires 'wsdl_mapper/deserializers/deserializer_factory'
           open_modules f, modules
-          f.assignments [@factory_name.class_name, "::WsdlMapper::Deserializers::DeserializerFactory.new"]
+          f.assignments [@factory_name.class_name, '::WsdlMapper::Deserializers::DeserializerFactory.new']
           close_modules f, modules
         end
 
@@ -85,7 +86,7 @@ module WsdlMapper
       end
 
       def register_type f, name, type, type_name
-        f.block "#{name.class_name} = #{@factory_name.name}.register(#{type.name.ns.inspect}, #{type.name.name.inspect}, #{type_name.name})", [] do
+        f.block "#{name.class_name} = #{@factory_name.name}.register(#{generate_name(type.name)}, #{type_name.name})", [] do
           register_attributes f, type
           register_properties f, type
         end
@@ -96,7 +97,7 @@ module WsdlMapper
           acc_name = @namer.get_attribute_name attr
           type = attr.type.root
           name = attr.name
-          f.statement "register_attr :#{acc_name.attr_name}, #{inspect_name(name)}, #{inspect_name(type.name)}"
+          f.statement "register_attr :#{acc_name.attr_name}, #{generate_name(name)}, #{generate_name(type.name)}"
         end
       end
 
@@ -104,7 +105,7 @@ module WsdlMapper
         containing_type.each_property do |prop|
           acc_name = @namer.get_property_name prop
           type = prop.type.is_a?(WsdlMapper::Dom::SimpleType) ? prop.type.root : prop.type
-          f.statement "register_prop :#{acc_name.attr_name}, #{inspect_name(prop.name)}, #{inspect_name(type.name)}#{inspect_prop_options(prop)}"
+          f.statement "register_prop :#{acc_name.attr_name}, #{generate_name(prop.name)}, #{generate_name(type.name)}#{inspect_prop_options(prop)}"
         end
       end
 
@@ -114,13 +115,9 @@ module WsdlMapper
 
       protected
       def inspect_prop_options prop
-        opts = ""
-        opts << ", array: true" if prop.array?
+        opts = ''
+        opts << ', array: true' if prop.array?
         opts
-      end
-
-      def inspect_name name
-        "::WsdlMapper::Dom::Name.get(#{name.ns.inspect}, #{name.name.inspect})"
       end
 
       def close_modules f, modules
