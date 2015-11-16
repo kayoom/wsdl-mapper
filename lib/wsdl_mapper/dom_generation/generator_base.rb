@@ -1,7 +1,9 @@
+require 'wsdl_mapper/generation/base'
+
 module WsdlMapper
   module DomGeneration
     # @abstract
-    class GeneratorBase
+    class GeneratorBase < WsdlMapper::Generation::Base
       def initialize generator
         @generator = generator
       end
@@ -22,6 +24,7 @@ module WsdlMapper
             requires << req
           end
         elsif WsdlMapper::Dom::SoapEncodingType.builtin? type_name
+          # ignore
         else
           type = schema.get_type type_name
           name = @generator.namer.get_type_name type

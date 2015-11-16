@@ -15,12 +15,12 @@ module S8rGenerationTests
     def test_basic_empty_type
       generate 'empty_note_type.xsd'
 
-      assert_file_is "note_type_serializer.rb", <<RUBY
+      assert_file_is 'note_type_serializer.rb', <<RUBY
 class NoteTypeSerializer
 
-  def build(x, obj)
+  def build(x, obj, name)
     attributes = []
-    x.complex(nil, "noteType", attributes) do |x|
+    x.complex([nil, "noteType"], name, attributes) do |x|
     end
   end
 end
@@ -28,32 +28,32 @@ RUBY
     end
 
     def test_basic_type_with_inline_complex_type
-      skip
       generate 'basic_note_type_with_inline_complex_type.xsd'
 
-      assert_file_is "note_type_serializer.rb", <<RUBY
+      assert_file_is 'note_type_serializer.rb', <<RUBY
 class NoteTypeSerializer
 
-  def build(x, obj)
+  def build(x, obj, name)
     attributes = []
-    x.complex(nil, "noteType", attributes) do |x|
-      x.value_builtin(nil, "to", obj.to, "string")
-      x.value_builtin(nil, "from", obj.from, "string")
-      x.value_builtin(nil, "heading", obj.heading, "string")
-      x.value_builtin(nil, "body", obj.body, "string")
-      x.get("attachment_inline_type_serializer").build(x, obj.attachment)
+    x.complex([nil, "noteType"], name, attributes) do |x|
+      x.value_builtin([nil, "to"], obj.to, "string")
+      x.value_builtin([nil, "from"], obj.from, "string")
+      x.value_builtin([nil, "heading"], obj.heading, "string")
+      x.value_builtin([nil, "body"], obj.body, "string")
+      x.get("attachment_inline_type_serializer").build(x, obj.attachment, [nil, "attachment"])
     end
   end
 end
 RUBY
 
-      assert_file_is "attachment_inline_type_serializer", <<RUBY
+      assert_file_is 'attachment_inline_type_serializer.rb', <<RUBY
 class AttachmentInlineTypeSerializer
-  def build(x, obj)
+
+  def build(x, obj, name)
     attributes = []
-    x.complex(nil, "attachment", attributes) do |x|
-      x.value_builtin(nil, "name", obj.to, "string")
-      x.value_builtin(nil, "body", obj.to, "string")
+    x.complex(nil, name, attributes) do |x|
+      x.value_builtin([nil, "name"], obj.name, "string")
+      x.value_builtin([nil, "body"], obj.body, "string")
     end
   end
 end
@@ -63,18 +63,18 @@ RUBY
     def test_basic_type_with_attribute
       generate 'basic_note_type_with_property_and_attribute.xsd'
 
-      assert_file_is "note_type_serializer.rb", <<RUBY
+      assert_file_is 'note_type_serializer.rb', <<RUBY
 class NoteTypeSerializer
 
-  def build(x, obj)
+  def build(x, obj, name)
     attributes = [
-      [nil, "uuid", obj.uuid, "token"]
+      [[nil, "uuid"], obj.uuid, "token"]
     ]
-    x.complex(nil, "noteType", attributes) do |x|
-      x.value_builtin(nil, "to", obj.to, "string")
-      x.value_builtin(nil, "from", obj.from, "string")
-      x.value_builtin(nil, "heading", obj.heading, "string")
-      x.value_builtin(nil, "body", obj.body, "string")
+    x.complex([nil, "noteType"], name, attributes) do |x|
+      x.value_builtin([nil, "to"], obj.to, "string")
+      x.value_builtin([nil, "from"], obj.from, "string")
+      x.value_builtin([nil, "heading"], obj.heading, "string")
+      x.value_builtin([nil, "body"], obj.body, "string")
     end
   end
 end
@@ -84,11 +84,11 @@ RUBY
     def test_simple_type
       generate 'address_type_enumeration.xsd'
 
-      assert_file_is "address_type_serializer.rb", <<RUBY
+      assert_file_is 'address_type_serializer.rb', <<RUBY
 class AddressTypeSerializer
 
-  def build(x, obj)
-    x.simple(nil, "addressType") do |x|
+  def build(x, obj, name)
+    x.simple([nil, "addressType"], name) do |x|
       x.text_builtin(obj, "token")
     end
   end
@@ -99,16 +99,16 @@ RUBY
     def test_basic_type_with_target_namespace
       generate 'basic_note_type_with_target_namespace.xsd'
 
-      assert_file_is "note_type_serializer.rb", <<RUBY
+      assert_file_is 'note_type_serializer.rb', <<RUBY
 class NoteTypeSerializer
 
-  def build(x, obj)
+  def build(x, obj, name)
     attributes = []
-    x.complex("http://example.org/schema", "noteType", attributes) do |x|
-      x.value_builtin("http://example.org/schema", "to", obj.to, "string")
-      x.value_builtin("http://example.org/schema", "from", obj.from, "string")
-      x.value_builtin("http://example.org/schema", "heading", obj.heading, "string")
-      x.value_builtin("http://example.org/schema", "body", obj.body, "string")
+    x.complex(["http://example.org/schema", "noteType"], name, attributes) do |x|
+      x.value_builtin(["http://example.org/schema", "to"], obj.to, "string")
+      x.value_builtin(["http://example.org/schema", "from"], obj.from, "string")
+      x.value_builtin(["http://example.org/schema", "heading"], obj.heading, "string")
+      x.value_builtin(["http://example.org/schema", "body"], obj.body, "string")
     end
   end
 end
@@ -117,18 +117,19 @@ RUBY
 
     def test_basic_type_with_import
       generate 'basic_note_type_with_import.xsd'
-      assert_file_is "note_type_serializer.rb", <<RUBY
+
+      assert_file_is 'note_type_serializer.rb', <<RUBY
 class NoteTypeSerializer
 
-  def build(x, obj)
+  def build(x, obj, name)
     attributes = []
-    x.complex("http://example.org/notes", "noteType", attributes) do |x|
-      x.value_builtin("http://example.org/notes", "to", obj.to, "string")
-      x.value_builtin("http://example.org/notes", "from", obj.from, "string")
-      x.value_builtin("http://example.org/notes", "heading", obj.heading, "string")
-      x.value_builtin("http://example.org/notes", "body", obj.body, "string")
+    x.complex(["http://example.org/notes", "noteType"], name, attributes) do |x|
+      x.value_builtin(["http://example.org/notes", "to"], obj.to, "string")
+      x.value_builtin(["http://example.org/notes", "from"], obj.from, "string")
+      x.value_builtin(["http://example.org/notes", "heading"], obj.heading, "string")
+      x.value_builtin(["http://example.org/notes", "body"], obj.body, "string")
       obj.attachments.each do |itm|
-        x.get("attachment_type_serializer").build(x, itm)
+        x.get("attachment_type_serializer").build(x, itm, ["http://example.org/notes", "attachments"])
       end
     end
   end
@@ -139,18 +140,18 @@ RUBY
     def test_basic_type_with_array
       generate 'basic_note_type_with_attachments.xsd'
 
-      assert_file_is "note_type_serializer.rb", <<RUBY
+      assert_file_is 'note_type_serializer.rb', <<RUBY
 class NoteTypeSerializer
 
-  def build(x, obj)
+  def build(x, obj, name)
     attributes = []
-    x.complex(nil, "noteType", attributes) do |x|
-      x.value_builtin(nil, "to", obj.to, "string")
-      x.value_builtin(nil, "from", obj.from, "string")
-      x.value_builtin(nil, "heading", obj.heading, "string")
-      x.value_builtin(nil, "body", obj.body, "string")
+    x.complex([nil, "noteType"], name, attributes) do |x|
+      x.value_builtin([nil, "to"], obj.to, "string")
+      x.value_builtin([nil, "from"], obj.from, "string")
+      x.value_builtin([nil, "heading"], obj.heading, "string")
+      x.value_builtin([nil, "body"], obj.body, "string")
       obj.attachments.each do |itm|
-        x.value_builtin(nil, "attachments", itm, "string")
+        x.value_builtin([nil, "attachments"], itm, "string")
       end
     end
   end
@@ -161,18 +162,18 @@ RUBY
     def test_basic_type_with_array_simple_type
       generate 'basic_note_type_with_attachments_simple_type.xsd'
 
-      assert_file_is "note_type_serializer.rb", <<RUBY
+      assert_file_is 'note_type_serializer.rb', <<RUBY
 class NoteTypeSerializer
 
-  def build(x, obj)
+  def build(x, obj, name)
     attributes = []
-    x.complex(nil, "noteType", attributes) do |x|
-      x.value_builtin(nil, "to", obj.to, "string")
-      x.value_builtin(nil, "from", obj.from, "string")
-      x.value_builtin(nil, "heading", obj.heading, "string")
-      x.value_builtin(nil, "body", obj.body, "string")
+    x.complex([nil, "noteType"], name, attributes) do |x|
+      x.value_builtin([nil, "to"], obj.to, "string")
+      x.value_builtin([nil, "from"], obj.from, "string")
+      x.value_builtin([nil, "heading"], obj.heading, "string")
+      x.value_builtin([nil, "body"], obj.body, "string")
       obj.attachments.each do |itm|
-        x.get("attachment_type_serializer").build(x, itm)
+        x.get("attachment_type_serializer").build(x, itm, [nil, "attachments"])
       end
     end
   end
@@ -183,26 +184,26 @@ RUBY
     def test_basic_type_with_reference
       generate 'basic_note_type_with_referenced_simple_email_address_type.xsd'
 
-      assert_file_is "note_type_serializer.rb", <<RUBY
+      assert_file_is 'note_type_serializer.rb', <<RUBY
 class NoteTypeSerializer
 
-  def build(x, obj)
+  def build(x, obj, name)
     attributes = []
-    x.complex(nil, "noteType", attributes) do |x|
-      x.get("email_address_type_serializer").build(x, obj.to)
-      x.get("email_address_type_serializer").build(x, obj.from)
-      x.value_builtin(nil, "heading", obj.heading, "string")
-      x.value_builtin(nil, "body", obj.body, "string")
+    x.complex([nil, "noteType"], name, attributes) do |x|
+      x.get("email_address_type_serializer").build(x, obj.to, [nil, "to"])
+      x.get("email_address_type_serializer").build(x, obj.from, [nil, "from"])
+      x.value_builtin([nil, "heading"], obj.heading, "string")
+      x.value_builtin([nil, "body"], obj.body, "string")
     end
   end
 end
 RUBY
 
-      assert_file_is "email_address_type_serializer.rb", <<RUBY
+      assert_file_is 'email_address_type_serializer.rb', <<RUBY
 class EmailAddressTypeSerializer
 
-  def build(x, obj)
-    x.simple(nil, "emailAddressType") do |x|
+  def build(x, obj, name)
+    x.simple([nil, "emailAddressType"], name) do |x|
       x.text_builtin(obj, "string")
     end
   end
@@ -212,16 +213,17 @@ RUBY
 
     def test_soap_array
       generate 'basic_note_type_with_soap_array.xsd'
-      assert_file_is "attachments_array_serializer.rb", <<RUBY
+
+      assert_file_is 'attachments_array_serializer.rb', <<RUBY
 class AttachmentsArraySerializer
 
-  def build(x, obj)
+  def build(x, obj, name)
     attributes = [
-      [x.soap_enc, "arrayType", "attachment[\#{obj.length}]", "string"]
+      [[x.soap_enc, "arrayType"], "attachment[\#{obj.length}]", "string"]
     ]
-    x.complex(nil, "attachmentsArray", attributes) do |x|
+    x.complex([nil, "attachmentsArray"], name, attributes) do |x|
       obj.each do |itm|
-        x.get("attachment_serializer").build(x, itm)
+        x.get("attachment_serializer").build(x, itm, [nil, "item"])
       end
     end
   end
@@ -232,14 +234,14 @@ RUBY
     def test_complex_type_with_simple_content
       generate 'simple_money_type_with_currency_attribute.xsd'
 
-      assert_file_is "money_type_serializer.rb", <<RUBY
+      assert_file_is 'money_type_serializer.rb', <<RUBY
 class MoneyTypeSerializer
 
-  def build(x, obj)
+  def build(x, obj, name)
     attributes = [
-      [nil, "currency", obj.currency, "token"]
+      [[nil, "currency"], obj.currency, "token"]
     ]
-    x.complex(nil, "moneyType", attributes) do |x|
+    x.complex([nil, "moneyType"], name, attributes) do |x|
       x.text_builtin(obj.content, "float")
     end
   end
@@ -250,16 +252,16 @@ RUBY
     def test_basic_type_with_properties
       generate 'basic_note_type.xsd'
 
-      assert_file_is "note_type_serializer.rb", <<RUBY
+      assert_file_is 'note_type_serializer.rb', <<RUBY
 class NoteTypeSerializer
 
-  def build(x, obj)
+  def build(x, obj, name)
     attributes = []
-    x.complex(nil, "noteType", attributes) do |x|
-      x.value_builtin(nil, "to", obj.to, "string")
-      x.value_builtin(nil, "from", obj.from, "string")
-      x.value_builtin(nil, "heading", obj.heading, "string")
-      x.value_builtin(nil, "body", obj.body, "string")
+    x.complex([nil, "noteType"], name, attributes) do |x|
+      x.value_builtin([nil, "to"], obj.to, "string")
+      x.value_builtin([nil, "from"], obj.from, "string")
+      x.value_builtin([nil, "heading"], obj.heading, "string")
+      x.value_builtin([nil, "body"], obj.body, "string")
     end
   end
 end
@@ -273,7 +275,7 @@ RUBY
 
       result = generator.generate schema
 
-      expected_file = @tmp_path.join("notes_api", "s8r", "note_type_serializer.rb")
+      expected_file = @tmp_path.join('notes_api', 's8r', 'note_type_serializer.rb')
       assert File.exists? expected_file
       assert_includes result.files, expected_file
 
@@ -283,13 +285,13 @@ module NotesApi
   module S8r
     class NoteTypeSerializer
 
-      def build(x, obj)
+      def build(x, obj, name)
         attributes = []
-        x.complex(nil, "noteType", attributes) do |x|
-          x.value_builtin(nil, "to", obj.to, "string")
-          x.value_builtin(nil, "from", obj.from, "string")
-          x.value_builtin(nil, "heading", obj.heading, "string")
-          x.value_builtin(nil, "body", obj.body, "string")
+        x.complex([nil, "noteType"], name, attributes) do |x|
+          x.value_builtin([nil, "to"], obj.to, "string")
+          x.value_builtin([nil, "from"], obj.from, "string")
+          x.value_builtin([nil, "heading"], obj.heading, "string")
+          x.value_builtin([nil, "body"], obj.body, "string")
         end
       end
     end
@@ -298,13 +300,13 @@ end
 RUBY
 
       root_node = result.module_tree.first
-      assert_equal "NotesApi", root_node.type_name.module_name
+      assert_equal 'NotesApi', root_node.type_name.module_name
       middle_node = root_node.children.first
-      assert_equal "S8r", middle_node.type_name.module_name
+      assert_equal 'S8r', middle_node.type_name.module_name
       type_node = middle_node.children.first
-      assert_equal "NoteTypeSerializer", type_node.type_name.class_name
+      assert_equal 'NoteTypeSerializer', type_node.type_name.class_name
 
-      expected_file = @tmp_path.join("notes_api", "s8r.rb")
+      expected_file = @tmp_path.join('notes_api', 's8r.rb')
       assert File.exists? expected_file
 
       generated_file = File.read expected_file
@@ -312,7 +314,7 @@ RUBY
 require "notes_api/s8r/note_type_serializer"
 RUBY
 
-      expected_file = @tmp_path.join("notes_api.rb")
+      expected_file = @tmp_path.join('notes_api.rb')
       assert File.exists? expected_file
 
       generated_file = File.read expected_file

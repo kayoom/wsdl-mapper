@@ -5,10 +5,11 @@ require 'wsdl_mapper/generation/type_to_generate'
 require 'wsdl_mapper/generation/default_module_generator'
 require 'wsdl_mapper/dom/complex_type'
 require 'wsdl_mapper/dom/simple_type'
+require 'wsdl_mapper/generation/base'
 
 module WsdlMapper
   module S8rGeneration
-    class S8rGenerator
+    class S8rGenerator < ::WsdlMapper::Generation::Base
       include WsdlMapper::Generation
 
       attr_reader :context
@@ -66,9 +67,8 @@ module WsdlMapper
 
       protected
       def def_simple_build_method_body f, ttg
-        ns = ttg.type.name.ns.inspect
-        tag = tag_string_for_name ttg.type.name
-        f.block "x.simple(#{ns}, #{tag})", ["x"] do
+        type_name = generate_name ttg.type.name
+        f.block "x.simple(#{type_name}, name)", ['x'] do
           root_type = ttg.type.root.name.name
           f.statement "x.text_builtin(obj, #{root_type.inspect})"
         end
@@ -76,10 +76,8 @@ module WsdlMapper
 
       def def_complex_build_method_body f, ttg
         f.literal_array 'attributes', collect_attributes(ttg)
-        ns = ttg.type.name.ns.inspect
-        tag = tag_string_for_name ttg.type.name
-        # TODO: wrong! -> property name, not type name!
-        f.block "x.complex(#{ns}, #{tag}, attributes)", ["x"] do
+        type_name = generate_name ttg.type.name
+        f.block "x.complex(#{type_name}, name, attributes)", ['x'] do
           if ttg.type.simple_content?
             write_content_statement f, ttg
           elsif ttg.type.soap_array?
@@ -111,19 +109,21 @@ module WsdlMapper
           soap_array_attributes(ttg)
         else
           ttg.type.each_attribute.map do |attr|
-            name = attr.name
-            attr_name = @namer.get_attribute_name(attr).attr_name
-            type = attr.type.root.name.name
+            attr_name = generate_name attr.name
+            accessor_name = @namer.get_attribute_name(attr).attr_name
+            type = attr.type.root.name.name.inspect
 
-            %<[#{name.ns.inspect}, #{name.name.inspect}, obj.#{attr_name}, #{type.inspect}]>
+            "[#{attr_name}, obj.#{accessor_name}, #{type}]"
           end
         end
       end
 
       def write_soap_array_statements f, ttg
         s8r_name = @namer.get_s8r_name ttg.type.soap_array_type
+        # TODO: dont hardcode, move over to Namer
+        item_name = generate_name WsdlMapper::Dom::Name.get(ttg.type.name.ns, 'item')
         f.block 'obj.each', ['itm'] do
-          f.statement "x.get(#{s8r_name.require_path.inspect}).build(x, itm)"
+          f.statement "x.get(#{s8r_name.require_path.inspect}).build(x, itm, #{item_name})"
         end
       end
 
@@ -131,7 +131,7 @@ module WsdlMapper
         # Use String#inspect to get the proper escaping, but cut off the last quotemark and append the array length
         name = ttg.type.soap_array_type_name.name.inspect[0..-2] + "[\#{obj.length}]\""
         [
-          %<[x.soap_enc, "arrayType", #{name}, "string"]>
+          %<[[x.soap_enc, "arrayType"], #{name}, "string"]>
         ]
       end
 
@@ -161,14 +161,16 @@ module WsdlMapper
         end
       end
 
-      def write_simple_property_statement f, prop, name
-        s8r_name = get_s8r_name(prop)
-        f.statement "x.get(#{s8r_name.require_path.inspect}).build(x, #{name})"
+      def write_simple_property_statement f, prop, var_name
+        serializer = get_s8r_name(prop).require_path.inspect
+        element_name = generate_name prop.name
+        f.statement "x.get(#{serializer}).build(x, #{var_name}, #{element_name})"
       end
 
-      def write_complex_property_statement f, prop, name
-        s8r_name = get_s8r_name(prop)
-        f.statement "x.get(#{s8r_name.require_path.inspect}).build(x, #{name})"
+      def write_complex_property_statement f, prop, var_name
+        serializer = get_s8r_name(prop).require_path.inspect
+        element_name = generate_name prop.name
+        f.statement "x.get(#{serializer}).build(x, #{var_name}, #{element_name})"
       end
 
       def get_s8r_name prop
@@ -180,14 +182,13 @@ module WsdlMapper
       end
 
       def write_builtin_property_statement f, prop, name
-        tag = tag_string_for_name prop.name
-        ns = prop.name.ns.inspect
         type = prop.type_name.name.inspect
-        f.statement "x.value_builtin(#{ns}, #{tag}, #{name}, #{type})"
+        element_name = generate_name prop.name
+        f.statement "x.value_builtin(#{element_name}, #{name}, #{type})"
       end
 
       def def_build_method f, ttg
-        f.begin_def 'build', [:x, :obj]
+        f.begin_def 'build', [:x, :obj, :name]
         case ttg.type
         when ::WsdlMapper::Dom::ComplexType
           def_complex_build_method_body f, ttg
@@ -203,14 +204,6 @@ module WsdlMapper
 
       def open_class f, ttg
         f.begin_class ttg.name.class_name
-      end
-
-      def tag_for_name name
-        name.name
-      end
-
-      def tag_string_for_name name
-        tag_for_name(name).inspect
       end
 
       def close_modules f, modules
