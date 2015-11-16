@@ -7,6 +7,15 @@ module WsdlMapper
       end
 
       protected
+      def add_prop_require requires, prop, schema
+        if prop.type_name
+          add_type_require requires, prop.type_name, schema
+        elsif prop.type
+          name = @generator.namer.get_type_name @generator.namer.get_inline_type prop
+          requires << name.require_path
+        end
+      end
+
       def add_type_require requires, type_name, schema
         if WsdlMapper::Dom::BuiltinType.builtin? type_name
           @generator.type_mapping.requires(type_name).each do |req|

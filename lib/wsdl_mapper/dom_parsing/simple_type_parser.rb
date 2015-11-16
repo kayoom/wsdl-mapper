@@ -36,10 +36,28 @@ module WsdlMapper
           case get_name(child)
           when ENUMERATION
             parse_simple_type_enumeration child, type
+          when PATTERN
+            parse_simple_type_pattern child, type
+          when MIN_INCLUSIVE
+            parse_simple_type_min child, type
+          when MAX_INCLUSIVE
+            parse_simple_type_max child, type
           else
             log_msg node, :unknown
           end
         end
+      end
+
+      def parse_simple_type_pattern node, type
+        type.pattern = fetch_attribute_value 'value', node
+      end
+
+      def parse_simple_type_min node, type
+        type.min_inclusive = fetch_attribute_value 'value', node
+      end
+
+      def parse_simple_type_max node, type
+        type.max_inclusive = fetch_attribute_value 'value', node
       end
 
       def parse_simple_type_enumeration node, type

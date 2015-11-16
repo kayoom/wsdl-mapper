@@ -12,6 +12,7 @@ module WsdlMapper
 
       def initialize
         @types = Directory.new
+        @anon_types = []
         @elements = Directory.new
         @builtin_types = Directory.new
         @soap_encoding_types = Directory.new
@@ -26,7 +27,12 @@ module WsdlMapper
       end
 
       def add_type type
-        @types[type.name] = type
+        if type.name
+          @types[type.name] = type
+        else
+          @anon_types << type
+        end
+        type
       end
 
       def add_element element
@@ -56,6 +62,9 @@ module WsdlMapper
           @types.each do |(n, t)|
             y << t
           end
+          @anon_types.each do |t|
+            y << t
+          end
           @imports.each do |i|
             i.each_type do |t|
               y << t
@@ -67,18 +76,7 @@ module WsdlMapper
       end
 
       def each_element &block
-        enum = Enumerator.new do |y|
-          @elements.each do |(n, t)|
-            y << t
-          end
-          @imports.each do |i|
-            i.each_element do |t|
-              y << t
-            end
-          end
-        end
-
-        block_given? ? enum.each(&block) : enum
+        recursive_each @elements, :each_element, &block
       end
 
       def each_builtin_type &block
@@ -87,6 +85,22 @@ module WsdlMapper
 
       def each_soap_encoding_type &block
         @soap_encoding_types.values.each &block
+      end
+
+      protected
+      def recursive_each array, accessor, &block
+        enum = Enumerator.new do |y|
+          array.each do |(n, t)|
+            y << t
+          end
+          @imports.each do |i|
+            i.send(accessor) do |t|
+              y << t
+            end
+          end
+        end
+
+        block_given? ? enum.each(&block) : enum
       end
     end
   end

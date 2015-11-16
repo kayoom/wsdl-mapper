@@ -27,6 +27,39 @@ end
 RUBY
     end
 
+    def test_basic_type_with_inline_complex_type
+      skip
+      generate 'basic_note_type_with_inline_complex_type.xsd'
+
+      assert_file_is "note_type_serializer.rb", <<RUBY
+class NoteTypeSerializer
+
+  def build(x, obj)
+    attributes = []
+    x.complex(nil, "noteType", attributes) do |x|
+      x.value_builtin(nil, "to", obj.to, "string")
+      x.value_builtin(nil, "from", obj.from, "string")
+      x.value_builtin(nil, "heading", obj.heading, "string")
+      x.value_builtin(nil, "body", obj.body, "string")
+      x.get("attachment_inline_type_serializer").build(x, obj.attachment)
+    end
+  end
+end
+RUBY
+
+      assert_file_is "attachment_inline_type_serializer", <<RUBY
+class AttachmentInlineTypeSerializer
+  def build(x, obj)
+    attributes = []
+    x.complex(nil, "attachment", attributes) do |x|
+      x.value_builtin(nil, "name", obj.to, "string")
+      x.value_builtin(nil, "body", obj.to, "string")
+    end
+  end
+end
+RUBY
+    end
+
     def test_basic_type_with_attribute
       generate 'basic_note_type_with_property_and_attribute.xsd'
 

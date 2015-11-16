@@ -23,10 +23,12 @@ module WsdlMapper
       private
       def link_element_types
         @schema.each_element do |element|
-          element.type = @schema.get_type element.type_name
+          if element.type_name
+            element.type = @schema.get_type element.type_name
 
-          unless element.type
-            log_msg prop, :missing_element_type
+            unless element.type
+              log_msg element.type, :missing_element_type
+            end
           end
         end
       end
@@ -34,11 +36,14 @@ module WsdlMapper
       def link_property_types
         @schema.each_type do |type|
           next unless type.is_a? WsdlMapper::Dom::ComplexType
-          type.each_property do |prop|
-            prop.type = @schema.get_type prop.type_name
 
-            unless prop.type
-              log_msg prop, :missing_property_type
+          type.each_property do |prop|
+            if prop.type_name
+              prop.type = @schema.get_type prop.type_name
+
+              unless prop.type
+                log_msg prop, :missing_property_type
+              end
             end
           end
         end

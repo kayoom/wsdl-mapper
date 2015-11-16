@@ -24,6 +24,9 @@ module WsdlMapper
       ENUMERATION = Name.get NS, 'enumeration'
       ATTRIBUTE = Name.get NS, 'attribute'
       ALL = Name.get NS, 'all'
+      PATTERN = Name.get NS, 'pattern'
+      MIN_INCLUSIVE = Name.get NS, 'minInclusive'
+      MAX_INCLUSIVE = Name.get NS, 'maxInclusive'
 
       ELEMENT_FORM_DEFAULT = "elementFormDefault"
       ATTRIBUTE_FORM_DEFAULT = "attributeFormDefault"

@@ -10,12 +10,6 @@ module WsdlMapper
 
         element = Element.new name
 
-        # Only elements with type reference supported.
-        # TODO: anonymous, inline types?
-        unless node.attributes['type']
-          log_msg node, :unknown
-          return
-        end
         element.type_name = parse_name_in_attribute 'type', node
 
         each_element node do |child|
@@ -32,6 +26,12 @@ module WsdlMapper
         case get_name node
         when ANNOTATION
           parse_annotation node, element
+        when COMPLEX_TYPE
+          element.type = @base.parsers[COMPLEX_TYPE].parse node
+          element.type.containing_element = element
+        when SIMPLE_TYPE
+          element.type = @base.parsers[SIMPLE_TYPE].parse node
+          element.type.containing_element = element
         else
           log_msg node, :unknown
         end

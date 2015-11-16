@@ -161,6 +161,12 @@ module WsdlMapper
         case get_name child
         when ANNOTATION
           parse_annotation child, prop
+        when COMPLEX_TYPE
+          prop.type = parse child
+          prop.type.containing_property = prop
+        when SIMPLE_TYPE
+          prop.type = @base.parsers[SIMPLE_TYPE].parse child
+          prop.type.containing_property = prop
         else
           log_msg child, :unknown
         end

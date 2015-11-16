@@ -58,7 +58,7 @@ module WsdlMapper
         requires = []
         add_base_require requires, type, schema
         type.each_property do |prop|
-          add_type_require requires, prop.type_name, schema
+          add_prop_require requires, prop, schema
         end
         # TODO: collect requires from ctr generator?
         requires.uniq

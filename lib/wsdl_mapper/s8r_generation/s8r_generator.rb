@@ -35,7 +35,13 @@ module WsdlMapper
       end
 
       def generate_type type, result
-        name = @namer.get_s8r_name type
+        name = if type.name
+          @namer.get_s8r_name type
+        elsif type.containing_element
+          @namer.get_s8r_name @namer.get_inline_type type.containing_element
+        elsif type.containing_property
+          @namer.get_s8r_name @namer.get_inline_type type.containing_property
+        end
         file_name = @context.path_for name
         modules = name.parents.reverse
 
@@ -69,9 +75,10 @@ module WsdlMapper
       end
 
       def def_complex_build_method_body f, ttg
-        f.literal_array "attributes", collect_attributes(ttg)
+        f.literal_array 'attributes', collect_attributes(ttg)
         ns = ttg.type.name.ns.inspect
         tag = tag_string_for_name ttg.type.name
+        # TODO: wrong! -> property name, not type name!
         f.block "x.complex(#{ns}, #{tag}, attributes)", ["x"] do
           if ttg.type.simple_content?
             write_content_statement f, ttg
@@ -108,14 +115,14 @@ module WsdlMapper
             attr_name = @namer.get_attribute_name(attr).attr_name
             type = attr.type.root.name.name
 
-            %<[nil, #{name.inspect}, obj.#{attr_name}, #{type.inspect}]>
+            %<[#{name.ns.inspect}, #{name.name.inspect}, obj.#{attr_name}, #{type.inspect}]>
           end
         end
       end
 
       def write_soap_array_statements f, ttg
         s8r_name = @namer.get_s8r_name ttg.type.soap_array_type
-        f.block "obj.each", ["itm"] do
+        f.block 'obj.each', ['itm'] do
           f.statement "x.get(#{s8r_name.require_path.inspect}).build(x, itm)"
         end
       end
@@ -155,13 +162,21 @@ module WsdlMapper
       end
 
       def write_simple_property_statement f, prop, name
-        s8r_name = @namer.get_s8r_name prop.type
+        s8r_name = get_s8r_name(prop)
         f.statement "x.get(#{s8r_name.require_path.inspect}).build(x, #{name})"
       end
 
       def write_complex_property_statement f, prop, name
-        s8r_name = @namer.get_s8r_name prop.type
+        s8r_name = get_s8r_name(prop)
         f.statement "x.get(#{s8r_name.require_path.inspect}).build(x, #{name})"
+      end
+
+      def get_s8r_name prop
+        if prop.type.name
+          @namer.get_s8r_name prop.type
+        else
+          @namer.get_s8r_name @namer.get_inline_type prop
+        end
       end
 
       def write_builtin_property_statement f, prop, name
@@ -172,7 +187,7 @@ module WsdlMapper
       end
 
       def def_build_method f, ttg
-        f.begin_def "build", [:x, :obj]
+        f.begin_def 'build', [:x, :obj]
         case ttg.type
         when ::WsdlMapper::Dom::ComplexType
           def_complex_build_method_body f, ttg

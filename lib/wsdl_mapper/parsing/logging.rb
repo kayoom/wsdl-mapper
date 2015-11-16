@@ -23,7 +23,7 @@ module WsdlMapper
         @log_msgs ||= []
         @log_msgs << LogMsg.new(node, source, msg)
         # TODO: remove debugging output
-        puts node.inspect
+        puts node.to_s
         puts msg
         puts caller
         puts "\n\n"

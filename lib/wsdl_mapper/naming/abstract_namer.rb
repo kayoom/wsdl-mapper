@@ -34,6 +34,10 @@ module WsdlMapper
       def get_content_name type
         raise NotImplementedError
       end
+
+      def get_inline_type element
+        raise NotImplementedError
+      end
     end
   end
 end

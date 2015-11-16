@@ -162,7 +162,7 @@ module SchemaTests
       assert_equal base_type, type.base
 
       attr = type.attributes.values.first
-      assert_equal "currency", attr.name
+      assert_equal Name.get(nil, "currency"), attr.name
     end
 
     def test_example_6_complex_type_properties_all
@@ -212,7 +212,7 @@ module SchemaTests
 
       assert_equal ns, schema.target_namespace
 
-      assert_equal 2, schema.types.count
+      assert_equal 2, schema.each_type.count
 
       base_type = schema.each_type.first
       extended_type = schema.each_type.to_a.last
@@ -225,6 +225,76 @@ module SchemaTests
       prop = extended_type.properties.values.first
 
       assert_equal 'attachments', prop.name.name
+    end
+
+    def test_ref_attribute
+      schema = TestHelper.parse_schema 'basic_note_type_with_ref_attribute.xsd'
+
+      assert_equal 1, schema.each_attribute.count
+      attr = schema.each_attribute.first
+
+      assert_equal Name.get(nil, "uuid"), attr.name
+
+      type = schema.each_type.first
+
+      assert_equal 1, type.each_attribute.count
+      assert_equal [attr], type.each_attribute.to_a
+    end
+
+    def test_inline_complex_type
+      schema = TestHelper.parse_schema 'basic_note_type_with_inline_complex_type.xsd'
+
+      assert_equal 2, schema.each_type.count
+
+      note_type = schema.each_type.first
+      inline_type = schema.each_type.to_a.last
+
+      assert_equal 5, note_type.each_property.count
+
+      prop = note_type.each_property.to_a.last
+      assert_equal inline_type, prop.type
+      assert_equal prop, inline_type.containing_property
+    end
+
+    def test_inline_simple_type
+      schema = TestHelper.parse_schema 'basic_note_type_with_inline_simple_type.xsd'
+
+      assert_equal 2, schema.each_type.count
+
+      note_type = schema.each_type.first
+      inline_type = schema.each_type.to_a.last
+
+      assert_equal 5, note_type.each_property.count
+
+      prop = note_type.each_property.to_a.last
+      assert_equal inline_type, prop.type
+      assert_equal prop, inline_type.containing_property
+    end
+
+    def test_element_inline_complex_type
+      schema = TestHelper.parse_schema 'basic_note_type_with_element_inline_complex_type.xsd'
+
+      assert_equal 1, schema.each_type.count
+
+      note_type = schema.each_type.first
+      element = schema.each_element.first
+
+      refute_nil element.type
+      assert_equal note_type, element.type
+      assert_equal element, note_type.containing_element
+    end
+
+    def test_element_inline_simple_type
+      schema = TestHelper.parse_schema 'element_inline_simple_type.xsd'
+
+      assert_equal 1, schema.each_type.count
+
+      note_type = schema.each_type.first
+      element = schema.each_element.first
+
+      refute_nil element.type
+      assert_equal note_type, element.type
+      assert_equal element, note_type.containing_element
     end
   end
 end

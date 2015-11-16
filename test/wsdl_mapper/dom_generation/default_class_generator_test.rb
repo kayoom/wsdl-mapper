@@ -13,6 +13,42 @@ module DomGenerationTests
         generator.generate schema
       end
 
+      def test_inline_complex_type
+        generate 'basic_note_type_with_inline_complex_type.xsd'
+
+        assert_file_is "attachment_inline_type.rb", <<RUBY
+class AttachmentInlineType
+  attr_accessor :name
+  attr_accessor :body
+end
+RUBY
+
+        assert_file_is "note_type.rb", <<RUBY
+require "attachment_inline_type"
+
+class NoteType
+  attr_accessor :to
+  attr_accessor :from
+  attr_accessor :heading
+  attr_accessor :body
+  attr_accessor :attachment
+end
+RUBY
+      end
+
+      def test_element_inline_complex_type
+        generate 'basic_note_type_with_element_inline_complex_type.xsd'
+
+        assert_file_is "note_inline_type.rb", <<RUBY
+class NoteInlineType
+  attr_accessor :to
+  attr_accessor :from
+  attr_accessor :heading
+  attr_accessor :body
+end
+RUBY
+      end
+
       def test_empty_properties
         generate 'empty_note_type.xsd'
 
