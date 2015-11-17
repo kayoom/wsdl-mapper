@@ -5,7 +5,7 @@ module WsdlMapper
     class Directory
       include Enumerable
 
-      def initialize &block
+      def initialize on_nil: nil, &block
         if block
           @data = Hash.new do |h, k|
             h[k] = Hash.new do |h2, k2|
@@ -15,14 +15,21 @@ module WsdlMapper
         else
           @data = {}
         end
+        @on_nil = on_nil
       end
 
       # @param [WsdlMapper::Dom::Name] name
       # @return [Object]
       def get name
         hsh = @data[name.ns]
-        hsh ? hsh[name.name] : nil
+        hsh && hsh[name.name] ||
+          on_nil(name)
       end
+
+      def on_nil name
+        @on_nil && raise(@on_nil.new(name))
+      end
+
       alias_method :[], :get
 
       # @param [WsdlMapper::Dom::Name] name

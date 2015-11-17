@@ -25,6 +25,7 @@ module WsdlMapper
       end
 
       def complex type_name, element_name, attributes
+        # TODO: keep type_name parameter?
         @x.send expand_tag(*element_name), eval_attributes(attributes) do |x|
           yield self
         end

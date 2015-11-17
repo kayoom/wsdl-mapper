@@ -11,21 +11,21 @@ module DeserializersTests
     include WsdlMapper::Deserializers
 
     BUILTIN = lambda do |name|
-      Name.get BuiltinType::NAMESPACE, name
+      [BuiltinType::NAMESPACE, name]
     end
 
-    NS1 = "http://example.org/schema1"
-    NS2 = "http://example.org/schema2"
+    NS1 = 'http://example.org/schema1'
+    NS2 = 'http://example.org/schema2'
 
     class NoteType
       attr_accessor :to, :date_time, :uuid, :attachments
     end
 
     NoteTypeMapping = ClassMapping.new NoteType do
-      register_attr :uuid, Name.get(NS1, 'uuid'), BUILTIN['token']
-      register_prop :to, Name.get(NS1, 'to'), BUILTIN['string']
-      register_prop :date_time, Name.get(NS1, 'dateTime'), BUILTIN['dateTime']
-      register_prop :attachments, Name.get(NS1, 'attachment'), Name.new(NS1, 'attachmentType'), array: true
+      register_attr :uuid, [NS1, 'uuid'], BUILTIN['token']
+      register_prop :to, [NS1, 'to'], BUILTIN['string']
+      register_prop :date_time, [NS1, 'dateTime'], BUILTIN['dateTime']
+      register_prop :attachments, [NS1, 'attachment'], [NS1, 'attachmentType'], array: true
     end
 
     class AttachmentType
@@ -33,8 +33,8 @@ module DeserializersTests
     end
 
     AttachmentTypeMapping = ClassMapping.new AttachmentType do
-      register_prop :name, Name.get(NS1, 'name'), BUILTIN['string']
-      register_prop :content, Name.get(NS1, 'body'), BUILTIN['base64Binary']
+      register_prop :name, [NS1, 'name'], BUILTIN['string']
+      register_prop :content, [NS1, 'body'], BUILTIN['base64Binary']
     end
 
     class User
@@ -42,8 +42,8 @@ module DeserializersTests
     end
 
     UserMapping = ClassMapping.new User do
-      register_prop :name, Name.get(NS2, 'name'), BUILTIN['string']
-      register_prop :supervisor, Name.get(NS2, 'supervisor'), Name.get(NS2, 'userType')
+      register_prop :name, [NS2, 'name'], BUILTIN['string']
+      register_prop :supervisor, [NS2, 'supervisor'], [NS2, 'userType']
     end
 
     class Conversation
@@ -51,7 +51,7 @@ module DeserializersTests
     end
 
     ConversationMapping = ClassMapping.new Conversation do
-      register_prop :notes, Name.get(NS2, 'note'), Name.get(NS1, 'noteType'), array: true
+      register_prop :notes, [NS2, 'note'], [NS1, 'noteType'], array: true
     end
 
     class Case
@@ -59,14 +59,14 @@ module DeserializersTests
     end
 
     CaseMapping = ClassMapping.new Case do
-      register_prop :author, Name.get(NS2, 'author'), Name.get(NS2, 'userType')
-      register_prop :conversation, Name.get(NS2, 'conversation'), Name.get(NS2, 'conversationType')
+      register_prop :author, [NS2, 'author'], [NS2, 'userType']
+      register_prop :conversation, [NS2, 'conversation'], [NS2, 'conversationType']
     end
 
     def test_fully_qualified_example
       xml = <<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<ns2:caseType xmlns:ns1="http://example.org/schema1" xmlns:ns2="http://example.org/schema2">
+<ns2:case xmlns:ns1="http://example.org/schema1" xmlns:ns2="http://example.org/schema2">
   <ns2:author>
     <ns2:name>Mr. Bean</ns2:name>
     <ns2:supervisor>
@@ -83,26 +83,27 @@ module DeserializersTests
       </ns1:attachment>
     </ns2:note>
   </ns2:conversation>
-</ns2:caseType>
+</ns2:case>
 XML
 
       deserializer = Deserializer.new
-      deserializer.register Name.get(NS1, "noteType"), NoteTypeMapping
-      deserializer.register Name.get(NS1, "attachmentType"), AttachmentTypeMapping
-      deserializer.register Name.get(NS2, "userType"), UserMapping
-      deserializer.register Name.get(NS2, "conversationType"), ConversationMapping
-      deserializer.register Name.get(NS2, "caseType"), CaseMapping
+      deserializer.register_type [NS1, 'noteType'], NoteTypeMapping
+      deserializer.register_type [NS1, 'attachmentType'], AttachmentTypeMapping
+      deserializer.register_type [NS2, 'userType'], UserMapping
+      deserializer.register_type [NS2, 'conversationType'], ConversationMapping
+      deserializer.register_type [NS2, 'caseType'], CaseMapping
+      deserializer.register_element [NS2, 'case'], [NS2, 'caseType']
 
       obj = deserializer.from_xml xml
       assert_kind_of Case, obj
 
       author = obj.author
       assert_kind_of User, author
-      assert_equal "Mr. Bean", author.name
+      assert_equal 'Mr. Bean', author.name
 
       supervisor = author.supervisor
       assert_kind_of User, supervisor
-      assert_equal "James Bond", supervisor.name
+      assert_equal 'James Bond', supervisor.name
 
       conv = obj.conversation
       assert_kind_of Conversation, conv
@@ -110,12 +111,12 @@ XML
       notes = conv.notes
       note = notes.first
       assert_kind_of NoteType, note
-      assert_equal "ABCD-1234", note.uuid
-      assert_equal "to@example.org", note.to
+      assert_equal 'ABCD-1234', note.uuid
+      assert_equal 'to@example.org', note.to
 
       att = note.attachments.first
       assert_kind_of AttachmentType, att
-      assert_equal "This is an attachment.", att.name
+      assert_equal 'This is an attachment.', att.name
 
       assert_kind_of StringIO, att.content
       assert_equal <<TXT.strip, att.content.read
@@ -126,7 +127,7 @@ TXT
     def test_partially_qualified_example
       xml = <<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<ns2:caseType xmlns:ns1="http://example.org/schema1" xmlns:ns2="http://example.org/schema2">
+<ns2:case xmlns:ns1="http://example.org/schema1" xmlns:ns2="http://example.org/schema2">
   <author>
     <name>Mr. Bean</name>
     <supervisor>
@@ -143,26 +144,27 @@ TXT
       </attachment>
     </note>
   </conversation>
-</ns2:caseType>
+</ns2:case>
 XML
 
       deserializer = Deserializer.new
-      deserializer.register Name.get(NS1, "noteType"), NoteTypeMapping
-      deserializer.register Name.get(NS1, "attachmentType"), AttachmentTypeMapping
-      deserializer.register Name.get(NS2, "userType"), UserMapping
-      deserializer.register Name.get(NS2, "conversationType"), ConversationMapping
-      deserializer.register Name.get(NS2, "caseType"), CaseMapping
+      deserializer.register_type [NS1, 'noteType'], NoteTypeMapping
+      deserializer.register_type [NS1, 'attachmentType'], AttachmentTypeMapping
+      deserializer.register_type [NS2, 'userType'], UserMapping
+      deserializer.register_type [NS2, 'conversationType'], ConversationMapping
+      deserializer.register_type [NS2, 'caseType'], CaseMapping
+      deserializer.register_element [NS2, 'case'], [NS2, 'caseType']
 
       obj = deserializer.from_xml xml
       assert_kind_of Case, obj
 
       author = obj.author
       assert_kind_of User, author
-      assert_equal "Mr. Bean", author.name
+      assert_equal 'Mr. Bean', author.name
 
       supervisor = author.supervisor
       assert_kind_of User, supervisor
-      assert_equal "James Bond", supervisor.name
+      assert_equal 'James Bond', supervisor.name
 
       conv = obj.conversation
       assert_kind_of Conversation, conv
@@ -170,12 +172,12 @@ XML
       notes = conv.notes
       note = notes.first
       assert_kind_of NoteType, note
-      assert_equal "ABCD-1234", note.uuid
-      assert_equal "to@example.org", note.to
+      assert_equal 'ABCD-1234', note.uuid
+      assert_equal 'to@example.org', note.to
 
       att = note.attachments.first
       assert_kind_of AttachmentType, att
-      assert_equal "This is an attachment.", att.name
+      assert_equal 'This is an attachment.', att.name
 
       assert_kind_of StringIO, att.content
       assert_equal <<TXT.strip, att.content.read

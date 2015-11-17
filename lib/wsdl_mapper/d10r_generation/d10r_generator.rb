@@ -18,18 +18,20 @@ module WsdlMapper
           namer: WsdlMapper::Naming::DefaultNamer.new,
           formatter_factory: DefaultFormatter,
           module_generator_factory: DefaultModuleGenerator,
-          deserializer_factory_name: 'DeserializerFactory'
+          type_directory_name_template: 'TypeDirectory',
+          element_directory_name_template: 'ElementDirectory'
         @context = context
         @namer = namer
         @formatter_factory = formatter_factory
         @module_generator = module_generator_factory.new self
-        @deserializer_factory_name = deserializer_factory_name
+        @type_directory_name_template = type_directory_name_template
+        @element_directory_name_template = element_directory_name_template
       end
 
       def generate schema
         result = Result.new schema
 
-        generate_factory result
+        generate_type_directory schema, result
 
         schema.each_type do |type|
           generate_type type, result
@@ -39,23 +41,62 @@ module WsdlMapper
           @module_generator.generate module_node, result
         end
 
+        generate_element_directory schema, result
+
         result
       end
 
-      def generate_factory result
-        @factory_name = @namer.get_support_name @deserializer_factory_name
-        file_name = @context.path_for @factory_name
-        modules = @factory_name.parents.reverse
+      def generate_element_directory schema, result
+        @element_directory_name = @namer.get_support_name @element_directory_name_template
+        file_name = @context.path_for @element_directory_name
+        modules = @element_directory_name.parents.reverse
 
         File.open file_name, 'w' do |io|
           f = get_formatter io
-          f.requires 'wsdl_mapper/deserializers/deserializer_factory'
+          f.requires 'wsdl_mapper/deserializers/type_directory',
+            'wsdl_mapper/deserializers/element_directory'
           open_modules f, modules
-          f.assignments [@factory_name.class_name, '::WsdlMapper::Deserializers::DeserializerFactory.new']
+          f.block "#{@element_directory_name.class_name} = ::WsdlMapper::Deserializers::ElementDirectory.new(#{@type_directory_name.name})", [] do
+            register_elements f, schema, result
+          end
           close_modules f, modules
         end
 
-        result.add_type @factory_name
+        result.add_type @element_directory_name
+        result.files << file_name
+      end
+
+      def register_elements f, schema, result
+        schema.each_element do |element|
+          register_element f, element, result
+        end
+      end
+
+      # @param [WsdlMapper::Generation::AbstractFormatter] f
+      # @param [WsdlMapper::Dom::Element] element
+      # @param [WsdlMapper::Generation::Result] result
+      def register_element f, element, result
+        element_name = generate_name element.name
+        type_name = generate_name element.type_name
+        d10r_name = @namer.get_d10r_name(element.type.name ? element.type : @namer.get_inline_type(element))
+        require_path = d10r_name.require_path.inspect
+        f.statement "register_element #{element_name}, #{type_name}, #{require_path}, #{d10r_name.name.inspect}"
+      end
+
+      def generate_type_directory schema, result
+        @type_directory_name = @namer.get_support_name @type_directory_name_template
+        file_name = @context.path_for @type_directory_name
+        modules = @type_directory_name.parents.reverse
+
+        File.open file_name, 'w' do |io|
+          f = get_formatter io
+          f.requires 'wsdl_mapper/deserializers/type_directory'
+          open_modules f, modules
+          f.assignments [@type_directory_name.class_name, '::WsdlMapper::Deserializers::TypeDirectory.new']
+          close_modules f, modules
+        end
+
+        result.add_type @type_directory_name
         result.files << file_name
       end
 
@@ -74,10 +115,14 @@ module WsdlMapper
 
         File.open file_name, 'w' do |io|
           f = get_formatter io
-          f.requires @factory_name.require_path, type_name.require_path
+          f.requires @type_directory_name.require_path, type_name.require_path
 
           open_modules f, modules
-          register_type f, name, type, type_name
+          if type.soap_array?
+            register_soap_array f, name, type, type_name
+          else
+            register_complex_type f, name, type, type_name
+          end
           close_modules f, modules
         end
 
@@ -85,8 +130,12 @@ module WsdlMapper
         result.files << file_name
       end
 
-      def register_type f, name, type, type_name
-        f.block "#{name.class_name} = #{@factory_name.name}.register(#{generate_name(type.name)}, #{type_name.name})", [] do
+      def register_soap_array f, name, type, type_name
+        f.assignments [name.class_name, "#{@type_directory_name.name}.register_soap_array(#{generate_name(type.name)}, #{type_name.name})"]
+      end
+
+      def register_complex_type f, name, type, type_name
+        f.block "#{name.class_name} = #{@type_directory_name.name}.register_type(#{generate_name(type.name)}, #{type_name.name})", [] do
           register_attributes f, type
           register_properties f, type
         end

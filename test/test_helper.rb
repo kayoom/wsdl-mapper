@@ -85,7 +85,8 @@ class GenerationTestCase < SchemaTestCase
   end
 
   def assert_file_exists *name
-    assert File.exist? tmp_path.join *name
+    path = tmp_path.join *name
+    assert File.exist?(path), "Expected file #{name * '/'} to exist."
   end
 
   def assert_file_is *name, expected

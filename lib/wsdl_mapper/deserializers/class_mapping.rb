@@ -3,6 +3,7 @@ require 'wsdl_mapper/dom/name'
 require 'wsdl_mapper/dom/builtin_type'
 require 'wsdl_mapper/deserializers/attr_mapping'
 require 'wsdl_mapper/deserializers/prop_mapping'
+require 'wsdl_mapper/deserializers/errors'
 
 module WsdlMapper
   module Deserializers
@@ -12,17 +13,19 @@ module WsdlMapper
 
       def initialize cls, &block
         @cls = cls
-        @attributes = Directory.new
-        @properties = Directory.new
+        @attributes = Directory.new on_nil: Errors::UnknownAttributeError
+        @properties = Directory.new on_nil: Errors::UnknownElementError
         instance_exec &block
       end
 
       def register_attr accessor, attr_name, type_name
-        @attributes[attr_name] = AttrMapping.new(accessor, attr_name, type_name)
+        attr_name = Name.get *attr_name
+        @attributes[attr_name] = AttrMapping.new(accessor, attr_name, Name.get(*type_name))
       end
 
       def register_prop accessor, prop_name, type_name, array: false
-        @properties[prop_name] = PropMapping.new(accessor, prop_name, type_name, array: array)
+        prop_name = Name.get *prop_name
+        @properties[prop_name] = PropMapping.new(accessor, prop_name, Name.get(*type_name), array: array)
       end
 
       def start base, frame
@@ -34,10 +37,8 @@ module WsdlMapper
         set_properties base, frame
       end
 
-      def get_type prop_name
+      def get_type_name_for_prop prop_name
         @properties[prop_name].type_name
-      rescue NoMethodError
-        raise ArgumentError.new("Property #{prop_name} not found in #{@cls} mapping.")
       end
 
       protected

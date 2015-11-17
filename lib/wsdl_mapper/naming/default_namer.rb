@@ -1,4 +1,5 @@
 require 'wsdl_mapper/dom/name'
+
 require 'wsdl_mapper/naming/type_name'
 require 'wsdl_mapper/naming/property_name'
 require 'wsdl_mapper/naming/enumeration_value_name'
@@ -15,6 +16,8 @@ module WsdlMapper
     # 3. Each class in its own file
     # 4. (De)Serializers are put within the same module as XSD Types
     class DefaultNamer < AbstractNamer
+      include WsdlMapper::Dom
+
       include Inflector
 
       class InlineType < Struct.new(:name)
@@ -86,10 +89,10 @@ module WsdlMapper
         @content_name ||= PropertyName.new get_accessor_name(@content_attribute_name), get_var_name(@content_attribute_name)
       end
 
-      # @param [WsdlMapper::Dom::Property, WsdlMapper::Dom::Element] property
+      # @param [WsdlMapper::Dom::Property, WsdlMapper::Dom::Element] element
       # @return [InlineType]
       def get_inline_type element
-        name = element.name.name + "InlineType"
+        name = element.name.name + 'InlineType'
         InlineType.new WsdlMapper::Dom::Name.get(element.name.ns, name)
       end
 

@@ -7,24 +7,35 @@ module WsdlMapper
 
       attr_reader :object
 
+      # @param [WsdlMapper::Deserializers::Deserializer] base
       def initialize base
         @base = base
       end
 
+      # @param [String] name
+      # @param [Array<Nokogiri::XML::Attr>] attrs
+      # @param [String] prefix
+      # @param [String] uri
+      # @param [Array<Array<String, String>] ns
       def start_element_namespace name, attrs = [], prefix = nil, uri = nil, ns = []
-        @buffer = ""
+        @buffer = ''
         uri = inherit_element_namespace uri
         name = Name.get uri, name
         namespaces = Namespaces.for Hash[ns]
         type_name = get_type_name name
         attrs = get_attributes type_name, attrs
-        @current_frame = Frame.new name, type_name, attrs, @current_frame, namespaces, @base
+        parent = @current_frame
+        mapping = @base.get_type_mapping type_name
+        @current_frame = Frame.new name, type_name, attrs, parent, namespaces, @base, mapping
         @current_frame.start
       end
 
+      # @param [String] name
+      # @param [String] prefix
+      # @param [String] uri
       def end_element_namespace name, prefix = nil, uri = nil
         @current_frame.text = @buffer
-        @buffer = ""
+        @buffer = ''
         @last_frame = @current_frame
         @current_frame = @current_frame.parent
         if @current_frame
@@ -40,16 +51,16 @@ module WsdlMapper
       def characters text
         @buffer << text
       end
+      # TODO: cdata?
 
       protected
-      def get_type_name name
+      # @param [WsdlMapper::Dom::Name] element_name
+      def get_type_name element_name
         if @current_frame
           # TODO: xsi:type
-          @current_frame.mapping.get_type name
+          @current_frame.mapping.get_type_name_for_prop element_name
         else
-          # root element -> (tag-)name == type name
-          # TODO: thats wrong
-          name
+          @base.get_element_type element_name
         end
       end
 
@@ -76,8 +87,6 @@ module WsdlMapper
           [name, attr.value]
         end
       end
-
-      # TODO: cdata?
     end
   end
 end
