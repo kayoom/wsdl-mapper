@@ -93,8 +93,28 @@ module SvcDescParsingTests
     end
 
     def test_port_type_operation_overloads
-      skip
-      # TODO port type operation overloads and bindings
+      desc = TestHelper.parse_wsdl 'simple_service_with_overload.wsdl'
+
+      port_types = desc.each_port_type.to_a
+      assert_equal 1, port_types.count
+      port_type = port_types.first
+
+      operations = port_type.each_operation.to_a
+      assert_equal 2, operations.count
+
+      operation = operations.last
+      assert_equal Name.get(NS, 'SomeOperation'), operation.name
+
+      assert_equal Name.get(NS, 'OperationInputMsg2'), operation.input.message.name
+
+      bindings = desc.each_binding.to_a
+      binding = bindings.first
+      operations = binding.each_operation.to_a
+
+      assert_equal 2, operations.count
+      binding_operation = operations.last
+
+      assert_equal operation, binding_operation.target
     end
 
     def test_services

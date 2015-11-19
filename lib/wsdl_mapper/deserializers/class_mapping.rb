@@ -11,11 +11,12 @@ module WsdlMapper
       include ::WsdlMapper::Dom
       attr_reader :attributes, :properties
 
-      def initialize cls, &block
+      def initialize cls, simple: false, &block
         @cls = cls
         @attributes = Directory.new on_nil: Errors::UnknownAttributeError
         @properties = Directory.new on_nil: Errors::UnknownElementError
         instance_exec &block
+        @simple = simple
       end
 
       def register_attr accessor, attr_name, type_name
@@ -29,11 +30,18 @@ module WsdlMapper
       end
 
       def start base, frame
-        frame.object = @cls.new
-        set_attributes base, frame
+        frame.object = @simple ? @cls.new(nil) : @cls.new
       end
 
       def end base, frame
+        if @simple # TODO: test
+          type_name = WsdlMapper::Dom::Name.get *@simple
+          content = base.to_ruby type_name, frame.text
+          frame.object = @cls.new content
+        else
+          frame.object = @cls.new
+        end
+        set_attributes base, frame
         set_properties base, frame
       end
 

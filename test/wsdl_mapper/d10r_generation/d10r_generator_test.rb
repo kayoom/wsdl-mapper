@@ -15,28 +15,36 @@ module D10rGenerationTests
     def test_basic_empty_type
       generate 'empty_note_type.xsd'
 
-      assert_file_is 'type_directory.rb', <<RUBY
+      assert_file_is 'd10r_type_directory.rb', <<RUBY
 require "wsdl_mapper/deserializers/type_directory"
 
-TypeDirectory = ::WsdlMapper::Deserializers::TypeDirectory.new
+D10rTypeDirectory = ::WsdlMapper::Deserializers::TypeDirectory.new
 
 RUBY
 
       assert_file_is 'note_type_deserializer.rb', <<RUBY
-require "type_directory"
+require "d10r_type_directory"
 require "note_type"
 
-NoteTypeDeserializer = ::TypeDirectory.register_type([nil, "noteType"], ::NoteType) do
+NoteTypeDeserializer = ::D10rTypeDirectory.register_type([nil, "noteType"], ::NoteType) do
 end
 RUBY
 
-      assert_file_is 'element_directory.rb', <<RUBY
-require "wsdl_mapper/deserializers/type_directory"
+      assert_file_is 'd10r_element_directory.rb', <<RUBY
+require "d10r_type_directory"
 require "wsdl_mapper/deserializers/element_directory"
 
-ElementDirectory = ::WsdlMapper::Deserializers::ElementDirectory.new(::TypeDirectory) do
+D10rElementDirectory = ::WsdlMapper::Deserializers::ElementDirectory.new(::D10rTypeDirectory) do
   register_element [nil, "note"], [nil, "noteType"], "note_type_deserializer", "::NoteTypeDeserializer"
 end
+RUBY
+
+      assert_file_is 'deserializer.rb', <<RUBY
+require "wsdl_mapper/deserializers/lazy_loading_deserializer"
+require "d10r_element_directory"
+
+Deserializer = ::WsdlMapper::Deserializers::LazyLoadingDeserializer.new(::D10rElementDirectory)
+
 RUBY
     end
 
@@ -44,10 +52,10 @@ RUBY
       generate 'basic_note_type.xsd'
 
       assert_file_is 'note_type_deserializer.rb', <<RUBY
-require "type_directory"
+require "d10r_type_directory"
 require "note_type"
 
-NoteTypeDeserializer = ::TypeDirectory.register_type([nil, "noteType"], ::NoteType) do
+NoteTypeDeserializer = ::D10rTypeDirectory.register_type([nil, "noteType"], ::NoteType) do
   register_prop :to, [nil, "to"], ["http://www.w3.org/2001/XMLSchema", "string"]
   register_prop :from, [nil, "from"], ["http://www.w3.org/2001/XMLSchema", "string"]
   register_prop :heading, [nil, "heading"], ["http://www.w3.org/2001/XMLSchema", "string"]
@@ -56,14 +64,34 @@ end
 RUBY
     end
 
+    def test_basic_type_with_nesting
+      generate 'basic_note_type_with_complex_attachments.xsd'
+
+      assert_file_is 'note_type_deserializer.rb', <<RUBY
+require "d10r_type_directory"
+require "note_type"
+
+require "attachment_type_deserializer"
+
+NoteTypeDeserializer = ::D10rTypeDirectory.register_type([nil, "noteType"], ::NoteType) do
+  register_attr :uuid, [nil, "uuid"], ["http://www.w3.org/2001/XMLSchema", "string"]
+  register_prop :to, [nil, "to"], ["http://www.w3.org/2001/XMLSchema", "string"]
+  register_prop :from, [nil, "from"], ["http://www.w3.org/2001/XMLSchema", "string"]
+  register_prop :heading, [nil, "heading"], ["http://www.w3.org/2001/XMLSchema", "string"]
+  register_prop :body, [nil, "body"], ["http://www.w3.org/2001/XMLSchema", "string"]
+  register_prop :attachments, [nil, "attachments"], [nil, "attachmentType"], array: true
+end
+RUBY
+    end
+
     def test_basic_type_with_array
       generate 'basic_note_type_with_attachments.xsd'
 
       assert_file_is 'note_type_deserializer.rb', <<RUBY
-require "type_directory"
+require "d10r_type_directory"
 require "note_type"
 
-NoteTypeDeserializer = ::TypeDirectory.register_type([nil, "noteType"], ::NoteType) do
+NoteTypeDeserializer = ::D10rTypeDirectory.register_type([nil, "noteType"], ::NoteType) do
   register_prop :to, [nil, "to"], ["http://www.w3.org/2001/XMLSchema", "string"]
   register_prop :from, [nil, "from"], ["http://www.w3.org/2001/XMLSchema", "string"]
   register_prop :heading, [nil, "heading"], ["http://www.w3.org/2001/XMLSchema", "string"]
@@ -77,10 +105,10 @@ RUBY
       generate 'basic_note_type_with_attachments_simple_type.xsd'
 
       assert_file_is 'note_type_deserializer.rb', <<RUBY
-require "type_directory"
+require "d10r_type_directory"
 require "note_type"
 
-NoteTypeDeserializer = ::TypeDirectory.register_type([nil, "noteType"], ::NoteType) do
+NoteTypeDeserializer = ::D10rTypeDirectory.register_type([nil, "noteType"], ::NoteType) do
   register_prop :to, [nil, "to"], ["http://www.w3.org/2001/XMLSchema", "string"]
   register_prop :from, [nil, "from"], ["http://www.w3.org/2001/XMLSchema", "string"]
   register_prop :heading, [nil, "heading"], ["http://www.w3.org/2001/XMLSchema", "string"]
@@ -94,10 +122,12 @@ RUBY
       generate 'basic_note_type_with_complex_attachments.xsd'
 
       assert_file_is 'note_type_deserializer.rb', <<RUBY
-require "type_directory"
+require "d10r_type_directory"
 require "note_type"
 
-NoteTypeDeserializer = ::TypeDirectory.register_type([nil, "noteType"], ::NoteType) do
+require "attachment_type_deserializer"
+
+NoteTypeDeserializer = ::D10rTypeDirectory.register_type([nil, "noteType"], ::NoteType) do
   register_attr :uuid, [nil, "uuid"], ["http://www.w3.org/2001/XMLSchema", "string"]
   register_prop :to, [nil, "to"], ["http://www.w3.org/2001/XMLSchema", "string"]
   register_prop :from, [nil, "from"], ["http://www.w3.org/2001/XMLSchema", "string"]
@@ -108,12 +138,41 @@ end
 RUBY
 
       assert_file_is 'attachment_type_deserializer.rb', <<RUBY
-require "type_directory"
+require "d10r_type_directory"
 require "attachment_type"
 
-AttachmentTypeDeserializer = ::TypeDirectory.register_type([nil, "attachmentType"], ::AttachmentType) do
+AttachmentTypeDeserializer = ::D10rTypeDirectory.register_type([nil, "attachmentType"], ::AttachmentType) do
   register_prop :name, [nil, "name"], ["http://www.w3.org/2001/XMLSchema", "string"]
   register_prop :body, [nil, "body"], ["http://www.w3.org/2001/XMLSchema", "string"]
+end
+RUBY
+    end
+
+    def test_extended_type
+      generate 'basic_note_type_and_fancy_note_type_extension.xsd'
+
+      assert_file_is 'note_type_deserializer.rb', <<RUBY
+require "d10r_type_directory"
+require "note_type"
+
+NoteTypeDeserializer = ::D10rTypeDirectory.register_type([nil, "noteType"], ::NoteType) do
+  register_prop :to, [nil, "to"], ["http://www.w3.org/2001/XMLSchema", "string"]
+  register_prop :from, [nil, "from"], ["http://www.w3.org/2001/XMLSchema", "string"]
+  register_prop :heading, [nil, "heading"], ["http://www.w3.org/2001/XMLSchema", "string"]
+  register_prop :body, [nil, "body"], ["http://www.w3.org/2001/XMLSchema", "string"]
+end
+RUBY
+
+      assert_file_is 'fancy_note_type_deserializer.rb', <<RUBY
+require "d10r_type_directory"
+require "fancy_note_type"
+
+FancyNoteTypeDeserializer = ::D10rTypeDirectory.register_type([nil, "fancyNoteType"], ::FancyNoteType) do
+  register_prop :to, [nil, "to"], ["http://www.w3.org/2001/XMLSchema", "string"]
+  register_prop :from, [nil, "from"], ["http://www.w3.org/2001/XMLSchema", "string"]
+  register_prop :heading, [nil, "heading"], ["http://www.w3.org/2001/XMLSchema", "string"]
+  register_prop :body, [nil, "body"], ["http://www.w3.org/2001/XMLSchema", "string"]
+  register_prop :attachments, [nil, "attachments"], ["http://www.w3.org/2001/XMLSchema", "string"], array: true
 end
 RUBY
     end
@@ -122,10 +181,10 @@ RUBY
       generate 'basic_note_type_with_soap_array.xsd'
 
       assert_file_is 'attachments_array_deserializer.rb', <<RUBY
-require "type_directory"
+require "d10r_type_directory"
 require "attachments_array"
 
-AttachmentsArrayDeserializer = ::TypeDirectory.register_soap_array([nil, "attachmentsArray"], ::AttachmentsArray)
+AttachmentsArrayDeserializer = ::D10rTypeDirectory.register_soap_array([nil, "attachmentsArray"], ::AttachmentsArray, [nil, "attachment"])
 
 RUBY
     end

@@ -37,6 +37,10 @@ module WsdlMapper
       def soap_array?
         !!@soap_array
       end
+
+      def root
+        @base ? @base.root : self
+      end
     end
   end
 end

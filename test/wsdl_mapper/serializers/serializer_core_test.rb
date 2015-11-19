@@ -1,11 +1,11 @@
 require 'test_helper'
 
 require 'wsdl_mapper/dom/name'
-require 'wsdl_mapper/serializers/serializer'
+require 'wsdl_mapper/serializers/serializer_core'
 require 'wsdl_mapper/core_ext/time_duration'
 
 module SerializersTests
-  class SerializerTest < ::Minitest::Test
+  class SerializerCoreTest < ::Minitest::Test
     include WsdlMapper::CoreExt
     include WsdlMapper::Serializers
     include WsdlMapper::Dom
@@ -34,7 +34,7 @@ module SerializersTests
       def build x, obj, name
         x.complex [nil, 'noteType'], name, [] do |x|
           obj.attachments.each do |attachment|
-            x.get('serializers/attachment_serializer').build(x, attachment, [nil, 'attachment'])
+            x.get(Attachment.name).build(x, attachment, [nil, 'attachment'])
           end
         end
       end
@@ -50,9 +50,9 @@ module SerializersTests
 
     def test_resolving
       resolver = MockResolver.new
-      resolver.serializers['serializers/attachment_serializer'] = AttachmentSerializer.new
+      resolver.serializers[Attachment.name] = AttachmentSerializer.new
 
-      base = Serializer.new resolver: resolver
+      base = SerializerCore.new resolver: resolver
 
       obj = NoteType.new([Attachment.new('This is an attachment.')])
 
@@ -67,7 +67,7 @@ XML
     end
 
     def test_simple_example_with_namespace
-      base = Serializer.new resolver: nil
+      base = SerializerCore.new resolver: nil
 
       base.complex ['urn:WsdlMapper', 'noteType'], ['urn:WsdlMapper', 'note'], [] do |x|
         x.value_builtin ['urn:WsdlMapper', 'to'], 'to@example.org', :string
@@ -92,7 +92,7 @@ XML
     end
 
     def test_simple_example_with_namespace_and_default
-      base = Serializer.new resolver: nil, default_namespace: 'urn:WsdlMapper'
+      base = SerializerCore.new resolver: nil, default_namespace: 'urn:WsdlMapper'
 
       base.complex ['urn:WsdlMapper', 'noteType'], ['urn:WsdlMapper', 'note'], [] do |x|
         x.value_builtin ['urn:WsdlMapper', 'to'], 'to@example.org', :string
@@ -119,7 +119,7 @@ XML
     def test_simple_example_with_namespace_and_custom_prefix
       namespaces = WsdlMapper::Dom::Namespaces.new
       namespaces[:wm] = 'urn:WsdlMapper'
-      base = Serializer.new resolver: nil, namespaces: namespaces
+      base = SerializerCore.new resolver: nil, namespaces: namespaces
 
       base.complex ['urn:WsdlMapper', 'noteType'], ['urn:WsdlMapper', 'note'], [] do |x|
         x.value_builtin ['urn:WsdlMapper', 'to'], 'to@example.org', :string
@@ -144,7 +144,7 @@ XML
     end
 
     def test_simple_example_without_namespace
-      base = Serializer.new resolver: nil
+      base = SerializerCore.new resolver: nil
 
       base.complex [nil, 'noteType'], [nil, 'note'], [] do |x|
         x.value_builtin [nil, 'to'], 'to@example.org', :string
@@ -169,7 +169,7 @@ XML
     end
 
     def test_simple_example_with_default_namespace
-      base = Serializer.new resolver: nil, default_namespace: 'urn:WsdlMapper'
+      base = SerializerCore.new resolver: nil, default_namespace: 'urn:WsdlMapper'
 
       base.complex [nil, 'noteType'], [nil, 'note'], [] do |x|
         x.value_builtin ['urn:WsdlMapper', 'to'], 'to@example.org', :string
@@ -194,7 +194,7 @@ XML
     end
 
     def test_nested_example
-      base = Serializer.new resolver: nil
+      base = SerializerCore.new resolver: nil
 
       base.complex [nil, 'noteType'], [nil, 'note'], [] do |x|
         x.complex [nil, 'noteHeader'], [nil, 'header'], [] do |x|
@@ -223,7 +223,7 @@ XML
     end
 
     def test_soap_array
-      base = Serializer.new resolver: nil
+      base = SerializerCore.new resolver: nil
 
       attributes = [
         [[base.soap_enc, 'arrayType'], 'attachment[2]', 'string']
@@ -251,7 +251,7 @@ XML
     end
 
     def test_nil_attribute
-      base = Serializer.new resolver: nil
+      base = SerializerCore.new resolver: nil
 
       attributes = [
         [[nil, 'uuid'], nil, 'token']
@@ -271,7 +271,7 @@ XML
     end
 
     def test_simple_example_with_attributes
-      base = Serializer.new resolver: nil
+      base = SerializerCore.new resolver: nil
 
       attributes = [
         [[nil, 'uuid'], '12345', 'token']

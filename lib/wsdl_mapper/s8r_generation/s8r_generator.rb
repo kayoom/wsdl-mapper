@@ -14,15 +14,26 @@ module WsdlMapper
 
       attr_reader :context
 
-      def initialize context, namer: WsdlMapper::Naming::DefaultNamer.new, formatter_factory: DefaultFormatter, module_generator_factory: DefaultModuleGenerator
+      def initialize context,
+          namer: WsdlMapper::Naming::DefaultNamer.new,
+          formatter_factory: DefaultFormatter,
+          module_generator_factory: DefaultModuleGenerator,
+          type_directory_name_template: 'S8rTypeDirectory',
+          serializer_factory_name_template: 'SerializerFactory'
+
         @context = context
         @namer = namer
         @formatter_factory = formatter_factory
         @module_generator = module_generator_factory.new self
+        @type_directory_name_template = type_directory_name_template
+        @serializer_factory_name_template = serializer_factory_name_template
       end
 
       def generate schema
         result = Result.new schema
+
+        generate_type_directory schema, result
+        generate_serializer_factory schema, result
 
         schema.each_type do |type|
           generate_type type, result
@@ -35,26 +46,77 @@ module WsdlMapper
         result
       end
 
-      def generate_type type, result
-        name = if type.name
-          @namer.get_s8r_name type
-        elsif type.containing_element
-          @namer.get_s8r_name @namer.get_inline_type type.containing_element
-        elsif type.containing_property
-          @namer.get_s8r_name @namer.get_inline_type type.containing_property
+      def generate_serializer_factory schema, result
+        @serializer_factory_name = @namer.get_support_name @serializer_factory_name_template
+        file_name = @context.path_for @serializer_factory_name
+        modules = @serializer_factory_name.parents.reverse
+        default_namespace = schema.target_namespace.inspect
+
+        File.open file_name, 'w' do |io|
+          f = get_formatter io
+          f.requires 'wsdl_mapper/serializers/serializer_factory',
+            @type_directory_name.require_path
+
+          open_modules f, modules
+          f.assignments [@serializer_factory_name.class_name, "::WsdlMapper::Serializers::SerializerFactory.new(#{@type_directory_name.name}, default_namespace: #{default_namespace})"]
+          close_modules f, modules
         end
+      end
+
+      def generate_type_directory schema, result
+        @type_directory_name = @namer.get_support_name @type_directory_name_template
+        file_name = @context.path_for @type_directory_name
+        modules = @type_directory_name.parents.reverse
+
+        File.open file_name, 'w' do |io|
+          f = get_formatter io
+          f.requires 'wsdl_mapper/serializers/type_directory'
+
+          open_modules f, modules
+          f.block "#{@type_directory_name.class_name} = ::WsdlMapper::Serializers::TypeDirectory.new", [] do
+            schema.each_type do |type|
+              generate_type_directory_entry f, type, result
+            end
+            schema.each_element do |element|
+              generate_element_entry f, element, result
+            end
+          end
+          close_modules f, modules
+        end
+      end
+
+      def generate_element_entry f, element, result
+        type_name = @namer.get_type_name get_type_name element.type
+        type_class_name = type_name.name.inspect
+        f.statement "register_element(#{type_class_name}, #{generate_name(element.name)})"
+      end
+
+      def generate_type_directory_entry f, type, result
+        type_name = @namer.get_type_name get_type_name type
+        s8r_name = @namer.get_s8r_name get_type_name type
+        type_class_name = type_name.name.inspect
+        require_path = s8r_name.require_path.inspect
+        s8r_class_name = s8r_name.name.inspect
+        f.statement "register_type(#{type_class_name}, #{require_path}, #{s8r_class_name})"
+      end
+
+      def generate_type type, result
+        name = @namer.get_s8r_name get_type_name type
         file_name = @context.path_for name
         modules = name.parents.reverse
 
         File.open file_name, 'w' do |io|
           f = get_formatter io
           ttg = TypeToGenerate.new type, name
+          f.requires @type_directory_name.require_path
 
           open_modules f, modules
           open_class f, ttg
           def_build_method f, ttg
           close_class f, ttg
           close_modules f, modules
+
+          f.statement "#{@type_directory_name.name}.register_serializer(#{name.name.inspect}, #{name.name}.new)"
         end
 
         result.add_type name
@@ -120,10 +182,11 @@ module WsdlMapper
 
       def write_soap_array_statements f, ttg
         s8r_name = @namer.get_s8r_name ttg.type.soap_array_type
+        type_name = @namer.get_type_name get_type_name ttg.type
         # TODO: dont hardcode, move over to Namer
         item_name = generate_name WsdlMapper::Dom::Name.get(ttg.type.name.ns, 'item')
         f.block 'obj.each', ['itm'] do
-          f.statement "x.get(#{s8r_name.require_path.inspect}).build(x, itm, #{item_name})"
+          f.statement "x.get(#{type_name.name.inspect}).build(x, itm, #{item_name})"
         end
       end
 
@@ -137,14 +200,14 @@ module WsdlMapper
 
       def write_property_array_statement f, prop
         name = "obj.#{@namer.get_property_name(prop).attr_name}.each"
-        f.block name, ["itm"] do
+        f.block name, ['itm'] do
           case prop.type
           when ::WsdlMapper::Dom::BuiltinType
-            write_builtin_property_statement f, prop, "itm"
+            write_builtin_property_statement f, prop, 'itm'
           when ::WsdlMapper::Dom::ComplexType
-            write_complex_property_statement f, prop, "itm"
+            write_complex_property_statement f, prop, 'itm'
           when ::WsdlMapper::Dom::SimpleType
-            write_simple_property_statement f, prop, "itm"
+            write_simple_property_statement f, prop, 'itm'
           end
         end
       end
@@ -162,15 +225,15 @@ module WsdlMapper
       end
 
       def write_simple_property_statement f, prop, var_name
-        serializer = get_s8r_name(prop).require_path.inspect
         element_name = generate_name prop.name
-        f.statement "x.get(#{serializer}).build(x, #{var_name}, #{element_name})"
+        type_name = @namer.get_type_name get_type_name prop.type
+        f.statement "x.get(#{type_name.name.inspect}).build(x, #{var_name}, #{element_name})"
       end
 
       def write_complex_property_statement f, prop, var_name
-        serializer = get_s8r_name(prop).require_path.inspect
         element_name = generate_name prop.name
-        f.statement "x.get(#{serializer}).build(x, #{var_name}, #{element_name})"
+        type_name = @namer.get_type_name get_type_name prop.type
+        f.statement "x.get(#{type_name.name.inspect}).build(x, #{var_name}, #{element_name})"
       end
 
       def get_s8r_name prop
@@ -189,6 +252,7 @@ module WsdlMapper
 
       def def_build_method f, ttg
         f.begin_def 'build', [:x, :obj, :name]
+        f.statement 'return if obj.nil?'
         case ttg.type
         when ::WsdlMapper::Dom::ComplexType
           def_complex_build_method_body f, ttg

@@ -51,7 +51,10 @@ module WsdlMapper
       def characters text
         @buffer << text
       end
-      # TODO: cdata?
+
+      def cdata_block text
+        @buffer << text
+      end
 
       protected
       # @param [WsdlMapper::Dom::Name] element_name

@@ -36,7 +36,6 @@ module SvcDescParsingTests
 
     # focus
     def test_parsing_cdiscount
-      skip
       doc = TestHelper.get_xml_doc 'cdiscount.wsdl'
       parser = Parser.new
 

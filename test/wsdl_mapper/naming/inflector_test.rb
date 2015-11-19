@@ -8,29 +8,29 @@ module NamingTests
 
     def test_camelize
       test_strings = [
-        'foo_bar',
-        'foo bar',
-        ' foo bar ',
-        'foo/bar',
-        'fooBar'
+        'foo1_bar',
+        'foo1 bar',
+        ' foo 1 bar ',
+        'foo1/bar',
+        'foo1Bar'
       ]
 
       test_strings.each do |str|
-        assert_equal 'FooBar', camelize(str)
+        assert_equal 'Foo1Bar', camelize(str), "Expected camelize(#{str}) to return Foo1Bar"
       end
     end
 
     def test_underscore
       test_strings = [
-        'FooBar',
-        'Foo Bar',
-        ' foo bar ',
-        'foo/bar',
-        'fooBar'
+        'Foo1Bar',
+        'Foo1 Bar',
+        ' foo1 bar ',
+        'foo1/bar',
+        'foo1Bar'
       ]
 
       test_strings.each do |str|
-        assert_equal 'foo_bar', underscore(str)
+        assert_equal 'foo1_bar', underscore(str)
       end
     end
   end

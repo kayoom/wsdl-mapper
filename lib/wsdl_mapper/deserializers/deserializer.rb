@@ -19,7 +19,7 @@ module WsdlMapper
       def initialize type_mapping: WsdlMapper::TypeMapping::DEFAULT, qualified_elements: false, qualified_attributes: false
         @tm = type_mapping
         @element_mappings = Directory.new on_nil: Errors::UnknownElementError
-        @type_mappings = Directory.new
+        @type_mappings = Directory.new on_nil: Errors::UnknownTypeError
         @element_type_mappings = Directory.new do |name|
           get_type_mapping get_element_type name
         end
@@ -54,6 +54,7 @@ module WsdlMapper
       end
 
       def get_type_mapping type_name
+        return if WsdlMapper::Dom::BuiltinType.builtin? type_name
         @type_mappings[type_name]
       end
 

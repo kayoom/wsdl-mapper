@@ -18,14 +18,16 @@ module WsdlMapper
           namer: WsdlMapper::Naming::DefaultNamer.new,
           formatter_factory: DefaultFormatter,
           module_generator_factory: DefaultModuleGenerator,
-          type_directory_name_template: 'TypeDirectory',
-          element_directory_name_template: 'ElementDirectory'
+          type_directory_name_template: 'D10rTypeDirectory',
+          element_directory_name_template: 'D10rElementDirectory',
+          deserializer_name_template: 'Deserializer'
         @context = context
         @namer = namer
         @formatter_factory = formatter_factory
         @module_generator = module_generator_factory.new self
         @type_directory_name_template = type_directory_name_template
         @element_directory_name_template = element_directory_name_template
+        @deserializer_name_template = deserializer_name_template
       end
 
       def generate schema
@@ -42,8 +44,27 @@ module WsdlMapper
         end
 
         generate_element_directory schema, result
+        generate_deserializer schema, result
 
         result
+      end
+
+      def generate_deserializer schema, result
+        @deserializer_name = @namer.get_support_name @deserializer_name_template
+        file_name = @context.path_for @deserializer_name
+        modules = @deserializer_name.parents.reverse
+
+        File.open file_name, 'w' do |io|
+          f = get_formatter io
+          f.requires 'wsdl_mapper/deserializers/lazy_loading_deserializer',
+            @element_directory_name.require_path
+          open_modules f, modules
+          f.assignments [@deserializer_name.class_name, "::WsdlMapper::Deserializers::LazyLoadingDeserializer.new(#{@element_directory_name.name})"]
+          close_modules f, modules
+        end
+
+        result.add_type @deserializer_name
+        result.files << file_name
       end
 
       def generate_element_directory schema, result
@@ -53,7 +74,7 @@ module WsdlMapper
 
         File.open file_name, 'w' do |io|
           f = get_formatter io
-          f.requires 'wsdl_mapper/deserializers/type_directory',
+          f.requires @type_directory_name.require_path,
             'wsdl_mapper/deserializers/element_directory'
           open_modules f, modules
           f.block "#{@element_directory_name.class_name} = ::WsdlMapper::Deserializers::ElementDirectory.new(#{@type_directory_name.name})", [] do
@@ -116,6 +137,9 @@ module WsdlMapper
         File.open file_name, 'w' do |io|
           f = get_formatter io
           f.requires @type_directory_name.require_path, type_name.require_path
+          prop_requires = collect_property_requires(type.each_property)
+          prop_requires += collect_property_requires(type.base.each_property) if has_base?(type)
+          f.requires *prop_requires.uniq
 
           open_modules f, modules
           if type.soap_array?
@@ -130,18 +154,34 @@ module WsdlMapper
         result.files << file_name
       end
 
+      def collect_property_requires properties
+        properties.map do |prop|
+          type = get_type_name(prop.type)
+          next if WsdlMapper::Dom::BuiltinType.builtin?(type.name) || type.is_a?(WsdlMapper::Dom::SimpleType)
+          @namer.get_d10r_name(type).require_path
+        end.compact
+      end
+
       def register_soap_array f, name, type, type_name
-        f.assignments [name.class_name, "#{@type_directory_name.name}.register_soap_array(#{generate_name(type.name)}, #{type_name.name})"]
+        f.assignments [name.class_name, "#{@type_directory_name.name}.register_soap_array(#{generate_name(type.name)}, #{type_name.name}, #{generate_name(type.soap_array_type_name)})"]
       end
 
       def register_complex_type f, name, type, type_name
-        f.block "#{name.class_name} = #{@type_directory_name.name}.register_type(#{generate_name(type.name)}, #{type_name.name})", [] do
+        simple = ", simple: #{generate_name(type.root.name)}" if type.simple_content? # TODO: test
+        f.block "#{name.class_name} = #{@type_directory_name.name}.register_type(#{generate_name(type.name)}, #{type_name.name}#{simple})", [] do
           register_attributes f, type
           register_properties f, type
         end
       end
 
+      def has_base? type
+        WsdlMapper::Dom::ComplexType === type && type.base && WsdlMapper::Dom::ComplexType === type.base
+      end
+
       def register_attributes f, containing_type
+        if has_base? containing_type
+          register_attributes f, containing_type.base
+        end
         containing_type.each_attribute do |attr|
           acc_name = @namer.get_attribute_name attr
           type = attr.type.root
@@ -151,6 +191,9 @@ module WsdlMapper
       end
 
       def register_properties f, containing_type
+        if has_base? containing_type
+          register_properties f, containing_type.base
+        end
         containing_type.each_property do |prop|
           acc_name = @namer.get_property_name prop
           type = prop.type.is_a?(WsdlMapper::Dom::SimpleType) ? prop.type.root : prop.type

@@ -24,6 +24,10 @@ module WsdlMapper
         "#{ns}##{name}"
       end
 
+      def to_a
+        [ns, name]
+      end
+
       def self.get ns, name
         @cache ||= Hash.new do |h, k|
           h[k] = Hash.new do |h2, k2|

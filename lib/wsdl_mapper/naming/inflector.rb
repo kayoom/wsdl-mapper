@@ -6,9 +6,9 @@ module WsdlMapper
       FIRST_CHAR = /^./
       NON_WORD = /[^a-zA-Z]/
       NON_AN = /[^a-zA-Z0-9]/
-      NON_WORD_FOLLOWED_BY_WORD = /[^a-zA-Z]+([a-zA-Z])/
+      NON_WORD_FOLLOWED_BY_WORD = /[^a-zA-Z0-9]+([a-zA-Z0-9])/
       CAPITALS = /([A-Z])/
-      DOWN_FOLLOWED_BY_UP = /([a-z])([A-Z])/
+      DOWN_FOLLOWED_BY_UP = /([a-z0-9])([A-Z])/
 
       def camelize source
         source.

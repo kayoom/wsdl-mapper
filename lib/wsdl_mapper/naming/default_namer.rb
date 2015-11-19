@@ -118,19 +118,19 @@ module WsdlMapper
       end
 
       def get_d10r_file_name type
-        underscore(type.name.name) + "_deserializer.rb"
+        underscore(type.name.name) + '_deserializer.rb'
       end
 
       def get_d10r_class_name type
-        get_camelized_name(type.name.name) + "Deserializer"
+        get_camelized_name(type.name.name) + 'Deserializer'
       end
 
       def get_s8r_file_name type
-        underscore(type.name.name) + "_serializer.rb"
+        underscore(type.name.name) + '_serializer.rb'
       end
 
       def get_s8r_class_name type
-        get_camelized_name(type.name.name) + "Serializer"
+        get_camelized_name(type.name.name) + 'Serializer'
       end
 
       def get_support_class_name name
@@ -178,7 +178,7 @@ module WsdlMapper
       end
 
       def get_file_name name
-        underscore(name) + ".rb"
+        underscore(name) + '.rb'
       end
 
       def get_file_path path

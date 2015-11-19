@@ -113,7 +113,25 @@ module WsdlMapper
 
         def initialize name
           super name
-          @operations = WsdlMapper::Dom::Directory.new
+          @operations = WsdlMapper::Dom::Directory.new do |name|
+            []
+          end
+        end
+
+        def each_operation &block
+          @operations.each_value.to_a.flatten.each &block
+        end
+
+        def add_operation operation
+          @operations[operation.name] << operation
+        end
+
+        def get_operations name
+          @operations[name]
+        end
+
+        def get_operation name
+          @operations[name].first
         end
 
         def rpc?
@@ -122,14 +140,6 @@ module WsdlMapper
 
         def document?
           !rpc?
-        end
-
-        def add_operation operation
-          @operations[operation.name] = operation
-        end
-
-        def each_operation &block
-          @operations.each_value &block
         end
       end
     end

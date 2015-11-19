@@ -6,6 +6,7 @@ module WsdlMapper
   module Deserializers
     class ElementDirectory
       class ElementItem < Struct.new(:element_name, :type_name, :require_path, :class_name)
+        attr_accessor :loaded
       end
 
       def initialize type_directory, &block
@@ -22,7 +23,13 @@ module WsdlMapper
 
       def load element_name
         item = @directory[element_name]
-        require item.require_path
+        if item.loaded
+          false
+        else
+          require item.require_path
+          item.loaded = true
+          true
+        end
       end
 
       def each_element &block

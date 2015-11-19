@@ -10,10 +10,9 @@ module WsdlMapper
       end
 
       def get_element_type element_name
-        super
-      rescue Errors::UnknownElementError
-        @element_directory.load element_name
-        reload
+        if @element_directory.load element_name
+          reload
+        end
         super
       end
 
