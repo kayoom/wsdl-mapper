@@ -3,7 +3,7 @@ require 'test_helper'
 require 'wsdl_mapper/type_mapping/base64_binary'
 
 module TypeMappingTests
-  class Base64BinaryTest < ::Minitest::Test
+  class Base64BinaryTest < ::WsdlMapperTesting::Test
     include WsdlMapper::TypeMapping
 
     def test_to_ruby

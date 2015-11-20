@@ -5,7 +5,7 @@ require 'wsdl_mapper/deserializers/deserializer'
 require 'wsdl_mapper/core_ext/time_duration'
 
 module DeserializersTests
-  class DeserializerWithNsTest < ::Minitest::Test
+  class DeserializerWithNsTest < ::WsdlMapperTesting::Test
     include WsdlMapper::CoreExt
     include WsdlMapper::Dom
     include WsdlMapper::Deserializers
@@ -22,10 +22,10 @@ module DeserializersTests
     end
 
     NoteTypeMapping = ClassMapping.new NoteType do
-      register_attr :uuid, [NS1, 'uuid'], BUILTIN['token']
-      register_prop :to, [NS1, 'to'], BUILTIN['string']
-      register_prop :date_time, [NS1, 'dateTime'], BUILTIN['dateTime']
-      register_prop :attachments, [NS1, 'attachment'], [NS1, 'attachmentType'], array: true
+      register_attr(:uuid, [NS1, 'uuid'], BUILTIN['token'])
+      register_prop(:to, [NS1, 'to'], BUILTIN['string'])
+      register_prop(:date_time, [NS1, 'dateTime'], BUILTIN['dateTime'])
+      register_prop(:attachments, [NS1, 'attachment'], [NS1, 'attachmentType'], array: true)
     end
 
     class AttachmentType
@@ -33,8 +33,8 @@ module DeserializersTests
     end
 
     AttachmentTypeMapping = ClassMapping.new AttachmentType do
-      register_prop :name, [NS1, 'name'], BUILTIN['string']
-      register_prop :content, [NS1, 'body'], BUILTIN['base64Binary']
+      register_prop(:name, [NS1, 'name'], BUILTIN['string'])
+      register_prop(:content, [NS1, 'body'], BUILTIN['base64Binary'])
     end
 
     class User
@@ -42,8 +42,8 @@ module DeserializersTests
     end
 
     UserMapping = ClassMapping.new User do
-      register_prop :name, [NS2, 'name'], BUILTIN['string']
-      register_prop :supervisor, [NS2, 'supervisor'], [NS2, 'userType']
+      register_prop(:name, [NS2, 'name'], BUILTIN['string'])
+      register_prop(:supervisor, [NS2, 'supervisor'], [NS2, 'userType'])
     end
 
     class Conversation
@@ -51,7 +51,7 @@ module DeserializersTests
     end
 
     ConversationMapping = ClassMapping.new Conversation do
-      register_prop :notes, [NS2, 'note'], [NS1, 'noteType'], array: true
+      register_prop(:notes, [NS2, 'note'], [NS1, 'noteType'], array: true)
     end
 
     class Case
@@ -59,8 +59,8 @@ module DeserializersTests
     end
 
     CaseMapping = ClassMapping.new Case do
-      register_prop :author, [NS2, 'author'], [NS2, 'userType']
-      register_prop :conversation, [NS2, 'conversation'], [NS2, 'conversationType']
+      register_prop(:author, [NS2, 'author'], [NS2, 'userType'])
+      register_prop(:conversation, [NS2, 'conversation'], [NS2, 'conversationType'])
     end
 
     def test_fully_qualified_example

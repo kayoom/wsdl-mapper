@@ -3,7 +3,7 @@ require 'test_helper'
 require 'wsdl_mapper/type_mapping/date_time'
 
 module TypeMappingTests
-  class DateTimeTest < ::Minitest::Test
+  class DateTimeTest < ::WsdlMapperTesting::Test
     include WsdlMapper::TypeMapping
 
     def test_to_ruby

@@ -6,7 +6,7 @@ require 'wsdl_mapper/dom_generation/schema_generator'
 
 module DomGenerationTests
   module GeneratorTests
-    class DefaultEnumGeneratorTest < GenerationTestCase
+    class DefaultEnumGeneratorTest < GenerationTest
       include WsdlMapper::DomGeneration
 
       def generate name

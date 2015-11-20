@@ -3,7 +3,7 @@ require 'test_helper'
 require 'wsdl_mapper/type_mapping/base'
 
 module TypeMappingTests
-  class BaseTest < ::Minitest::Test
+  class BaseTest < ::WsdlMapperTesting::Test
     TestMapping = WsdlMapper::TypeMapping::Base.new do
       register_xml_types %w[int integer]
     end

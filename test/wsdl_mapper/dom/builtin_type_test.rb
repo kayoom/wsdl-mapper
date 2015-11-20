@@ -3,7 +3,7 @@ require 'test_helper'
 require 'wsdl_mapper/dom/builtin_type'
 
 module DomTests
-  class BuiltinTypeTest < Minitest::Test
+  class BuiltinTypeTest < WsdlMapperTesting::Test
     include WsdlMapper::Dom
 
     def test_index_accessor

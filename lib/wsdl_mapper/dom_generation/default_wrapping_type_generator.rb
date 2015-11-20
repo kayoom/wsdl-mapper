@@ -5,23 +5,18 @@ module WsdlMapper
     class DefaultWrappingTypeGenerator < GeneratorBase
 
       def generate ttg, result
-        file_name = @generator.context.path_for ttg.name
-
-        modules = ttg.name.parents.reverse
+        modules = get_module_names ttg.name
         content_name = @generator.namer.get_content_name ttg.type
 
-        File.open file_name, 'w' do |io|
-          f = @generator.get_formatter io
-
+        type_file_for ttg.name, result do |f|
           write_requires f, get_requires(ttg.type, result.schema)
-          open_modules f, modules
-          open_class f, ttg
-          generate_accessor f, ttg, content_name
-          generate_ctr f, ttg, result, content_name
-          close_class f, ttg
-          close_modules f, modules
+          f.in_modules modules do
+            in_class f, ttg do
+              generate_accessor f, ttg, content_name
+              generate_ctr f, ttg, result, content_name
+            end
+          end
         end
-        result.files << file_name
         self
       end
 
@@ -33,12 +28,8 @@ module WsdlMapper
         requires.uniq
       end
 
-      def open_class f, ttg
-        f.begin_class ttg.name.class_name
-      end
-
-      def close_class f, ttg
-        f.end
+      def in_class f, ttg, &block
+        f.in_class ttg.name.class_name, &block
       end
 
       def generate_ctr f, ttg, result, content_name

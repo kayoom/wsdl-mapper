@@ -5,7 +5,7 @@ require 'wsdl_mapper/serializers/serializer_core'
 require 'wsdl_mapper/core_ext/time_duration'
 
 module SerializersTests
-  class SerializerCoreTest < ::Minitest::Test
+  class SerializerCoreTest < ::WsdlMapperTesting::Test
     include WsdlMapper::CoreExt
     include WsdlMapper::Serializers
     include WsdlMapper::Dom

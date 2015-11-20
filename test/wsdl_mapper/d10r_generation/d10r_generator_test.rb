@@ -5,7 +5,7 @@ require 'wsdl_mapper/generation/context'
 require 'wsdl_mapper/d10r_generation/d10r_generator'
 
 module D10rGenerationTests
-  class D10rGeneratorTests < GenerationTestCase
+  class D10rGeneratorTests < GenerationTest
     def generate name
       schema = get_schema name
       generator = WsdlMapper::D10rGeneration::D10rGenerator.new context
@@ -19,7 +19,6 @@ module D10rGenerationTests
 require "wsdl_mapper/deserializers/type_directory"
 
 D10rTypeDirectory = ::WsdlMapper::Deserializers::TypeDirectory.new
-
 RUBY
 
       assert_file_is 'note_type_deserializer.rb', <<RUBY
@@ -44,7 +43,6 @@ require "wsdl_mapper/deserializers/lazy_loading_deserializer"
 require "d10r_element_directory"
 
 Deserializer = ::WsdlMapper::Deserializers::LazyLoadingDeserializer.new(::D10rElementDirectory)
-
 RUBY
     end
 
@@ -56,7 +54,7 @@ require "d10r_type_directory"
 require "money_type"
 
 MoneyTypeDeserializer = ::D10rTypeDirectory.register_type([nil, "moneyType"], ::MoneyType, simple: ["http://www.w3.org/2001/XMLSchema", "float"]) do
-  register_attr :currency, [nil, "currency"], ["http://www.w3.org/2001/XMLSchema", "token"]
+  register_attr(:currency, [nil, "currency"], ["http://www.w3.org/2001/XMLSchema", "token"])
 end
 RUBY
     end
@@ -69,10 +67,10 @@ require "d10r_type_directory"
 require "note_type"
 
 NoteTypeDeserializer = ::D10rTypeDirectory.register_type([nil, "noteType"], ::NoteType) do
-  register_prop :to, [nil, "to"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :from, [nil, "from"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :heading, [nil, "heading"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :body, [nil, "body"], ["http://www.w3.org/2001/XMLSchema", "string"]
+  register_prop(:to, [nil, "to"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:from, [nil, "from"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:heading, [nil, "heading"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:body, [nil, "body"], ["http://www.w3.org/2001/XMLSchema", "string"])
 end
 RUBY
     end
@@ -87,12 +85,12 @@ require "note_type"
 require "attachment_type_deserializer"
 
 NoteTypeDeserializer = ::D10rTypeDirectory.register_type([nil, "noteType"], ::NoteType) do
-  register_attr :uuid, [nil, "uuid"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :to, [nil, "to"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :from, [nil, "from"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :heading, [nil, "heading"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :body, [nil, "body"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :attachments, [nil, "attachments"], [nil, "attachmentType"], array: true
+  register_attr(:uuid, [nil, "uuid"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:to, [nil, "to"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:from, [nil, "from"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:heading, [nil, "heading"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:body, [nil, "body"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:attachments, [nil, "attachments"], [nil, "attachmentType"], array: true)
 end
 RUBY
     end
@@ -105,11 +103,11 @@ require "d10r_type_directory"
 require "note_type"
 
 NoteTypeDeserializer = ::D10rTypeDirectory.register_type([nil, "noteType"], ::NoteType) do
-  register_prop :to, [nil, "to"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :from, [nil, "from"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :heading, [nil, "heading"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :body, [nil, "body"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :attachments, [nil, "attachments"], ["http://www.w3.org/2001/XMLSchema", "string"], array: true
+  register_prop(:to, [nil, "to"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:from, [nil, "from"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:heading, [nil, "heading"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:body, [nil, "body"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:attachments, [nil, "attachments"], ["http://www.w3.org/2001/XMLSchema", "string"], array: true)
 end
 RUBY
     end
@@ -122,11 +120,11 @@ require "d10r_type_directory"
 require "note_type"
 
 NoteTypeDeserializer = ::D10rTypeDirectory.register_type([nil, "noteType"], ::NoteType) do
-  register_prop :to, [nil, "to"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :from, [nil, "from"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :heading, [nil, "heading"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :body, [nil, "body"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :attachments, [nil, "attachments"], ["http://www.w3.org/2001/XMLSchema", "string"], array: true
+  register_prop(:to, [nil, "to"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:from, [nil, "from"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:heading, [nil, "heading"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:body, [nil, "body"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:attachments, [nil, "attachments"], ["http://www.w3.org/2001/XMLSchema", "string"], array: true)
 end
 RUBY
     end
@@ -141,12 +139,12 @@ require "note_type"
 require "attachment_type_deserializer"
 
 NoteTypeDeserializer = ::D10rTypeDirectory.register_type([nil, "noteType"], ::NoteType) do
-  register_attr :uuid, [nil, "uuid"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :to, [nil, "to"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :from, [nil, "from"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :heading, [nil, "heading"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :body, [nil, "body"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :attachments, [nil, "attachments"], [nil, "attachmentType"], array: true
+  register_attr(:uuid, [nil, "uuid"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:to, [nil, "to"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:from, [nil, "from"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:heading, [nil, "heading"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:body, [nil, "body"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:attachments, [nil, "attachments"], [nil, "attachmentType"], array: true)
 end
 RUBY
 
@@ -155,8 +153,8 @@ require "d10r_type_directory"
 require "attachment_type"
 
 AttachmentTypeDeserializer = ::D10rTypeDirectory.register_type([nil, "attachmentType"], ::AttachmentType) do
-  register_prop :name, [nil, "name"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :body, [nil, "body"], ["http://www.w3.org/2001/XMLSchema", "string"]
+  register_prop(:name, [nil, "name"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:body, [nil, "body"], ["http://www.w3.org/2001/XMLSchema", "string"])
 end
 RUBY
     end
@@ -169,10 +167,10 @@ require "d10r_type_directory"
 require "note_type"
 
 NoteTypeDeserializer = ::D10rTypeDirectory.register_type([nil, "noteType"], ::NoteType) do
-  register_prop :to, [nil, "to"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :from, [nil, "from"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :heading, [nil, "heading"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :body, [nil, "body"], ["http://www.w3.org/2001/XMLSchema", "string"]
+  register_prop(:to, [nil, "to"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:from, [nil, "from"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:heading, [nil, "heading"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:body, [nil, "body"], ["http://www.w3.org/2001/XMLSchema", "string"])
 end
 RUBY
 
@@ -181,11 +179,11 @@ require "d10r_type_directory"
 require "fancy_note_type"
 
 FancyNoteTypeDeserializer = ::D10rTypeDirectory.register_type([nil, "fancyNoteType"], ::FancyNoteType) do
-  register_prop :to, [nil, "to"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :from, [nil, "from"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :heading, [nil, "heading"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :body, [nil, "body"], ["http://www.w3.org/2001/XMLSchema", "string"]
-  register_prop :attachments, [nil, "attachments"], ["http://www.w3.org/2001/XMLSchema", "string"], array: true
+  register_prop(:to, [nil, "to"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:from, [nil, "from"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:heading, [nil, "heading"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:body, [nil, "body"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:attachments, [nil, "attachments"], ["http://www.w3.org/2001/XMLSchema", "string"], array: true)
 end
 RUBY
     end
@@ -198,7 +196,6 @@ require "d10r_type_directory"
 require "attachments_array"
 
 AttachmentsArrayDeserializer = ::D10rTypeDirectory.register_soap_array([nil, "attachmentsArray"], ::AttachmentsArray, [nil, "attachment"])
-
 RUBY
     end
   end

@@ -1,15 +1,21 @@
 require 'test_helper'
 
+require 'wsdl_mapper_testing/implementation_test'
+require 'wsdl_mapper/generation/abstract_formatter'
 require 'wsdl_mapper/generation/default_formatter'
 
 module GenerationTests
-  class DefaultFormatterTest < ::Minitest::Test
+  class DefaultFormatterTest < WsdlMapperTesting::ImplementationTest
     def formatter
       @formatter ||= WsdlMapper::Generation::DefaultFormatter.new stream
     end
 
     def stream
       @stream ||= StringIO.new
+    end
+
+    def test_implementation
+      assert_implements WsdlMapper::Generation::AbstractFormatter, WsdlMapper::Generation::DefaultFormatter
     end
 
     def test_newlines_to_separate_statements

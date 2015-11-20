@@ -20,7 +20,7 @@ module WsdlMapper
         f.after_constants
       end
 
-      def open_class f, ttg
+      def in_class f, ttg
         yard = YardDocFormatter.new f
         yard.class_doc ttg.type
         super

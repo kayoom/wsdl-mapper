@@ -1,12 +1,10 @@
-require 'wsdl_mapper/generation/abstract_formatter'
-
 module WsdlMapper
   module Generation
     # Default implementation for the ruby formatter interface. This class should be considered as a reference for
     # custom implementations. All public methods are mandatory.
-    class DefaultFormatter < AbstractFormatter
+    class DefaultFormatter
       def initialize io
-        super
+        @io = io
         @i = 0
       end
 
@@ -36,6 +34,17 @@ module WsdlMapper
         indent
         @io << statement
         next_statement
+      end
+
+      def statements *statements
+        statements.each do |s|
+          statement s
+        end
+        blank_line
+      end
+
+      def call name, *args
+        statement "#{name}(#{args * ', '})"
       end
 
       def block statement, block_args
@@ -82,6 +91,22 @@ module WsdlMapper
         inc_indent
       end
 
+      def begin_modules names
+        names.each do |name|
+          begin_module name
+        end
+      end
+
+      def end_modules names
+        names.each { self.end }
+      end
+
+      def in_modules names
+        begin_modules names
+        yield
+        end_modules names
+      end
+
       def begin_class name
         statement "class #{name}"
         inc_indent
@@ -90,6 +115,18 @@ module WsdlMapper
       def begin_sub_class name, super_name
         statement "class #{name} < #{super_name}"
         inc_indent
+      end
+
+      def in_class name
+        begin_class name
+        yield
+        self.end
+      end
+
+      def in_sub_class name, super_name
+        begin_sub_class name, super_name
+        yield
+        self.end
       end
 
       def begin_def name, args = []
@@ -114,9 +151,13 @@ module WsdlMapper
         statement "]"
       end
 
+      def assignment var_name, value
+        statement "#{var_name} = #{value}"
+      end
+
       def assignments *assigns
         assigns.each do |(var_name, value)|
-          statement "#{var_name} = #{value}"
+          assignment var_name, value
         end
         blank_line
       end

@@ -3,7 +3,7 @@ require 'test_helper'
 require 'wsdl_mapper/type_mapping/float'
 
 module TypeMappingTests
-  class FloatTest < ::Minitest::Test
+  class FloatTest < ::WsdlMapperTesting::Test
     include WsdlMapper::TypeMapping
 
     def test_to_ruby

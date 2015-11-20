@@ -4,7 +4,7 @@ require 'wsdl_mapper/dom/simple_type'
 require 'wsdl_mapper/dom/name'
 
 module DomTests
-  class SimpleTypeTest < Minitest::Test
+  class SimpleTypeTest < WsdlMapperTesting::Test
     include WsdlMapper::Dom
 
     def test_root_self

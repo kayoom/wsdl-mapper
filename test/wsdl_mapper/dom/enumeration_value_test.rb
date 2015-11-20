@@ -3,7 +3,7 @@ require 'test_helper'
 require 'wsdl_mapper/dom/enumeration_value'
 
 module DomTests
-  class EnumerationValueTest < Minitest::Test
+  class EnumerationValueTest < WsdlMapperTesting::Test
     include WsdlMapper::Dom
 
     def test_value_accessors

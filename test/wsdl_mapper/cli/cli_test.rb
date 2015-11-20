@@ -1,7 +1,7 @@
 require 'test_helper'
 
 module CliTests
-  class CliTest < ::Minitest::Test
+  class CliTest < ::WsdlMapperTesting::Test
     def test_todo
       skip
       # TODO

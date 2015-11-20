@@ -4,7 +4,7 @@ require 'wsdl_mapper/type_mapping/date_parts'
 
 module TypeMappingTests
   module DatePartsTest
-    class BaseTest < ::Minitest::Test
+    class BaseTest < ::WsdlMapperTesting::Test
       include WsdlMapper::TypeMapping::DateParts
       include WsdlMapper::CoreExt
 
@@ -13,7 +13,7 @@ module TypeMappingTests
       end
     end
 
-    class DayTest < ::Minitest::Test
+    class DayTest < ::WsdlMapperTesting::Test
       include WsdlMapper::TypeMapping::DateParts
       include WsdlMapper::CoreExt
 
@@ -26,7 +26,7 @@ module TypeMappingTests
       end
     end
 
-    class MonthTest < ::Minitest::Test
+    class MonthTest < ::WsdlMapperTesting::Test
       include WsdlMapper::TypeMapping::DateParts
       include WsdlMapper::CoreExt
 
@@ -39,7 +39,7 @@ module TypeMappingTests
       end
     end
 
-    class YearTest < ::Minitest::Test
+    class YearTest < ::WsdlMapperTesting::Test
       include WsdlMapper::TypeMapping::DateParts
       include WsdlMapper::CoreExt
 
@@ -52,7 +52,7 @@ module TypeMappingTests
       end
     end
 
-    class YearMonthTest < ::Minitest::Test
+    class YearMonthTest < ::WsdlMapperTesting::Test
       include WsdlMapper::TypeMapping::DateParts
       include WsdlMapper::CoreExt
 
@@ -65,7 +65,7 @@ module TypeMappingTests
       end
     end
 
-    class MonthDayTest < ::Minitest::Test
+    class MonthDayTest < ::WsdlMapperTesting::Test
       include WsdlMapper::TypeMapping::DateParts
       include WsdlMapper::CoreExt
 

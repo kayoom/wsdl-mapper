@@ -30,7 +30,7 @@ module WsdlMapper
       end
 
       def generate schema
-        result = Result.new schema
+        result = Result.new schema: schema
 
         generate_type_directory schema, result
         generate_serializer_factory schema, result
@@ -46,54 +46,48 @@ module WsdlMapper
         result
       end
 
-      def get_formatter io
-        @formatter_factory.new io
-      end
-
       protected
       def generate_serializer_factory schema, result
         @serializer_factory_name = @namer.get_support_name @serializer_factory_name_template
-        file_name = @context.path_for @serializer_factory_name
-        modules = @serializer_factory_name.parents.reverse
-        default_namespace = schema.target_namespace ? ", default_namespace: #{schema.target_namespace.inspect}" : ''
+        modules = get_module_names @serializer_factory_name
 
-        File.open file_name, 'w' do |io|
-          f = get_formatter io
+        file_for @serializer_factory_name, result do |f|
           f.requires 'wsdl_mapper/serializers/serializer_factory',
             @type_directory_name.require_path
 
-          open_modules f, modules
-          f.assignments [@serializer_factory_name.class_name, "::WsdlMapper::Serializers::SerializerFactory.new(#{@type_directory_name.name}#{default_namespace})"]
-          close_modules f, modules
+          f.in_modules modules do
+            args = [@type_directory_name.name]
+            args << "default_namespace: #{schema.target_namespace.inspect}" if schema.target_namespace
+            f.assignment @serializer_factory_name.class_name, "::WsdlMapper::Serializers::SerializerFactory.new(#{args * ', '})"
+          end
         end
       end
 
       def generate_type_directory schema, result
         @type_directory_name = @namer.get_support_name @type_directory_name_template
-        file_name = @context.path_for @type_directory_name
-        modules = @type_directory_name.parents.reverse
+        modules = get_module_names @type_directory_name
 
-        File.open file_name, 'w' do |io|
-          f = get_formatter io
+        file_for @type_directory_name, result do |f|
           f.requires 'wsdl_mapper/serializers/type_directory'
 
-          open_modules f, modules
-          f.block "#{@type_directory_name.class_name} = ::WsdlMapper::Serializers::TypeDirectory.new", [] do
-            schema.each_type do |type|
-              generate_type_directory_entry f, type, result
-            end
-            schema.each_element do |element|
-              generate_element_entry f, element, result
+          f.in_modules modules do
+            f.block_assignment @type_directory_name.class_name, '::WsdlMapper::Serializers::TypeDirectory.new', [] do
+              schema.each_type do |type|
+                generate_type_directory_entry f, type, result
+              end
+              schema.each_element do |element|
+                generate_element_entry f, element, result
+              end
             end
           end
-          close_modules f, modules
         end
       end
 
       def generate_element_entry f, element, result
         type_name = @namer.get_type_name get_type_name element.type
         type_class_name = type_name.name.inspect
-        f.statement "register_element(#{type_class_name}, #{generate_name(element.name)})"
+
+        f.call :register_element, type_class_name, generate_name(element.name)
       end
 
       def generate_type_directory_entry f, type, result
@@ -102,37 +96,33 @@ module WsdlMapper
         type_class_name = type_name.name.inspect
         require_path = s8r_name.require_path.inspect
         s8r_class_name = s8r_name.name.inspect
-        f.statement "register_type(#{type_class_name}, #{require_path}, #{s8r_class_name})"
+
+        f.call :register_type, type_class_name, require_path, s8r_class_name
       end
 
       def generate_type type, result
         name = @namer.get_s8r_name get_type_name type
-        file_name = @context.path_for name
-        modules = name.parents.reverse
+        modules = get_module_names name
 
-        File.open file_name, 'w' do |io|
-          f = get_formatter io
+        type_file_for name, result do |f|
           ttg = TypeToGenerate.new type, name
           f.requires @type_directory_name.require_path
 
-          open_modules f, modules
-          open_class f, ttg
-          def_build_method f, ttg
-          close_class f, ttg
-          close_modules f, modules
+          f.in_modules modules do
+            f.in_class ttg.name.class_name do
+              def_build_method f, ttg
+            end
+          end
 
-          f.statement "#{@type_directory_name.name}.register_serializer(#{name.name.inspect}, #{name.name}.new)"
+          f.call "#{@type_directory_name.name}.register_serializer", name.name.inspect, "#{name.name}.new"
         end
-
-        result.add_type name
-        result.files << file_name
       end
 
       def def_simple_build_method_body f, ttg
         type_name = generate_name ttg.type.name
         f.block "x.simple(#{type_name}, name)", ['x'] do
           root_type = ttg.type.root.name.name
-          f.statement "x.text_builtin(obj, #{root_type.inspect})"
+          f.call 'x.text_builtin', 'obj', root_type.inspect
         end
       end
 
@@ -153,7 +143,7 @@ module WsdlMapper
       def write_content_statement f, ttg
         content_name = @namer.get_content_name ttg.type
         type = ttg.type.base.name.name
-        f.statement "x.text_builtin(obj.#{content_name.attr_name}, #{type.inspect})"
+        f.call 'x.text_builtin', "obj.#{content_name.attr_name}", type.inspect
       end
 
       def write_property_statements f, ttg

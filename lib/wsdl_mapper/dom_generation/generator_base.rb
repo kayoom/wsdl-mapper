@@ -6,9 +6,14 @@ module WsdlMapper
     class GeneratorBase < WsdlMapper::Generation::Base
       def initialize generator
         @generator = generator
+        @context = generator.context
       end
 
       protected
+      def get_formatter io
+        @generator.get_formatter io
+      end
+
       def add_prop_require requires, prop, schema
         if prop.type_name
           add_type_require requires, prop.type_name, schema

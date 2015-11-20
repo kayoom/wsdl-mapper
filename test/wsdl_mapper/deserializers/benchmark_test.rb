@@ -6,7 +6,7 @@ require 'wsdl_mapper/deserializers/class_mapping'
 require 'wsdl_mapper/core_ext/time_duration'
 
 module DeserializersTests
-  class BenchmarkTest < ::Minitest::Test
+  class BenchmarkTest < ::WsdlMapperTesting::Test
     include WsdlMapper::CoreExt
     include WsdlMapper::Dom
     include WsdlMapper::Deserializers
@@ -36,29 +36,29 @@ module DeserializersTests
     end
 
     AttachmentTypeMapping = ClassMapping.new AttachmentType do
-      register_prop :name, [nil, 'name'], BUILTIN['string']
-      register_prop :content, [nil, 'body'], BUILTIN['base64Binary']
+      register_prop(:name, [nil, 'name'], BUILTIN['string'])
+      register_prop(:content, [nil, 'body'], BUILTIN['base64Binary'])
     end
 
     NoteTypeMapping = ClassMapping.new NoteType do
-      register_attr :uuid, [nil, 'uuid'], BUILTIN['token']
-      register_prop :to, [nil, 'to'], BUILTIN['string']
-      register_prop :date_time, [nil, 'dateTime'], BUILTIN['dateTime']
-      register_prop :attachments, [nil, 'attachment'], [nil, 'attachmentType'], array: true
+      register_attr(:uuid, [nil, 'uuid'], BUILTIN['token'])
+      register_prop(:to, [nil, 'to'], BUILTIN['string'])
+      register_prop(:date_time, [nil, 'dateTime'], BUILTIN['dateTime'])
+      register_prop(:attachments, [nil, 'attachment'], [nil, 'attachmentType'], array: true)
     end
 
     UserMapping = ClassMapping.new User do
-      register_prop :name, [nil, 'name'], BUILTIN['string']
-      register_prop :supervisor, [nil, 'supervisor'], [nil, 'userType']
+      register_prop(:name, [nil, 'name'], BUILTIN['string'])
+      register_prop(:supervisor, [nil, 'supervisor'], [nil, 'userType'])
     end
 
     ConversationMapping = ClassMapping.new Conversation do
-      register_prop :notes, [nil, 'note'], [nil, 'noteType'], array: true
+      register_prop(:notes, [nil, 'note'], [nil, 'noteType'], array: true)
     end
 
     CaseMapping = ClassMapping.new Case do
-      register_prop :author, [nil, 'author'], [nil, 'userType']
-      register_prop :conversation, [nil, 'conversation'], [nil, 'conversationType']
+      register_prop(:author, [nil, 'author'], [nil, 'userType'])
+      register_prop(:conversation, [nil, 'conversation'], [nil, 'conversationType'])
     end
 
     def test_complex_example

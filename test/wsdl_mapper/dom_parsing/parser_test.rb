@@ -3,7 +3,7 @@ require 'test_helper'
 require 'wsdl_mapper/dom_parsing/parser'
 
 module SchemaTests
-  class ParserTest < Minitest::Test
+  class ParserTest < WsdlMapperTesting::Test
     include WsdlMapper::DomParsing
     include WsdlMapper::Dom
 

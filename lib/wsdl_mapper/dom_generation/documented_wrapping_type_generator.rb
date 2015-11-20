@@ -6,10 +6,11 @@ module WsdlMapper
     class DocumentedWrappingTypeGenerator < DefaultWrappingTypeGenerator
 
       protected
-      def open_class f, ttg
+      def in_class f, ttg
         yard = YardDocFormatter.new f
         yard.class_doc ttg.type
-        f.begin_class ttg.name.class_name
+
+        super
       end
     end
   end

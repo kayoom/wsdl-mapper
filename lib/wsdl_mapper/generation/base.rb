@@ -21,6 +21,34 @@ module WsdlMapper
           @namer.get_inline_type type.containing_property
         end
       end
+
+      def file_for type_name, result, &block
+        file_name = @context.path_for type_name
+        file file_name, result, &block
+      end
+
+      # @yieldparam [WsdlMapper::Generation::AbstractFormatter]
+      def type_file_for type_name, result, &block
+        file_for type_name, result, &block
+        result.add_type type_name
+      end
+
+      def file file_name, result
+        File.open file_name, 'w' do |io|
+          f = get_formatter io
+          yield f
+        end
+
+        result.files << file_name
+      end
+
+      def get_formatter io
+        @formatter_factory.new io
+      end
+
+      def get_module_names type
+        type.parents.reverse.map &:module_name
+      end
     end
   end
 end

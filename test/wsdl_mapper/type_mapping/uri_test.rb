@@ -3,7 +3,7 @@ require 'test_helper'
 require 'wsdl_mapper/type_mapping/uri'
 
 module TypeMappingTests
-  class UriTest < ::Minitest::Test
+  class UriTest < ::WsdlMapperTesting::Test
     include WsdlMapper::TypeMapping
 
     def test_to_ruby

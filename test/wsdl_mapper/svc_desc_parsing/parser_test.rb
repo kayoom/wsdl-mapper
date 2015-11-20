@@ -3,7 +3,7 @@ require 'test_helper'
 require 'wsdl_mapper/svc_desc_parsing/parser'
 
 module SvcDescParsingTests
-  class ParserTest < Minitest::Test
+  class ParserTest < WsdlMapperTesting::Test
     include WsdlMapper::SvcDescParsing
     include WsdlMapper::Dom
 

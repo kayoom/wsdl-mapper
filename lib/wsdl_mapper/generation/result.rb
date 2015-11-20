@@ -16,10 +16,11 @@ module WsdlMapper
 
       attr_reader :files, :module_tree, :schema
 
-      def initialize schema
+      def initialize schema: nil, description: nil
         @files = []
         @module_tree = []
-        @schema = schema
+        @description = description
+        @schema = schema || description && description.schema
       end
 
       def add_type type_name

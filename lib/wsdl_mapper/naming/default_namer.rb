@@ -4,7 +4,6 @@ require 'wsdl_mapper/naming/type_name'
 require 'wsdl_mapper/naming/property_name'
 require 'wsdl_mapper/naming/enumeration_value_name'
 require 'wsdl_mapper/naming/inflector'
-require 'wsdl_mapper/naming/abstract_namer'
 
 module WsdlMapper
   module Naming
@@ -15,7 +14,7 @@ module WsdlMapper
     # 2. File names are under_score (e.g. `some_type.rb`)
     # 3. Each class in its own file
     # 4. (De)Serializers are put within the same module as XSD Types
-    class DefaultNamer < AbstractNamer
+    class DefaultNamer
       include WsdlMapper::Dom
 
       include Inflector

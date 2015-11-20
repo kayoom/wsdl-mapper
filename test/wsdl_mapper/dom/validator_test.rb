@@ -7,7 +7,7 @@ require 'wsdl_mapper/dom/builtin_type'
 require 'wsdl_mapper/dom/schema'
 
 module DomTests
-  class ValidatorTest < Minitest::Test
+  class ValidatorTest < WsdlMapperTesting::Test
     include WsdlMapper::Dom
 
     def test_invalid_root_of_simple_types

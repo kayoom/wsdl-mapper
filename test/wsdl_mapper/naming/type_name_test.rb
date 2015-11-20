@@ -3,7 +3,7 @@ require 'test_helper'
 require 'wsdl_mapper/naming/type_name'
 
 module NamingTests
-  class TypeNameTest < ::Minitest::Test
+  class TypeNameTest < ::WsdlMapperTesting::Test
     include WsdlMapper::Naming
 
     def test_simple_name

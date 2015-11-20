@@ -51,7 +51,7 @@ module WsdlMapper
       end
 
       def generate schema
-        result = Result.new schema
+        result = Result.new schema: schema
 
         generate_complex_types schema, result
         generate_enumerations schema, result
@@ -89,7 +89,6 @@ module WsdlMapper
 
         types_to_generate.each do |ttg|
           @wrapping_type_generator.generate ttg, result
-          result.add_type ttg.name
         end
       end
 
@@ -104,7 +103,6 @@ module WsdlMapper
 
         types_to_generate.each do |ttg|
           @enum_generator.generate ttg, result
-          result.add_type ttg.name
         end
       end
 
@@ -119,7 +117,6 @@ module WsdlMapper
 
         types_to_generate.each do |ttg|
           @class_generator.generate ttg, result
-          result.add_type ttg.name
         end
       end
 

@@ -3,7 +3,7 @@ require 'test_helper'
 require 'wsdl_mapper/type_mapping'
 
 module TypeMappingTests
-  class TypeMappingTest < ::Minitest::Test
+  class TypeMappingTest < ::WsdlMapperTesting::Test
     include WsdlMapper::TypeMapping
 
     def test_completeness

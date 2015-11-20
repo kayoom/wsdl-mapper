@@ -3,7 +3,7 @@ require 'test_helper'
 require 'wsdl_mapper/type_mapping/integer'
 
 module TypeMappingTests
-  class IntegerTest < ::Minitest::Test
+  class IntegerTest < ::WsdlMapperTesting::Test
     include WsdlMapper::TypeMapping
 
     def test_to_ruby

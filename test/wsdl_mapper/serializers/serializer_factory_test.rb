@@ -5,7 +5,7 @@ require 'wsdl_mapper/serializers/serializer_factory'
 require 'wsdl_mapper/serializers/type_directory'
 
 module SerializersTests
-  class SerializerFactoryTest < ::Minitest::Test
+  class SerializerFactoryTest < ::WsdlMapperTesting::Test
     include WsdlMapper::Serializers
     include WsdlMapper::Dom
 

@@ -8,35 +8,27 @@ module WsdlMapper
 
       def initialize generator, base: '::String', values_const_name: 'Values'
         @generator = generator
+        @context = generator.context
         @base = base
         @values_const_name = values_const_name
       end
 
       def generate ttg, result
-        file_name = @generator.context.path_for ttg.name
+        modules = get_module_names ttg.name
+        values_to_generate = get_values_to_generate(ttg)
 
-        modules = ttg.name.parents.reverse
-
-        File.open file_name, 'w' do |io|
-          f = @generator.get_formatter io
-          values_to_generate = get_values_to_generate(ttg)
-
-          open_modules f, modules
-          open_class f, ttg
-          generate_constant_assignments f, values_to_generate
-          generate_values_array f, values_to_generate
-          close_class f, ttg
-          close_modules f, modules
+        type_file_for ttg.name, result do |f|
+          f.in_modules modules do
+            in_class f, ttg do
+              generate_constant_assignments f, values_to_generate
+              generate_values_array f, values_to_generate
+            end
+          end
         end
-        result.files << file_name
         self
       end
 
       protected
-      def close_class f, ttg
-        f.end
-      end
-
       def generate_values_array f, values_to_generate
         f.literal_array @values_const_name, values_to_generate.map { |vtg| vtg.name.constant_name }
       end
@@ -55,8 +47,8 @@ module WsdlMapper
         end
       end
 
-      def open_class f, ttg
-        f.begin_sub_class ttg.name.class_name, @base
+      def in_class f, ttg, &block
+        f.in_sub_class ttg.name.class_name, @base, &block
       end
 
       def value_constant_assignment vtg

@@ -7,7 +7,7 @@ require 'wsdl_mapper/dom_generation/documented_class_generator'
 
 module DomGenerationTests
   module GeneratorTests
-    class DocumentedClassGeneratorTest < GenerationTestCase
+    class DocumentedClassGeneratorTest < GenerationTest
       include WsdlMapper::DomGeneration
 
       def generate name

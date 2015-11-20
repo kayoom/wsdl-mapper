@@ -3,7 +3,7 @@ require 'test_helper'
 require 'wsdl_mapper/type_mapping/duration'
 
 module TypeMappingTests
-  class DurationTest < ::Minitest::Test
+  class DurationTest < ::WsdlMapperTesting::Test
     include WsdlMapper::TypeMapping
     include WsdlMapper::CoreExt
 

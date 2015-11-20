@@ -6,6 +6,34 @@ module WsdlMapper
         @io = io
       end
 
+      def in_class name
+        raise NotImplementedError
+      end
+
+      def in_sub_class name
+        raise NotImplementedError
+      end
+
+      def begin_modules names
+        raise NotImplementedError
+      end
+
+      def end_modules names
+        raise NotImplementedError
+      end
+
+      def in_modules names
+        raise NotImplementedError
+      end
+
+      def assignment var_name, value
+        raise NotImplementedError
+      end
+
+      def call name, *args
+        raise NotImplementedError
+      end
+
       def next_statement
         raise NotImplementedError
       end
@@ -23,6 +51,10 @@ module WsdlMapper
       end
 
       def block_assignment var_name, statement, block_args, &block
+        raise NotImplementedError
+      end
+
+      def statements *statements
         raise NotImplementedError
       end
 

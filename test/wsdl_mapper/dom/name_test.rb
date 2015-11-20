@@ -3,7 +3,7 @@ require 'test_helper'
 require 'wsdl_mapper/dom/name'
 
 module DomTests
-  class NameTest < Minitest::Test
+  class NameTest < WsdlMapperTesting::Test
     include WsdlMapper::Dom
 
     def test_equality

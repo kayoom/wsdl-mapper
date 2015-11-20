@@ -6,7 +6,7 @@ require 'wsdl_mapper/dom_generation/schema_generator'
 
 module DomGenerationTests
   module GeneratorTests
-    class DefaultClassGeneratorTest < GenerationTestCase
+    class DefaultClassGeneratorTest < GenerationTest
       def generate name
         schema = get_schema name
         generator = WsdlMapper::DomGeneration::SchemaGenerator.new context

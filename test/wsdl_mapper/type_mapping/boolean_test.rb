@@ -3,7 +3,7 @@ require 'test_helper'
 require 'wsdl_mapper/type_mapping/boolean'
 
 module TypeMappingTests
-  class BooleanTest < ::Minitest::Test
+  class BooleanTest < ::WsdlMapperTesting::Test
     include WsdlMapper::TypeMapping
 
     def test_to_ruby

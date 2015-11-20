@@ -7,7 +7,7 @@ require 'wsdl_mapper/dom_generation/default_ctr_generator'
 
 module DomGenerationTests
   module GeneratorTests
-    class DefaultWrappingTypeGeneratorTest < GenerationTestCase
+    class DefaultWrappingTypeGeneratorTest < GenerationTest
       include WsdlMapper::DomGeneration
 
       def generate name

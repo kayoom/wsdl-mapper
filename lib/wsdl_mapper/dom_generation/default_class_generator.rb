@@ -5,23 +5,19 @@ module WsdlMapper
   module DomGeneration
     class DefaultClassGenerator < GeneratorBase
       def generate ttg, result
-        file_name = @generator.context.path_for ttg.name
-        modules = ttg.name.parents.reverse
+        modules = get_module_names ttg.name
 
-        File.open file_name, 'w' do |io|
-          f = @generator.get_formatter io
-
+        type_file_for ttg.name, result do |f|
           write_requires f, get_requires(ttg.type, result.schema)
-          open_modules f, modules
-          open_class f, ttg
-          generate_content_attribute f, ttg if ttg.type.simple_content?
-          generate_property_attributes f, ttg.type.each_property
-          generate_attribute_attributes f, ttg.type.each_attribute
-          generate_ctr f, ttg, result
-          close_class f, ttg
-          close_modules f, modules
+          f.in_modules modules do
+            in_class f, ttg do
+              generate_content_attribute f, ttg if ttg.type.simple_content?
+              generate_property_attributes f, ttg.type.each_property
+              generate_attribute_attributes f, ttg.type.each_attribute
+              generate_ctr f, ttg, result
+            end
+          end
         end
-        result.files << file_name
         self
       end
 
@@ -64,16 +60,18 @@ module WsdlMapper
         requires.uniq
       end
 
-      def close_class f, ttg
-        f.end
+      def in_class f, ttg, &block
+        if base_name = get_base_name(ttg.type)
+          f.in_sub_class ttg.name.class_name, base_name, &block
+        else
+          f.in_class ttg.name.class_name, &block
+        end
       end
 
-      def open_class f, ttg
-        if ttg.type.base && !ttg.type.simple_content? && base_name = @generator.get_ruby_type_name(ttg.type.base)
-          f.begin_sub_class ttg.name.class_name, base_name
-        else
-          f.begin_class ttg.name.class_name
-        end
+      def get_base_name type
+        type.base &&
+          !type.simple_content? &&
+          @generator.get_ruby_type_name(type.base)
       end
     end
   end

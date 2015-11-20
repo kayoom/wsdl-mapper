@@ -9,7 +9,7 @@ require 'wsdl_mapper/dom/property'
 
 module DomGenerationTests
   module GeneratorTests
-    class DefaultCtrGeneratorTest < GenerationTestCase
+    class DefaultCtrGeneratorTest < GenerationTest
       include WsdlMapper::Generation
       include WsdlMapper::DomGeneration
       include WsdlMapper::Dom

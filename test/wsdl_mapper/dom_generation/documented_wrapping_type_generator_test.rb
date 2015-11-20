@@ -7,7 +7,7 @@ require 'wsdl_mapper/dom_generation/documented_wrapping_type_generator'
 
 module DomGenerationTests
   module GeneratorTests
-    class DocumentedWrappingTypeGeneratorTest < GenerationTestCase
+    class DocumentedWrappingTypeGeneratorTest < GenerationTest
       include WsdlMapper::DomGeneration
 
       def generate name

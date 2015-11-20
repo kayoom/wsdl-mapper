@@ -3,7 +3,7 @@ require 'test_helper'
 require 'wsdl_mapper/type_mapping/decimal'
 
 module TypeMappingTests
-  class DecimalTest < ::Minitest::Test
+  class DecimalTest < ::WsdlMapperTesting::Test
     include WsdlMapper::TypeMapping
 
     def test_to_ruby

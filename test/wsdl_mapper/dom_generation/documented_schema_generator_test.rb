@@ -6,7 +6,7 @@ require 'wsdl_mapper/dom_generation/documented_schema_generator'
 
 module DomGenerationTests
   module GeneratorTests
-    class DocumentedSchemaGeneratorTest < GenerationTestCase
+    class DocumentedSchemaGeneratorTest < GenerationTest
       include WsdlMapper::DomGeneration
 
       def generate name
@@ -18,7 +18,7 @@ module DomGenerationTests
       def test_class_documentation
         generate 'basic_note_type.xsd'
 
-        assert_file_is "note_type.rb", <<RUBY
+        assert_file_is 'note_type.rb', <<RUBY
 # @xml_name noteType
 class NoteType
   # @!attribute to
@@ -57,7 +57,7 @@ class NoteType
 end
 RUBY
 
-        assert_file_is ".yardopts", <<SH
+        assert_file_is '.yardopts', <<SH
 --tag xml_name:"XML Name"
 --tag xml_namespace:"XML Namespace"
 --tag xml_value:"XML Value"

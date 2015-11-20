@@ -5,7 +5,7 @@ require 'wsdl_mapper/deserializers/lazy_loading_deserializer'
 require 'wsdl_mapper/core_ext/time_duration'
 
 module DeserializersTests
-  class DeserializerIntegrationTest < ::Minitest::Test
+  class DeserializerIntegrationTest < ::WsdlMapperTesting::Test
     include WsdlMapper::CoreExt
     include WsdlMapper::Dom
     include WsdlMapper::Deserializers
@@ -18,10 +18,10 @@ class NoteType
 end
 TypeDirectory = ::WsdlMapper::Deserializers::TypeDirectory.new
 NoteTypeDeserializer = TypeDirectory.register_type([nil, 'noteType'], NoteType) do
-  register_prop :to, [nil, 'to'], ['http://www.w3.org/2001/XMLSchema', 'string']
-  register_prop :from, [nil, 'from'], ['http://www.w3.org/2001/XMLSchema', 'string']
-  register_prop :heading, [nil, 'heading'], ['http://www.w3.org/2001/XMLSchema', 'string']
-  register_prop :body, [nil, 'body'], ['http://www.w3.org/2001/XMLSchema', 'string']
+  register_prop(:to, [nil, 'to'], ['http://www.w3.org/2001/XMLSchema', 'string'])
+  register_prop(:from, [nil, 'from'], ['http://www.w3.org/2001/XMLSchema', 'string'])
+  register_prop(:heading, [nil, 'heading'], ['http://www.w3.org/2001/XMLSchema', 'string'])
+  register_prop(:body, [nil, 'body'], ['http://www.w3.org/2001/XMLSchema', 'string'])
 end
 ElementDirectory = ::WsdlMapper::Deserializers::ElementDirectory.new(TypeDirectory) do
   register_element [nil, 'note'], [nil, 'noteType'], 'note_type_deserializer', '::NoteTypeDeserializer'
@@ -43,15 +43,15 @@ class AttachmentsArray < ::Array
 end
 TypeDirectory = ::WsdlMapper::Deserializers::TypeDirectory.new
 NoteTypeDeserializer = TypeDirectory.register_type([nil, 'noteType'], NoteType) do
-  register_prop :to, [nil, 'to'], ['http://www.w3.org/2001/XMLSchema', 'string']
-  register_prop :from, [nil, 'from'], ['http://www.w3.org/2001/XMLSchema', 'string']
-  register_prop :heading, [nil, 'heading'], ['http://www.w3.org/2001/XMLSchema', 'string']
-  register_prop :body, [nil, 'body'], ['http://www.w3.org/2001/XMLSchema', 'string']
-  register_prop :attachments, [nil, 'attachments'], [nil, 'attachmentsArray']
+  register_prop(:to, [nil, 'to'], ['http://www.w3.org/2001/XMLSchema', 'string'])
+  register_prop(:from, [nil, 'from'], ['http://www.w3.org/2001/XMLSchema', 'string'])
+  register_prop(:heading, [nil, 'heading'], ['http://www.w3.org/2001/XMLSchema', 'string'])
+  register_prop(:body, [nil, 'body'], ['http://www.w3.org/2001/XMLSchema', 'string'])
+  register_prop(:attachments, [nil, 'attachments'], [nil, 'attachmentsArray'])
 end
 AttachmentDeserializer = TypeDirectory.register_type([nil, 'attachment'], AttachmentType) do
-  register_prop :name, [nil, 'name'], ['http://www.w3.org/2001/XMLSchema', 'string']
-  register_prop :body, [nil, 'body'], ['http://www.w3.org/2001/XMLSchema', 'string']
+  register_prop(:name, [nil, 'name'], ['http://www.w3.org/2001/XMLSchema', 'string'])
+  register_prop(:body, [nil, 'body'], ['http://www.w3.org/2001/XMLSchema', 'string'])
 end
 AttachmentsArrayDeserializer = TypeDirectory.register_soap_array([nil, 'attachmentsArray'], AttachmentsArray, [nil, 'attachment'])
 ElementDirectory = ::WsdlMapper::Deserializers::ElementDirectory.new(TypeDirectory) do

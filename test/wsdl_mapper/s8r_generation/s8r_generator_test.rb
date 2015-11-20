@@ -5,7 +5,7 @@ require 'wsdl_mapper/generation/context'
 require 'wsdl_mapper/s8r_generation/s8r_generator'
 
 module S8rGenerationTests
-  class S8rGeneratorTests < GenerationTestCase
+  class S8rGeneratorTests < GenerationTest
     def generate name
       schema = get_schema name
       generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
@@ -29,7 +29,6 @@ require "wsdl_mapper/serializers/serializer_factory"
 require "s8r_type_directory"
 
 SerializerFactory = ::WsdlMapper::Serializers::SerializerFactory.new(::S8rTypeDirectory)
-
 RUBY
 
       assert_file_is 'note_type_serializer.rb', <<RUBY

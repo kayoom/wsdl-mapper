@@ -1,14 +1,20 @@
 require 'test_helper'
 
 require 'wsdl_mapper/dom/name'
+require 'wsdl_mapper_testing/implementation_test'
+require 'wsdl_mapper/naming/abstract_namer'
 require 'wsdl_mapper/naming/default_namer'
 
 module NamingTests
-  class DefaultNamerTest < ::Minitest::Test
+  class DefaultNamerTest < WsdlMapperTesting::ImplementationTest
     class TestType < Struct.new(:name)
     end
 
     class TestProperty < Struct.new(:name)
+    end
+
+    def test_implementation
+      assert_implements WsdlMapper::Naming::AbstractNamer, WsdlMapper::Naming::DefaultNamer
     end
 
     def test_numeric_enum_value_name

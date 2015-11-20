@@ -3,7 +3,7 @@ require 'test_helper'
 require 'wsdl_mapper/type_mapping/hex_binary'
 
 module TypeMappingTests
-  class HexBinaryTest < ::Minitest::Test
+  class HexBinaryTest < ::WsdlMapperTesting::Test
     include WsdlMapper::TypeMapping
 
     def test_to_ruby

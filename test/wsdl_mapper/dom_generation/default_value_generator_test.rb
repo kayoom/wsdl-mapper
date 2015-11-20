@@ -6,7 +6,7 @@ require 'bigdecimal'
 
 module DomGenerationTests
   module GeneratorTests
-    class DefaultValueGeneratorTest < ::Minitest::Test
+    class DefaultValueGeneratorTest < ::WsdlMapperTesting::Test
       include WsdlMapper::Generation
       include WsdlMapper::DomGeneration
       include WsdlMapper::CoreExt

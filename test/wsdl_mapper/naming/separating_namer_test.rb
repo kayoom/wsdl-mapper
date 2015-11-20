@@ -4,7 +4,7 @@ require 'wsdl_mapper/dom/name'
 require 'wsdl_mapper/naming/separating_namer'
 
 module NamingTests
-  class SeparatingNamerTest < ::Minitest::Test
+  class SeparatingNamerTest < ::WsdlMapperTesting::Test
     class TestType < Struct.new(:name)
     end
 

@@ -3,7 +3,7 @@ require 'test_helper'
 require 'wsdl_mapper/naming/inflector'
 
 module NamingTests
-  class InflectorTest < ::Minitest::Test
+  class InflectorTest < ::WsdlMapperTesting::Test
     include WsdlMapper::Naming::Inflector
 
     def test_camelize

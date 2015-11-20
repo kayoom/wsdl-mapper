@@ -6,7 +6,7 @@ module WsdlMapper
     class DocumentedClassGenerator < DefaultClassGenerator
 
       protected
-      def open_class f, ttg
+      def in_class f, ttg
         yard = YardDocFormatter.new f
         yard.class_doc ttg.type
 

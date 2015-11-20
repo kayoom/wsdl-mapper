@@ -3,7 +3,7 @@ require 'test_helper'
 require 'wsdl_mapper/core_ext/time_duration'
 
 module CoreExtTests
-  class TimeDurationTest < ::Minitest::Test
+  class TimeDurationTest < ::WsdlMapperTesting::Test
     include WsdlMapper::CoreExt
 
     def test_equality

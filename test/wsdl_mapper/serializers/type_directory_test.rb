@@ -4,7 +4,7 @@ require 'wsdl_mapper/dom/name'
 require 'wsdl_mapper/serializers/type_directory'
 
 module SerializersTests
-  class TypeDirectoryTest < ::Minitest::Test
+  class TypeDirectoryTest < ::WsdlMapperTesting::Test
     include WsdlMapper::Serializers
     include WsdlMapper::Dom
 
