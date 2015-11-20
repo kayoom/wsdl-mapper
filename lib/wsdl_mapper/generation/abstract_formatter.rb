@@ -14,6 +14,18 @@ module WsdlMapper
         raise NotImplementedError
       end
 
+      def blank_comment
+        raise NotImplementedError
+      end
+
+      def block statement, block_args, &block
+        raise NotImplementedError
+      end
+
+      def block_assignment var_name, statement, block_args, &block
+        raise NotImplementedError
+      end
+
       def after_requires
         raise NotImplementedError
       end

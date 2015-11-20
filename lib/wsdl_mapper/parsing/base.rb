@@ -129,12 +129,14 @@ module WsdlMapper
         parse_name val, node
       end
 
-      # @param [String] name
+      # @param [String] name_str
       # @return [WsdlMapper::Dom::Name]
       def parse_name name_str, node
         name, ns_code = name_str.split(':').reverse
         ns = if ns_code.nil?
           @base.target_namespace
+        elsif ns_code == 'xml'
+          'http://www.w3.org/XML/1998/namespace'
         else
           node.namespaces["xmlns:#{ns_code}"]
         end

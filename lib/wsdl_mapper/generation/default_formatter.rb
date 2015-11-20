@@ -24,7 +24,7 @@ module WsdlMapper
       end
 
       def blank_comment
-        statement "#"
+        statement '#'
         @blank_line = true
         self
       end
@@ -41,8 +41,8 @@ module WsdlMapper
       def block statement, block_args
         indent
         buf = statement.dup
-        buf << " do"
-        args = block_args.join ", "
+        buf << ' do'
+        args = block_args.join ', '
         buf << " |#{args}|" if block_args.any?
         @io << buf
         next_statement
@@ -51,9 +51,12 @@ module WsdlMapper
         self.end
       end
 
+      def block_assignment var_name, statement, block_args, &block
+        block "#{var_name} = #{statement}", block_args, &block
+      end
+
       def require path
-        # TODO: escape
-        statement %[require #{path.inspect}]
+        statement "require #{path.inspect}"
       end
 
       def requires *paths
@@ -66,7 +69,7 @@ module WsdlMapper
 
       def attr_accessors *attrs
         return if attrs.empty?
-        # TODO: check/escape
+
         attrs = attrs.map { |a| ":#{a}" }
         attrs.each do |attr|
           statement "attr_accessor #{attr}"

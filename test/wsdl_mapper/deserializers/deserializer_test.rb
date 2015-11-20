@@ -34,6 +34,18 @@ module DeserializersTests
       register_prop :attachments, [nil, 'attachment'], [nil, 'attachmentType'], array: true
     end
 
+    class MoneyType
+      attr_accessor :content, :currency
+
+      def initialize content
+        @content = content
+      end
+    end
+
+    MoneyTypeMapping = ClassMapping.new MoneyType, simple: ['http://www.w3.org/2001/XMLSchema', 'double'] do
+      register_attr :currency, [nil, 'currency'], BUILTIN['token']
+    end
+
     def test_register_type
       deserializer = Deserializer.new
 
@@ -70,6 +82,24 @@ XML
       assert_equal 'ABCD-1234', obj.uuid
       assert_equal 'to@example.org', obj.to
       assert_equal ::DateTime.new(2002, 5, 30, 9, 30, 10, '-6'), obj.date_time
+    end
+
+    def test_simple_content
+      xml = <<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<money currency="EUR">
+  123.45
+</money>
+XML
+
+      deserializer = Deserializer.new
+      deserializer.register_element [nil, 'money'], [nil, 'moneyType']
+      deserializer.register_type [nil, 'moneyType'], MoneyTypeMapping
+
+      obj = deserializer.from_xml xml
+      assert_kind_of MoneyType, obj
+      assert_equal 'EUR', obj.currency
+      assert_equal 123.45, obj.content
     end
 
     def test_raise_on_unknown_element

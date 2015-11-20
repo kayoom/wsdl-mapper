@@ -2,6 +2,7 @@ require 'nokogiri'
 
 require 'wsdl_mapper/dom_parsing/abstract_resolver'
 require 'uri'
+require 'open-uri'
 
 module WsdlMapper
   module DomParsing

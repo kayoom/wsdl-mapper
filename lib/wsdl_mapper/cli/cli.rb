@@ -7,11 +7,11 @@ require 'wsdl_mapper/d10r_generation/facade'
 module WsdlMapper
   module Cli
     class Generate < Thor
-      class_option :out
-      class_option :module
-      class_option :separate_modules, type: :boolean, default: true
-      class_option :clear, type: :boolean
-      class_option :docs, type: :boolean
+      class_option :out, desc: 'The output directory. If omitted, takes the <xsd_file> (without extension), e.g. `ebaySvc.xsd` => `ebaySvc`.'
+      class_option :module, desc: 'The ruby root module, for the generated classes.'
+      class_option :separate_modules, type: :boolean, default: true, desc: 'Set to <true> to separate types, serializers and deserializers into different modules and subdirectories.'
+      class_option :clear, type: :boolean, default: true, desc: 'Set to <true> to clear out the ouput directory before generation.'
+      class_option :docs, type: :boolean, default: true, desc: 'Set to <true> to generate yardoc annotations and (if present in xsd) doc strings for generated classes and attributes.'
 
       no_tasks do
         def facade_options xsd_file

@@ -46,11 +46,16 @@ module WsdlMapper
         result
       end
 
+      def get_formatter io
+        @formatter_factory.new io
+      end
+
+      protected
       def generate_serializer_factory schema, result
         @serializer_factory_name = @namer.get_support_name @serializer_factory_name_template
         file_name = @context.path_for @serializer_factory_name
         modules = @serializer_factory_name.parents.reverse
-        default_namespace = schema.target_namespace.inspect
+        default_namespace = schema.target_namespace ? ", default_namespace: #{schema.target_namespace.inspect}" : ''
 
         File.open file_name, 'w' do |io|
           f = get_formatter io
@@ -58,7 +63,7 @@ module WsdlMapper
             @type_directory_name.require_path
 
           open_modules f, modules
-          f.assignments [@serializer_factory_name.class_name, "::WsdlMapper::Serializers::SerializerFactory.new(#{@type_directory_name.name}, default_namespace: #{default_namespace})"]
+          f.assignments [@serializer_factory_name.class_name, "::WsdlMapper::Serializers::SerializerFactory.new(#{@type_directory_name.name}#{default_namespace})"]
           close_modules f, modules
         end
       end
@@ -123,11 +128,6 @@ module WsdlMapper
         result.files << file_name
       end
 
-      def get_formatter io
-        @formatter_factory.new io
-      end
-
-      protected
       def def_simple_build_method_body f, ttg
         type_name = generate_name ttg.type.name
         f.block "x.simple(#{type_name}, name)", ['x'] do
@@ -181,10 +181,8 @@ module WsdlMapper
       end
 
       def write_soap_array_statements f, ttg
-        s8r_name = @namer.get_s8r_name ttg.type.soap_array_type
         type_name = @namer.get_type_name get_type_name ttg.type
-        # TODO: dont hardcode, move over to Namer
-        item_name = generate_name WsdlMapper::Dom::Name.get(ttg.type.name.ns, 'item')
+        item_name = generate_name WsdlMapper::Dom::Name.get(ttg.type.name.ns, @namer.get_soap_array_item_name(ttg.type))
         f.block 'obj.each', ['itm'] do
           f.statement "x.get(#{type_name.name.inspect}).build(x, itm, #{item_name})"
         end

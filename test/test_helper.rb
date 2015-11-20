@@ -94,6 +94,12 @@ class GenerationTestCase < SchemaTestCase
     assert_equal expected, file(*name)
   end
 
+  def assert_file_contains *name, expected
+    assert_file_exists *name
+    content = file *name
+    assert content.include?(expected.strip), "Expected\n\n#{content}\n\n to include\n\n#{expected}\n"
+  end
+
   def file *name
     File.read tmp_path.join *name
   end

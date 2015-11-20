@@ -21,11 +21,11 @@ module WsdlMapper
           name = @generator.namer.get_property_name p
 
           type = if p.type.name == WsdlMapper::Dom::BuiltinType[:boolean].name
-            "true, false"
+            'true, false'
           else
             @generator.get_ruby_type_name p.type
           end
-          type ||= "Object"
+          type ||= 'Object'
 
           if p.array?
             type = "Array<#{type}>"

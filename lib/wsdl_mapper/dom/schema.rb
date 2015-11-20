@@ -59,11 +59,11 @@ module WsdlMapper
       end
 
       def get_element name
-        @elements[name]
+        @elements[name] || @imports.lazy.map { |s| s.get_element(name) }.reject(&:nil?).first
       end
 
       def get_attribute name
-        @attributes[name]
+        @attributes[name] || @imports.lazy.map { |s| s.get_attribute(name) }.reject(&:nil?).first
       end
 
       def each_type &block

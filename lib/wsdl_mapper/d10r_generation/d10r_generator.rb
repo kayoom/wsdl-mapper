@@ -167,7 +167,8 @@ module WsdlMapper
       end
 
       def register_complex_type f, name, type, type_name
-        simple = ", simple: #{generate_name(type.root.name)}" if type.simple_content? # TODO: test
+        simple = ", simple: #{generate_name(type.root.name)}" if type.simple_content?
+
         f.block "#{name.class_name} = #{@type_directory_name.name}.register_type(#{generate_name(type.name)}, #{type_name.name}#{simple})", [] do
           register_attributes f, type
           register_properties f, type

@@ -48,6 +48,19 @@ Deserializer = ::WsdlMapper::Deserializers::LazyLoadingDeserializer.new(::D10rEl
 RUBY
     end
 
+    def test_simple_content
+      generate 'simple_money_type_with_currency_attribute.xsd'
+
+      assert_file_is 'money_type_deserializer.rb', <<RUBY
+require "d10r_type_directory"
+require "money_type"
+
+MoneyTypeDeserializer = ::D10rTypeDirectory.register_type([nil, "moneyType"], ::MoneyType, simple: ["http://www.w3.org/2001/XMLSchema", "float"]) do
+  register_attr :currency, [nil, "currency"], ["http://www.w3.org/2001/XMLSchema", "token"]
+end
+RUBY
+    end
+
     def test_basic_type
       generate 'basic_note_type.xsd'
 

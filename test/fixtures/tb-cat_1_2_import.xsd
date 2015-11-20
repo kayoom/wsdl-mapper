@@ -1,0 +1,1769 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<!--
+	File generated with xsd-all-in-oneify, don't edit this file.
+-->
+<xs:import namespace="http://www.w3.org/XML/1998/namespace"
+			schemaLocation="http://www.w3.org/2001/xml.xsd" />
+
+<!--
+	begin: tb-cat_1_2.xsd
+-->
+
+
+<!--
+	Copyright (C) 2012 by Tradebyte Software GmbH
+	Written by Stefan Siegl <stefan.siegl@tradebyte.de>
+
+	All rights reserved.
+-->
+
+
+<!--
+	begin: tb-base.xsd
+-->
+
+
+<!--
+	Copyright (C) 2010, 2011, 2012 by Tradebyte Software GmbH
+	Written by Stefan Siegl <stefan.siegl@tradebyte.de>
+
+	All rights reserved.
+-->
+
+	<xs:complexType name="typeOrder">
+		<xs:sequence>
+			<xs:element name="ORDER_DATA" type="typeOrderData" />
+			<xs:element name="REPLACE_RESERVATIONS" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="RESERVATION" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:attribute name="identifier" use="required" type="typeIdentifier" />
+								<xs:attribute name="key" use="required" type="xs:string" />
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SELL_TO" type="typeCustomer" minOccurs="0" />
+			<xs:element name="SHIP_TO" type="typeCustomer" />
+			<xs:element name="SHIPMENT" type="typeShipment" minOccurs="0" />
+			<xs:element name="PAYMENT" type="typePayment" minOccurs="0" />
+			<xs:element name="USERDEFINED" type="typeUSERDEFINED" minOccurs="0" />
+			<xs:element name="REFERENCES" type="typeReferences" minOccurs="0" />
+			<xs:element name="HISTORY" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="EVENT" type="typeHistoryEvent" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SERVICES" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="SERVICE" type="typeService" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ITEMS">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ITEM" type="typeItem" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="typeOrderData">
+		<xs:sequence>
+			<xs:element name="ORDER_DATE" type="xs:date" />
+			<xs:element name="TB_ID" type="xs:positiveInteger" minOccurs="0" />
+			<xs:element name="CHANNEL_SIGN" type="typeChannelSign" minOccurs="0" />
+			<xs:element name="CHANNEL_ID" type="type50StringNotNull" />
+			<xs:element name="CHANNEL_NO" type="type50StringNotNull" minOccurs="0" />
+			<xs:element name="BILL_NO" type="type50StringNotNull" minOccurs="0" />
+			<xs:element name="PAID" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0" />
+						<xs:maxInclusive value="2" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="APPROVED" type="xs:boolean" />
+				<xs:element name="WITHDRAWN" type="typeOne" />
+			</xs:choice>
+			<xs:element name="DOCUMENT_URL" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="type255StringNotNull">
+							<xs:attribute name="type" use="optional" type="type50StringNotNull" />
+							<xs:attribute name="origname" use="optional" type="type100StringNotNull" />
+							<xs:attribute name="servlet" use="optional" type="xs:boolean" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="CUSTOMER_COMMENT" type="xs:string" minOccurs="0" />
+			<xs:element name="SIGNGROUPS" type="typeSigngroups" minOccurs="0" />
+			<xs:element name="ITEM_COUNT" type="xs:positiveInteger" />
+			<xs:element name="TOTAL_ITEM_AMOUNT" type="typeNonNegativeDecimalWithCurrencyAttribute" />
+			<xs:element name="DATE_CREATED" type="xs:dateTime" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="typeCustomer">
+		<xs:sequence>
+			<xs:element name="TB_ID" type="xs:positiveInteger" minOccurs="0" />
+			<xs:element name="CHANNEL_NO" type="type100StringNotNull" minOccurs="0" />
+			<xs:element name="TITLE" type="type20StringNotNull" minOccurs="0" />
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="FIRSTNAME" type="type50String" />
+					<xs:element name="LASTNAME" type="type50String" />
+					<xs:element name="NAME" type="type100StringNotNull" minOccurs="0" />
+				</xs:sequence>
+				<xs:element name="NAME" type="type100StringNotNull" />
+			</xs:choice>
+			<xs:element name="NAME_EXTENSION" type="type100String" minOccurs="0" />
+			<xs:element name="STREET_NO" type="type100String" />
+			<xs:element name="STREET_EXTENSION" type="type100String" minOccurs="0" />
+			<xs:element name="ZIP" type="type10String" />
+			<xs:element name="CITY" type="type50String" />
+			<xs:element name="COUNTRY" type="type2String" />
+			<xs:element name="PHONE_PRIVATE" type="type50StringNotNull" minOccurs="0" />
+			<xs:element name="PHONE_OFFICE" type="type50StringNotNull" minOccurs="0" />
+			<xs:element name="PHONE_MOBILE" type="type50StringNotNull" minOccurs="0" />
+			<xs:element name="EMAIL" type="type80StringNotNull" minOccurs="0" />
+			<xs:element name="BIRTHDAY" type="xs:date" minOccurs="0" />
+			<xs:element name="VAT_ID" type="type20StringNotNull" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="typeShipment">
+		<xs:sequence>
+			<xs:element name="CARRIER_PARCEL_TYPE" type="xs:string" minOccurs="0" />
+			<xs:element name="IDCODE_SHIP" type="type30StringNotNull" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="IDCODE_RETURN" type="type30StringNotNull" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="ROUTING_CODE" type="type20StringNotNull" minOccurs="0" />
+			<xs:element name="PRICE" type="typeNonNegativeDecimalWithCurrencyAttribute" minOccurs="0" />
+			<xs:element name="IS_EXPRESS" type="typeBoolString" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="typePayment">
+		<xs:sequence>
+			<xs:element name="TYPE" type="type50StringNotNull" minOccurs="0" />
+			<xs:element name="CODE" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Deprecated, use TYPE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="COSTS" type="typeNonNegativeDecimalWithCurrencyAttribute" minOccurs="0" />
+
+			<xs:element name="PAYMENT_TRANSACTION_ID" type="type50StringNotNull" minOccurs="0" />
+			<xs:element name="REFERENCE_NO" type="type50StringNotNull" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Deprecated, use PAYMENT_TRANSACTION_ID.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="PAYMENT_TRANSACTION_NR" type="type50StringNotNull" minOccurs="0" />
+			<xs:element name="PAYMENT_TRANSACTION_NAME" type="type100StringNotNull" minOccurs="0" />
+
+			<xs:element name="PAYMENT_DATA" type="xs:string" minOccurs="0" />
+			<xs:element name="PRICE" type="typeNonNegativeDecimalWithCurrencyAttribute" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Deprecated, use COSTS.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="DIRECTDEBIT" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ACCOUNTNAME" type="type50StringNotNull" minOccurs="0" />
+						<xs:element name="ACCOUNTNR" type="type50StringNotNull" minOccurs="0" />
+						<xs:element name="BANKNAME" type="type50StringNotNull" minOccurs="0" />
+						<xs:element name="BANKCODE" type="type50StringNotNull" minOccurs="0" />
+						<xs:element name="IBAN" type="type50StringNotNull" minOccurs="0" />
+						<xs:element name="BIC" type="type20StringNotNull" minOccurs="0" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="typeReferences">
+		<xs:sequence>
+			<xs:element name="REFERENCE" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="TB_ID" type="xs:positiveInteger" minOccurs="1" />
+					</xs:sequence>
+					<xs:attribute name="type" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="in" />
+								<xs:enumeration value="out" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="typeUSERDEFINED">
+		<xs:sequence>
+			<xs:element name="VALUE" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:anySimpleType">
+							<xs:attribute name="key" use="required" type="xs:string" />
+							<xs:attribute name="type" use="required" type="xs:QName" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="typeService">
+		<xs:sequence>
+			<xs:element name="CODE" type="xs:string" />
+			<xs:element name="DESC" type="type100StringNotNull" />
+			<xs:element name="PRICE" type="typeDecimalWithCurrencyAttribute"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="typeItem">
+		<xs:sequence>
+			<xs:element name="TB_ID" type="xs:positiveInteger" minOccurs="0" />
+			<xs:element name="CHANNEL_ID" type="type50StringNotNull" />
+			<xs:element name="SKU" type="type50StringNotNull" />
+			<xs:element name="CHANNEL_SKU" type="type50StringNotNull" minOccurs="0" />
+			<xs:element name="EAN" type="typeEAN" minOccurs="0" />
+			<xs:element name="QUANTITY" type="xs:positiveInteger" />
+			<xs:element name="BILLING_TEXT" type="type255StringNotNull" minOccurs="0" />
+			<xs:element name="TRANSFER_PRICE" type="typeDecimalWithCurrencyAttribute" minOccurs="0" />
+			<xs:element name="ITEM_PRICE" type="typeNonNegativeDecimalWithCurrencyAttribute" />
+			<xs:element name="DELIVERY_TIME" type="xs:positiveInteger" minOccurs="0" />
+			<xs:element name="DATE_CREATED" type="xs:dateTime" minOccurs="0" />
+
+			<xs:element name="SERVICES" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="SERVICE" type="typeService" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="typeHistoryEvent">
+		<xs:sequence>
+			<xs:element name="EVENT_ID" type="xs:positiveInteger" />
+			<xs:element name="EVENT_TYPE" type="enumHistoryEventType" />
+			<xs:element name="DATE_CREATED" type="xs:dateTime" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="typeMessage">
+		<xs:sequence>
+			<xs:element name="MESSAGE_ID" type="xs:positiveInteger" minOccurs="0" />
+			<xs:element name="MESSAGE_TYPE" type="enumMessageType" />
+			<xs:element name="TB_ORDER_ID" type="xs:positiveInteger" />
+			<xs:element name="TB_ORDER_ITEM_ID" type="xs:positiveInteger" minOccurs="0" />
+			<xs:element name="SKU" type="type50StringNotNull" minOccurs="0" />
+			<xs:element name="CHANNEL_SIGN" type="typeChannelSign" minOccurs="0" />
+			<xs:element name="CHANNEL_ORDER_ID" type="type50StringNotNull" minOccurs="0" />
+			<xs:element name="CHANNEL_ORDER_ITEM_ID" type="type50StringNotNull" minOccurs="0" />
+			<xs:element name="CHANNEL_SKU" type="type50StringNotNull" minOccurs="0" />
+			<xs:element name="QUANTITY" type="xs:positiveInteger" />
+			<xs:element name="CARRIER_PARCEL_TYPE" type="type50StringNotNull" minOccurs="0" />
+			<xs:sequence minOccurs="0">
+				<xs:element name="IDCODE" type="type50StringNotNull"/>
+				<xs:element name="IDCODE_RETURN_PROPOSAL" type="type50StringNotNull" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Voraussichtlicher Shipcode des Retourenpakets.  Nur zu liefern bei Versandmeldungen.  Der verwendete Shipcode bei Retourenmeldung ist in IDCODE zu liefern.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:element name="DEDUCTION" type="typeNonNegativeDecimalWithCurrencyAttribute" minOccurs="0">
+			</xs:element>
+			<xs:element name="COMMENT" type="xs:string" minOccurs="0" />
+			<xs:element name="RETURN_CAUSE" type="type50StringNotNull" minOccurs="0" />
+			<xs:element name="RETURN_STATE" type="type50StringNotNull" minOccurs="0" />
+			<xs:element name="SERVICE" type="typeService" minOccurs="0" />
+			<xs:element name="EST_SHIP_DATE" type="xs:date" minOccurs="0" />
+			<xs:element name="PROCESSED" type="xs:boolean" minOccurs="0" />
+			<xs:element name="EXPORTED" type="xs:boolean" minOccurs="0" />
+			<xs:element name="DATE_CREATED" type="xs:dateTime" minOccurs="0" />
+		</xs:sequence>
+
+		<xs:anyAttribute namespace="##other" processContents="skip" />
+	</xs:complexType>
+
+	<xs:complexType name="typeMessageList">
+		<xs:sequence>
+			<xs:element name="MESSAGE" type="typeMessage" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="typeMediaRef">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="type" use="required" type="xs:string" />
+				<xs:attribute name="sort" use="required" type="xs:integer" />
+				<xs:attribute name="origname" use="optional" type="xs:string" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="typeSigngroups">
+		<xs:sequence>
+			<xs:element name="SIGNGROUP" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="SIGN" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="xs:string">
+										<xs:attribute name="identifier" use="required" type="typeIdentifier" />
+										<xs:attribute name="key" use="required" type="xs:string" />
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="identifier" use="required" type="typeIdentifier" />
+					<xs:attribute name="key" use="required" type="xs:string" />
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="typeStringWithKey">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="identifier" use="required" type="typeIdentifier" />
+				<xs:attribute name="key" use="required" type="xs:string" />
+				<xs:attribute name="name" use="optional" type="xs:string" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:simpleType name="type2StringFix">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="type3StringFix">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="3"/>
+			<xs:maxLength value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="typeDecimalWithCurrencyAttribute">
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+				<xs:attribute name="currency" use="optional" type="type3StringFix"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="typeNonNegativeDecimalWithCurrencyAttribute">
+		<xs:simpleContent>
+			<xs:extension base="typeNonNegativeDecimal">
+				<xs:attribute name="currency" use="optional" type="type3StringFix"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:simpleType name="type2String">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="0"/>
+			<xs:maxLength value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="type5StringNotNull">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="type10String">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="0"/>
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="type10StringNotNull">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="type20StringNotNull">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="type30StringNotNull">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="type50String">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="0"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="type50StringNotNull">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="type80StringNotNull">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="80"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="type100String">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="0"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="type100StringNotNull">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="type200StringNotNull">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="200"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="type300StringNotNull">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="300"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="type255String">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="0"/>
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="type255StringNotNull">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="typeNonNegativeInteger">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="typeNonNegativeDecimal">
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="12" />
+			<xs:fractionDigits value="2" fixed="true" />
+			<xs:minInclusive value="0.00" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="typeEAN">
+		<xs:restriction base="xs:integer">
+			<xs:totalDigits value="13" fixed="true" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="enumChannelSign">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NDE" />
+			<xs:enumeration value="NAT" />
+			<xs:enumeration value="NCH" />
+			<xs:enumeration value="OTDE" />
+			<xs:enumeration value="PODE" />
+			<xs:enumeration value="AMDE" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="enumPaymentType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CREDIT_CARD" />
+			<xs:enumeration value="CASH_IN_ADVANCE" />
+			<xs:enumeration value="CASH_ON_DELIVERY" />
+			<xs:enumeration value="INVOICE" />
+			<xs:enumeration value="OTHER" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="enumMessageType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SHIP" />
+			<xs:enumeration value="NO_INVENTORY" />
+			<xs:enumeration value="CUST_CANCEL" />
+			<xs:enumeration value="RETURN" />
+			<xs:enumeration value="DEDUCT_SHIPPING_COSTS" />
+			<xs:enumeration value="DEDUCT_SERVICE_PRICE" />
+			<xs:enumeration value="ORDER_ACKNOWLEDGE" />
+			<xs:enumeration value="DEDUCT_PAYMENT_COSTS" />
+			<xs:enumeration value="PAYMENT_STATE_OPEN" />
+			<xs:enumeration value="PAYMENT_STATE_PAID" />
+			<xs:enumeration value="PAYMENT_STATE_SHORTFALL" />
+			<xs:enumeration value="REFUND" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="enumHistoryEventType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CUSTOMER_CHANGE_SELLTO" />
+			<xs:enumeration value="CUSTOMER_CHANGE_SHIPTO" />
+			<xs:enumeration value="MESSAGE_CREATED" />
+			<xs:enumeration value="MESSAGE_DELETED" />
+			<xs:enumeration value="ORDER_APPROVED" />
+			<xs:enumeration value="ORDER_CHANGE" />
+			<xs:enumeration value="ORDER_CHANGE_ROUTING_CODE" />
+			<xs:enumeration value="ORDER_CREATED" />
+			<xs:enumeration value="ORDER_EXPORTED" />
+			<xs:enumeration value="ORDER_EXPORT_CLEARED" />
+			<xs:enumeration value="ORDER_SEEN" />
+			<xs:enumeration value="ORDER_WITHDRAWN" />
+			<xs:enumeration value="ORDER_WITHDRAWN_OUTDATED" />
+			<xs:enumeration value="PAYMENT_STATE_OPEN" />
+			<xs:enumeration value="PAYMENT_STATE_PAID" />
+			<xs:enumeration value="PAYMENT_STATE_PARTIAL" />
+			<xs:enumeration value="PAYMENT_STATE_SHORTFALL" />
+			<xs:enumeration value="PRINT_DELIVERY_NOTE" />
+			<xs:enumeration value="PRINT_ORDER_SHEET" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="enumOrderState">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OPEN" />
+			<xs:enumeration value="PARTIAL" />
+			<xs:enumeration value="CLOSED" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="typeChannelSign">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="12"/>
+			<xs:pattern value="[A-Za-z][A-za-z0-9]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="typeBoolString">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1"/>
+			<xs:enumeration value="0"/>
+			<xs:enumeration value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="typeTaxCode">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1"/>
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="typeAttributeBase">
+		<xs:choice>
+
+			<!-- key based -->
+			<xs:sequence>
+				<xs:element name="KEY" type="xs:string" />
+				<xs:element name="NAME" type="xs:string" />
+			</xs:sequence>
+
+			<!-- name based -->
+			<xs:sequence>
+				<xs:element name="NAME" type="xs:string" />
+			</xs:sequence>
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:complexType name="typeAttributeBaseAlwaysID">
+		<xs:choice>
+			<!-- ID based -->
+			<xs:sequence>
+				<xs:element name="ID" type="typeNonNegativeInteger" />
+				<xs:element name="KEY" type="xs:string" minOccurs="0" />
+				<xs:element name="NAME" type="xs:string" />
+			</xs:sequence>
+
+			<!-- key based -->
+			<xs:sequence>
+				<xs:element name="KEY" type="xs:string" />
+				<xs:element name="NAME" type="xs:string" />
+			</xs:sequence>
+
+			<!-- name based -->
+			<xs:sequence>
+				<xs:element name="NAME" type="xs:string" />
+			</xs:sequence>
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:complexType name="typeIdentifierKey100Name300">
+		<xs:attribute name="identifier" type="typeIdentifier" use="required"/>
+		<xs:attribute name="key" type="type100StringNotNull" use="required"/>
+		<xs:attribute name="name" type="type300StringNotNull" use="optional"/>
+	</xs:complexType>
+
+	<xs:complexType name="typeIdentifierKeyName">
+		<xs:attribute name="identifier" type="typeIdentifier" use="required"/>
+		<xs:attribute name="key" type="type50StringNotNull" use="required"/>
+		<xs:attribute name="name" type="type100StringNotNull" use="optional"/>
+	</xs:complexType>
+
+	<xs:simpleType name="typeIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="key"/>
+			<xs:enumeration value="name"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="typeIdentifierAlwaysID">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="id"/>
+			<xs:enumeration value="key"/>
+			<xs:enumeration value="name"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="typeUnixTimestamp">
+		<xs:simpleContent>
+			<xs:extension base="xs:positiveInteger">
+				<xs:attribute name="type" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="unix_timestamp"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:simpleType name="typeOne">
+		<xs:restriction base="xs:positiveInteger">
+			<xs:enumeration value="1" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="typeCurrency">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ADP"/>
+			<xs:enumeration value="AED"/>
+			<xs:enumeration value="AFA"/>
+			<xs:enumeration value="ALL"/>
+			<xs:enumeration value="ANG"/>
+			<xs:enumeration value="AOK"/>
+			<xs:enumeration value="ARA"/>
+			<xs:enumeration value="ATS"/>
+			<xs:enumeration value="AUD"/>
+			<xs:enumeration value="AWG"/>
+			<xs:enumeration value="BBD"/>
+			<xs:enumeration value="BDT"/>
+			<xs:enumeration value="BEF"/>
+			<xs:enumeration value="BGL"/>
+			<xs:enumeration value="BHD"/>
+			<xs:enumeration value="BIF"/>
+			<xs:enumeration value="BMD"/>
+			<xs:enumeration value="BND"/>
+			<xs:enumeration value="BOB"/>
+			<xs:enumeration value="BRC"/>
+			<xs:enumeration value="BSD"/>
+			<xs:enumeration value="BTN"/>
+			<xs:enumeration value="BUK"/>
+			<xs:enumeration value="BWP"/>
+			<xs:enumeration value="BZD"/>
+			<xs:enumeration value="CAD"/>
+			<xs:enumeration value="CHF"/>
+			<xs:enumeration value="CLF"/>
+			<xs:enumeration value="CLP"/>
+			<xs:enumeration value="CNY"/>
+			<xs:enumeration value="COP"/>
+			<xs:enumeration value="CRC"/>
+			<xs:enumeration value="CSK"/>
+			<xs:enumeration value="CUP"/>
+			<xs:enumeration value="CVE"/>
+			<xs:enumeration value="CYP"/>
+			<xs:enumeration value="DDM"/>
+			<xs:enumeration value="DEM"/>
+			<xs:enumeration value="DJF"/>
+			<xs:enumeration value="DKK"/>
+			<xs:enumeration value="DOP"/>
+			<xs:enumeration value="DZD"/>
+			<xs:enumeration value="ECS"/>
+			<xs:enumeration value="EGP"/>
+			<xs:enumeration value="ESP"/>
+			<xs:enumeration value="ETB"/>
+			<xs:enumeration value="EUR"/>
+			<xs:enumeration value="FIM"/>
+			<xs:enumeration value="FJD"/>
+			<xs:enumeration value="FKP"/>
+			<xs:enumeration value="FRF"/>
+			<xs:enumeration value="GBP"/>
+			<xs:enumeration value="GHC"/>
+			<xs:enumeration value="GIP"/>
+			<xs:enumeration value="GMD"/>
+			<xs:enumeration value="GNF"/>
+			<xs:enumeration value="GRD"/>
+			<xs:enumeration value="GTQ"/>
+			<xs:enumeration value="GWP"/>
+			<xs:enumeration value="GYD"/>
+			<xs:enumeration value="HKD"/>
+			<xs:enumeration value="HNL"/>
+			<xs:enumeration value="HTG"/>
+			<xs:enumeration value="HUF"/>
+			<xs:enumeration value="IDR"/>
+			<xs:enumeration value="IEP"/>
+			<xs:enumeration value="ILS"/>
+			<xs:enumeration value="INR"/>
+			<xs:enumeration value="IQD"/>
+			<xs:enumeration value="IRR"/>
+			<xs:enumeration value="ISK"/>
+			<xs:enumeration value="ITL"/>
+			<xs:enumeration value="JMD"/>
+			<xs:enumeration value="JOD"/>
+			<xs:enumeration value="JPY"/>
+			<xs:enumeration value="KES"/>
+			<xs:enumeration value="KHR"/>
+			<xs:enumeration value="KMF"/>
+			<xs:enumeration value="KPW"/>
+			<xs:enumeration value="KRW"/>
+			<xs:enumeration value="KWD"/>
+			<xs:enumeration value="KYD"/>
+			<xs:enumeration value="LAK"/>
+			<xs:enumeration value="LBP"/>
+			<xs:enumeration value="LKR"/>
+			<xs:enumeration value="LRD"/>
+			<xs:enumeration value="LSL"/>
+			<xs:enumeration value="LUF"/>
+			<xs:enumeration value="LYD"/>
+			<xs:enumeration value="MAD"/>
+			<xs:enumeration value="MGF"/>
+			<xs:enumeration value="MNT"/>
+			<xs:enumeration value="MOP"/>
+			<xs:enumeration value="MRO"/>
+			<xs:enumeration value="MTL"/>
+			<xs:enumeration value="MUR"/>
+			<xs:enumeration value="MVR"/>
+			<xs:enumeration value="MWK"/>
+			<xs:enumeration value="MXP"/>
+			<xs:enumeration value="MYR"/>
+			<xs:enumeration value="MZM"/>
+			<xs:enumeration value="NGN"/>
+			<xs:enumeration value="NIC"/>
+			<xs:enumeration value="NLG"/>
+			<xs:enumeration value="NOK"/>
+			<xs:enumeration value="NPR"/>
+			<xs:enumeration value="NZD"/>
+			<xs:enumeration value="OMR"/>
+			<xs:enumeration value="PAB"/>
+			<xs:enumeration value="PEI"/>
+			<xs:enumeration value="PGK"/>
+			<xs:enumeration value="PHP"/>
+			<xs:enumeration value="PKR"/>
+			<xs:enumeration value="PLZ"/>
+			<xs:enumeration value="PTE"/>
+			<xs:enumeration value="PYG"/>
+			<xs:enumeration value="QAR"/>
+			<xs:enumeration value="ROL"/>
+			<xs:enumeration value="RWF"/>
+			<xs:enumeration value="SAR"/>
+			<xs:enumeration value="SBD"/>
+			<xs:enumeration value="SCR"/>
+			<xs:enumeration value="SDP"/>
+			<xs:enumeration value="SEK"/>
+			<xs:enumeration value="SGD"/>
+			<xs:enumeration value="SHP"/>
+			<xs:enumeration value="SLL"/>
+			<xs:enumeration value="SKK"/>
+			<xs:enumeration value="SOS"/>
+			<xs:enumeration value="SRG"/>
+			<xs:enumeration value="STD"/>
+			<xs:enumeration value="SUR"/>
+			<xs:enumeration value="SVC"/>
+			<xs:enumeration value="SYP"/>
+			<xs:enumeration value="SZL"/>
+			<xs:enumeration value="THB"/>
+			<xs:enumeration value="TND"/>
+			<xs:enumeration value="TOP"/>
+			<xs:enumeration value="TPE"/>
+			<xs:enumeration value="TRL"/>
+			<xs:enumeration value="TTD"/>
+			<xs:enumeration value="TWD"/>
+			<xs:enumeration value="TZS"/>
+			<xs:enumeration value="UGS"/>
+			<xs:enumeration value="USD"/>
+			<xs:enumeration value="UYP"/>
+			<xs:enumeration value="VEB"/>
+			<xs:enumeration value="VND"/>
+			<xs:enumeration value="VUV"/>
+			<xs:enumeration value="WST"/>
+			<xs:enumeration value="YDD"/>
+			<xs:enumeration value="YER"/>
+			<xs:enumeration value="YUD"/>
+			<xs:enumeration value="ZAR"/>
+			<xs:enumeration value="ZMK"/>
+			<xs:enumeration value="ZRZ"/>
+			<xs:enumeration value="ZWD"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="typeReservation">
+		<xs:sequence>
+			<xs:element name="RESERVATION_DATA" type="typeReservationData" />
+			<xs:element name="ORDER_DATA" type="typeReservationOrderData" minOccurs="0" />
+			<xs:element name="ITEM" type="typeReservationItem" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="typeReservationData">
+		<xs:sequence>
+			<xs:element name="RESERVATION_DATE" type="xs:date" />
+			<xs:element name="TB_ID" type="xs:positiveInteger" minOccurs="0" />
+			<xs:element name="CHANNEL_SIGN" type="typeChannelSign" minOccurs="0" />
+			<xs:element name="EXPIRATION" type="xs:date" minOccurs="0" />
+			<xs:element name="RESERVATION_KEY" type="type50StringNotNull" minOccurs="0" />
+			<xs:element name="DATE_CREATED" type="xs:date" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="typeReservationOrderData">
+		<xs:sequence>
+			<xs:element name="ORDER_DATE" type="xs:date" />
+			<xs:element name="TB_ID" type="xs:positiveInteger" />
+			<xs:element name="CHANNEL_SIGN" type="typeChannelSign" minOccurs="0" />
+			<xs:element name="CHANNEL_ID" type="type50StringNotNull" />
+			<xs:element name="CHANNEL_NO" type="type50StringNotNull" minOccurs="0" />
+			<xs:element name="BILL_NO" type="type50StringNotNull" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="typeReservationItem">
+		<xs:sequence>
+			<xs:element name="CHANNEL_ID" type="type50StringNotNull" minOccurs="0" />
+			<xs:element name="SKU" type="type50StringNotNull" />
+			<xs:element name="CHANNEL_SKU" type="type50StringNotNull" minOccurs="0" />
+			<xs:element name="EAN" type="typeEAN" minOccurs="0" />
+			<xs:element name="QUANTITY" type="xs:positiveInteger" />
+		</xs:sequence>
+	</xs:complexType>
+
+<!-- end: tb-base.xsd -->
+
+
+
+<!--
+	begin: tb-cat-base-multilang.xsd
+-->
+
+
+<!--
+	Copyright (C) 2012 by Tradebyte Software GmbH
+	Written by Robert Gross <robert.gross@tradebyte.de>
+
+	All rights reserved.
+-->
+
+
+	<xs:complexType name="stringOrTrans">
+		<xs:sequence>
+			<xs:element name="VALUE" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute ref="xml:lang" use="required" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="type255StringOrTrans">
+		<xs:sequence>
+			<xs:element name="VALUE" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="type255String">
+							<xs:attribute ref="xml:lang" use="required" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="type255StringNotNullOrTrans">
+		<xs:sequence>
+			<xs:element name="VALUE" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="type255StringNotNull">
+							<xs:attribute ref="xml:lang" use="required" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="typeStringWithKeyOrTrans">
+		<xs:sequence>
+			<xs:element name="VALUE" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute ref="xml:lang" use="required" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+
+		<xs:attribute name="identifier" use="required" type="typeIdentifier" />
+		<xs:attribute name="key" use="required" type="xs:string" />
+		<xs:attribute name="name" use="optional" type="xs:string" />
+	</xs:complexType>
+
+	<xs:complexType name="type255StringNotNullSortOrTrans">
+		<xs:complexContent>
+			<xs:extension base="type255StringNotNullOrTrans">
+				<xs:attribute name="sort" use="required" type="typeNonNegativeInteger" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+<!-- end: tb-cat-base-multilang.xsd -->
+
+
+	<xs:element name="TBCATALOG">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="SUPPLIER" minOccurs="0" />
+				<xs:element name="CLASSIFICATION" type="typeCLASSIFICATION" minOccurs="0" />
+				<xs:choice minOccurs="0">
+					<xs:element ref="PRODUCTDATA" />
+					<xs:element ref="ARTICLEDATA" />
+				</xs:choice>
+			</xs:sequence>
+
+			<xs:attribute name="version" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="7" />
+						<xs:enumeration value="1.2" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+
+
+			<xs:attribute name="creation" use="optional" type="xs:integer" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="SUPPLIER">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="NAME" type="xs:string" />
+				<xs:element name="CONTACT" type="xs:string" minOccurs="0" />
+				<xs:element name="STREET" type="xs:string" minOccurs="0" />
+				<xs:element name="ZIP" type="xs:string" minOccurs="0" />
+				<xs:element name="CITY" type="xs:string" minOccurs="0" />
+				<xs:element name="PHONE" type="xs:string" minOccurs="0" />
+				<xs:element name="FAX" type="xs:string" minOccurs="0" />
+				<xs:element name="EMAIL" type="xs:string" minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<!--
+
+		Classification part
+
+	-->
+	<xs:complexType name="typeCLASSIFICATION">
+		<xs:sequence>
+			<xs:element name="STRUCTURE" type="typeSTRUCTURE" minOccurs="0" maxOccurs="unbounded" />
+
+			<xs:element name="COMPONENTS" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="COMPONENT" minOccurs="0" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="TAGS" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="TAG" minOccurs="0" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="BRANDS" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="BRAND" minOccurs="0" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="LOGOS" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="LOGO" minOccurs="0" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+		</xs:sequence>
+
+		<xs:attribute name="type" use="optional" default="merge">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="merge" />
+					<xs:enumeration value="replace" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="typeSTRUCTURE">
+		<xs:sequence>
+			<xs:element name="CHANNEL_ASSIGNMENT" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="MIN_OCCURS" type="xs:nonNegativeInteger" />
+						<xs:element name="MAX_OCCURS">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:pattern value="unbounded|[1-9]\d*" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="HAS_MAPPING">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="no" />
+									<xs:enumeration value="first" />
+									<xs:enumeration value="all" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="type">
+						<xs:simpleType>
+							<xs:restriction base="xs:string" >
+								<xs:enumeration value="product_type" />
+								<xs:enumeration value="nav_primary" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element ref="STRUCTURE_ITEM" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="id" use="optional" type="xs:positiveInteger" />
+		<xs:attribute name="identifier" type="typeIdentifier" use="optional" />
+		<xs:attribute name="key" type="type50StringNotNull" use="optional" />
+		<xs:attribute name="name" type="type100StringNotNull" use="optional" />
+	</xs:complexType>
+
+	<xs:element name="STRUCTURE_ITEM">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="typeAttributeBaseAlwaysID">
+					<xs:sequence>
+						<xs:element name="PARENT_ID" type="xs:integer" />
+						<xs:element name="SORT" type="xs:integer" />
+						<xs:element name="SHORT_DESCRIPTION" type="xs:string" minOccurs="0" />
+						<xs:element name="DESCRIPTION" type="xs:string" minOccurs="0" />
+						<xs:element name="META_TITLE" type="xs:string" minOccurs="0" />
+						<xs:element name="META_KEYWORDS" type="xs:string" minOccurs="0" />
+						<xs:element name="META_DESCRIPTION" type="xs:string" minOccurs="0" />
+						<xs:element name="ATTRIBUTE_SET" type="typeIdentifierKeyName" minOccurs="0" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="COMPONENT">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="typeAttributeBase">
+					<xs:sequence>
+						<xs:element name="FILTERABLE" type="xs:boolean" minOccurs="0" />
+						<xs:element name="VISIBLE" type="xs:boolean" minOccurs="0" />
+						<xs:element name="COMPARABLE" type="xs:boolean" minOccurs="0" />
+
+						<xs:element name="DATA_TYPE" minOccurs="0">
+							<xs:complexType>
+								<xs:choice>
+									<xs:element name="INT">
+										<xs:complexType>
+											<xs:sequence minOccurs="0">
+												<xs:element name="MIN_VALUE" type="xs:integer" />
+												<xs:element name="MAX_VALUE" type="xs:integer" />
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+
+									<xs:element name="FLOAT">
+										<xs:complexType>
+											<xs:sequence minOccurs="0">
+												<xs:element name="MIN_VALUE" type="xs:float" />
+												<xs:element name="MAX_VALUE" type="xs:float" />
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+
+									<xs:element name="CHAR">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="MULTILINE" type="xs:boolean" minOccurs="0" />
+												<xs:element name="MIN_LENGTH" type="xs:int" minOccurs="0" />
+												<xs:element name="MAX_LENGTH" type="xs:int" minOccurs="0" />
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+
+									<xs:element name="UNIT">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="MIN_VALUE" type="xs:integer" minOccurs="0" />
+												<xs:element name="MAX_VALUE" type="xs:integer" minOccurs="0" />
+												<xs:element name="TAG" type="typeIdentifierKey100Name300">
+													<xs:annotation>
+														<xs:documentation>Referenz zu einem TAG Element. Der Tag enthält alle zur Verfügung stehenden Einheiten für diesen Datentypen.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+
+											<xs:attribute name="default" use="optional" type="type100StringNotNull">
+												<xs:annotation>
+													<xs:documentation>Standardwert der verwendet werden soll. Andernfalls wird das Feld im Export nicht exportiert, falls kein Wert zugeordnet ist.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+
+									<xs:element name="DATE">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="FORMAT" type="type100StringNotNull">
+													<xs:annotation>
+														<xs:documentation>Enthält das Format für die Ausgabe des Datums. Siehe auch http://php.net/manual/de/function.date.php</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+
+									<xs:element name="COMPOSITION" />
+								</xs:choice>
+							</xs:complexType>
+						</xs:element>
+
+						<xs:element name="COMPONENT_LISTS" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element ref="COMPONENT_LIST" minOccurs="0" maxOccurs="unbounded" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="COMPONENT_LIST">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="typeAttributeBase">
+					<xs:sequence>
+						<xs:element name="VALUES">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="VALUE" minOccurs="0" maxOccurs="unbounded" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="TAG">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="typeAttributeBase">
+					<xs:sequence>
+						<xs:element name="VALUES">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="VALUE" minOccurs="0" maxOccurs="unbounded" type="typeAttributeBase"/>
+								</xs:sequence>
+							</xs:complexType>
+							<xs:unique name="NAME-unique">
+								<xs:selector xpath="VALUE" />
+								<xs:field xpath="NAME" />
+							</xs:unique>
+						</xs:element>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="BRAND">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="typeAttributeBase">
+					<xs:sequence>
+						<xs:element name="MEDIA" minOccurs="0" type="typeMediaRef" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="LOGO">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="typeAttributeBase">
+					<xs:sequence>
+						<xs:element name="MEDIA" minOccurs="0" type="typeMediaRef" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+
+
+	<!--
+
+		Product data part
+
+	-->
+	<xs:element name="PRODUCTDATA">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PRODUCT" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="type" use="optional" default="delta">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="full" />
+						<xs:enumeration value="delta" />
+						<xs:enumeration value="single" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+
+		<xs:unique name="uniq_P_NR_EXTERNAL">
+			<xs:selector xpath="PRODUCT" />
+			<xs:field xpath="P_NR_EXTERNAL" />
+		</xs:unique>
+	</xs:element>
+
+	<xs:element name="PRODUCT">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="P_NR" type="type50StringNotNull" />
+				<xs:element name="P_NR_EXTERNAL" minOccurs="0" type="type50StringNotNull" />
+
+				<xs:choice>
+
+					<xs:sequence>
+						<xs:element ref="P_ACTIVEDATA" minOccurs="0" />
+						<xs:choice minOccurs="0">
+							<xs:element name="P_NAME" type="type255StringNotNullOrTrans">
+								<xs:unique name="uniqMULTILANG_P_NAME">
+									<xs:selector xpath="VALUE" />
+									<xs:field xpath="@xml:lang" />
+								</xs:unique>
+							</xs:element>
+
+							<xs:sequence>
+								<xs:element name="P_PREFIX" type="type255StringNotNullOrTrans" minOccurs="0">
+									<xs:unique name="uniqMULTILANG_P_PREFIX">
+										<xs:selector xpath="VALUE" />
+										<xs:field xpath="@xml:lang" />
+									</xs:unique>
+								</xs:element>
+								<xs:element name="P_NAME_KEYWORD" type="type255StringNotNullOrTrans">
+									<xs:unique name="uniqMULTILANG_P_NAME_KEYWORD">
+										<xs:selector xpath="VALUE" />
+										<xs:field xpath="@xml:lang" />
+									</xs:unique>
+								</xs:element>
+								<xs:element name="P_NAME_PROPER" type="type255StringNotNullOrTrans" minOccurs="0">
+									<xs:unique name="uniqMULTILANG_P_NAME_PROPER">
+										<xs:selector xpath="VALUE" />
+										<xs:field xpath="@xml:lang" />
+									</xs:unique>
+								</xs:element>
+							</xs:sequence>
+						</xs:choice>
+						<xs:element name="P_SUPPLEMENT" type="type255StringOrTrans" minOccurs="0">
+							<xs:unique name="uniqMULTILANG_P_SUPPLEMENT">
+								<xs:selector xpath="VALUE" />
+								<xs:field xpath="@xml:lang" />
+							</xs:unique>
+						</xs:element>
+						<xs:element name="P_TEXT" type="stringOrTrans" minOccurs="0">
+							<xs:unique name="uniqMULTILANG_P_TEXT">
+								<xs:selector xpath="VALUE" />
+								<xs:field xpath="@xml:lang" />
+							</xs:unique>
+						</xs:element>
+						<xs:element name="P_TEXT_INTERN" type="xs:string" minOccurs="0" />
+						<xs:element name="P_FEATURE" type="stringOrTrans" minOccurs="0">
+							<xs:unique name="uniqMULTILANG_P_FEATURE">
+								<xs:selector xpath="VALUE" />
+								<xs:field xpath="@xml:lang" />
+							</xs:unique>
+						</xs:element>
+						<xs:element name="P_BRAND" type="typeStringWithKey" minOccurs="0" />
+						<xs:element name="P_KEYWORDS" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="P_KEYWORD" type="stringOrTrans" maxOccurs="unbounded">
+										<xs:unique name="uniqMULTILANG_P_KEYWORD">
+											<xs:selector xpath="VALUE" />
+											<xs:field xpath="@xml:lang" />
+										</xs:unique>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="P_COMPONENTDATA" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="P_COMPONENT" minOccurs="0" maxOccurs="unbounded" type="typeStringWithKeyOrTrans">
+										<xs:unique name="uniqMULTILANG_P_COMPONENT">
+											<xs:selector xpath="VALUE" />
+											<xs:field xpath="@xml:lang" />
+										</xs:unique>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="P_TAGS" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="P_TAG" minOccurs="0" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="VALUES">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="VALUE" type="typeStringWithKey" maxOccurs="unbounded" />
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+											<xs:attribute name="identifier" type="typeIdentifier" use="required" />
+											<xs:attribute name="key" type="type50StringNotNull" use="required" />
+											<xs:attribute name="name" use="optional" type="xs:string" />
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="P_BULLETS" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="P_BULLET" maxOccurs="unbounded" type="type255StringNotNullSortOrTrans">
+										<xs:unique name="uniqMULTILANG_P_BULLET">
+											<xs:selector xpath="VALUE" />
+											<xs:field xpath="@xml:lang" />
+										</xs:unique>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element ref="P_MEDIADATA" minOccurs="0" />
+						<xs:element name="P_LOGOS" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="P_LOGO" type="typeStringWithKey" minOccurs="0" maxOccurs="unbounded" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element ref="P_CATEGORIES" minOccurs="0" />
+						<xs:element name="P_LINKDATA" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="P_LINK" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="type50StringNotNull">
+													<xs:attribute name="type" type="enumLinkTypes" use="required" />
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+
+
+						<xs:element ref="ARTICLEDATA" minOccurs="0" />
+					</xs:sequence>
+				</xs:choice>
+			</xs:sequence>
+
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="P_ACTIVEDATA">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="P_ACTIVE" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="typeBoolString">
+								<xs:attribute name="channel" use="required" type="typeChannelSign" />
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:element name="P_MEDIADATA">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="P_MEDIA" maxOccurs="unbounded" type="typeMediaRef" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="P_VARIANTFIELDS">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="P_VARIANTFIELD" type="typeStringWithKey" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="ARTICLEDATA">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ARTICLE" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="ARTICLE">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element name="A_NR" type="type50StringNotNull" />
+				</xs:choice>
+
+				<xs:element name="A_ACTIVE" type="typeBoolString" minOccurs="0" />
+				<xs:element name="A_EAN" type="typeEAN" minOccurs="0" />
+				<xs:element name="A_PROD_NR" type="type50String" minOccurs="0" />
+				<xs:element name="A_NR2" type="type50String" minOccurs="0" />
+				<xs:element name="A_SORT" type="xs:integer" minOccurs="0" />
+				<xs:element name="A_SEGMENT" type="typeStringWithKey" minOccurs="0" />
+				<xs:element ref="A_VARIANTDATA" minOccurs="0" />
+				<xs:element ref="A_COMPONENTDATA" minOccurs="0" />
+				<xs:element name="A_TAGS" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="A_TAG" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="VALUES">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="VALUE" type="typeStringWithKey" maxOccurs="unbounded" />
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="identifier" use="required" type="typeIdentifier" />
+									<xs:attribute name="key" use="required" type="xs:string" />
+									<xs:attribute name="name" use="optional" type="xs:string" />
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="A_PRICEDATA" minOccurs="0" />
+				<xs:element name="A_BASEPRICE_QUANTITY" minOccurs="0">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="typeStringWithKey">
+								<xs:attribute name="base_quantity" use="optional" type="xs:positiveInteger" />
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="A_PROVISIONDATA" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="A_PROVISION" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="type50StringNotNull">
+											<xs:attribute name="channel" type="typeChannelSign" use="required" />
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="A_MEDIADATA" minOccurs="0" />
+				<xs:element name="A_UNIT" minOccurs="0" default="ST">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="ST" />
+							<xs:enumeration value="CM" />
+							<xs:enumeration value="QM" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="A_STOCK" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:integer">
+								<xs:attribute name="identifier" type="typeIdentifier" />
+								<xs:attribute name="key" type="xs:string" />
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+
+				<xs:element name="A_DELIVERY_TIME" type="xs:positiveInteger" minOccurs="0" />
+				<xs:element name="A_REPLACEMENT" type="typeBoolString" minOccurs="0" />
+				<xs:element name="A_REPLACEMENT_TIME" type="xs:integer" minOccurs="0" />
+				<xs:element name="A_ORDER_MIN" type="xs:nonNegativeInteger" minOccurs="0" />
+				<xs:element name="A_ORDER_MAX" type="xs:nonNegativeInteger" minOccurs="0" />
+				<xs:element name="A_ORDER_INTERVAL" type="xs:nonNegativeInteger" minOccurs="0" />
+				<xs:element name="A_DEPOT" type="type100String" minOccurs="0" />
+				<xs:element name="A_DEPOT_TEXT" type="type255String" minOccurs="0" />
+
+				<xs:element name="A_PARCEL" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="A_PIECES" type="xs:positiveInteger" />
+							<xs:element name="A_WIDTH" type="xs:integer" />
+							<xs:element name="A_HEIGHT" type="xs:integer" />
+							<xs:element name="A_LENGTH" type="xs:integer" />
+							<xs:element name="A_WEIGHT" type="xs:float" />
+						</xs:sequence>
+						<xs:attribute name="type" use="optional" type="type50StringNotNull" />
+					</xs:complexType>
+				</xs:element>
+
+				<xs:element name="A_TRADESTAT" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="A_ORG_COUNTRY" minOccurs="0">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute name="alpha2" use="required" type="type2StringFix" />
+											<xs:attribute name="number" use="optional" type="xs:positiveInteger" />
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="A_TRADESTAT_NR" minOccurs="0">
+								<xs:simpleType>
+									<xs:restriction base="xs:positiveInteger">
+										<xs:totalDigits value="8" />
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+
+				<xs:element name="A_METADATA" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="META_TITLE" type="type255String" />
+							<xs:element name="META_KEYWORDS" type="xs:string" />
+							<xs:element name="META_DESCRIPTION" type="xs:string" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+
+				<xs:element ref="USERDEFINED" minOccurs="0" />
+			</xs:sequence>
+
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="A_VARIANTDATA">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="A_VARIANT" type="typeStringWithKeyOrTrans" maxOccurs="unbounded">
+					<xs:unique name="uniqMULTILANG_A_VARIANT">
+						<xs:selector xpath="VALUE" />
+						<xs:field xpath="@xml:lang" />
+					</xs:unique>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="A_COMPONENTDATA">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="A_COMPONENT" type="typeStringWithKeyOrTrans" maxOccurs="unbounded">
+					<xs:unique name="uniqMULTILANG_A_COMPONENT">
+						<xs:selector xpath="VALUE" />
+						<xs:field xpath="@xml:lang" />
+					</xs:unique>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="A_PRICEDATA">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="A_EK" type="xs:decimal" minOccurs="0" />
+
+				<xs:element name="A_PRICE" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="A_VK" type="xs:decimal" />
+							<xs:element name="A_VK_OLD" type="xs:decimal" minOccurs="0" />
+							<xs:element name="A_UVP" type="xs:decimal" minOccurs="0" />
+							<xs:element name="A_MWST" type="typeTaxCode" minOccurs="0" />
+							<xs:element name="A_EK" type="xs:decimal" minOccurs="0" />
+						</xs:sequence>
+						<xs:attribute name="channel" use="required" type="typeChannelSign" />
+						<xs:attribute name="currency" use="optional" type="typeCurrency" />
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="P_MASTER">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="P_MASTER_PRICEDATA" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="P_MASTER_EK" type="xs:decimal" minOccurs="0" />
+							<xs:element name="P_MASTER_PRICE" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="P_MASTER_A_VK" type="xs:decimal" />
+										<xs:element name="P_MASTER_A_VK_OLD" type="xs:decimal" minOccurs="0" />
+										<xs:element name="P_MASTER_A_UVP" type="xs:decimal" minOccurs="0" />
+										<xs:element name="P_MASTER_A_MWST" type="typeTaxCode" minOccurs="0" />
+										<xs:element name="P_MASTER_A_EK" type="xs:decimal" minOccurs="0" />
+									</xs:sequence>
+									<xs:attribute name="channel" use="required" type="typeChannelSign" />
+									<xs:attribute name="currency" use="optional" type="typeCurrency" />
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="A_MEDIADATA">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="A_MEDIA" maxOccurs="unbounded" type="typeMediaRef" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:simpleType name="enumLinkTypes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="cross" />
+			<xs:enumeration value="accessory" />
+			<xs:enumeration value="device" />
+			<xs:enumeration value="upselling" />
+			<xs:enumeration value="alternative" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="P_CATEGORIES">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="P_CATEGORY" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="channel" use="optional" type="typeChannelSign" />
+								<xs:attribute name="type" use="required" type="xs:string" />
+								<xs:attribute name="identifier" use="optional" type="typeIdentifierAlwaysID" />
+								<xs:attribute name="key" use="optional" type="type200StringNotNull" />
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="USERDEFINED" type="typeUSERDEFINED" />
+
+<!-- end: tb-cat_1_2.xsd -->
+</xs:schema>

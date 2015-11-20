@@ -27,9 +27,10 @@ module WsdlMapper
       #
       # @param [Array<String>] module_path the root module for the generated classes, e.g. `['MyApi', 'Types']` => `MyApi::Types::SomeClass` in `my_api/types/some_class.rb`
       # @param [String] content_attribute_name the accessor name for {file:concepts/wrapping_types.md wrapping types} (complex type with simple content and simple types with restrictions)
-      def initialize module_path: [], content_attribute_name: 'content'
+      def initialize module_path: [], content_attribute_name: 'content', soap_array_item_name: 'item'
         @module_path = module_path
         @content_attribute_name = content_attribute_name
+        @soap_array_item_name = soap_array_item_name
       end
 
       # @param [WsdlMapper::Dom::ComplexType, WsdlMapper::Dom::SimpleType] type
@@ -94,6 +95,12 @@ module WsdlMapper
       def get_inline_type element
         name = element.name.name + 'InlineType'
         InlineType.new WsdlMapper::Dom::Name.get(element.name.ns, name)
+      end
+
+      # @param [WsdlMapper::Dom::ComplexType] type
+      # @return [String]
+      def get_soap_array_item_name type
+        @soap_array_item_name
       end
 
       protected

@@ -33,6 +33,30 @@ module SchemaTests
 
       assert_equal 0, parser.log_msgs.count
     end
+
+    def test_parsing_tb_stock
+      skip
+      doc = TestHelper.get_xml_doc 'tb-stock_all_in_one.xsd'
+      parser = WsdlMapper::DomParsing::Parser.new
+
+      schema = parser.parse doc
+
+      assert_equal 0, parser.log_msgs.count
+    end
+
+    focus
+    def test_parsing_tb_stock
+      doc = TestHelper.get_xml_doc 'tb-cat_1_2_import.xsd'
+      parser = WsdlMapper::DomParsing::Parser.new import_resolver: DefaultResolver.new(File.dirname(__FILE__))
+
+      schema = parser.parse doc
+
+      parser.log_msgs.each do |msg|
+        puts msg.to_s
+      end
+
+      assert_equal 0, parser.log_msgs.count
+    end
   end
 end
 

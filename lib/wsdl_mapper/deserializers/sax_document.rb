@@ -58,6 +58,7 @@ module WsdlMapper
 
       protected
       # @param [WsdlMapper::Dom::Name] element_name
+      # @return [WsdlMapper::Dom::Name]
       def get_type_name element_name
         if @current_frame
           # TODO: xsi:type
@@ -68,6 +69,7 @@ module WsdlMapper
       end
 
       def inherit_element_namespace ns
+        # TODO: test
         if ns.nil? && !@base.qualified_elements? && @current_frame
           @current_frame.type_name.ns
         else
@@ -76,6 +78,7 @@ module WsdlMapper
       end
 
       def inherit_attr_namespace type_name, ns
+        # TODO: test
         if ns.nil? && !@base.qualified_attributes? && @current_frame
           type_name.ns
         else

@@ -34,7 +34,7 @@ module WsdlMapper
       end
 
       def end base, frame
-        if @simple # TODO: test
+        if @simple
           type_name = WsdlMapper::Dom::Name.get *@simple
           content = base.to_ruby type_name, frame.text
           frame.object = @cls.new content

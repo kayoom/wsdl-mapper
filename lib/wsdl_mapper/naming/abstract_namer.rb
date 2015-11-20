@@ -38,6 +38,14 @@ module WsdlMapper
       def get_inline_type element
         raise NotImplementedError
       end
+
+      def get_soap_array_item_name type
+        raise NotImplementedError
+      end
+
+      def get_support_name name
+        raise NotImplementedError
+      end
     end
   end
 end
