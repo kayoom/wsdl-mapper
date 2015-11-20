@@ -56,7 +56,7 @@ module WsdlMapper
           type.each_attribute do |attr|
             if attr.is_a?(WsdlMapper::Dom::Attribute::Ref)
               type.add_attribute @schema.get_attribute attr.name
-            else
+            elsif attr.type_name
               attr.type = @schema.get_type attr.type_name
 
               unless attr.type

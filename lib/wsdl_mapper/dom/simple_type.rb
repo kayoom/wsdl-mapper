@@ -4,7 +4,7 @@ require 'wsdl_mapper/dom/enumeration_value'
 module WsdlMapper
   module Dom
     class SimpleType < WsdlMapper::Dom::TypeBase
-      attr_accessor :base, :base_type_name, :pattern, :min_inclusive, :max_inclusive, :containing_property, :containing_element
+      attr_accessor :base, :base_type_name, :pattern, :min, :max, :containing_property, :containing_element, :min_inclusive, :max_inclusive, :total_digits, :fraction_digits
       attr_reader :enumeration_values
 
       def initialize name

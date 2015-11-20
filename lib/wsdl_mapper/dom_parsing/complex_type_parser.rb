@@ -25,6 +25,8 @@ module WsdlMapper
         case get_name node
         when SEQUENCE
           parse_complex_type_sequence node, type
+        when CHOICE
+          parse_complex_type_choice node, type
         when ALL
           parse_complex_type_all node, type
         when COMPLEX_CONTENT
@@ -35,8 +37,30 @@ module WsdlMapper
           parse_annotation node, type
         when ATTRIBUTE
           parse_attribute node, type
+        when ANY_ATTRIBUTE
+          # ignore
         else
           log_msg node, :unknown
+        end
+      end
+
+      def parse_complex_type_choice node, type
+        # TODO: test
+        each_element node do |child|
+          case get_name child
+          when SEQUENCE
+            # Just include all sequences. Setting the appropriate properties to nil
+            # to fulfill the choice requirements is the users responsibility.
+            # Known issue: Sequence of generated elements can not be guaranteed, if the
+            # same elements occur in different choices with different ordering.
+            parse_complex_type_sequence child, type
+          when ALL
+            parse_complex_type_all child, type
+          when ELEMENT
+            parse_complex_type_property child, type, 0, ALL
+          else
+            log_msg child, :unknown
+          end
         end
       end
 
@@ -167,6 +191,8 @@ module WsdlMapper
         when SIMPLE_TYPE
           prop.type = @base.parsers[SIMPLE_TYPE].parse child
           prop.type.containing_property = prop
+        when UNIQUE
+          # ignore
         else
           log_msg child, :unknown
         end

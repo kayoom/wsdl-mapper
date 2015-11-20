@@ -30,6 +30,7 @@ module WsdlMapper
       end
 
       def parse_simple_type_restriction node, type
+        # TODO: test
         parse_base node, type
 
         each_element node do |child|
@@ -39,25 +40,43 @@ module WsdlMapper
           when PATTERN
             parse_simple_type_pattern child, type
           when MIN_INCLUSIVE
-            parse_simple_type_min child, type
+            parse_simple_type_min child, type, true
           when MAX_INCLUSIVE
-            parse_simple_type_max child, type
+            parse_simple_type_max child, type, true
+          when MIN_LENGTH
+            parse_simple_type_min child, type, false
+          when MAX_LENGTH
+            parse_simple_type_max child, type, false
+          when TOTAL_DIGITS
+            parse_simple_type_total_digits child, type
+          when FRACTION_DIGITS
+            parse_simple_type_fraction_digits child, type
           else
-            log_msg node, :unknown
+            log_msg child, :unknown
           end
         end
+      end
+
+      def parse_simple_type_fraction_digits node, type
+        type.fraction_digits = fetch_attribute_value 'value', node
+      end
+
+      def parse_simple_type_total_digits node, type
+        type.total_digits = fetch_attribute_value 'value', node
       end
 
       def parse_simple_type_pattern node, type
         type.pattern = fetch_attribute_value 'value', node
       end
 
-      def parse_simple_type_min node, type
-        type.min_inclusive = fetch_attribute_value 'value', node
+      def parse_simple_type_min node, type, inclusive
+        type.min = fetch_attribute_value 'value', node
+        type.min_inclusive = inclusive
       end
 
-      def parse_simple_type_max node, type
-        type.max_inclusive = fetch_attribute_value 'value', node
+      def parse_simple_type_max node, type, inclusive
+        type.max = fetch_attribute_value 'value', node
+        type.max_inclusive = inclusive
       end
 
       def parse_simple_type_enumeration node, type

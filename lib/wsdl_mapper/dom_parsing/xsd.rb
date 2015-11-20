@@ -23,13 +23,20 @@ module WsdlMapper
       RESTRICTION = Name.get NS, 'restriction'
       ENUMERATION = Name.get NS, 'enumeration'
       ATTRIBUTE = Name.get NS, 'attribute'
+      ANY_ATTRIBUTE = Name.get NS, 'anyAttribute'
+      CHOICE = Name.get NS, 'choice'
+      UNIQUE = Name.get NS, 'unique'
       ALL = Name.get NS, 'all'
       PATTERN = Name.get NS, 'pattern'
       MIN_INCLUSIVE = Name.get NS, 'minInclusive'
+      MIN_LENGTH = Name.get NS, 'minLength'
       MAX_INCLUSIVE = Name.get NS, 'maxInclusive'
+      MAX_LENGTH = Name.get NS, 'maxLength'
+      TOTAL_DIGITS = Name.get NS, 'totalDigits'
+      FRACTION_DIGITS = Name.get NS, 'fractionDigits'
 
-      ELEMENT_FORM_DEFAULT = "elementFormDefault"
-      ATTRIBUTE_FORM_DEFAULT = "attributeFormDefault"
+      ELEMENT_FORM_DEFAULT = 'elementFormDefault'
+      ATTRIBUTE_FORM_DEFAULT = 'attributeFormDefault'
 
       DEFAULT_BOUNDS = {
         SEQUENCE  => Bounds.new(min: 1, max: 1),

@@ -32,6 +32,8 @@ module WsdlMapper
         when SIMPLE_TYPE
           element.type = @base.parsers[SIMPLE_TYPE].parse node
           element.type.containing_element = element
+        when UNIQUE
+          # ignore
         else
           log_msg node, :unknown
         end

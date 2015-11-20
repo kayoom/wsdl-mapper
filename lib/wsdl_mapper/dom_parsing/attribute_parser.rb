@@ -33,8 +33,11 @@ module WsdlMapper
           case get_name child
           when ANNOTATION
             parse_annotation child, attr
+          when SIMPLE_TYPE
+            # TODO: test
+            attr.type = @base.parsers[SIMPLE_TYPE].parse child
+            attr.type.containing_property = attr
           else
-            # TODO: inline simple type
             log_msg child, :unknown
           end
         end

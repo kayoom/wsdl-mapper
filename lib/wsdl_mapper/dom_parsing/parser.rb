@@ -95,7 +95,7 @@ module WsdlMapper
       # @param [Nokogiri::XML::Node] node
       def parse_attribute_form_default node
         attr = node.attributes[ATTRIBUTE_FORM_DEFAULT]
-        if attr && attr.value == "qualified"
+        if attr && attr.value == 'qualified'
           @schema.qualified_attributes = true
         end
       end
@@ -103,7 +103,7 @@ module WsdlMapper
       # @param [Nokogiri::XML::Node] node
       def parse_element_form_default node
         attr = node.attributes[ELEMENT_FORM_DEFAULT]
-        if attr && attr.value == "qualified"
+        if attr && attr.value == 'qualified'
           @schema.qualified_elements = true
         end
       end
@@ -122,6 +122,10 @@ module WsdlMapper
         end
 
         schema_node
+      end
+
+      def get_namespace prefix
+
       end
     end
   end
