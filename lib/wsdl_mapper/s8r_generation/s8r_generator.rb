@@ -239,32 +239,14 @@ module WsdlMapper
       end
 
       def def_build_method f, ttg
-        f.begin_def 'build', [:x, :obj, :name]
-        f.statement 'return if obj.nil?'
-        case ttg.type
-        when ::WsdlMapper::Dom::ComplexType
-          def_complex_build_method_body f, ttg
-        when ::WsdlMapper::Dom::SimpleType
-          def_simple_build_method_body f, ttg
-        end
-        f.end
-      end
-
-      def close_class f, ttg
-        f.end
-      end
-
-      def open_class f, ttg
-        f.begin_class ttg.name.class_name
-      end
-
-      def close_modules f, modules
-        modules.each { f.end }
-      end
-
-      def open_modules f, modules
-        modules.each do |mod|
-          f.begin_module mod.module_name
+        f.in_def 'build', :x, :obj, :name do
+          f.statement 'return if obj.nil?'
+          case ttg.type
+          when ::WsdlMapper::Dom::ComplexType
+            def_complex_build_method_body f, ttg
+          when ::WsdlMapper::Dom::SimpleType
+            def_simple_build_method_body f, ttg
+          end
         end
       end
     end

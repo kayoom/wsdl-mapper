@@ -31,9 +31,9 @@ module GenerationTests
     end
 
     def test_method_definition
-      formatter.begin_def "do_something", %w[with_this and_that]
-      formatter.statement "puts with_this, and_that"
-      formatter.end
+      formatter.in_def 'do_something', %w[with_this and_that] do
+        formatter.statement 'puts with_this, and_that'
+      end
 
       expected = <<RUBY
 
@@ -45,7 +45,7 @@ RUBY
     end
 
     def test_method_definition_wo_args
-      formatter.begin_def "do_something"
+      formatter.begin_def 'do_something'
       formatter.statement "puts 'foo bar'"
       formatter.end
 
@@ -59,8 +59,8 @@ RUBY
     end
 
     def test_class_definition
-      formatter.begin_class "NoteType"
-      formatter.statement "include FooBar"
+      formatter.begin_class 'NoteType'
+      formatter.statement 'include FooBar'
       formatter.end
 
       expected = <<RUBY
@@ -72,8 +72,8 @@ RUBY
     end
 
     def test_module_definition
-      formatter.begin_module "NotesApi"
-      formatter.statement "extend self"
+      formatter.begin_module 'NotesApi'
+      formatter.statement 'extend self'
       formatter.end
 
       expected = <<RUBY
@@ -85,9 +85,9 @@ RUBY
     end
 
     def test_nested_module_definition
-      formatter.begin_module "NotesApi"
-      formatter.begin_module "Types"
-      formatter.statement "extend self"
+      formatter.begin_module 'NotesApi'
+      formatter.begin_module 'Types'
+      formatter.statement 'extend self'
       formatter.end
       formatter.end
 

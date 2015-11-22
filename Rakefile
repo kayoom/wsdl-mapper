@@ -4,7 +4,13 @@ require 'rake/testtask'
 
 Rake::TestTask.new do |t|
   t.libs = ['test', 'lib']
-  t.pattern = 'test/**/*_test.rb'
+  t.pattern = 'test/wsdl_mapper/**/*_test.rb'
+end
+
+Rake::TestTask.new :compatibility do |t|
+  t.libs = ['test', 'lib']
+  t.pattern = 'test/compatibility/**/*_test.rb'
 end
 
 task default: :test
+task test_all: [:test, :compatibility]

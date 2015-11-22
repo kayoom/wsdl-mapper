@@ -27,6 +27,16 @@ module WsdlMapper
         self
       end
 
+      def attr_readers *attrs
+        return if attrs.empty?
+
+        attrs = attrs.map { |a| ":#{a}" }
+        attrs.each do |attr|
+          statement "attr_reader #{attr}"
+        end
+        blank_line
+      end
+
       alias_method :after_requires, :blank_line
       alias_method :after_constants, :blank_line
 
@@ -129,10 +139,16 @@ module WsdlMapper
         self.end
       end
 
-      def begin_def name, args = []
+      def begin_def name, *args
         blank_line
         statement method_definition(name, args)
         inc_indent
+      end
+
+      def in_def name, *args
+        begin_def name, *args
+        yield
+        self.end
       end
 
       def literal_array name, values

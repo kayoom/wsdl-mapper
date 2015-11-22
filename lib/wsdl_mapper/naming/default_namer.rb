@@ -3,7 +3,8 @@ require 'wsdl_mapper/dom/name'
 require 'wsdl_mapper/naming/type_name'
 require 'wsdl_mapper/naming/property_name'
 require 'wsdl_mapper/naming/enumeration_value_name'
-require 'wsdl_mapper/naming/inflector'
+
+require 'wsdl_mapper/naming/namer_base'
 
 module WsdlMapper
   module Naming
@@ -14,10 +15,8 @@ module WsdlMapper
     # 2. File names are under_score (e.g. `some_type.rb`)
     # 3. Each class in its own file
     # 4. (De)Serializers are put within the same module as XSD Types
-    class DefaultNamer
+    class DefaultNamer < NamerBase
       include WsdlMapper::Dom
-
-      include Inflector
 
       class InlineType < Struct.new(:name)
       end
@@ -27,7 +26,7 @@ module WsdlMapper
       # @param [Array<String>] module_path the root module for the generated classes, e.g. `['MyApi', 'Types']` => `MyApi::Types::SomeClass` in `my_api/types/some_class.rb`
       # @param [String] content_attribute_name the accessor name for {file:concepts/wrapping_types.md wrapping types} (complex type with simple content and simple types with restrictions)
       def initialize module_path: [], content_attribute_name: 'content', soap_array_item_name: 'item'
-        @module_path = module_path
+        super module_path: module_path
         @content_attribute_name = content_attribute_name
         @soap_array_item_name = soap_array_item_name
       end
@@ -103,6 +102,14 @@ module WsdlMapper
       end
 
       protected
+      def get_class_name type
+        camelize type.name.name
+      end
+
+      def get_class_file_name type
+        underscore(type.name.name) + '.rb'
+      end
+
       def get_class_module_path type
         @module_path
       end
@@ -115,20 +122,12 @@ module WsdlMapper
       alias_method :get_s8r_file_path, :get_class_file_path
       alias_method :get_d10r_file_path, :get_class_file_path
 
-      def make_parents path
-        return if path.empty?
-        mod, path = path.last, path[0...-1]
-        type_name = TypeName.new mod, path, get_file_name(mod), get_file_path(path)
-        type_name.parent = make_parents path
-        type_name
-      end
-
       def get_d10r_file_name type
         underscore(type.name.name) + '_deserializer.rb'
       end
 
       def get_d10r_class_name type
-        get_camelized_name(type.name.name) + 'Deserializer'
+        camelize type.name.name + 'Deserializer'
       end
 
       def get_s8r_file_name type
@@ -136,11 +135,11 @@ module WsdlMapper
       end
 
       def get_s8r_class_name type
-        get_camelized_name(type.name.name) + 'Serializer'
+        camelize type.name.name + 'Serializer'
       end
 
       def get_support_class_name name
-        get_camelized_name name
+        camelize name
       end
 
       def get_support_module_path name
@@ -153,56 +152,6 @@ module WsdlMapper
 
       def get_support_file_name name
         get_file_name name
-      end
-
-      def get_class_name type
-        get_camelized_name type.name.name
-      end
-
-      def get_class_file_name type
-        get_file_name type.name.name
-      end
-
-      def get_constant_name name
-        get_key_name(name).upcase
-      end
-
-      def get_key_name name
-        underscore sanitize name
-      end
-
-      def get_accessor_name name
-        get_key_name name
-      end
-
-      def get_var_name name
-        "@#{get_accessor_name(name)}"
-      end
-
-      def get_camelized_name name
-        camelize name
-      end
-
-      def get_file_name name
-        underscore(name) + '.rb'
-      end
-
-      def get_file_path path
-        path.map do |m|
-          underscore m
-        end
-      end
-
-      def sanitize name
-        if valid_symbol? name
-          name
-        else
-          "value_#{name}"
-        end
-      end
-
-      def valid_symbol? name
-        name =~ /^[a-zA-Z]/
       end
     end
   end

@@ -20,7 +20,7 @@ module WsdlMapper
         @files = []
         @module_tree = []
         @description = description
-        @schema = schema || description && description.schema
+        @schema = schema
       end
 
       def add_type type_name

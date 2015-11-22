@@ -90,7 +90,11 @@ module WsdlMapper
         raise NotImplementedError
       end
 
-      def begin_def name, args = []
+      def begin_def name, *args
+        raise NotImplementedError
+      end
+
+      def in_def name, *args
         raise NotImplementedError
       end
 
