@@ -5,20 +5,43 @@ require 'wsdl_mapper/generation/default_formatter'
 require 'wsdl_mapper/generation/result'
 require 'wsdl_mapper/naming/type_name'
 require 'wsdl_mapper/naming/default_service_namer'
+require 'wsdl_mapper/naming/default_namer'
+
+require 'wsdl_mapper/dom_parsing/parser'
+require 'wsdl_mapper/dom_generation/schema_generator'
+require 'wsdl_mapper/dom_generation/default_ctr_generator'
+
+require 'wsdl_mapper/svc_generation/type_to_generate'
+require 'wsdl_mapper/svc_generation/service_generator'
+require 'wsdl_mapper/svc_generation/port_generator'
+require 'wsdl_mapper/svc_generation/operation_generator'
 
 module WsdlMapper
   module SvcGeneration
     class SvcGenerator < WsdlMapper::Generation::Base
       include WsdlMapper::Generation
 
-      class ServiceToGenerate < Struct.new(:type, :name, :property_name)
-      end
+      attr_reader :context, :service_generator, :service_namer, :namer, :port_generator, :operation_generator, :schema_generator
 
       def initialize context,
-          formatter_factory: DefaultFormatter, namer: WsdlMapper::Naming::DefaultServiceNamer.new
+          formatter_factory: DefaultFormatter,
+          service_namer: WsdlMapper::Naming::DefaultServiceNamer.new,
+          namer: WsdlMapper::Naming::DefaultNamer.new,
+          service_generator_factory: ServiceGenerator,
+          port_generator_factory: PortGenerator,
+          operation_generator_factory: OperationGenerator,
+          schema_generator: nil
         @formatter_factory = formatter_factory
         @context = context
+        @service_namer = service_namer
         @namer = namer
+        @service_generator = service_generator_factory.new(self)
+        @port_generator = port_generator_factory.new(self)
+        @operation_generator = operation_generator_factory.new(self)
+        @schema_generator = schema_generator || WsdlMapper::DomGeneration::SchemaGenerator.new(context,
+          ctr_generator_factory: WsdlMapper::DomGeneration::DefaultCtrGenerator,
+          namer: namer
+        )
       end
 
       def generate desc
@@ -33,16 +56,15 @@ module WsdlMapper
         @formatter_factory.new io
       end
 
-      protected
       def generate_api desc, result
-        name = @namer.get_api_name
+        name = @service_namer.get_api_name
         modules = get_module_names name
         services = desc.each_service.map do |service|
-          ServiceToGenerate.new service, @namer.get_service_name(service), @namer.get_property_name(service)
+          TypeToGenerate.new service, @service_namer.get_service_name(service), @service_namer.get_property_name(service)
         end
 
         services.each do |service|
-          generate_service service, result
+          @service_generator.generate_service service, result
         end
 
         type_file_for name, result do |f|
@@ -50,96 +72,40 @@ module WsdlMapper
           f.requires *services.map { |s| s.name.require_path }
 
           f.in_modules modules do
-            f.in_sub_class name.class_name, api_base.name do
-              f.attr_readers *services.map { |s| s.property_name.attr_name }
-              f.in_def :initialize, 'options = {}' do
-                f.call :super, 'options'
-                services.each do |s|
-                  f.assignment s.property_name.var_name, "#{s.name.name}.new(self)"
-                end
-              end
-            end
+            generate_api_class f, name, services
           end
         end
       end
 
-      def generate_service service, result
-        modules = get_module_names service.name
-        ports = service.type.each_port.map do |port|
-          ServiceToGenerate.new port, @namer.get_port_name(service.type, port), @namer.get_property_name(port)
+      def generate_api_class f, name, services
+        f.in_sub_class name.class_name, api_base.name do
+          generate_api_service_accessors f, services
+          generate_api_ctr f, services
         end
+      end
 
-        ports.each do |port|
-          generate_port service, port, result
-        end
+      def generate_api_service_accessors f, services
+        f.attr_readers *services.map { |s| s.property_name.attr_name }
+      end
 
-        type_file_for service.name, result do |f|
-          f.requires service_base.require_path
-
-          f.in_modules modules do
-            f.in_sub_class service.name.class_name, service_base.name do
-              f.requires *ports.map { |p| p.name.require_path }
-              f.attr_readers *ports.map { |p| p.property_name.attr_name }
-              f.in_def :initialize, 'api' do
-                f.call :super, 'api'
-                ports.each do |p|
-                  f.assignment p.property_name.var_name, "#{p.name.name}.new(api, self)"
-                end
-              end
-            end
+      def generate_api_ctr f, services
+        f.in_def :initialize, 'options = {}' do
+          f.call :super, 'options'
+          services.each do |s|
+            f.assignment s.property_name.var_name, "#{s.name.name}.new(self)"
           end
         end
       end
 
-      def generate_port service, port, result
-        modules = get_module_names service.name
-        ops = port.type.binding.each_operation.map do |op|
-          ServiceToGenerate.new op, @namer.get_operation_name(service.type, port.type, op), @namer.get_property_name(op)
-        end
-
-        ops.each do |op|
-          generate_op service, port, op, result
-        end
-
-        type_file_for port.name, result do |f|
-          f.requires port_base.require_path
-
-          f.in_modules modules do
-            f.in_class service.name.class_name do
-              f.in_sub_class port.name.class_name, port_base.name do
-                f.requires *ops.map { |o| o.name.require_path }
-                f.assignments ['SOAP_ADDRESS', port.type.address_location.inspect]
-                f.in_def :initialize, 'api', 'service' do
-                  f.call :super, 'api', 'service'
-                  ops.each do |o|
-                    f.assignment o.property_name.var_name, "#{o.name.name}.new(api, service, self)"
-                  end
-                end
-              end
-            end
+      def in_classes f, *names, &block
+        next_block = if names.length > 1
+          proc do
+            in_classes f, *names.drop(1), &block
           end
+        else
+          block
         end
-      end
-
-      def generate_op service, port, op, result
-        modules = get_module_names service.name
-
-        type_file_for op.name, result do |f|
-          f.requires operation_base.require_path
-
-          f.in_modules modules do
-            f.in_class service.name.class_name do
-              f.in_class port.name.class_name do
-                f.in_sub_class op.name.class_name, operation_base.name do
-                  f.assignments ['SOAP_ACTION', op.type.soap_action.inspect]
-                  f.in_def :initialize, 'api', 'service', 'port' do
-                    f.call :super, 'api', 'service', 'port'
-                  end
-                end
-              end
-            end
-          end
-        end
+        f.in_class names.first, &next_block
       end
 
       def api_base
@@ -155,7 +121,15 @@ module WsdlMapper
       end
 
       def operation_base
-        @operation_base ||= runtime_base 'OperationFactory', 'operation_factory'
+        @operation_base ||= runtime_base 'Operation', 'operation'
+      end
+
+      def header_base
+        @header_base ||= runtime_base 'Header', 'header'
+      end
+
+      def body_base
+        @body_base ||= runtime_base 'Body', 'body'
       end
 
       def runtime_base name, file_name
@@ -168,6 +142,10 @@ module WsdlMapper
 
       def runtime_path
         @runtime_path ||= %w[wsdl_mapper runtime]
+      end
+
+      def get_type_name type
+        @schema_generator.get_type_name type
       end
     end
   end

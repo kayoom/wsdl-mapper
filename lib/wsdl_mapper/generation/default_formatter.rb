@@ -54,7 +54,11 @@ module WsdlMapper
       end
 
       def call name, *args
-        statement "#{name}(#{args * ', '})"
+        if args.empty?
+          statement name
+        else
+          statement "#{name}(#{args * ', '})"
+        end
       end
 
       def block statement, block_args

@@ -49,6 +49,10 @@ module WsdlMapper
         result
       end
 
+      def get_formatter io
+        @formatter_factory.new io
+      end
+
       protected
       def generate_deserializer schema, result
         @deserializer_name = @namer.get_support_name @deserializer_name_template
@@ -184,10 +188,6 @@ module WsdlMapper
           args << 'array: true' if prop.array?
           f.call :register_prop, *args
         end
-      end
-
-      def get_formatter io
-        @formatter_factory.new io
       end
     end
   end

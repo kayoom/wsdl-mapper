@@ -78,7 +78,6 @@ module WsdlMapper
         end
       end
 
-      protected
       def generate_restrictions schema, result
         types = schema.each_type.select(&WsdlMapper::Dom::SimpleType).reject(&:enumeration?).to_a
 

@@ -1,5 +1,5 @@
 module WsdlMapper
-  module DomGeneration
+  module Generation
     class YardDocFormatter
       def initialize formatter
         @formatter = formatter
@@ -65,7 +65,7 @@ module WsdlMapper
         inc_indent
         text doc if doc
         type_tag "return", type
-        block.call
+        block.call if block_given?
         dec_indent
       end
 

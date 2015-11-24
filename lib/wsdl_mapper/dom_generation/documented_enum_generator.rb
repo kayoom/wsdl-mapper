@@ -1,5 +1,5 @@
 require 'wsdl_mapper/dom_generation/default_enum_generator'
-require 'wsdl_mapper/dom_generation/yard_doc_formatter'
+require 'wsdl_mapper/generation/yard_doc_formatter'
 
 module WsdlMapper
   module DomGeneration
@@ -7,7 +7,7 @@ module WsdlMapper
 
       protected
       def generate_constant_assignments f, values_to_generate
-        yard = YardDocFormatter.new f
+        yard = WsdlMapper::Generation::YardDocFormatter.new f
         values_to_generate.each do |vtg|
           if vtg.type.documentation.present?
             yard.text vtg.type.documentation.default
@@ -21,7 +21,7 @@ module WsdlMapper
       end
 
       def in_class f, ttg
-        yard = YardDocFormatter.new f
+        yard = WsdlMapper::Generation::YardDocFormatter.new f
         yard.class_doc ttg.type
         super
       end

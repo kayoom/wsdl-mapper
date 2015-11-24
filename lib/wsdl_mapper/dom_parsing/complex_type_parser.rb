@@ -167,13 +167,24 @@ module WsdlMapper
       def parse_complex_type_property node, type, i, container
         name = parse_name_in_attribute 'name', node
         type_name = parse_name_in_attribute 'type', node
+        ref = parse_name_in_attribute 'ref', node
 
         bounds = parse_bounds node, container
 
-        prop = Property.new name, type_name, sequence: i, bounds: bounds,
+        options = {
+          sequence: i,
+          bounds: bounds,
           default: fetch_attribute_value('default', node),
           fixed: fetch_attribute_value('fixed', node),
           form: fetch_attribute_value('form', node)
+        }
+
+        prop = if ref
+          Property::Ref.new ref, **options
+        else
+          Property.new name, type_name, **options
+        end
+
         type.add_property prop
 
         each_element node do |child|

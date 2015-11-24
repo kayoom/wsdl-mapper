@@ -1,9 +1,9 @@
 require 'test_helper'
 
-require 'wsdl_mapper/svc_generation/svc_generator'
+require 'wsdl_mapper/svc_generation/documented_svc_generator'
 
 module SvcDescParsingTests
-  class SvcGeneratorTest < GenerationTest
+  class DocumentedSvcGeneratorTest < GenerationTest
     include WsdlMapper::SvcGeneration
     include WsdlMapper::Dom
 
@@ -11,7 +11,7 @@ module SvcDescParsingTests
 
     def generate name
       @desc = TestHelper.parse_wsdl name
-      generator = SvcGenerator.new context
+      generator = DocumentedSvcGenerator.new context
       generator.generate @desc
     end
 
@@ -24,6 +24,9 @@ require "wsdl_mapper/runtime/api"
 require "price_service"
 
 class Api < ::WsdlMapper::Runtime::Api
+  # @!attribute price_service
+  #   @return [::PriceService]
+  #   @soap_name PriceService
   attr_reader :price_service
 
   def initialize(options = {})

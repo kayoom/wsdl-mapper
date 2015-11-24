@@ -1,5 +1,5 @@
 require 'wsdl_mapper/dom_generation/default_class_generator'
-require 'wsdl_mapper/dom_generation/yard_doc_formatter'
+require 'wsdl_mapper/generation/yard_doc_formatter'
 
 module WsdlMapper
   module DomGeneration
@@ -7,7 +7,7 @@ module WsdlMapper
 
       protected
       def in_class f, ttg
-        yard = YardDocFormatter.new f
+        yard = WsdlMapper::Generation::YardDocFormatter.new f
         yard.class_doc ttg.type
 
         super
@@ -15,7 +15,7 @@ module WsdlMapper
 
       def generate_property_attributes f, properties
         return unless properties.any?
-        yard = YardDocFormatter.new f
+        yard = WsdlMapper::Generation::YardDocFormatter.new f
 
         properties.each do |p|
           name = @generator.namer.get_property_name p
@@ -41,7 +41,7 @@ module WsdlMapper
 
       def generate_attribute_attributes f, attributes
         return unless attributes.any?
-        yard = YardDocFormatter.new f
+        yard = WsdlMapper::Generation::YardDocFormatter.new f
 
         attributes.each do |a|
           name = @generator.namer.get_attribute_name a

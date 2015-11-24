@@ -15,15 +15,6 @@ module WsdlMapper
         @api_name = api_name
       end
 
-      #
-      # # @param [WsdlMapper::Dom::ComplexType, WsdlMapper::Dom::SimpleType] type
-      # # @return [TypeName]
-      # def get_type_name type
-      #   type_name = TypeName.new get_class_name(type), get_class_module_path(type), get_class_file_name(type), get_class_file_path(type)
-      #   type_name.parent = make_parents get_class_module_path(type)
-      #   type_name
-      # end
-
       def get_api_name
         type_name = TypeName.new camelize(@api_name), @module_path, get_file_name(@api_name), get_file_path(@module_path)
         type_name.parent = make_parents @module_path
@@ -52,10 +43,60 @@ module WsdlMapper
         service_name = get_service_name service
         port_name = get_port_name service, port
         module_path = @module_path + [service_name.class_name, port_name.class_name]
-        name = "#{operation.name.name}Factory"
+        name = operation.name.name
         type_name = TypeName.new camelize(name), module_path, get_file_name(name), get_file_path(module_path)
         type_name.parent = make_parents module_path
         type_name
+      end
+
+      def get_operation_s8r_name service, port, operation
+        service_name = get_service_name service
+        port_name = get_port_name service, port
+        module_path = @module_path + [service_name.class_name, port_name.class_name]
+        name = operation.name.name + "S8r"
+        type_name = TypeName.new camelize(name), module_path, get_file_name(name), get_file_path(module_path)
+        type_name.parent = make_parents module_path
+        type_name
+      end
+
+      def get_property_name_for_string str
+        PropertyName.new underscore(str), '@' + underscore(str)
+      end
+
+      def get_input_body_name service, port, op
+        get_body_name service, port, op, 'InputBody'
+      end
+
+      def get_body_name service, port, op, name
+        service_name = get_service_name service
+        port_name = get_port_name service, port
+        op_name = get_operation_name service, port, op
+        module_path = @module_path + [service_name.class_name, port_name.class_name, op_name.class_name]
+        type_name = TypeName.new camelize(name), module_path, get_file_name(name), get_file_path(module_path)
+        type_name.parent = make_parents module_path
+        type_name
+      end
+      alias_method :get_header_name, :get_body_name
+
+      def get_output_body_name service, port, op
+        get_body_name service, port, op, 'OutputBody'
+      end
+
+      def get_input_header_name service, port, op
+        get_header_name service, port, op, 'InputHeader'
+      end
+
+      def get_output_header_name service, port, op
+        get_header_name service, port, op, 'OutputHeader'
+      end
+
+      def get_header_property_name message_name, part_name
+        name = message_name.name + part_name.name
+        PropertyName.new underscore(name), '@' + underscore(name)
+      end
+
+      def get_body_property_name part_name
+        PropertyName.new underscore(part_name.name), '@' + underscore(part_name.name)
       end
     end
   end

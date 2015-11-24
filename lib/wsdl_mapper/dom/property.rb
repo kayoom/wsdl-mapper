@@ -3,6 +3,19 @@ require 'wsdl_mapper/dom/bounds'
 module WsdlMapper
   module Dom
     class Property
+      class Ref < TypeBase
+        attr_accessor :containing_type
+        attr_reader :name, :bounds, :sequence, :default, :fixed, :form
+
+        def initialize name, bounds: Bounds.new, sequence: 0, default: nil, fixed: nil, form: nil
+          super name
+          @name, @bounds, @sequence = name, bounds, sequence
+          @default = default
+          @fixed = fixed
+          @form = form
+        end
+      end
+
       attr_reader :name, :type_name, :bounds, :sequence, :default, :fixed, :form
       attr_accessor :type, :containing_type
       attr_accessor :documentation

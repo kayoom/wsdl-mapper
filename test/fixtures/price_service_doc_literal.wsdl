@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="PriceService"
+             xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:ns="http://example.org/schema"
+             targetNamespace="http://example.org/schema"
+             xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <schema targetNamespace="http://example.org/schema" xmlns:ns="http://example.org/schema" xmlns="http://www.w3.org/2001/XMLSchema">
+      <element name="ProductID">
+        <complexType>
+          <sequence>
+            <element name="ID" type="string"/>
+            <element name="Name" type="string"/>
+          </sequence>
+        </complexType>
+      </element>
+      <complexType name="VariantIDType">
+        <sequence>
+          <element name="ID" type="string"/>
+          <element name="Name" type="string"/>
+        </sequence>
+      </complexType>
+      <element name="Price">
+        <complexType>
+          <simpleContent>
+            <extension base="double">
+              <attribute name="Currency" type="string"/>
+            </extension>
+          </simpleContent>
+        </complexType>
+      </element>
+      <element name="Credentials">
+        <complexType>
+          <sequence>
+            <element name="User" type="string"/>
+            <element name="Password" type="string"/>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="ErrorMessage" type="string"/>
+    </schema>
+  </types>
+
+  <message name="Credentials">
+    <part name="UserAndPassword" element="ns:Credentials"/>
+  </message>
+
+  <message name="ProductAndVariantID">
+    <part name="ProductIDPart" element="ns:ProductID"/>
+    <part name="VariantIDPart" type="ns:VariantIDType"/>
+  </message>
+
+  <message name="PriceResult">
+    <part name="Price" element="ns:Price"/>
+  </message>
+
+  <message name="ProductNotFound">
+    <part name="Error" element="ns:ErrorMessage"/>
+  </message>
+
+  <portType name="ProductPrices">
+    <operation name="GetProductPrice">
+      <input message="ns:ProductAndVariantID"/>
+      <output message="ns:PriceResult"/>
+    </operation>
+  </portType>
+
+  <binding name="DefaultBinding" type="ns:ProductPrices">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="GetProductPrice">
+      <wsdlsoap:operation soapAction="GetProductPrice"/>
+      <input>
+        <wsdlsoap:header message="Credentials" part="UserAndPassword" use="literal"/>
+        <wsdlsoap:body use="literal"/>
+      </input>
+      <output>
+        <wsdlsoap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+
+  <service name="PriceService">
+    <port binding="ns:DefaultBinding" name="ProductPrices">
+      <wsdlsoap:address location="http://example.org/api"/>
+    </port>
+  </service>
+</definitions>
+

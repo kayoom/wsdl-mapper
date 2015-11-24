@@ -38,7 +38,21 @@ module WsdlMapper
           next unless type.is_a? WsdlMapper::Dom::ComplexType
 
           type.each_property do |prop|
-            if prop.type_name
+            if prop.is_a?(WsdlMapper::Dom::Property::Ref)
+              element = @schema.get_element prop.name
+              p = WsdlMapper::Dom::Property.new element.name, element.type_name,
+                sequence: prop.sequence,
+                bounds: prop.bounds,
+                fixed: prop.fixed,
+                form: prop.form,
+                default: prop.default
+              if p.type_name
+                p.type = @schema.get_type p.type_name
+              else
+                p.type = element.type
+              end
+              type.add_property p
+            elsif prop.type_name
               prop.type = @schema.get_type prop.type_name
 
               unless prop.type

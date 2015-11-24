@@ -6,6 +6,8 @@ module WsdlMapper
     class NamerBase
       include Inflector
 
+      attr_reader :module_path
+
       def initialize module_path: []
         @module_path = module_path
       end
