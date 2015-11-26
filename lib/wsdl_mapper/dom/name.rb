@@ -21,7 +21,7 @@ module WsdlMapper
       end
 
       def to_s
-        "#{ns}##{name}"
+        "{#{ns}}#{name}"
       end
 
       def to_a

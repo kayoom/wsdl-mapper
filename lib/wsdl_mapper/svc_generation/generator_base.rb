@@ -32,6 +32,10 @@ module WsdlMapper
         @generator.operation_generator
       end
 
+      def operation_s8r_generator
+        @generator.operation_s8r_generator
+      end
+
       def port_base
         @generator.port_base
       end

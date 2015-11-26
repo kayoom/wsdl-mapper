@@ -6,14 +6,12 @@
              xmlns="http://schemas.xmlsoap.org/wsdl/">
   <types>
     <schema targetNamespace="http://example.org/schema" xmlns:ns="http://example.org/schema" xmlns="http://www.w3.org/2001/XMLSchema">
-      <element name="ProductID">
-        <complexType>
-          <sequence>
-            <element name="ID" type="string"/>
-            <element name="Name" type="string"/>
-          </sequence>
-        </complexType>
-      </element>
+      <complexType name="ProductIDType">
+        <sequence>
+          <element name="ID" type="string"/>
+          <element name="Name" type="string"/>
+        </sequence>
+      </complexType>
       <complexType name="VariantIDType">
         <sequence>
           <element name="ID" type="string"/>
@@ -30,25 +28,22 @@
           </simpleContent>
         </complexType>
       </element>
-      <element name="Credentials">
-        <complexType>
-          <sequence>
-            <element name="User" type="string"/>
-            <element name="Password" type="string"/>
-          </sequence>
-        </complexType>
-      </element>
+      <complexType name="CredentialsType">
+        <sequence>
+          <element name="User" type="string"/>
+          <element name="Password" type="string"/>
+        </sequence>
+      </complexType>
       <element name="ErrorMessage" type="string"/>
     </schema>
   </types>
 
   <message name="Credentials">
-    <part name="UserAndPassword" element="ns:Credentials"/>
+    <part name="UserAndPassword" type="ns:CredentialsType"/>
   </message>
 
   <message name="ProductAndVariantID">
-    <part name="ProductIDPart" element="ns:ProductID"/>
-    <part name="VariantIDPart" element="ns:VariantID"/>
+    <part name="ProductIDPart" type="ns:ProductIDType"/>
   </message>
 
   <message name="PriceResult">

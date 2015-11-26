@@ -67,7 +67,15 @@ module WsdlMapper
         get_body_name service, port, op, 'InputBody'
       end
 
-      def get_body_name service, port, op, name
+      def get_input_s8r_name service, port, op
+        get_operation_part_name service, port, op, 'InputS8r'
+      end
+
+      def get_output_s8r_name service, port, op
+        get_operation_part_name service, port, op, 'OutputS8r'
+      end
+
+      def get_operation_part_name service, port, op, name
         service_name = get_service_name service
         port_name = get_port_name service, port
         op_name = get_operation_name service, port, op
@@ -76,7 +84,8 @@ module WsdlMapper
         type_name.parent = make_parents module_path
         type_name
       end
-      alias_method :get_header_name, :get_body_name
+      alias_method :get_header_name, :get_operation_part_name
+      alias_method :get_body_name, :get_operation_part_name
 
       def get_output_body_name service, port, op
         get_body_name service, port, op, 'OutputBody'

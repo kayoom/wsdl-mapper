@@ -1,3 +1,6 @@
+require 'wsdl_mapper/dom_parsing/linker'
+require 'wsdl_mapper/dom/schema'
+
 module WsdlMapper
   module SvcDescParsing
     # The Linker creates pointers between the different components of a WSDL schema,
@@ -10,6 +13,13 @@ module WsdlMapper
       end
 
       def link
+        schema = WsdlMapper::Dom::Schema.new
+        @description.each_schema do |s|
+          schema.add_import s.target_namespace, s
+        end
+        schema_linker = WsdlMapper::DomParsing::Linker.new schema
+        schema_linker.link
+
         link_messages
         link_port_types
         link_bindings
