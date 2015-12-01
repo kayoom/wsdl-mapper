@@ -29,8 +29,8 @@ class PriceService
         super(api, service, port)
         @soap_action = "GetProductPrice"
         @requires = [
-          "credentials_inline_type",
-          "product_idinline_type",
+          "credentials_type",
+          "product_idtype",
           "variant_idtype",
           "price_inline_type",
           "price_service/product_prices/get_product_price/input_header",

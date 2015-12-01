@@ -123,7 +123,7 @@ class PriceService
     class GetProductPrice
       class InputHeader < ::WsdlMapper::Runtime::Header
         # @!attribute credentials_user_and_password
-        #   @return [::CredentialsInlineType]
+        #   @return [::CredentialsType]
         attr_accessor :credentials_user_and_password
 
         def initialize(credentials_user_and_password: nil)
@@ -167,7 +167,7 @@ class PriceService
     class GetProductPrice
       class InputBody < ::WsdlMapper::Runtime::Body
         # @!attribute product_idpart
-        #   @return [::ProductIDInlineType]
+        #   @return [::ProductIDType]
         attr_accessor :product_idpart
 
         # @!attribute variant_idpart
