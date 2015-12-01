@@ -11,8 +11,8 @@ module WsdlMapper
       SOAP_HEADER = Name.get SOAP_ENV_NS, 'Header'
 
       def generate_operation_s8r service, port, op, result
-
         generate_op_input_s8r service, port, op, result
+        generate_op_output_s8r service, port, op, result
       end
 
       def generate_op_input_s8r service, port, op, result
@@ -24,7 +24,7 @@ module WsdlMapper
 
           f.in_modules modules do
             in_classes f, service.name.class_name, port.name.class_name, op.name.class_name do
-              generate_op_s8r_class f, port, op, name, op.type.input
+              generate_op_s8r_class f, port, op, name, op.type.input, input_s8r_base
             end
           end
         end
@@ -39,27 +39,27 @@ module WsdlMapper
 
           f.in_modules modules do
             in_classes f, service.name.class_name, port.name.class_name, op.name.class_name do
-              generate_op_s8r_class f, port, op, name, op.type.output
+              generate_op_s8r_class f, port, op, name, op.type.output, output_s8r_base
             end
           end
         end
       end
 
-      def generate_op_s8r_class f, port, op, name, in_out
-        f.in_sub_class name.class_name, input_s8r_base.name do
-          generate_op_s8r_body f, port, op, in_out
+      def generate_op_s8r_class f, port, op, name, in_out, base
+        f.in_sub_class name.class_name, base.name do
           generate_op_s8r_header f, port, op, in_out
+          generate_op_s8r_body f, port, op, in_out
         end
       end
 
       def generate_op_s8r_header f, port, op, in_out
         headers = get_header_parts in_out
         f.in_def :build_header, 'x', 'header' do
-          generate_header f, port, op, headers, in_out
+          generate_each_header f, headers
         end
       end
 
-      def generate_header f, port, op, headers, in_out
+      def generate_each_header f, headers
         headers.each do |header|
           part = header.header.part
           if header.header.use == 'encoded'
@@ -79,27 +79,28 @@ module WsdlMapper
       end
 
       def generate_literal_type_header f, header
-        element_name = generate_name SOAP_HEADER
-        type_name = get_type_name header.type
-        get_and_build f, type_name.name.inspect, 'header', header.property_name.attr_name, element_name
+        get_and_build_header f, header, SOAP_HEADER
       end
 
       def generate_literal_element_header f, header, part
         soap_header_wrapper f do
           part_wrapper f, part do
-            element_name = generate_name part.element.name
-            type_name = get_type_name header.type
-            get_and_build f, type_name.name.inspect, 'header', header.property_name.attr_name, element_name
+            get_and_build_header f, header, part.element.name
           end
         end
       end
 
       def generate_encoded_header f, header, part
         soap_header_wrapper f do
-          element_name = generate_name part.name
-          type_name = get_type_name header.type
-          get_and_build f, type_name.name.inspect, 'header', header.property_name.attr_name, element_name
+          get_and_build_header f, header, part.name
         end
+      end
+
+      def get_and_build_header f, header, element
+        type_name = get_type_name(header.type).name.inspect
+        attr_name = header.property_name.attr_name
+        element_name = generate_name element
+        get_and_build f, type_name, 'header', attr_name, element_name
       end
 
       def generate_op_s8r_body f, port, op, in_out
@@ -126,22 +127,27 @@ module WsdlMapper
       end
 
       def generate_body f, port, op, body_parts, in_out
-        rpc = port.type.binding.style == 'rpc'
-        encoded = in_out.body.use == 'encoded'
-
-        if rpc
-          if encoded
+        if rpc?(port)
+          if encoded?(in_out)
             generate_rpc_encoded_body f, op, body_parts
           else #literal
             generate_rpc_literal_body f, op, body_parts
           end
         else #document
-          if encoded
+          if encoded?(in_out)
             generate_doc_encoded_body f, body_parts
           else #literal
             generate_doc_literal_body f, body_parts
           end
         end
+      end
+
+      def encoded? in_out
+        in_out.body.use == 'encoded'
+      end
+
+      def rpc? port
+        port.type.binding.style == 'rpc'
       end
 
       def generate_doc_literal_body f, body_parts
@@ -155,9 +161,7 @@ module WsdlMapper
       end
 
       def generate_doc_literal_type_body f, part
-        element_name = generate_name SOAP_BODY
-        type_name = get_type_name part.type
-        get_and_build f, type_name.name.inspect, 'body', part.property_name.attr_name, element_name
+        get_and_build_body f, part, SOAP_BODY
       end
 
       def generate_doc_literal_elements_body f, body_parts
@@ -169,9 +173,7 @@ module WsdlMapper
       end
 
       def generate_doc_literal_elements_body_part f, part
-        element_name = generate_name part.part.element.name
-        type_name = get_type_name part.type
-        get_and_build f, type_name.name.inspect, 'body', part.property_name.attr_name, element_name
+        get_and_build_body f, part, part.part.element.name
       end
 
       def generate_doc_encoded_body f, body_parts
@@ -197,16 +199,12 @@ module WsdlMapper
       end
 
       def generate_rpc_literal_type_body_part f, part
-        element_name = generate_name part.part.name
-        type_name = get_type_name part.type
-        get_and_build f, type_name.name.inspect, 'body', part.property_name.attr_name, element_name
+        get_and_build_body f, part, part.part.name
       end
 
       def generate_rpc_literal_element_body_part f, part
-        element_name = generate_name part.part.element.name
-        type_name = get_type_name part.type
         part_wrapper f, part.part do
-          get_and_build f, type_name.name.inspect, 'body', part.property_name.attr_name, element_name
+          get_and_build_body f, part, part.part.element.name
         end
       end
 
@@ -221,9 +219,14 @@ module WsdlMapper
       end
 
       def generate_encoded_body_part f, part
-        name = generate_name part.part.name
-        type_name = get_type_name part.type
-        get_and_build f, type_name.name.inspect, 'body', part.property_name.attr_name, name
+        get_and_build_body f, part, part.part.name
+      end
+
+      def get_and_build_body f, part, element
+        type_name = get_type_name(part.type).name.inspect
+        attr_name = part.property_name.attr_name
+        element_name = generate_name element
+        get_and_build f, type_name, 'body', attr_name, element_name
       end
 
       def get_and_build f, type_name, obj_name, attr_name, element_name

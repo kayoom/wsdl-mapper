@@ -16,6 +16,8 @@ module SvcDescParsingTests
       generator.generate @desc
     end
 
+    ## Input ##
+
     ### Header ###
     def test_encoded_input_header_s8r
       generate 'price_service_rpc_encoded.wsdl'
