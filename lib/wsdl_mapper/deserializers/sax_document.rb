@@ -10,7 +10,6 @@ module WsdlMapper
       # @param [WsdlMapper::Deserializers::Deserializer] base
       def initialize base
         @base = base
-        @wrappers = []
       end
 
       # @param [String] name
@@ -24,7 +23,7 @@ module WsdlMapper
         name = Name.get uri, name
         namespaces = Namespaces.for Hash[ns]
         if @current_frame && @current_frame.mapping.wrapper?(name)
-          @wrappers << name
+          @wrapper = name
           return
         end
         type_name = get_type_name name
@@ -39,8 +38,8 @@ module WsdlMapper
       # @param [String] prefix
       # @param [String] uri
       def end_element_namespace name, prefix = nil, uri = nil
-        if @wrappers.last == Name.get(uri, name)
-          @wrappers.pop
+        if @wrapper == Name.get(uri, name)
+          @wrapper = nil
           return
         end
         @current_frame.text = @buffer
