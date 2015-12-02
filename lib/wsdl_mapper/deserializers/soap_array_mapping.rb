@@ -25,6 +25,10 @@ module WsdlMapper
       def get_type_name_for_prop element_name
         @type
       end
+
+      def wrapper? name
+        false
+      end
     end
   end
 end

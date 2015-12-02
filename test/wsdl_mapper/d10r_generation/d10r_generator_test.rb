@@ -206,7 +206,7 @@ RUBY
 require "d10r_type_directory"
 require "note_inline_type"
 
-NoteInlineTypeDeserializer = ::D10rTypeDirectory.register_type(["#inline-types", "noteInlineType"], ::NoteInlineType) do
+NoteInlineTypeDeserializer = ::D10rTypeDirectory.register_type([nil, "noteInlineType"], ::NoteInlineType) do
   register_prop(:to, [nil, "to"], ["http://www.w3.org/2001/XMLSchema", "string"])
   register_prop(:from, [nil, "from"], ["http://www.w3.org/2001/XMLSchema", "string"])
   register_prop(:heading, [nil, "heading"], ["http://www.w3.org/2001/XMLSchema", "string"])
@@ -219,7 +219,7 @@ require "d10r_type_directory"
 require "wsdl_mapper/deserializers/element_directory"
 
 D10rElementDirectory = ::WsdlMapper::Deserializers::ElementDirectory.new(::D10rTypeDirectory) do
-  register_element [nil, "note"], ["#inline-types", "noteInlineType"], "note_inline_type_deserializer", "::NoteInlineTypeDeserializer"
+  register_element [nil, "note"], [nil, "noteInlineType"], "note_inline_type_deserializer", "::NoteInlineTypeDeserializer"
 end
 RUBY
     end

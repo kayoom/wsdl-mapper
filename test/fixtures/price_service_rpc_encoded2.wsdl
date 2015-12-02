@@ -3,7 +3,8 @@
              xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
              xmlns:ns="http://example.org/schema"
              targetNamespace="http://example.org/schema"
-             xmlns="http://schemas.xmlsoap.org/wsdl/">
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <types>
     <schema targetNamespace="http://example.org/schema" xmlns:ns="http://example.org/schema" xmlns="http://www.w3.org/2001/XMLSchema">
       <complexType name="ProductIDType">
@@ -18,7 +19,6 @@
           <element name="Name" type="string"/>
         </sequence>
       </complexType>
-      <element name="VariantID" type="ns:VariantIDType"/>
       <element name="Price">
         <complexType>
           <simpleContent>
@@ -28,6 +28,7 @@
           </simpleContent>
         </complexType>
       </element>
+      <element name="Credentials" type="ns:CredentialsType"/>
       <complexType name="CredentialsType">
         <sequence>
           <element name="User" type="string"/>
@@ -39,11 +40,12 @@
   </types>
 
   <message name="Credentials">
-    <part name="UserAndPassword" type="ns:CredentialsType"/>
+    <part name="UserAndPassword" element="ns:Credentials"/>
   </message>
 
   <message name="ProductAndVariantID">
     <part name="ProductIDPart" type="ns:ProductIDType"/>
+    <part name="VariantIDPart" type="ns:VariantIDType"/>
   </message>
 
   <message name="PriceResult">
@@ -62,15 +64,15 @@
   </portType>
 
   <binding name="DefaultBinding" type="ns:ProductPrices">
-    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
     <operation name="GetProductPrice">
       <wsdlsoap:operation soapAction="GetProductPrice"/>
       <input>
-        <wsdlsoap:header message="ns:Credentials" part="UserAndPassword" use="literal"/>
-        <wsdlsoap:body use="literal"/>
+        <wsdlsoap:header message="Credentials" part="UserAndPassword" use="encoded"/>
+        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding" namespace="http://example.org/schema"/>
       </input>
       <output>
-        <wsdlsoap:body use="literal"/>
+        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding" namespace="http://example.org/schema"/>
       </output>
     </operation>
   </binding>

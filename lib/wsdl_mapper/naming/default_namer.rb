@@ -92,7 +92,7 @@ module WsdlMapper
       # @return [InlineType]
       def get_inline_type element
         name = element.name.name + 'InlineType'
-        InlineType.new WsdlMapper::Dom::Name.get("#{element.name.ns}#inline-types", name)
+        InlineType.new WsdlMapper::Dom::Name.get(element.name.ns, name)
       end
 
       # @param [WsdlMapper::Dom::ComplexType] type

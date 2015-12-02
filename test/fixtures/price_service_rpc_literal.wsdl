@@ -51,7 +51,7 @@
   </message>
 
   <message name="PriceResult">
-    <part name="Price" element="ns:Price"/>
+    <part name="PricePart" element="ns:Price"/>
   </message>
 
   <message name="ProductNotFound">

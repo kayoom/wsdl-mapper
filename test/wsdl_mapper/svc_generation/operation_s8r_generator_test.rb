@@ -50,7 +50,9 @@ RUBY
 
       assert_file_contains 'price_service/product_prices/get_product_price/input_s8r.rb', <<RUBY
         def build_header(x, header)
-          x.get("::CredentialsType").build(x, header.credentials_user_and_password, ["#{SOAP_ENV}", "Header"])
+          x.complex(nil, ["#{SOAP_ENV}", "Header"], []) do |x|
+            x.get("::CredentialsType").build(x, header.credentials_user_and_password, ["http://example.org/schema", "UserAndPassword"])
+          end
         end
 RUBY
     end
@@ -81,9 +83,7 @@ RUBY
         def build_body(x, body)
           x.complex(nil, ["#{SOAP_ENV}", "Body"], []) do |x|
             x.complex(nil, ["http://example.org/schema", "GetProductPrice"], []) do |x|
-              x.complex(nil, ["http://example.org/schema", "ProductIDPart"], []) do |x|
-                x.get("::ProductIDInlineType").build(x, body.product_idpart, ["http://example.org/schema", "ProductID"])
-              end
+              x.get("::ProductIDInlineType").build(x, body.product_idpart, ["http://example.org/schema", "ProductID"])
               x.get("::VariantIDType").build(x, body.variant_idpart, ["http://example.org/schema", "VariantIDPart"])
             end
           end
@@ -111,7 +111,9 @@ RUBY
 
       assert_file_contains 'price_service/product_prices/get_product_price/input_s8r.rb', <<RUBY
         def build_body(x, body)
-          x.get("::ProductIDType").build(x, body.product_idpart, ["#{SOAP_ENV}", "Body"])
+          x.complex(nil, ["#{SOAP_ENV}", "Body"], []) do |x|
+            x.get("::ProductIDType").build(x, body.product_idpart, ["http://example.org/schema", "ProductIDPart"])
+          end
         end
 RUBY
     end
@@ -155,9 +157,7 @@ RUBY
 def build_body(x, body)
   x.complex(nil, ["#{SOAP_ENV}", "Body"], []) do |x|
     x.complex(nil, ["http://example.org/schema", "GetProductPriceResponse"], []) do |x|
-      x.complex(nil, ["http://example.org/schema", "Price"], []) do |x|
-        x.get("::PriceInlineType").build(x, body.price, ["http://example.org/schema", "Price"])
-      end
+      x.get("::PriceInlineType").build(x, body.price_part, ["http://example.org/schema", "Price"])
     end
   end
 end

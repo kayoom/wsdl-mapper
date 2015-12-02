@@ -71,7 +71,7 @@
     <operation name="GetProductPrice">
       <wsdlsoap:operation soapAction="GetProductPrice"/>
       <input>
-        <wsdlsoap:header message="Credentials" part="UserAndPassword" use="literal"/>
+        <wsdlsoap:header message="ns:Credentials" part="UserAndPassword" use="literal"/>
         <wsdlsoap:body use="literal"/>
       </input>
       <output>

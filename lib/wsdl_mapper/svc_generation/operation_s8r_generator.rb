@@ -74,12 +74,14 @@ module WsdlMapper
         if part.element
           generate_literal_element_header f, header, part
         else
-          generate_literal_type_header f, header
+          generate_literal_type_header f, header, part
         end
       end
 
-      def generate_literal_type_header f, header
-        get_and_build_header f, header, SOAP_HEADER
+      def generate_literal_type_header f, header, part
+        soap_header_wrapper f do
+          get_and_build_header f, header, part.name
+        end
       end
 
       def generate_literal_element_header f, header, part
@@ -161,7 +163,9 @@ module WsdlMapper
       end
 
       def generate_doc_literal_type_body f, part
-        get_and_build_body f, part, SOAP_BODY
+        soap_body_wrapper f do
+          get_and_build_body f, part, part.part.name
+        end
       end
 
       def generate_doc_literal_elements_body f, body_parts
@@ -204,9 +208,7 @@ module WsdlMapper
       end
 
       def generate_rpc_literal_element_body_part f, part
-        part_wrapper f, part.part do
-          get_and_build_body f, part, part.part.element.name
-        end
+        get_and_build_body f, part, part.part.element.name
       end
 
       def generate_rpc_encoded_body f, op, in_out, body_parts
