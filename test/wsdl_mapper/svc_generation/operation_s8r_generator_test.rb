@@ -128,5 +128,40 @@ RUBY
         end
 RUBY
     end
+
+    ## Output ##
+
+    ### Body ###
+    #### RPC ####
+
+    def test_rpc_encoded_output_body_s8r
+      generate 'price_service_rpc_encoded.wsdl'
+
+      assert_file_contains 'price_service/product_prices/get_product_price/output_s8r.rb', <<RUBY
+def build_body(x, body)
+  x.complex(nil, ["#{SOAP_ENV}", "Body"], []) do |x|
+    x.complex(nil, ["http://example.org/schema", "GetProductPriceResponse"], []) do |x|
+      x.get("::PriceInlineType").build(x, body.price, ["http://example.org/schema", "Price"])
+    end
+  end
+end
+RUBY
+    end
+
+    def test_rpc_literal_output_body_s8r
+      generate 'price_service_rpc_literal.wsdl'
+
+      assert_file_contains 'price_service/product_prices/get_product_price/output_s8r.rb', <<RUBY
+def build_body(x, body)
+  x.complex(nil, ["#{SOAP_ENV}", "Body"], []) do |x|
+    x.complex(nil, ["http://example.org/schema", "GetProductPriceResponse"], []) do |x|
+      x.complex(nil, ["http://example.org/schema", "Price"], []) do |x|
+        x.get("::PriceInlineType").build(x, body.price, ["http://example.org/schema", "Price"])
+      end
+    end
+  end
+end
+RUBY
+    end
   end
 end

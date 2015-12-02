@@ -15,8 +15,9 @@ module WsdlMapper
         @cls = cls
         @attributes = Directory.new on_nil: Errors::UnknownAttributeError
         @properties = Directory.new on_nil: Errors::UnknownElementError
-        instance_exec &block
         @simple = simple
+        @wrappers = Directory.new
+        instance_exec &block
       end
 
       def register_attr accessor, attr_name, type_name
@@ -27,6 +28,15 @@ module WsdlMapper
       def register_prop accessor, prop_name, type_name, array: false
         prop_name = Name.get *prop_name
         @properties[prop_name] = PropMapping.new(accessor, prop_name, Name.get(*type_name), array: array)
+      end
+
+      def register_wrapper name
+        name = Name.get *name
+        @wrappers[name] = true
+      end
+
+      def wrapper? name
+        @wrappers[name]
       end
 
       def start base, frame

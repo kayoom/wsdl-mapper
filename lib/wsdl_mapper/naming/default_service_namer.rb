@@ -75,6 +75,14 @@ module WsdlMapper
         get_operation_part_name service, port, op, 'OutputS8r'
       end
 
+      def get_input_d10r_name service, port, op
+        get_operation_part_name service, port, op, 'InputD10r'
+      end
+
+      def get_output_d10r_name service, port, op
+        get_operation_part_name service, port, op, 'OutputD10r'
+      end
+
       def get_operation_part_name service, port, op, name
         service_name = get_service_name service
         port_name = get_port_name service, port

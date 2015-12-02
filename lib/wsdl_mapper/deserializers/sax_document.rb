@@ -22,10 +22,14 @@ module WsdlMapper
         uri = inherit_element_namespace uri
         name = Name.get uri, name
         namespaces = Namespaces.for Hash[ns]
+        if @current_frame && @current_frame.mapping.wrapper?(name)
+          @wrapper = true
+          return
+        end
         type_name = get_type_name name
         attrs = get_attributes type_name, attrs
         parent = @current_frame
-        mapping = @base.get_type_mapping type_name
+        mapping = @base.get_type_mapping(type_name)
         @current_frame = Frame.new name, type_name, attrs, parent, namespaces, @base, mapping
         @current_frame.start
       end
@@ -34,6 +38,10 @@ module WsdlMapper
       # @param [String] prefix
       # @param [String] uri
       def end_element_namespace name, prefix = nil, uri = nil
+        if @wrapper
+          @wrapper = false
+          return
+        end
         @current_frame.text = @buffer
         @buffer = ''
         @last_frame = @current_frame

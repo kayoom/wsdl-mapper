@@ -198,5 +198,30 @@ require "attachments_array"
 AttachmentsArrayDeserializer = ::D10rTypeDirectory.register_soap_array([nil, "attachmentsArray"], ::AttachmentsArray, [nil, "attachment"])
 RUBY
     end
+
+    def test_inline_type
+      generate 'basic_note_inline_type.xsd'
+
+      assert_file_is 'note_inline_type_deserializer.rb', <<RUBY
+require "d10r_type_directory"
+require "note_inline_type"
+
+NoteInlineTypeDeserializer = ::D10rTypeDirectory.register_type(["#inline-types", "noteInlineType"], ::NoteInlineType) do
+  register_prop(:to, [nil, "to"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:from, [nil, "from"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:heading, [nil, "heading"], ["http://www.w3.org/2001/XMLSchema", "string"])
+  register_prop(:body, [nil, "body"], ["http://www.w3.org/2001/XMLSchema", "string"])
+end
+RUBY
+
+      assert_file_is 'd10r_element_directory.rb', <<RUBY
+require "d10r_type_directory"
+require "wsdl_mapper/deserializers/element_directory"
+
+D10rElementDirectory = ::WsdlMapper::Deserializers::ElementDirectory.new(::D10rTypeDirectory) do
+  register_element [nil, "note"], ["#inline-types", "noteInlineType"], "note_inline_type_deserializer", "::NoteInlineTypeDeserializer"
+end
+RUBY
+    end
   end
 end

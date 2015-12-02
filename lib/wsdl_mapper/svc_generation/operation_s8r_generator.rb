@@ -122,16 +122,16 @@ module WsdlMapper
         f.block "x.complex(nil, #{generate_name(part.name)}, [])", ['x'], &block
       end
 
-      def call_wrapper f, op, &block
-        f.block "x.complex(nil, #{generate_name(op.name)}, [])", ['x'], &block
+      def call_wrapper f, op, suffix = '', &block
+        f.block "x.complex(nil, #{generate_name(op.name, suffix)}, [])", ['x'], &block
       end
 
       def generate_body f, port, op, body_parts, in_out
         if rpc?(port)
           if encoded?(in_out)
-            generate_rpc_encoded_body f, op, body_parts
+            generate_rpc_encoded_body f, op, in_out, body_parts
           else #literal
-            generate_rpc_literal_body f, op, body_parts
+            generate_rpc_literal_body f, op, in_out, body_parts
           end
         else #document
           if encoded?(in_out)
@@ -184,9 +184,10 @@ module WsdlMapper
         end
       end
 
-      def generate_rpc_literal_body f, op, body_parts
+      def generate_rpc_literal_body f, op, in_out, body_parts
         soap_body_wrapper f do
-          call_wrapper f, op.type do
+          suffix = in_out == op.type.output ? 'Response' : ''
+          call_wrapper f, op.type, suffix do
             body_parts.each do |part|
               if part.part.element
                 generate_rpc_literal_element_body_part f, part
@@ -208,9 +209,10 @@ module WsdlMapper
         end
       end
 
-      def generate_rpc_encoded_body f, op, body_parts
+      def generate_rpc_encoded_body f, op, in_out, body_parts
         soap_body_wrapper f do
-          call_wrapper f, op.type do
+          suffix = in_out == op.type.output ? 'Response' : ''
+          call_wrapper f, op.type, suffix do
             body_parts.each do |part|
               generate_encoded_body_part f, part
             end

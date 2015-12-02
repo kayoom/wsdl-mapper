@@ -12,6 +12,7 @@ module WsdlMapper
         generate_op_output_body service, port, op, result
 
         operation_s8r_generator.generate_operation_s8r service, port, op, result
+        operation_d10r_generator.generate_operation_d10r service, port, op, result
 
         type_file_for op.name, result do |f|
           f.requires operation_base.require_path

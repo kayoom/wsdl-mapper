@@ -93,7 +93,7 @@ module WsdlMapper
       # @param [WsdlMapper::Generation::Result] result
       def register_element f, element, result
         element_name = generate_name element.name
-        type_name = generate_name element.type_name
+        type_name = generate_name get_type_name(element.type).name
         d10r_name = @namer.get_d10r_name(element.type.name ? element.type : @namer.get_inline_type(element))
         require_path = d10r_name.require_path.inspect
 
@@ -120,8 +120,8 @@ module WsdlMapper
       end
 
       def generate_complex type, result
-        type_name = @namer.get_type_name type
-        name = @namer.get_d10r_name type
+        type_name = @namer.get_type_name get_type_name type
+        name = @namer.get_d10r_name get_type_name type
         modules = get_module_names name
         prop_requires = collect_property_requires(type.each_property)
         prop_requires += collect_property_requires(type.base.each_property) if has_base?(type)
@@ -155,7 +155,8 @@ module WsdlMapper
       def register_complex_type f, name, type, type_name
         simple = ", simple: #{generate_name(type.root.name)}" if type.simple_content?
 
-        f.block_assignment name.class_name, "#{@type_directory_name.name}.register_type(#{generate_name(type.name)}, #{type_name.name}#{simple})", [] do
+        type_or_inline = get_type_name(type).name
+        f.block_assignment name.class_name, "#{@type_directory_name.name}.register_type(#{generate_name(type_or_inline)}, #{type_name.name}#{simple})", [] do
           register_attributes f, type
           register_properties f, type
         end

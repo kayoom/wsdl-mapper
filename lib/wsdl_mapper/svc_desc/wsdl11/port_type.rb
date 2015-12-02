@@ -5,7 +5,7 @@ module WsdlMapper
     module Wsdl11
       class PortType < Base
         class Operation < Base
-          attr_accessor :input, :output, :faults
+          attr_accessor :input, :output, :faults, :type
 
           def initialize name
             super name

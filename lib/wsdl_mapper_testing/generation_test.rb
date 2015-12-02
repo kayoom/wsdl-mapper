@@ -30,8 +30,10 @@ module WsdlMapperTesting
 
     def assert_file_contains *name, expected
       assert_file_exists *name
-      content = file *name
-      assert content.include?(expected.strip), "Expected\n\n#{content}\n\n to include\n\n#{expected}\n"
+      content = file(*name)
+      content_normalized = content.gsub(/^\s+/, '')
+      expected_normalized = expected.strip.gsub(/^\s+/, '')
+      assert content_normalized.include?(expected_normalized), "Expected\n\n#{content}\n\n to include\n\n#{expected}\n"
     end
 
     def file *name

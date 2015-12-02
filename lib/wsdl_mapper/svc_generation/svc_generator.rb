@@ -16,13 +16,14 @@ require 'wsdl_mapper/svc_generation/service_generator'
 require 'wsdl_mapper/svc_generation/port_generator'
 require 'wsdl_mapper/svc_generation/operation_generator'
 require 'wsdl_mapper/svc_generation/operation_s8r_generator'
+require 'wsdl_mapper/svc_generation/operation_d10r_generator'
 
 module WsdlMapper
   module SvcGeneration
     class SvcGenerator < WsdlMapper::Generation::Base
       include WsdlMapper::Generation
 
-      attr_reader :context, :service_generator, :service_namer, :namer, :port_generator, :operation_generator, :schema_generator, :operation_s8r_generator
+      attr_reader :context, :service_generator, :service_namer, :namer, :port_generator, :operation_generator, :schema_generator, :operation_s8r_generator, :operation_d10r_generator
 
       def initialize context,
           formatter_factory: DefaultFormatter,
@@ -32,6 +33,7 @@ module WsdlMapper
           port_generator_factory: PortGenerator,
           operation_generator_factory: OperationGenerator,
           operation_s8r_generator_factory: OperationS8rGenerator,
+          operation_d10r_generator_factory: OperationD10rGenerator,
           schema_generator: nil
         @formatter_factory = formatter_factory
         @context = context
@@ -41,6 +43,7 @@ module WsdlMapper
         @port_generator = port_generator_factory.new(self)
         @operation_generator = operation_generator_factory.new(self)
         @operation_s8r_generator = operation_s8r_generator_factory.new(self)
+        @operation_d10r_generator = operation_d10r_generator_factory.new(self)
         @schema_generator = schema_generator || WsdlMapper::DomGeneration::SchemaGenerator.new(context,
           ctr_generator_factory: WsdlMapper::DomGeneration::DefaultCtrGenerator,
           namer: namer

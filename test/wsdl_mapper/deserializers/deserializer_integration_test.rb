@@ -30,7 +30,7 @@ ElementDirectory = ::WsdlMapper::Deserializers::ElementDirectory.new(TypeDirecto
 end
 RUBY
 
-    TestModule2 = <<RUBY
+    SoapArrayTestModule = <<RUBY
 require "wsdl_mapper/deserializers/type_directory"
 require "wsdl_mapper/deserializers/element_directory"
 class NoteType
@@ -62,9 +62,7 @@ end
 RUBY
 
     def test_with_soap_array
-      test_module_name = 'TestModule' + SecureRandom.hex
-      eval "module #{test_module_name}\n#{TestModule2}\nend"
-      test_module = self.class.const_get test_module_name
+      test_module = create_test_module SoapArrayTestModule
 
       xml = <<XML
 <?xml version="1.0" encoding="UTF-8"?>
@@ -94,9 +92,7 @@ XML
     end
 
     def test_integration
-      test_module_name = 'TestModule' + SecureRandom.hex
-      eval "module #{test_module_name}\n#{TestModule1}\nend"
-      test_module = self.class.const_get test_module_name
+      test_module = create_test_module TestModule1
 
       xml = <<XML
 <?xml version="1.0" encoding="UTF-8"?>

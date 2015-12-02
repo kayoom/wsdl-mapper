@@ -32,25 +32,47 @@ module WsdlMapper
 
         operation = PortType::Operation.new name
 
+        sequence = []
         each_element node do |child|
-          parse_operation_child child, operation
+          sequence << parse_operation_child(child, operation)
         end
+        sequence.compact!
+        operation.type = determine_type sequence
 
         port_type.add_operation operation
       end
 
+      def determine_type sequence
+        case sequence[0, 2]
+        when [INPUT]
+          :one_way
+        when [INPUT, OUTPUT]
+          :request_response
+        when [OUTPUT, INPUT]
+          :solicit_response
+        when [OUTPUT]
+          :notification
+        end
+      end
+
       def parse_operation_child node, operation
-        case get_name(node)
+        name = get_name(node)
+        case name
         when INPUT
           parse_operation_input node, operation
+          name
         when OUTPUT
           parse_operation_output node, operation
+          name
         when FAULT
           parse_operation_fault node, operation
+          name
         when DOCUMENTATION
           @base.parse_documentation node, operation
+          nil
         else
           log_msg node, :unknown
+          nil
         end
       end
 

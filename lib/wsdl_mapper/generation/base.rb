@@ -3,11 +3,12 @@ module WsdlMapper
     # @abstract
     class Base
       protected
-      def generate_name name
+      def generate_name name, suffix = ''
         return 'nil' if name.nil?
 
         ns = name.ns.inspect
-        local_name = name.name.inspect
+        local_name = (name.name + suffix).inspect
+
 
         "[#{ns}, #{local_name}]"
       end
