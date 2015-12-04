@@ -6,7 +6,7 @@ module WsdlMapper
     class DocumentedWrappingTypeGenerator < DefaultWrappingTypeGenerator
 
       protected
-      def in_class f, ttg
+      def in_class(f, ttg)
         yard = WsdlMapper::Generation::YardDocFormatter.new f
         yard.class_doc ttg.type
 

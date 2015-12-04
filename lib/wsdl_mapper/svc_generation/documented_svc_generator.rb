@@ -7,16 +7,16 @@ require 'wsdl_mapper/generation/yard_doc_formatter'
 module WsdlMapper
   module SvcGeneration
     class DocumentedSvcGenerator < SvcGenerator
-      def initialize context,
+      def initialize(context,
         formatter_factory: DefaultFormatter,
         service_namer: WsdlMapper::Naming::DefaultServiceNamer.new,
         service_generator_factory: DocumentedServiceGenerator,
         port_generator_factory: DocumentedPortGenerator,
-        operation_generator_factory: DocumentedOperationGenerator
+        operation_generator_factory: DocumentedOperationGenerator)
         super
       end
 
-      def generate_api_service_accessors f, services
+      def generate_api_service_accessors(f, services)
         yard = WsdlMapper::Generation::YardDocFormatter.new f
         services.each do |s|
           attr_name = s.property_name.attr_name

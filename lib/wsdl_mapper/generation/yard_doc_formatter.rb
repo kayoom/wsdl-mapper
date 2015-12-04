@@ -1,12 +1,12 @@
 module WsdlMapper
   module Generation
     class YardDocFormatter
-      def initialize formatter
+      def initialize(formatter)
         @formatter = formatter
         @i = 0
       end
 
-      def line line
+      def line(line)
         buf = "# "
         buf << "  " * @i
         buf << strip(line)
@@ -24,7 +24,7 @@ module WsdlMapper
         self
       end
 
-      def class_doc type
+      def class_doc(type)
         if type.documentation.present?
           text type.documentation.default
           blank_line
@@ -36,7 +36,7 @@ module WsdlMapper
         end
       end
 
-      def text text
+      def text(text)
         lines = process(text).strip.split("\n")
 
         lines.each do |l|
@@ -50,17 +50,17 @@ module WsdlMapper
         self
       end
 
-      def tag tag, text
+      def tag(tag, text)
         line "@#{tag} #{text}"
       end
 
-      def type_tag tag_name, type, text = nil
+      def type_tag(tag_name, type, text = nil)
         buf = "@#{tag_name} [#{type}]"
         buf << " #{text}" if text
         line buf
       end
 
-      def attribute! name, type, doc, &block
+      def attribute!(name, type, doc, &block)
         tag "!attribute", name
         inc_indent
         text doc if doc
@@ -69,13 +69,13 @@ module WsdlMapper
         dec_indent
       end
 
-      def param name, type, text = nil
+      def param(name, type, text = nil)
         buf = "@param #{name} [#{type}]"
         buf << " #{text}" if text
         line buf
       end
 
-      def params *params
+      def params(*params)
         return if params.empty?
         params.each do |p|
           param *p
@@ -84,12 +84,12 @@ module WsdlMapper
       end
 
       protected
-      def strip text
+      def strip(text)
         return "" if text.nil?
         text.gsub(/[\n\r]/, " ").gsub(/\s+/, " ").strip
       end
 
-      def process doc
+      def process(doc)
         doc
       end
     end

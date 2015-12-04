@@ -3,7 +3,7 @@ require 'wsdl_mapper/svc_generation/port_generator'
 module WsdlMapper
   module SvcGeneration
     class DocumentedPortGenerator < PortGenerator
-      def generate_port_operation_accessors f, ops
+      def generate_port_operation_accessors(f, ops)
         yard = WsdlMapper::Generation::YardDocFormatter.new f
         ops.map do |op|
           attr_name = op.property_name.attr_name

@@ -14,7 +14,7 @@ module DomGenerationTests
       include WsdlMapper::DomGeneration
       include WsdlMapper::Dom
 
-      def generate name
+      def generate(name)
         schema = TestHelper.parse_schema name
         generator = SchemaGenerator.new context, ctr_generator_factory: DefaultCtrGenerator
         generator.generate schema

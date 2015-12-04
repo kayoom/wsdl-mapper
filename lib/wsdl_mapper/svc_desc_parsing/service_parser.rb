@@ -4,7 +4,7 @@ require 'wsdl_mapper/svc_desc/wsdl11/service'
 module WsdlMapper
   module SvcDescParsing
     class ServiceParser < ParserBase
-      def parse node
+      def parse(node)
         name = parse_name_in_attribute 'name', node
 
         service = Service.new name
@@ -16,7 +16,7 @@ module WsdlMapper
         @base.description.add_service service
       end
 
-      def parse_service_child node, service
+      def parse_service_child(node, service)
         case get_name node
         when PORT
           parse_service_port node, service
@@ -27,7 +27,7 @@ module WsdlMapper
         end
       end
 
-      def parse_service_port node, service
+      def parse_service_port(node, service)
         name = parse_name_in_attribute 'name', node
 
         port = Service::Port.new name
@@ -40,7 +40,7 @@ module WsdlMapper
         service.add_port port
       end
 
-      def parse_port_child node, port
+      def parse_port_child(node, port)
         case get_name node
         when Soap::ADDRESS
           parse_port_address node, port
@@ -51,7 +51,7 @@ module WsdlMapper
         end
       end
 
-      def parse_port_address node, port
+      def parse_port_address(node, port)
         port.address_location = fetch_attribute_value 'location', node
       end
     end

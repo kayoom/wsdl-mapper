@@ -10,7 +10,7 @@ module SvcDescParsingTests
     NS = 'http://example.org/schema'
     SOAP_ENV = 'http://schemas.xmlsoap.org/soap/envelope/'
 
-    def generate name
+    def generate(name)
       @desc = TestHelper.parse_wsdl name
       generator = SvcGenerator.new context
       generator.generate @desc

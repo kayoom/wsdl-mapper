@@ -8,12 +8,12 @@ module WsdlMapper
         time
       ]
 
-      def to_ruby string
+      def to_ruby(string)
         zone = ::Date._parse(string)[:zone]
         ::Time.parse(string.to_s).getlocal zone
       end
 
-      def to_xml object
+      def to_xml(object)
         object.strftime "%T%:z"
       end
 

@@ -10,11 +10,11 @@ module WsdlMapper
         anyURI
       ]
 
-      def to_ruby string
+      def to_ruby(string)
         URI(string)
       end
 
-      def to_xml object
+      def to_xml(object)
         case object
         when URI::Generic
           object.to_s

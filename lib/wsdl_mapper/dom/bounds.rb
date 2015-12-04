@@ -3,7 +3,7 @@ module WsdlMapper
     class Bounds
       attr_accessor :min, :max, :nillable
 
-      def initialize min: nil, max: nil, nillable: nil
+      def initialize(min: nil, max: nil, nillable: nil)
         @min, @max, @nillable = min, max, nillable
       end
 

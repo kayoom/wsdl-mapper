@@ -4,7 +4,7 @@ require 'wsdl_mapper/generation/yard_doc_formatter'
 module WsdlMapper
   module SvcGeneration
     class DocumentedOperationGenerator < OperationGenerator
-      def generate_header_accessors f, parts
+      def generate_header_accessors(f, parts)
         yard = WsdlMapper::Generation::YardDocFormatter.new f
         parts.each do |p|
           attr_name = p.property_name.attr_name
@@ -14,7 +14,7 @@ module WsdlMapper
         end
       end
 
-      def generate_body_accessors f, parts
+      def generate_body_accessors(f, parts)
         yard = WsdlMapper::Generation::YardDocFormatter.new f
         parts.each do |p|
           attr_name = p.property_name.attr_name

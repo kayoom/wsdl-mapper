@@ -4,7 +4,7 @@ require 'wsdl_mapper/svc_desc/wsdl11/message'
 module WsdlMapper
   module SvcDescParsing
     class MessageParser < ParserBase
-      def parse node
+      def parse(node)
         name = parse_name_in_attribute 'name', node
 
         message = Message.new name
@@ -16,7 +16,7 @@ module WsdlMapper
         @base.description.add_message message
       end
 
-      def parse_message_child node, message
+      def parse_message_child(node, message)
         case get_name(node)
         when PART
           parse_part node, message
@@ -27,7 +27,7 @@ module WsdlMapper
         end
       end
 
-      def parse_part node, message
+      def parse_part(node, message)
         name = parse_name_in_attribute 'name', node
 
         part = Message::Part.new name

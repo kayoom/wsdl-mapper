@@ -10,7 +10,7 @@ module SerializersTests
     include WsdlMapper::Dom
 
     class NoteTypeSerializer
-      def build x, obj, name
+      def build(x, obj, name)
         x.complex [nil, 'noteType'], [nil, 'note'], [] do |x|
           x.value_builtin [nil, 'to'], 'to@example.org', :string
           x.value_builtin [nil, 'from'], 'from@example.org', :string
@@ -28,7 +28,8 @@ module SerializersTests
       type_directory.register_serializer NoteTypeSerializer.name, NoteTypeSerializer.new
       type_directory.register_element NoteType.name, [nil, 'note']
 
-      def type_directory.require path;end
+      def type_directory.require(path);
+      end
 
       serializer_factory = WsdlMapper::Serializers::SerializerFactory.new type_directory
 

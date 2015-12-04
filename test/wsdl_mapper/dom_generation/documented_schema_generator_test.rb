@@ -9,7 +9,7 @@ module DomGenerationTests
     class DocumentedSchemaGeneratorTest < GenerationTest
       include WsdlMapper::DomGeneration
 
-      def generate name
+      def generate(name)
         schema = TestHelper.parse_schema name
         generator = DocumentedSchemaGenerator.new context
         generator.generate schema

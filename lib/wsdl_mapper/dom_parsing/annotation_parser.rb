@@ -3,7 +3,7 @@ require 'wsdl_mapper/dom_parsing/parser_base'
 module WsdlMapper
   module DomParsing
     class AnnotationParser < ParserBase
-      def parse node
+      def parse(node)
         return Documentation.new(nil) unless node
 
         doc_node = find_node node, DOCUMENTATION
@@ -15,7 +15,7 @@ module WsdlMapper
         doc
       end
 
-      def parse_app_info node
+      def parse_app_info(node)
         app_info_node = find_node node, APPINFO
 
         app_info_node && app_info_node.children.to_s

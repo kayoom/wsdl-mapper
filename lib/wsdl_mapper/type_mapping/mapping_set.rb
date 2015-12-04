@@ -8,16 +8,16 @@ module WsdlMapper
         end
       end
 
-      def << mapping
+      def <<(mapping)
         @list << mapping
         self
       end
 
-      def find type
+      def find(type)
         @cache[type]
       end
 
-      def find! type
+      def find!(type)
         find(type) || raise(ArgumentError.new("Unknown type: #{type}"))
       end
 
@@ -30,7 +30,7 @@ module WsdlMapper
       end
 
       # TODO: test
-      def remove mapping
+      def remove(mapping)
         @list.delete mapping
         @cache.delete_if { |_, m| m == mapping }
       end
@@ -39,24 +39,24 @@ module WsdlMapper
         @default ||= MappingSet.new
       end
 
-      def to_ruby type, value
+      def to_ruby(type, value)
         find!(type).to_ruby value
       end
 
-      def to_xml type, value
+      def to_xml(type, value)
         find!(type).to_xml value
       end
 
-      def ruby_type type
+      def ruby_type(type)
         find!(type).ruby_type
       end
 
-      def requires type
+      def requires(type)
         find!(type).requires
       end
 
       protected
-      def get_mapping type
+      def get_mapping(type)
         @list.find { |m| m.maps? type }
       end
     end

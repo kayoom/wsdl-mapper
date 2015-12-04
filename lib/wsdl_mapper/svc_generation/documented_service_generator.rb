@@ -3,7 +3,7 @@ require 'wsdl_mapper/svc_generation/service_generator'
 module WsdlMapper
   module SvcGeneration
     class DocumentedServiceGenerator < ServiceGenerator
-      def generate_service_port_accessors f, ports
+      def generate_service_port_accessors(f, ports)
         yard = WsdlMapper::Generation::YardDocFormatter.new f
         ports.map do |p|
           attr_name = p.property_name.attr_name

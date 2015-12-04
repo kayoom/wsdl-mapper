@@ -5,7 +5,7 @@ module WsdlMapperTesting
       FileUtils.mkdir_p @path
     end
 
-    def join *args
+    def join(*args)
       File.join @path, *args
     end
 

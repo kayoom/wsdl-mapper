@@ -4,7 +4,7 @@ module WsdlMapper
   module SvcGeneration
     class ServiceGenerator < GeneratorBase
 
-      def generate_service service, result
+      def generate_service(service, result)
         modules = get_module_names service.name
         ports = service.type.each_port.map do |port|
           TypeToGenerate.new port, service_namer.get_port_name(service.type, port), service_namer.get_property_name(port)
@@ -23,7 +23,7 @@ module WsdlMapper
         end
       end
 
-      def generate_service_class f, ports, service
+      def generate_service_class(f, ports, service)
         f.in_sub_class service.name.class_name, service_base.name do
           f.requires *ports.map { |p| p.name.require_path }
           generate_service_port_accessors f, ports
@@ -31,11 +31,11 @@ module WsdlMapper
         end
       end
 
-      def generate_service_port_accessors f, ports
+      def generate_service_port_accessors(f, ports)
         f.attr_readers *ports.map { |p| p.property_name.attr_name }
       end
 
-      def generate_service_ctr f, ports
+      def generate_service_ctr(f, ports)
         f.in_def :initialize, 'api' do
           f.call :super, 'api'
           ports.each do |p|

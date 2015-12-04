@@ -9,16 +9,16 @@ module WsdlMapper
           attr_accessor :binding
         end
 
-        def initialize name
+        def initialize(name)
           super name
           @ports = WsdlMapper::Dom::Directory.new
         end
 
-        def add_port port
+        def add_port(port)
           @ports[port.name] = port
         end
 
-        def each_port &block
+        def each_port(&block)
           @ports.each_value &block
         end
       end

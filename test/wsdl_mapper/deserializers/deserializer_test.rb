@@ -37,7 +37,7 @@ module DeserializersTests
     class MoneyType
       attr_accessor :content, :currency
 
-      def initialize content
+      def initialize(content)
         @content = content
       end
     end

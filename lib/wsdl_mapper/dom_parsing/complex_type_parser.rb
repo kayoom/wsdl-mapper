@@ -9,7 +9,7 @@ module WsdlMapper
   module DomParsing
     class ComplexTypeParser < ParserBase
 
-      def parse node
+      def parse(node)
         name = parse_name_in_attribute 'name', node
 
         type = ComplexType.new name
@@ -21,7 +21,7 @@ module WsdlMapper
         @base.schema.add_type type
       end
 
-      def parse_complex_type_child node, type
+      def parse_complex_type_child(node, type)
         case get_name node
         when SEQUENCE
           parse_complex_type_sequence node, type
@@ -44,7 +44,7 @@ module WsdlMapper
         end
       end
 
-      def parse_complex_type_choice node, type
+      def parse_complex_type_choice(node, type)
         # TODO: test
         each_element node do |child|
           case get_name child
@@ -64,17 +64,17 @@ module WsdlMapper
         end
       end
 
-      def parse_attribute node, type
+      def parse_attribute(node, type)
         @base.parsers[ATTRIBUTE].parse_attribute node, type
       end
 
-      def parse_complex_type_all node, type
+      def parse_complex_type_all(node, type)
         each_element node do |child|
           parse_complex_type_property child, type, -1, ALL
         end
       end
 
-      def parse_simple_content node, type
+      def parse_simple_content(node, type)
         type.simple_content = true
         each_element node do |child|
           case get_name child
@@ -86,7 +86,7 @@ module WsdlMapper
         end
       end
 
-      def parse_complex_content node, type
+      def parse_complex_content(node, type)
         child = first_element node
 
         case get_name child
@@ -100,7 +100,7 @@ module WsdlMapper
         end
       end
 
-      def parse_complex_content_restriction node, type
+      def parse_complex_content_restriction(node, type)
         parse_base node, type
 
         case type.base_type_name
@@ -111,7 +111,7 @@ module WsdlMapper
         end
       end
 
-      def parse_soap_array node, type
+      def parse_soap_array(node, type)
         type.soap_array = true
         each_element node do |child|
           case get_name child
@@ -123,7 +123,7 @@ module WsdlMapper
         end
       end
 
-      def parse_soap_array_attribute node, type
+      def parse_soap_array_attribute(node, type)
         ref = parse_name_in_attribute 'ref', node
 
         if ref != SoapEncodingType['arrayType'].name
@@ -134,7 +134,7 @@ module WsdlMapper
         type.soap_array_type_name = Name.get type_name.ns, type_name.name[0..-3]
       end
 
-      def parse_extension node, type
+      def parse_extension(node, type)
         parse_base node, type
 
         each_element node do |child|
@@ -149,11 +149,11 @@ module WsdlMapper
         end
       end
 
-      def parse_extension_sequence node, type
+      def parse_extension_sequence(node, type)
         parse_complex_type_sequence node, type
       end
 
-      def parse_complex_type_sequence node, type
+      def parse_complex_type_sequence(node, type)
         i = 0
 
         each_element node do |elm|
@@ -164,7 +164,7 @@ module WsdlMapper
         end
       end
 
-      def parse_complex_type_property node, type, i, container
+      def parse_complex_type_property(node, type, i, container)
         name = parse_name_in_attribute 'name', node
         type_name = parse_name_in_attribute 'type', node
         ref = parse_name_in_attribute 'ref', node
@@ -192,7 +192,7 @@ module WsdlMapper
         end
       end
 
-      def parse_property_child child, prop
+      def parse_property_child(child, prop)
         case get_name child
         when ANNOTATION
           parse_annotation child, prop

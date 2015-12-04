@@ -2,7 +2,7 @@ require 'wsdl_mapper_testing/test'
 
 module WsdlMapperTesting
   class ImplementationTest < WsdlMapperTesting::Test
-    def assert_implements abstract, implementation
+    def assert_implements(abstract, implementation)
       impl_methods = implementation.public_methods
 
       abstract.public_methods.each do |method_name|

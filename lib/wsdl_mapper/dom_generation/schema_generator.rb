@@ -26,17 +26,17 @@ module WsdlMapper
 
       attr_reader :class_generator, :module_generator, :ctr_generator, :enum_generator, :type_mapping, :value_defaults_generator, :value_generator, :wrapping_type_generator
 
-      def initialize context,
-          formatter_factory: DefaultFormatter,
-          namer: WsdlMapper::Naming::DefaultNamer.new,
-          class_generator_factory: DefaultClassGenerator,
-          module_generator_factory: DefaultModuleGenerator,
-          ctr_generator_factory: NullCtrGenerator,
-          enum_generator_factory: DefaultEnumGenerator,
-          value_defaults_generator_factory: DefaultValueDefaultsGenerator,
-          wrapping_type_generator_factory: DefaultWrappingTypeGenerator,
-          type_mapping: WsdlMapper::TypeMapping::DEFAULT,
-          value_generator: DefaultValueGenerator.new
+      def initialize(context,
+        formatter_factory: DefaultFormatter,
+        namer: WsdlMapper::Naming::DefaultNamer.new,
+        class_generator_factory: DefaultClassGenerator,
+        module_generator_factory: DefaultModuleGenerator,
+        ctr_generator_factory: NullCtrGenerator,
+        enum_generator_factory: DefaultEnumGenerator,
+        value_defaults_generator_factory: DefaultValueDefaultsGenerator,
+        wrapping_type_generator_factory: DefaultWrappingTypeGenerator,
+        type_mapping: WsdlMapper::TypeMapping::DEFAULT,
+        value_generator: DefaultValueGenerator.new)
 
         @formatter_factory = formatter_factory
         @context = context
@@ -51,7 +51,7 @@ module WsdlMapper
         @value_generator = value_generator
       end
 
-      def generate schema
+      def generate(schema)
         result = Result.new schema: schema
 
         generate_complex_types schema, result
@@ -65,11 +65,11 @@ module WsdlMapper
         result
       end
 
-      def get_formatter io
+      def get_formatter(io)
         @formatter_factory.new io
       end
 
-      def get_ruby_type_name type
+      def get_ruby_type_name(type)
         if WsdlMapper::Dom::BuiltinType.builtin? type.name
           type_mapping.ruby_type type.name
         elsif WsdlMapper::Dom::SoapEncodingType.builtin? type.name
@@ -79,7 +79,7 @@ module WsdlMapper
         end
       end
 
-      def generate_restrictions schema, result
+      def generate_restrictions(schema, result)
         types = schema.each_type.select(&WsdlMapper::Dom::SimpleType).reject(&:enumeration?).to_a
 
         types_to_generate = types.map do |type|
@@ -93,7 +93,7 @@ module WsdlMapper
         end
       end
 
-      def generate_enumerations schema, result
+      def generate_enumerations(schema, result)
         enum_types = schema.each_type.select(&WsdlMapper::Dom::SimpleType).select(&:enumeration?).to_a
 
         types_to_generate = enum_types.map do |type|
@@ -107,7 +107,7 @@ module WsdlMapper
         end
       end
 
-      def generate_complex_types schema, result
+      def generate_complex_types(schema, result)
         complex_types = schema.each_type.select(&WsdlMapper::Dom::ComplexType).to_a
 
         types_to_generate = complex_types.map do |type|

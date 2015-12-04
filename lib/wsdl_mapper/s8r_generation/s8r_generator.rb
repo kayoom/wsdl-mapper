@@ -14,12 +14,12 @@ module WsdlMapper
 
       attr_reader :context
 
-      def initialize context,
-          namer: WsdlMapper::Naming::DefaultNamer.new,
-          formatter_factory: DefaultFormatter,
-          module_generator_factory: DefaultModuleGenerator,
-          type_directory_name_template: 'S8rTypeDirectory',
-          serializer_factory_name_template: 'SerializerFactory'
+      def initialize(context,
+        namer: WsdlMapper::Naming::DefaultNamer.new,
+        formatter_factory: DefaultFormatter,
+        module_generator_factory: DefaultModuleGenerator,
+        type_directory_name_template: 'S8rTypeDirectory',
+        serializer_factory_name_template: 'SerializerFactory')
 
         @context = context
         @namer = namer
@@ -29,7 +29,7 @@ module WsdlMapper
         @serializer_factory_name_template = serializer_factory_name_template
       end
 
-      def generate schema
+      def generate(schema)
         result = Result.new schema: schema
 
         generate_type_directory schema, result
@@ -47,7 +47,7 @@ module WsdlMapper
       end
 
       protected
-      def generate_serializer_factory schema, result
+      def generate_serializer_factory(schema, result)
         @serializer_factory_name = @namer.get_support_name @serializer_factory_name_template
         modules = get_module_names @serializer_factory_name
 
@@ -63,7 +63,7 @@ module WsdlMapper
         end
       end
 
-      def generate_type_directory schema, result
+      def generate_type_directory(schema, result)
         @type_directory_name = @namer.get_support_name @type_directory_name_template
         modules = get_module_names @type_directory_name
 
@@ -83,14 +83,14 @@ module WsdlMapper
         end
       end
 
-      def generate_element_entry f, element, result
+      def generate_element_entry(f, element, result)
         type_name = @namer.get_type_name get_type_name element.type
         type_class_name = type_name.name.inspect
 
         f.call :register_element, type_class_name, generate_name(element.name)
       end
 
-      def generate_type_directory_entry f, type, result
+      def generate_type_directory_entry(f, type, result)
         type_name = @namer.get_type_name get_type_name type
         s8r_name = @namer.get_s8r_name get_type_name type
         type_class_name = type_name.name.inspect
@@ -100,7 +100,7 @@ module WsdlMapper
         f.call :register_type, type_class_name, require_path, s8r_class_name
       end
 
-      def generate_type type, result
+      def generate_type(type, result)
         name = @namer.get_s8r_name get_type_name type
         modules = get_module_names name
 
@@ -118,7 +118,7 @@ module WsdlMapper
         end
       end
 
-      def def_simple_build_method_body f, ttg
+      def def_simple_build_method_body(f, ttg)
         type_name = generate_name ttg.type.name
         f.block "x.simple(#{type_name}, name)", ['x'] do
           root_type = ttg.type.root.name.name
@@ -126,7 +126,7 @@ module WsdlMapper
         end
       end
 
-      def def_complex_build_method_body f, ttg
+      def def_complex_build_method_body(f, ttg)
         f.literal_array 'attributes', collect_attributes(ttg)
         type_name = generate_name ttg.type.name
         f.block "x.complex(#{type_name}, name, attributes)", ['x'] do
@@ -140,13 +140,13 @@ module WsdlMapper
         end
       end
 
-      def write_content_statement f, ttg
+      def write_content_statement(f, ttg)
         content_name = @namer.get_content_name ttg.type
         type = ttg.type.base.name.name
         f.call 'x.text_builtin', "obj.#{content_name.attr_name}", type.inspect
       end
 
-      def write_property_statements f, ttg
+      def write_property_statements(f, ttg)
         ttg.type.each_property do |prop|
           if prop.array?
             write_property_array_statement f, prop
@@ -156,7 +156,7 @@ module WsdlMapper
         end
       end
 
-      def collect_attributes ttg
+      def collect_attributes(ttg)
         if ttg.type.soap_array?
           soap_array_attributes(ttg)
         else
@@ -170,7 +170,7 @@ module WsdlMapper
         end
       end
 
-      def write_soap_array_statements f, ttg
+      def write_soap_array_statements(f, ttg)
         type_name = @namer.get_type_name get_type_name ttg.type
         item_name = generate_name WsdlMapper::Dom::Name.get(ttg.type.name.ns, @namer.get_soap_array_item_name(ttg.type))
         f.block 'obj.each', ['itm'] do
@@ -178,7 +178,7 @@ module WsdlMapper
         end
       end
 
-      def soap_array_attributes ttg
+      def soap_array_attributes(ttg)
         # Use String#inspect to get the proper escaping, but cut off the last quotemark and append the array length
         name = ttg.type.soap_array_type_name.name.inspect[0..-2] + "[\#{obj.length}]\""
         [
@@ -186,7 +186,7 @@ module WsdlMapper
         ]
       end
 
-      def write_property_array_statement f, prop
+      def write_property_array_statement(f, prop)
         name = "obj.#{@namer.get_property_name(prop).attr_name}.each"
         f.block name, ['itm'] do
           case prop.type
@@ -200,7 +200,7 @@ module WsdlMapper
         end
       end
 
-      def write_property_statement f, prop
+      def write_property_statement(f, prop)
         name = "obj.#{@namer.get_property_name(prop).attr_name}"
         case prop.type
         when ::WsdlMapper::Dom::BuiltinType
@@ -212,19 +212,19 @@ module WsdlMapper
         end
       end
 
-      def write_simple_property_statement f, prop, var_name
+      def write_simple_property_statement(f, prop, var_name)
         element_name = generate_name prop.name
         type_name = @namer.get_type_name get_type_name prop.type
         f.statement "x.get(#{type_name.name.inspect}).build(x, #{var_name}, #{element_name})"
       end
 
-      def write_complex_property_statement f, prop, var_name
+      def write_complex_property_statement(f, prop, var_name)
         element_name = generate_name prop.name
         type_name = @namer.get_type_name get_type_name prop.type
         f.statement "x.get(#{type_name.name.inspect}).build(x, #{var_name}, #{element_name})"
       end
 
-      def get_s8r_name prop
+      def get_s8r_name(prop)
         if prop.type.name
           @namer.get_s8r_name prop.type
         else
@@ -232,13 +232,13 @@ module WsdlMapper
         end
       end
 
-      def write_builtin_property_statement f, prop, name
+      def write_builtin_property_statement(f, prop, name)
         type = prop.type_name.name.inspect
         element_name = generate_name prop.name
         f.statement "x.value_builtin(#{element_name}, #{name}, #{type})"
       end
 
-      def def_build_method f, ttg
+      def def_build_method(f, ttg)
         f.in_def 'build', :x, :obj, :name do
           f.statement 'return if obj.nil?'
           case ttg.type

@@ -14,10 +14,10 @@ module WsdlMapper
 
       attr_reader :context
 
-      def initialize context,
-          namer: WsdlMapper::Naming::DefaultNamer.new,
-          formatter_factory: DefaultFormatter,
-          module_generator_factory: DefaultModuleGenerator
+      def initialize(context,
+        namer: WsdlMapper::Naming::DefaultNamer.new,
+        formatter_factory: DefaultFormatter,
+        module_generator_factory: DefaultModuleGenerator)
         @context = context
         @namer = namer
         @formatter_factory = formatter_factory
@@ -27,7 +27,7 @@ module WsdlMapper
         @deserializer_name = @namer.get_global_d10r_name
       end
 
-      def generate schema
+      def generate(schema)
         result = Result.new schema: schema
 
         generate_type_directory schema, result
@@ -46,12 +46,12 @@ module WsdlMapper
         result
       end
 
-      def get_formatter io
+      def get_formatter(io)
         @formatter_factory.new io
       end
 
       protected
-      def generate_deserializer schema, result
+      def generate_deserializer(schema, result)
         modules = @deserializer_name.parents.reverse.map &:module_name
 
         type_file_for @deserializer_name, result do |f|
@@ -63,7 +63,7 @@ module WsdlMapper
         end
       end
 
-      def generate_element_directory schema, result
+      def generate_element_directory(schema, result)
         modules = get_module_names @element_directory_name
 
         type_file_for @element_directory_name, result do |f|
@@ -77,7 +77,7 @@ module WsdlMapper
         end
       end
 
-      def register_elements f, schema, result
+      def register_elements(f, schema, result)
         schema.each_element do |element|
           register_element f, element, result
         end
@@ -86,7 +86,7 @@ module WsdlMapper
       # @param [WsdlMapper::Generation::AbstractFormatter] f
       # @param [WsdlMapper::Dom::Element] element
       # @param [WsdlMapper::Generation::Result] result
-      def register_element f, element, result
+      def register_element(f, element, result)
         element_name = generate_name element.name
         type_name = generate_name get_type_name(element.type).name
         d10r_name = @namer.get_d10r_name(element.type.name ? element.type : @namer.get_inline_type(element))
@@ -95,7 +95,7 @@ module WsdlMapper
         f.statement "register_element #{element_name}, #{type_name}, #{require_path}, #{d10r_name.name.inspect}"
       end
 
-      def generate_type_directory schema, result
+      def generate_type_directory(schema, result)
         modules = get_module_names @type_directory_name
 
         type_file_for @type_directory_name, result do |f|
@@ -106,14 +106,14 @@ module WsdlMapper
         end
       end
 
-      def generate_type type, result
+      def generate_type(type, result)
         case type
         when WsdlMapper::Dom::ComplexType
           generate_complex type, result
         end
       end
 
-      def generate_complex type, result
+      def generate_complex(type, result)
         type_name = @namer.get_type_name get_type_name type
         name = @namer.get_d10r_name get_type_name type
         modules = get_module_names name
@@ -134,7 +134,7 @@ module WsdlMapper
         end
       end
 
-      def collect_property_requires properties
+      def collect_property_requires(properties)
         properties.map do |prop|
           type = get_type_name(prop.type)
           next if WsdlMapper::Dom::BuiltinType.builtin?(type.name) || type.is_a?(WsdlMapper::Dom::SimpleType)
@@ -142,11 +142,11 @@ module WsdlMapper
         end.compact
       end
 
-      def register_soap_array f, name, type, type_name
+      def register_soap_array(f, name, type, type_name)
         f.assignment name.class_name, "#{@type_directory_name.name}.register_soap_array(#{generate_name(type.name)}, #{type_name.name}, #{generate_name(type.soap_array_type_name)})"
       end
 
-      def register_complex_type f, name, type, type_name
+      def register_complex_type(f, name, type, type_name)
         simple = ", simple: #{generate_name(type.root.name)}" if type.simple_content?
 
         type_or_inline = get_type_name(type).name
@@ -156,11 +156,11 @@ module WsdlMapper
         end
       end
 
-      def has_base? type
+      def has_base?(type)
         WsdlMapper::Dom::ComplexType === type && type.base && WsdlMapper::Dom::ComplexType === type.base
       end
 
-      def register_attributes f, containing_type
+      def register_attributes(f, containing_type)
         if has_base? containing_type
           register_attributes f, containing_type.base
         end
@@ -172,7 +172,7 @@ module WsdlMapper
         end
       end
 
-      def register_properties f, containing_type
+      def register_properties(f, containing_type)
         if has_base? containing_type
           register_properties f, containing_type.base
         end

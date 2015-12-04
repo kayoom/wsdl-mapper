@@ -21,11 +21,11 @@ module WsdlMapper
           gDay
         ]
 
-        def to_ruby string
+        def to_ruby(string)
           WsdlMapper::CoreExt::TimeDuration.new days: string.to_s.to_i
         end
 
-        def to_xml object
+        def to_xml(object)
           "%02d" % object.days
         end
       end
@@ -35,11 +35,11 @@ module WsdlMapper
           gMonth
         ]
 
-        def to_ruby string
+        def to_ruby(string)
           WsdlMapper::CoreExt::TimeDuration.new months: string.to_s.to_i
         end
 
-        def to_xml object
+        def to_xml(object)
           "%02d" % object.months
         end
       end
@@ -49,11 +49,11 @@ module WsdlMapper
           gYear
         ]
 
-        def to_ruby string
+        def to_ruby(string)
           WsdlMapper::CoreExt::TimeDuration.new years: string.to_s.to_i
         end
 
-        def to_xml object
+        def to_xml(object)
           "%04d" % object.years
         end
       end
@@ -63,12 +63,12 @@ module WsdlMapper
           gYearMonth
         ]
 
-        def to_ruby string
+        def to_ruby(string)
           years, months = string.split '-'
           WsdlMapper::CoreExt::TimeDuration.new years: years.to_i, months: months.to_i
         end
 
-        def to_xml object
+        def to_xml(object)
           "%04d-%02d" % [object.years, object.months]
         end
       end
@@ -78,12 +78,12 @@ module WsdlMapper
           gMonthDay
         ]
 
-        def to_ruby string
+        def to_ruby(string)
           months, days = string.split '-'
           WsdlMapper::CoreExt::TimeDuration.new months: months.to_i, days: days.to_i
         end
 
-        def to_xml object
+        def to_xml(object)
           "%02d-%02d" % [object.months, object.days]
         end
       end

@@ -8,11 +8,11 @@ module WsdlMapper
         date
       ]
 
-      def to_ruby string
+      def to_ruby(string)
         ::DateTime.parse string.to_s
       end
 
-      def to_xml object
+      def to_xml(object)
         object.strftime "%F%:z"
       end
 

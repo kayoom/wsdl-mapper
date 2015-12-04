@@ -6,7 +6,7 @@ module WsdlMapper
       attr_reader :name
       attr_accessor :type_name, :type, :documentation
 
-      def initialize name
+      def initialize(name)
         @name = name
         @documentation = Documentation.new
       end

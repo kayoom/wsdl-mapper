@@ -1,11 +1,11 @@
 module WsdlMapper
   module DomGeneration
     class DefaultValueDefaultsGenerator
-      def initialize generator
+      def initialize(generator)
         @generator = generator
       end
 
-      def generate_for_attribute attribute
+      def generate_for_attribute(attribute)
         if attribute.default?
           xml_val = attribute.default
           return @generator.value_generator.generate_nil unless xml_val
@@ -22,7 +22,7 @@ module WsdlMapper
         end
       end
 
-      def generate_for_property property
+      def generate_for_property(property)
         if property.default? && !property.array?
           xml_val = property.default
           return @generator.value_generator.generate_nil unless xml_val
@@ -43,7 +43,7 @@ module WsdlMapper
       end
 
       protected
-      def builtin? type
+      def builtin?(type)
         type.name.ns == WsdlMapper::Dom::BuiltinType::NAMESPACE
       end
     end

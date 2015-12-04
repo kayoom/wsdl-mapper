@@ -9,15 +9,15 @@ module WsdlMapper
       include Xsd
 
       protected
-      def parse_base node, type
+      def parse_base(node, type)
         type.base_type_name = parse_name_in_attribute 'base', node
       end
 
-      def parse_annotation node, type
+      def parse_annotation(node, type)
         type.documentation = @base.parsers[ANNOTATION].parse node
       end
 
-      def parse_bounds node, container
+      def parse_bounds(node, container)
         bounds = DEFAULT_BOUNDS[container].dup
 
         if bounds.nil?

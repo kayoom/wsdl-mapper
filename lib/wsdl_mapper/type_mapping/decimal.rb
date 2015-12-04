@@ -10,11 +10,11 @@ module WsdlMapper
         decimal
       ]
 
-      def to_ruby string
+      def to_ruby(string)
         BigDecimal.new string.to_s
       end
 
-      def to_xml object
+      def to_xml(object)
         object.to_s 'F'
       end
 

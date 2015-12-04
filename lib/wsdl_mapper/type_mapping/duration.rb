@@ -10,7 +10,7 @@ module WsdlMapper
         duration
       ]
 
-      def to_ruby string
+      def to_ruby(string)
         duration = WsdlMapper::CoreExt::TimeDuration.new
         value = ""
         negative = false
@@ -51,7 +51,7 @@ module WsdlMapper
         duration
       end
 
-      def to_xml object
+      def to_xml(object)
         buf = ""
 
         add_period buf, object
@@ -69,12 +69,12 @@ module WsdlMapper
         ['wsdl_mapper/core_ext/time_duration']
       end
 
-      def add_period buf, d
+      def add_period(buf, d)
         buf << "-" if d.negative?
         buf << "P"
       end
 
-      def add_date buf, d
+      def add_date(buf, d)
         if d.years > 0
           buf << d.years.to_s
           buf << "Y"
@@ -91,7 +91,7 @@ module WsdlMapper
         end
       end
 
-      def add_time buf, d
+      def add_time(buf, d)
         return unless [d.hours, d.minutes, d.seconds].any? { |t| t > 0 }
         buf << "T"
 

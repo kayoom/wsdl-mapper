@@ -5,7 +5,7 @@ module WsdlMapper
     class Api
       include SimplerInspect
 
-      def initialize options = {}
+      def initialize(options = {})
         @_options = options
         @_services = []
       end

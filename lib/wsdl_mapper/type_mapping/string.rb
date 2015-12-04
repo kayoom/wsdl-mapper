@@ -22,11 +22,11 @@ module WsdlMapper
       ]
 
       # TODO: non UTF-8 encodings
-      def to_ruby string
+      def to_ruby(string)
         string.to_s
       end
 
-      def to_xml object
+      def to_xml(object)
         object.to_s
       end
 

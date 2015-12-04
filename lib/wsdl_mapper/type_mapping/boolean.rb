@@ -10,7 +10,7 @@ module WsdlMapper
         boolean
       ]
 
-      def to_ruby string
+      def to_ruby(string)
         case string.to_s
         when "true", "1"
           true
@@ -19,7 +19,7 @@ module WsdlMapper
         end
       end
 
-      def to_xml object
+      def to_xml(object)
         object ? "true" : "false"
       end
 

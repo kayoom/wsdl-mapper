@@ -3,12 +3,12 @@ require 'wsdl_mapper/generation/base'
 module WsdlMapper
   module Generation
     class DefaultModuleGenerator < Base
-      def initialize generator
+      def initialize(generator)
         @generator = generator
         @context = generator.context
       end
 
-      def generate module_node, result
+      def generate(module_node, result)
         return self if module_node.leaf?
 
         file_for module_node.type_name, result do |f|
@@ -24,7 +24,7 @@ module WsdlMapper
       end
 
       protected
-      def get_formatter io
+      def get_formatter(io)
         @generator.get_formatter io
       end
     end

@@ -3,11 +3,11 @@ require 'wsdl_mapper/dom/builtin_type'
 module WsdlMapper
   module DomGeneration
     class DefaultCtrGenerator
-      def initialize generator
+      def initialize(generator)
         @generator = generator
       end
 
-      def generate ttg, f, result
+      def generate(ttg, f, result)
         props = ttg.type.each_property.to_a
         attrs = ttg.type.each_attribute.to_a
 
@@ -22,7 +22,7 @@ module WsdlMapper
         end
       end
 
-      def generate_simple ttg, f, result
+      def generate_simple(ttg, f, result)
         attrs = ttg.type.each_attribute
         content_name = @generator.namer.get_content_name ttg.type
 
@@ -32,38 +32,38 @@ module WsdlMapper
         end
       end
 
-      def generate_wrapping ttg, f, result, var_name, par_name
+      def generate_wrapping(ttg, f, result, var_name, par_name)
         f.in_def 'initialize', par_name do
           f.assignment var_name, par_name
         end
       end
 
       protected
-      def get_base_attrs type
+      def get_base_attrs(type)
         return [] unless type.base
         type.base.each_attribute.to_a + get_base_attrs(type.base)
       end
 
-      def get_base_props type
+      def get_base_props(type)
         return [] unless type.base
         type.base.each_property.to_a + get_base_props(type.base)
       end
 
-      def get_prop_kw_assigns props
+      def get_prop_kw_assigns(props)
         props.map do |p|
           name = @generator.namer.get_property_name p
           "#{name.attr_name}: #{name.attr_name}"
         end
       end
 
-      def get_attr_kw_assigns attrs
+      def get_attr_kw_assigns(attrs)
         attrs.map do |a|
           name = @generator.namer.get_attribute_name a
           "#{name.attr_name}: #{name.attr_name}"
         end
       end
 
-      def get_prop_kw_args props
+      def get_prop_kw_args(props)
         props.map do |p|
           name = @generator.namer.get_property_name p
           default = @generator.value_defaults_generator.generate_for_property p
@@ -71,7 +71,7 @@ module WsdlMapper
         end
       end
 
-      def get_attr_kw_args attrs
+      def get_attr_kw_args(attrs)
         attrs.map do |a|
           name = @generator.namer.get_attribute_name a
           default = @generator.value_defaults_generator.generate_for_attribute a
@@ -79,14 +79,14 @@ module WsdlMapper
         end
       end
 
-      def get_prop_assigns props
+      def get_prop_assigns(props)
         props.map do |p|
           name = @generator.namer.get_property_name p
           [name.var_name, name.attr_name]
         end
       end
 
-      def get_attr_assigns attrs
+      def get_attr_assigns(attrs)
         attrs.map do |a|
           name = @generator.namer.get_attribute_name a
           [name.var_name, name.attr_name]

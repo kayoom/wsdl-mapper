@@ -4,7 +4,7 @@ require 'wsdl_mapper/dom/soap_encoding_type'
 module WsdlMapper
   module DomParsing
     class ImportParser < ParserBase
-      def parse node
+      def parse(node)
         # TODO: namespace attribute is optional
         case node.attributes['namespace'].value
         when SoapEncodingType::NAMESPACE, BuiltinType::NAMESPACE
@@ -14,7 +14,7 @@ module WsdlMapper
         end
       end
 
-      def import_schema node
+      def import_schema(node)
         ns = fetch_attribute_value 'namespace', node
         location = fetch_attribute_value 'schemaLocation', node
 

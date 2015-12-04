@@ -10,7 +10,7 @@ module DomGenerationTests
     class DocumentedEnumGeneratorTest < GenerationTest
       include WsdlMapper::DomGeneration
 
-      def generate name
+      def generate(name)
         schema = TestHelper.parse_schema name
         generator = SchemaGenerator.new context, enum_generator_factory: DocumentedEnumGenerator
         generator.generate schema

@@ -7,7 +7,7 @@ require 'open-uri'
 module WsdlMapper
   module DomParsing
     class UrlResolver < AbstractResolver
-      def resolve url
+      def resolve(url)
         uri = URI.parse url
         Nokogiri::XML::Document.parse uri.read
       end

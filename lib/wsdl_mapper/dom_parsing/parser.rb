@@ -24,17 +24,17 @@ module WsdlMapper
       attr_reader :schema, :parsers, :namespaces, :target_namespace, :default_namespace, :log_msgs, :import_resolver
 
       # @param [WsdlMapper::DomParsing::AbstractResolver] import_resolver
-      def initialize import_resolver: nil
+      def initialize(import_resolver: nil)
         @base = self
         @schema = WsdlMapper::Dom::Schema.new
 
         @parsers = {
-          COMPLEX_TYPE  => ComplexTypeParser.new(self),
-          ANNOTATION    => AnnotationParser.new(self),
-          SIMPLE_TYPE   => SimpleTypeParser.new(self),
-          IMPORT        => ImportParser.new(self),
-          ELEMENT       => ElementParser.new(self),
-          ATTRIBUTE     => AttributeParser.new(self)
+          COMPLEX_TYPE => ComplexTypeParser.new(self),
+          ANNOTATION => AnnotationParser.new(self),
+          SIMPLE_TYPE => SimpleTypeParser.new(self),
+          IMPORT => ImportParser.new(self),
+          ELEMENT => ElementParser.new(self),
+          ATTRIBUTE => AttributeParser.new(self)
         }
 
         @import_resolver = import_resolver
@@ -46,7 +46,7 @@ module WsdlMapper
 
       # @param [Nokogiri::XML::Document] doc
       # @return [WsdlMapper::Dom::Schema]
-      def parse doc, parse_only: false
+      def parse(doc, parse_only: false)
         # Phase 1: Parsing
         parse_doc doc
 
@@ -76,7 +76,7 @@ module WsdlMapper
       end
 
       # @param [Nokogiri::XML::Document] doc
-      def parse_doc doc
+      def parse_doc(doc)
         parse_namespaces doc
         schema_node = get_schema_node doc
         parse_attributes schema_node
@@ -86,14 +86,14 @@ module WsdlMapper
       end
 
       # @param [Nokogiri::XML::Node] schema_node
-      def parse_attributes schema_node
+      def parse_attributes(schema_node)
         @schema.target_namespace = parse_target_namespace schema_node
         parse_element_form_default schema_node
         parse_attribute_form_default schema_node
       end
 
       # @param [Nokogiri::XML::Node] node
-      def parse_attribute_form_default node
+      def parse_attribute_form_default(node)
         attr = node.attributes[ATTRIBUTE_FORM_DEFAULT]
         if attr && attr.value == 'qualified'
           @schema.qualified_attributes = true
@@ -101,7 +101,7 @@ module WsdlMapper
       end
 
       # @param [Nokogiri::XML::Node] node
-      def parse_element_form_default node
+      def parse_element_form_default(node)
         attr = node.attributes[ELEMENT_FORM_DEFAULT]
         if attr && attr.value == 'qualified'
           @schema.qualified_elements = true
@@ -109,7 +109,7 @@ module WsdlMapper
       end
 
       # @param [Nokogiri::XML::Document] doc
-      def get_schema_node doc
+      def get_schema_node(doc)
         return doc if is_element?(doc) && get_name(doc) == SCHEMA
         schema_node = first_element doc
 
@@ -124,7 +124,7 @@ module WsdlMapper
         schema_node
       end
 
-      def get_namespace prefix
+      def get_namespace(prefix)
 
       end
     end

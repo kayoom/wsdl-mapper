@@ -5,7 +5,7 @@ module WsdlMapper
     class Linker
       include WsdlMapper::Parsing::Logging
 
-      def initialize schema
+      def initialize(schema)
         @schema = schema
         @log_msgs = []
       end

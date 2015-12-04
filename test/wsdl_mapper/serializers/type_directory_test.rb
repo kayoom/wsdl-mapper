@@ -20,7 +20,8 @@ module SerializersTests
       type_directory.register_serializer NoteTypeSerializer.name, NoteTypeSerializer.new
       type_directory.register_element NoteType.name, [nil, 'note']
 
-      def type_directory.require path;end
+      def type_directory.require(path);
+      end
 
       assert_kind_of NoteTypeSerializer, type_directory.resolve(NoteType.name)
       assert_kind_of NoteTypeSerializer, type_directory.find(NoteType.new)

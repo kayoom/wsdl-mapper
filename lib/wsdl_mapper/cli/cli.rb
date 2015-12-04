@@ -15,7 +15,7 @@ module WsdlMapper
       class_option :docs, type: :boolean, default: true, desc: 'Set to <true> to generate yardoc annotations and (if present in xsd) doc strings for generated classes and attributes.'
 
       no_tasks do
-        def facade_options xsd_file, ext
+        def facade_options(xsd_file, ext)
           {
             file: xsd_file,
             out: out(xsd_file, ext),
@@ -29,38 +29,38 @@ module WsdlMapper
           options[:module] ? options[:module].split('::').compact : []
         end
 
-        def out xsd_file, ext
+        def out(xsd_file, ext)
           options[:out] || File.join(FileUtils.pwd, file_name(xsd_file, ext))
         end
 
-        def file_name xsd_file, ext
+        def file_name(xsd_file, ext)
           File.basename xsd_file, ext
         end
       end
 
       desc 'dom <xsd_file>', 'Generates classes for the schema in <xsd_file>'
-      def dom xsd_file
+      def dom(xsd_file)
         generator = WsdlMapper::DomGeneration::Facade.new **facade_options(xsd_file, '.xsd')
         FileUtils.rmtree out(xsd_file, '.xsd') if options[:clear]
         generator.generate
       end
 
       desc 's8r <xsd_file>', 'Generate serializers for the schema in <xsd_file>'
-      def s8r xsd_file
+      def s8r(xsd_file)
         generator = WsdlMapper::S8rGeneration::Facade.new **facade_options(xsd_file, '.xsd')
         FileUtils.rmtree out(xsd_file, '.xsd') if options[:clear]
         generator.generate
       end
 
       desc 'd10r <xsd_file>', 'Generate deserializers for the schema in <xsd_file>'
-      def d10r xsd_file
+      def d10r(xsd_file)
         generator = WsdlMapper::D10rGeneration::Facade.new **facade_options(xsd_file, '.xsd')
         FileUtils.rmtree out(xsd_file, '.xsd') if options[:clear]
         generator.generate
       end
 
       desc 'all <xsd_file>', 'Generate DOM, Serializers, Deserializers for the schema in <xsd_file>'
-      def all xsd_file
+      def all(xsd_file)
         file_name = File.basename xsd_file, '.xsd'
         out = options[:out] || File.join(FileUtils.pwd, file_name)
         FileUtils.rmtree out if options[:clear]
@@ -71,7 +71,7 @@ module WsdlMapper
       end
 
       desc 'svc <wsdl_file>', 'Generate SOAP client'
-      def svc wsdl_file
+      def svc(wsdl_file)
         generator = WsdlMapper::SvcGeneration::Facade.new **facade_options(wsdl_file, '.wsdl')
         FileUtils.rmtree out(wsdl_file, '.wsdl') if options[:clear]
         generator.generate

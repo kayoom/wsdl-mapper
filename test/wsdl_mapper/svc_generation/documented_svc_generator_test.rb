@@ -9,7 +9,7 @@ module SvcDescParsingTests
 
     NS = 'http://example.org/schema'
 
-    def generate name
+    def generate(name)
       @desc = TestHelper.parse_wsdl name
       generator = DocumentedSvcGenerator.new context
       generator.generate @desc

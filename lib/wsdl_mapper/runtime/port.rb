@@ -5,7 +5,7 @@ module WsdlMapper
     class Port
       include SimplerInspect
 
-      def initialize api, service
+      def initialize(api, service)
         @_api = api
         @_service = service
         @_operations = []

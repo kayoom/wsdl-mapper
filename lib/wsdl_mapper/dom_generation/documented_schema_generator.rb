@@ -8,22 +8,22 @@ module WsdlMapper
   module DomGeneration
     class DocumentedSchemaGenerator < SchemaGenerator
 
-      def initialize context,
-          formatter_factory: DefaultFormatter,
-          namer: WsdlMapper::Naming::DefaultNamer.new,
-          class_generator_factory: DocumentedClassGenerator,
-          module_generator_factory: DefaultModuleGenerator,
-          ctr_generator_factory: DocumentedCtrGenerator,
-          enum_generator_factory: DocumentedEnumGenerator,
-          value_defaults_generator_factory: DefaultValueDefaultsGenerator,
-          wrapping_type_generator_factory: DocumentedWrappingTypeGenerator,
-          type_mapping: WsdlMapper::TypeMapping::DEFAULT,
-          value_generator: DefaultValueGenerator.new
+      def initialize(context,
+        formatter_factory: DefaultFormatter,
+        namer: WsdlMapper::Naming::DefaultNamer.new,
+        class_generator_factory: DocumentedClassGenerator,
+        module_generator_factory: DefaultModuleGenerator,
+        ctr_generator_factory: DocumentedCtrGenerator,
+        enum_generator_factory: DocumentedEnumGenerator,
+        value_defaults_generator_factory: DefaultValueDefaultsGenerator,
+        wrapping_type_generator_factory: DocumentedWrappingTypeGenerator,
+        type_mapping: WsdlMapper::TypeMapping::DEFAULT,
+        value_generator: DefaultValueGenerator.new)
 
         super
       end
 
-      def generate schema
+      def generate(schema)
         result = super
 
         generate_yard_opts

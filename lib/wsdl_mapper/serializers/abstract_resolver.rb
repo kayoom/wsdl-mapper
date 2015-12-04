@@ -2,7 +2,7 @@ module WsdlMapper
   module Serializers
     # @abstract
     class AbstractResolver
-      def resolve name
+      def resolve(name)
         raise NotImplementedError
       end
     end

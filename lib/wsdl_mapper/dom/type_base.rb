@@ -6,7 +6,7 @@ module WsdlMapper
       attr_reader :name
       attr_accessor :documentation
 
-      def initialize name
+      def initialize(name)
         @name = name
         @documentation = Documentation.new
       end
@@ -15,11 +15,11 @@ module WsdlMapper
         name ? [self.class, name].hash : super
       end
 
-      def == other
+      def ==(other)
         eql? other
       end
 
-      def eql? other
+      def eql?(other)
         name ? (self.class == other.class && name == other.name) : super
       end
 

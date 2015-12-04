@@ -23,11 +23,11 @@ module WsdlMapper
         @unresolved_imports = []
       end
 
-      def add_import ns, schema
+      def add_import(ns, schema)
         @imports << schema
       end
 
-      def add_type type
+      def add_type(type)
         if type.name
           @types[type.name] = type
         else
@@ -36,15 +36,15 @@ module WsdlMapper
         type
       end
 
-      def add_element element
+      def add_element(element)
         @elements[element.name] = element
       end
 
-      def add_attribute attr
+      def add_attribute(attr)
         @attributes[attr.name] = attr
       end
 
-      def get_type name
+      def get_type(name)
         return if name.nil?
 
         if name.ns == BuiltinType::NAMESPACE
@@ -58,15 +58,15 @@ module WsdlMapper
         end
       end
 
-      def get_element name
+      def get_element(name)
         @elements[name] || @imports.lazy.map { |s| s.get_element(name) }.reject(&:nil?).first
       end
 
-      def get_attribute name
+      def get_attribute(name)
         @attributes[name] || @imports.lazy.map { |s| s.get_attribute(name) }.reject(&:nil?).first
       end
 
-      def each_type &block
+      def each_type(&block)
         enum = Enumerator.new do |y|
           @types.each do |(n, t)|
             y << t
@@ -84,24 +84,24 @@ module WsdlMapper
         block_given? ? enum.each(&block) : enum
       end
 
-      def each_element &block
+      def each_element(&block)
         recursive_each @elements, :each_element, &block
       end
 
-      def each_attribute &block
+      def each_attribute(&block)
         recursive_each @attributes, :each_attribute, &block
       end
 
-      def each_builtin_type &block
+      def each_builtin_type(&block)
         @builtin_types.values.each &block
       end
 
-      def each_soap_encoding_type &block
+      def each_soap_encoding_type(&block)
         @soap_encoding_types.values.each &block
       end
 
       protected
-      def recursive_each array, accessor, &block
+      def recursive_each(array, accessor, &block)
         enum = Enumerator.new do |y|
           array.each do |(n, t)|
             y << t

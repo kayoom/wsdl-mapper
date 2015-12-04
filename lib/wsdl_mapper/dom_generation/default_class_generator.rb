@@ -4,7 +4,7 @@ require 'wsdl_mapper/dom/builtin_type'
 module WsdlMapper
   module DomGeneration
     class DefaultClassGenerator < GeneratorBase
-      def generate ttg, result
+      def generate(ttg, result)
         modules = get_module_names ttg.name
 
         type_file_for ttg.name, result do |f|
@@ -22,19 +22,19 @@ module WsdlMapper
       end
 
       protected
-      def generate_content_attribute f, ttg
+      def generate_content_attribute(f, ttg)
         name = @generator.namer.get_content_name(ttg.type)
         f.attr_accessors name.attr_name
       end
 
-      def generate_attribute_attributes f, attributes
+      def generate_attribute_attributes(f, attributes)
         return unless attributes.any?
         attribute_names = attributes.map { |a| @generator.namer.get_attribute_name a }
 
         f.attr_accessors *attribute_names.map(&:attr_name)
       end
 
-      def generate_property_attributes f, properties
+      def generate_property_attributes(f, properties)
         return unless properties.any?
         property_names = properties.map { |p| @generator.namer.get_property_name p }
 
@@ -42,7 +42,7 @@ module WsdlMapper
         f.attr_accessors *property_names.map(&:attr_name)
       end
 
-      def generate_ctr f, ttg, result
+      def generate_ctr(f, ttg, result)
         if ttg.type.simple_content?
           @generator.ctr_generator.generate_simple ttg, f, result
         else
@@ -50,7 +50,7 @@ module WsdlMapper
         end
       end
 
-      def get_requires type, schema
+      def get_requires(type, schema)
         requires = []
         add_base_require requires, type, schema
         type.each_property do |prop|
@@ -60,7 +60,7 @@ module WsdlMapper
         requires.uniq
       end
 
-      def in_class f, ttg, &block
+      def in_class(f, ttg, &block)
         if base_name = get_base_name(ttg.type)
           f.in_sub_class ttg.name.class_name, base_name, &block
         else
@@ -68,7 +68,7 @@ module WsdlMapper
         end
       end
 
-      def get_base_name type
+      def get_base_name(type)
         type.base &&
           !type.simple_content? &&
           @generator.get_ruby_type_name(type.base)

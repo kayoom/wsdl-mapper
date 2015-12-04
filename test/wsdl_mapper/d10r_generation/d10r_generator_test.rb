@@ -6,7 +6,7 @@ require 'wsdl_mapper/d10r_generation/d10r_generator'
 
 module D10rGenerationTests
   class D10rGeneratorTests < GenerationTest
-    def generate name
+    def generate(name)
       schema = get_schema name
       generator = WsdlMapper::D10rGeneration::D10rGenerator.new context
       generator.generate schema

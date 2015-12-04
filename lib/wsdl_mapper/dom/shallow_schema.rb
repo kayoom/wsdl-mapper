@@ -11,23 +11,23 @@ module WsdlMapper
         end
       end
 
-      def [] name
+      def [](name)
         n = name.is_a?(WsdlMapper::Dom::Name) ? name.name : name
         types[name]
       end
 
-      def build name
+      def build(name)
         n = name.is_a?(WsdlMapper::Dom::Name) ? name : Name.get(namespace, name)
         new n
       end
 
       include Enumerable
 
-      def each &block
+      def each(&block)
         types.values.each &block
       end
 
-      def builtin? name
+      def builtin?(name)
         return name.ns == namespace
       end
     end

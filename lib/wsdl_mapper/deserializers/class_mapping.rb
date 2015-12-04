@@ -14,7 +14,7 @@ module WsdlMapper
       include ::WsdlMapper::Dom
       attr_reader :attributes, :properties
 
-      def initialize cls, simple: false, &block
+      def initialize(cls, simple: false, &block)
         @cls = cls
         @attributes = Directory.new on_nil: Errors::UnknownAttributeError
         @properties = Directory.new on_nil: Errors::UnknownElementError
@@ -23,34 +23,34 @@ module WsdlMapper
         instance_exec &block
       end
 
-      def register_attr accessor, attr_name, type_name
+      def register_attr(accessor, attr_name, type_name)
         attr_name = Name.get *attr_name
         @attributes[attr_name] = AttrMapping.new(accessor, attr_name, Name.get(*type_name))
       end
 
-      def register_prop accessor, prop_name, type_name, array: false
+      def register_prop(accessor, prop_name, type_name, array: false)
         prop_name = Name.get *prop_name
         @properties[prop_name] = PropMapping.new(accessor, prop_name, Name.get(*type_name), array: array)
       end
 
-      def register_delegate accessor, type_name
+      def register_delegate(accessor, type_name)
         @delegate = Delegate.new accessor, Name.get(*type_name)
       end
 
-      def register_wrapper name
+      def register_wrapper(name)
         name = Name.get *name
         @wrappers[name] = true
       end
 
-      def wrapper? name
+      def wrapper?(name)
         @wrappers[name]
       end
 
-      def start base, frame
+      def start(base, frame)
         # frame.object = @simple ? @cls.new(nil) : @cls.new
       end
 
-      def end base, frame
+      def end(base, frame)
         frame.object = build_object base, frame
 
         if @delegate
@@ -65,7 +65,7 @@ module WsdlMapper
         end
       end
 
-      def build_object base, frame
+      def build_object(base, frame)
         if @simple
           type_name = WsdlMapper::Dom::Name.get *@simple
           content = base.to_ruby type_name, frame.text
@@ -75,11 +75,11 @@ module WsdlMapper
         end
       end
 
-      def get_type_name_for_prop prop_name
+      def get_type_name_for_prop(prop_name)
         @properties[prop_name].type_name
       end
 
-      def set_properties base, frame, object
+      def set_properties(base, frame, object)
         frame.children.each do |child|
           name = child.name
           prop_mapping = properties[name]
@@ -93,7 +93,7 @@ module WsdlMapper
         end
       end
 
-      def set_attributes base, frame, object
+      def set_attributes(base, frame, object)
         frame.attrs.each do |(name, value)|
           attr_mapping = attributes[name]
           ruby_value = base.to_ruby attr_mapping.type_name, value

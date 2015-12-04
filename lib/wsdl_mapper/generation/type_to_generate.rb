@@ -3,7 +3,7 @@ module WsdlMapper
     class TypeToGenerate
       attr_reader :type, :name
 
-      def initialize type, type_name
+      def initialize(type, type_name)
         @type = type
         @name = type_name
       end

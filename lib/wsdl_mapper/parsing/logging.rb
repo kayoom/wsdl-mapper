@@ -3,7 +3,7 @@ module WsdlMapper
     module Logging
 
       class LogMsg
-        def initialize node, source, msg = ''
+        def initialize(node, source, msg = '')
           @node = node
           @source = source
           @node_name = node && node.name
@@ -19,7 +19,7 @@ module WsdlMapper
 
       # @param [Nokogiri::XML::Node] node
       # @param [String, Symbol] msg
-      def log_msg node, msg = '', source = self
+      def log_msg(node, msg = '', source = self)
         @log_msgs ||= []
         @log_msgs << LogMsg.new(node, source, msg)
       end

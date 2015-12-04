@@ -5,7 +5,7 @@ module WsdlMapper
   module DomParsing
     class SimpleTypeParser < ParserBase
 
-      def parse node
+      def parse(node)
         name = parse_name_in_attribute 'name', node
 
         type = SimpleType.new name
@@ -18,7 +18,7 @@ module WsdlMapper
       end
 
       protected
-      def parse_simple_type_child node, type
+      def parse_simple_type_child(node, type)
         case get_name node
         when RESTRICTION
           parse_simple_type_restriction node, type
@@ -29,7 +29,7 @@ module WsdlMapper
         end
       end
 
-      def parse_simple_type_restriction node, type
+      def parse_simple_type_restriction(node, type)
         # TODO: test
         parse_base node, type
 
@@ -57,29 +57,29 @@ module WsdlMapper
         end
       end
 
-      def parse_simple_type_fraction_digits node, type
+      def parse_simple_type_fraction_digits(node, type)
         type.fraction_digits = fetch_attribute_value 'value', node
       end
 
-      def parse_simple_type_total_digits node, type
+      def parse_simple_type_total_digits(node, type)
         type.total_digits = fetch_attribute_value 'value', node
       end
 
-      def parse_simple_type_pattern node, type
+      def parse_simple_type_pattern(node, type)
         type.pattern = fetch_attribute_value 'value', node
       end
 
-      def parse_simple_type_min node, type, inclusive
+      def parse_simple_type_min(node, type, inclusive)
         type.min = fetch_attribute_value 'value', node
         type.min_inclusive = inclusive
       end
 
-      def parse_simple_type_max node, type, inclusive
+      def parse_simple_type_max(node, type, inclusive)
         type.max = fetch_attribute_value 'value', node
         type.max_inclusive = inclusive
       end
 
-      def parse_simple_type_enumeration node, type
+      def parse_simple_type_enumeration(node, type)
         value = node.attributes['value'].value
 
         enum_value = EnumerationValue.new value

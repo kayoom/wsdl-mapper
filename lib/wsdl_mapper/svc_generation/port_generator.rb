@@ -3,7 +3,7 @@ require 'wsdl_mapper/svc_generation/generator_base'
 module WsdlMapper
   module SvcGeneration
     class PortGenerator < GeneratorBase
-      def generate_port service, port, result
+      def generate_port(service, port, result)
         modules = get_module_names service.name
         ops = port.type.binding.each_operation.map do |op|
           TypeToGenerate.new op, service_namer.get_operation_name(service.type, port.type, op), service_namer.get_property_name(op)
@@ -24,7 +24,7 @@ module WsdlMapper
         end
       end
 
-      def generate_port_class f, ops, port
+      def generate_port_class(f, ops, port)
         f.in_sub_class port.name.class_name, port_base.name do
           f.requires *ops.map { |op| op.name.require_path }
           generate_port_operation_accessors f, ops
@@ -32,7 +32,7 @@ module WsdlMapper
         end
       end
 
-      def generate_port_ctr f, ops, port
+      def generate_port_ctr(f, ops, port)
         f.in_def :initialize, 'api', 'service' do
           f.call :super, 'api', 'service'
           f.assignment '@_style', port.type.binding.style.inspect
@@ -46,7 +46,7 @@ module WsdlMapper
         end
       end
 
-      def generate_port_operation_accessors f, ops
+      def generate_port_operation_accessors(f, ops)
         f.attr_readers *ops.map { |op| op.property_name.attr_name }
       end
     end

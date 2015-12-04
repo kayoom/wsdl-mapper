@@ -5,11 +5,11 @@ module WsdlMapper
   module DomParsing
     class AttributeParser < ParserBase
       # @param [Nokogiri::XML::Node] node
-      def parse node
+      def parse(node)
         parse_attribute node, @base.schema
       end
 
-      def parse_attribute node, container
+      def parse_attribute(node, container)
         name = parse_name_in_attribute 'name', node
         ref = parse_name_in_attribute 'ref', node
 

@@ -9,11 +9,11 @@ module WsdlMapper
         "#{accessor}="
       end
 
-      def get obj
+      def get(obj)
         obj.send getter
       end
 
-      def set obj, value
+      def set(obj, value)
         obj.send setter, value
       end
     end

@@ -11,11 +11,11 @@ module WsdlMapper
         base64Binary
       ]
 
-      def to_ruby string
+      def to_ruby(string)
         StringIO.new Base64.decode64 string
       end
 
-      def to_xml io
+      def to_xml(io)
         Base64.encode64 io.read
       end
 

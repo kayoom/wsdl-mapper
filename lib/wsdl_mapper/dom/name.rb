@@ -3,16 +3,16 @@ module WsdlMapper
     class Name
       attr_reader :ns, :name
 
-      def initialize ns, name
+      def initialize(ns, name)
         @ns, @name = ns, name
         @hash = [ns, name].hash
       end
 
-      def eql? other
+      def eql?(other)
         self.class == other.class && name == other.name && ns == other.ns
       end
 
-      def == other
+      def ==(other)
         eql? other
       end
 
@@ -28,7 +28,7 @@ module WsdlMapper
         [ns, name]
       end
 
-      def self.get ns, name
+      def self.get(ns, name)
         @cache ||= Hash.new do |h, k|
           h[k] = Hash.new do |h2, k2|
             h2[k2] = new k, k2

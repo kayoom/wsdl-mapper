@@ -5,7 +5,7 @@ module WsdlMapper
   module DomParsing
     class ElementParser < ParserBase
       # @param [Nokogiri::XML::Node] node
-      def parse node
+      def parse(node)
         name = parse_name_in_attribute 'name', node
 
         element = Element.new name
@@ -22,7 +22,7 @@ module WsdlMapper
       protected
       # @param [Nokogiri::XML::Node] node
       # @param [WsdlMapper::Dom::Element] element
-      def parse_element_child node, element
+      def parse_element_child(node, element)
         case get_name node
         when ANNOTATION
           parse_annotation node, element

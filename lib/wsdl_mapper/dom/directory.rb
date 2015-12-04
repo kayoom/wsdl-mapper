@@ -5,7 +5,7 @@ module WsdlMapper
     class Directory
       include Enumerable
 
-      def initialize on_nil: nil, &block
+      def initialize(on_nil: nil, &block)
         if block
           @data = Hash.new do |h, k|
             h[k] = Hash.new do |h2, k2|
@@ -20,31 +20,31 @@ module WsdlMapper
 
       # @param [WsdlMapper::Dom::Name] name
       # @return [Object]
-      def get name
+      def get(name)
         hsh = @data[name.ns]
         hsh && hsh[name.name] ||
           on_nil(name)
       end
       alias_method :[], :get
 
-      def on_nil name
+      def on_nil(name)
         @on_nil && raise(@on_nil.new(name))
       end
 
-      def has_key? name
+      def has_key?(name)
         hsh = @data[name.ns]
         !!(hsh && hsh[name.name])
       end
 
       # @param [WsdlMapper::Dom::Name] name
       # @param [Object] value
-      def set name, value
+      def set(name, value)
         @data[name.ns] ||= {}
         @data[name.ns][name.name] = value
       end
       alias_method :[]=, :set
 
-      def each &block
+      def each(&block)
         enum = Enumerator.new do |y|
           @data.each do |ns, data|
             data.each do |name, value|
@@ -55,7 +55,7 @@ module WsdlMapper
         block_given? ? enum.each(&block) : enum.each
       end
 
-      def each_value &block
+      def each_value(&block)
         enum = Enumerator.new do |y|
           @data.each do |ns, data|
             data.each do |name, value|

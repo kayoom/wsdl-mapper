@@ -20,11 +20,11 @@ module WsdlMapper
         unsignedByte
       ]
 
-      def to_ruby string
+      def to_ruby(string)
         string.to_s.to_i
       end
 
-      def to_xml int
+      def to_xml(int)
         int.to_i.to_s
       end
 

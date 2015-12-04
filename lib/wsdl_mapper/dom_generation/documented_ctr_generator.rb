@@ -4,7 +4,7 @@ require 'wsdl_mapper/generation/yard_doc_formatter'
 module WsdlMapper
   module DomGeneration
     class DocumentedCtrGenerator < DefaultCtrGenerator
-      def generate ttg, f, result
+      def generate(ttg, f, result)
         yard = WsdlMapper::Generation::YardDocFormatter.new f
 
         props = ttg.type.each_property
@@ -43,7 +43,7 @@ module WsdlMapper
         end
       end
 
-      def generate_wrapping ttg, f, result, var_name, par_name
+      def generate_wrapping(ttg, f, result, var_name, par_name)
         f.in_def 'initialize', par_name do
           f.assignment var_name, par_name
         end

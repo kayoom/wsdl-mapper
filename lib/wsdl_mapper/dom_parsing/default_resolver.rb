@@ -7,12 +7,12 @@ module WsdlMapper
   module DomParsing
     class DefaultResolver < AbstractResolver
 
-      def initialize path
+      def initialize(path)
         @file_resolver = LocalFileResolver.new path
         @url_resolver = UrlResolver.new
       end
 
-      def resolve name
+      def resolve(name)
         if url? name
           @url_resolver.resolve name
         else
@@ -22,7 +22,7 @@ module WsdlMapper
       end
 
       protected
-      def url? name
+      def url?(name)
         name =~ /^https?\:\/\//
       end
     end

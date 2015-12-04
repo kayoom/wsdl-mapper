@@ -3,7 +3,7 @@ module WsdlMapper
     # @abstract
     class Base
       protected
-      def generate_name name, suffix = ''
+      def generate_name(name, suffix = '')
         return 'nil' if name.nil?
 
         ns = name.ns.inspect
@@ -13,7 +13,7 @@ module WsdlMapper
         "[#{ns}, #{local_name}]"
       end
 
-      def get_type_name type
+      def get_type_name(type)
         if type.name
           type
         elsif type.containing_element
@@ -23,18 +23,18 @@ module WsdlMapper
         end
       end
 
-      def file_for type_name, result, &block
+      def file_for(type_name, result, &block)
         file_name = @context.path_for type_name
         file file_name, result, &block
       end
 
       # @yieldparam [WsdlMapper::Generation::AbstractFormatter]
-      def type_file_for type_name, result, &block
+      def type_file_for(type_name, result, &block)
         file_for type_name, result, &block
         result.add_type type_name
       end
 
-      def file file_name, result
+      def file(file_name, result)
         File.open file_name, 'w' do |io|
           f = get_formatter io
           yield f
@@ -43,11 +43,11 @@ module WsdlMapper
         result.files << file_name
       end
 
-      def get_formatter io
+      def get_formatter(io)
         @formatter_factory.new io
       end
 
-      def get_module_names type
+      def get_module_names(type)
         type.parents.reverse.map &:module_name
       end
     end

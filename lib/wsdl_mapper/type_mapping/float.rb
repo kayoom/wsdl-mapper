@@ -9,11 +9,11 @@ module WsdlMapper
         double
       ]
 
-      def to_ruby string
+      def to_ruby(string)
         string.to_s.to_f
       end
 
-      def to_xml object
+      def to_xml(object)
         case object
         when ::Float, ::Integer
           object.to_s

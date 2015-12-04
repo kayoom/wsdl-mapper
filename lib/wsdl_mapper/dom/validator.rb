@@ -7,13 +7,13 @@ module WsdlMapper
       class Error
         attr_reader :element, :msg
 
-        def initialize element, msg
+        def initialize(element, msg)
           @element = element
           @msg = msg
         end
       end
 
-      def initialize schema
+      def initialize(schema)
         @schema = schema
       end
 

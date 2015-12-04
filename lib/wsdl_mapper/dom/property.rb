@@ -7,7 +7,7 @@ module WsdlMapper
         attr_accessor :containing_type
         attr_reader :name, :bounds, :sequence, :default, :fixed, :form
 
-        def initialize name, bounds: Bounds.new, sequence: 0, default: nil, fixed: nil, form: nil
+        def initialize(name, bounds: Bounds.new, sequence: 0, default: nil, fixed: nil, form: nil)
           super name
           @name, @bounds, @sequence = name, bounds, sequence
           @default = default
@@ -20,7 +20,7 @@ module WsdlMapper
       attr_accessor :type, :containing_type
       attr_accessor :documentation
 
-      def initialize name, type_name, bounds: Bounds.new, sequence: 0, default: nil, fixed: nil, form: nil
+      def initialize(name, type_name, bounds: Bounds.new, sequence: 0, default: nil, fixed: nil, form: nil)
         @name, @type_name, @bounds, @sequence = name, type_name, bounds, sequence
         @documentation = Documentation.new
         @default = default

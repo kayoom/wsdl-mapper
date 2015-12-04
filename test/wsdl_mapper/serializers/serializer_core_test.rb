@@ -15,7 +15,7 @@ module SerializersTests
         @serializers = {}
       end
 
-      def resolve name
+      def resolve(name)
         serializers[name]
       end
 
@@ -31,7 +31,7 @@ module SerializersTests
     end
 
     class NoteTypeSerializer
-      def build x, obj, name
+      def build(x, obj, name)
         x.complex [nil, 'noteType'], name, [] do |x|
           obj.attachments.each do |attachment|
             x.get(Attachment.name).build(x, attachment, [nil, 'attachment'])
@@ -41,7 +41,7 @@ module SerializersTests
     end
 
     class AttachmentSerializer
-      def build x, obj, name
+      def build(x, obj, name)
         x.simple [nil, 'attachment'], name do |x|
           x.text_builtin obj, 'string'
         end

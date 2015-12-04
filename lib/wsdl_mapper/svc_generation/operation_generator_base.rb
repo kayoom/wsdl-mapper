@@ -9,7 +9,7 @@ module WsdlMapper
       class HeaderToGenerate < Struct.new(:type, :name, :property_name, :header)
       end
 
-      def get_body_parts in_out
+      def get_body_parts(in_out)
         parts = in_out.body.parts
         parts = in_out.target.message.each_part.to_a if parts.empty?
 
@@ -22,7 +22,7 @@ module WsdlMapper
         end
       end
 
-      def get_header_parts in_out
+      def get_header_parts(in_out)
         in_out.each_header.map do |header|
           type = header.part.type || header.part.element.type
           name = namer.get_type_name get_type_name type

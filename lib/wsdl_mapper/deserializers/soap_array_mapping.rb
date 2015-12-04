@@ -7,26 +7,26 @@ module WsdlMapper
     class SoapArrayMapping
       include ::WsdlMapper::Dom
 
-      def initialize cls, type:
+      def initialize(cls, type:)
         @cls = cls
         @type = Name.get *type
       end
 
-      def start base, frame
+      def start(base, frame)
         frame.object = @cls.new
       end
 
-      def end base, frame
+      def end(base, frame)
         frame.children.each do |child|
           frame.object << child.object
         end
       end
 
-      def get_type_name_for_prop element_name
+      def get_type_name_for_prop(element_name)
         @type
       end
 
-      def wrapper? name
+      def wrapper?(name)
         false
       end
     end

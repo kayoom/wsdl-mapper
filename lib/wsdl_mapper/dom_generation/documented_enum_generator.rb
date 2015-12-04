@@ -6,7 +6,7 @@ module WsdlMapper
     class DocumentedEnumGenerator < DefaultEnumGenerator
 
       protected
-      def generate_constant_assignments f, values_to_generate
+      def generate_constant_assignments(f, values_to_generate)
         yard = WsdlMapper::Generation::YardDocFormatter.new f
         values_to_generate.each do |vtg|
           if vtg.type.documentation.present?
@@ -20,7 +20,7 @@ module WsdlMapper
         f.after_constants
       end
 
-      def in_class f, ttg
+      def in_class(f, ttg)
         yard = WsdlMapper::Generation::YardDocFormatter.new f
         yard.class_doc ttg.type
         super

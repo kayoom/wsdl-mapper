@@ -6,7 +6,7 @@ require 'wsdl_mapper/s8r_generation/s8r_generator'
 
 module S8rGenerationTests
   class S8rGeneratorTests < GenerationTest
-    def generate name
+    def generate(name)
       schema = get_schema name
       generator = WsdlMapper::S8rGeneration::S8rGenerator.new context
       generator.generate schema

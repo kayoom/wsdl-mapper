@@ -18,7 +18,7 @@ module WsdlMapperTesting
       WsdlMapper::DomParsing::Parser.new(import_resolver: import_resolver).parse get_xml_doc name
     end
 
-    def parse_wsdl name
+    def parse_wsdl(name)
       WsdlMapper::SvcDescParsing::Parser.new.parse(get_xml_doc(name)).first
     end
 

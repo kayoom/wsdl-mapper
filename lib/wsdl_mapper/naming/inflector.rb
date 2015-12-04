@@ -10,14 +10,14 @@ module WsdlMapper
       CAPITALS = /([A-Z])/
       DOWN_FOLLOWED_BY_UP = /([a-z0-9])([A-Z])/
 
-      def camelize source
+      def camelize(source)
         source.
           strip.
           gsub(NON_WORD_FOLLOWED_BY_WORD) { |s| $1.upcase }.
           sub(FIRST_CHAR) { |s| s.upcase }
       end
 
-      def underscore source
+      def underscore(source)
         source.
           strip.
           gsub(DOWN_FOLLOWED_BY_UP) { |s| "#{$1}_#{$2.downcase}" }.

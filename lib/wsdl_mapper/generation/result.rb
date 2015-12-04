@@ -4,7 +4,7 @@ module WsdlMapper
       class ModuleTreeNode
         attr_reader :type_name, :children
 
-        def initialize type_name
+        def initialize(type_name)
           @type_name = type_name
           @children = []
         end
@@ -16,14 +16,14 @@ module WsdlMapper
 
       attr_reader :files, :module_tree, :schema
 
-      def initialize schema: nil, description: nil
+      def initialize(schema: nil, description: nil)
         @files = []
         @module_tree = []
         @description = description
         @schema = schema
       end
 
-      def add_type type_name
+      def add_type(type_name)
         modules = type_name.parents.reverse
 
         children = @module_tree

@@ -7,43 +7,43 @@ module WsdlMapper
   module Naming
     # @abstract
     class AbstractNamer
-      def get_type_name type
+      def get_type_name(type)
         raise NotImplementedError
       end
 
-      def get_property_name property
+      def get_property_name(property)
         raise NotImplementedError
       end
 
-      def get_enumeration_value_name type, enum_value
+      def get_enumeration_value_name(type, enum_value)
         raise NotImplementedError
       end
 
-      def get_s8r_name type
+      def get_s8r_name(type)
         raise NotImplementedError
       end
 
-      def get_d10r_name type
+      def get_d10r_name(type)
         raise NotImplementedError
       end
 
-      def get_attribute_name attribute
+      def get_attribute_name(attribute)
         raise NotImplementedError
       end
 
-      def get_content_name type
+      def get_content_name(type)
         raise NotImplementedError
       end
 
-      def get_inline_type element
+      def get_inline_type(element)
         raise NotImplementedError
       end
 
-      def get_soap_array_item_name type
+      def get_soap_array_item_name(type)
         raise NotImplementedError
       end
 
-      def get_support_name name
+      def get_support_name(name)
         raise NotImplementedError
       end
     end

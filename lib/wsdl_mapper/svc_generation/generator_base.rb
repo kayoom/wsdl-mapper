@@ -6,13 +6,13 @@ module WsdlMapper
     class GeneratorBase < WsdlMapper::Generation::Base
       include WsdlMapper::Generation
 
-      def initialize generator
+      def initialize(generator)
         @generator = generator
         @context = generator.context
       end
 
       protected
-      def get_formatter io
+      def get_formatter(io)
         @generator.get_formatter io
       end
 
@@ -63,11 +63,11 @@ module WsdlMapper
         @generator.body_base
       end
 
-      def in_classes f, *names, &block
+      def in_classes(f, *names, &block)
         @generator.in_classes f, *names, &block
       end
 
-      def get_type_name type
+      def get_type_name(type)
         @generator.get_type_name type
       end
     end

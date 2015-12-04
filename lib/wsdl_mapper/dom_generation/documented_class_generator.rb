@@ -6,14 +6,14 @@ module WsdlMapper
     class DocumentedClassGenerator < DefaultClassGenerator
 
       protected
-      def in_class f, ttg
+      def in_class(f, ttg)
         yard = WsdlMapper::Generation::YardDocFormatter.new f
         yard.class_doc ttg.type
 
         super
       end
 
-      def generate_property_attributes f, properties
+      def generate_property_attributes(f, properties)
         return unless properties.any?
         yard = WsdlMapper::Generation::YardDocFormatter.new f
 
@@ -39,7 +39,7 @@ module WsdlMapper
         end
       end
 
-      def generate_attribute_attributes f, attributes
+      def generate_attribute_attributes(f, attributes)
         return unless attributes.any?
         yard = WsdlMapper::Generation::YardDocFormatter.new f
 

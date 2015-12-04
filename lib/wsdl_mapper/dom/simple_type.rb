@@ -7,7 +7,7 @@ module WsdlMapper
       attr_accessor :base, :base_type_name, :pattern, :min, :max, :containing_property, :containing_element, :min_inclusive, :max_inclusive, :total_digits, :fraction_digits
       attr_reader :enumeration_values
 
-      def initialize name
+      def initialize(name)
         super
         @enumeration_values = []
       end

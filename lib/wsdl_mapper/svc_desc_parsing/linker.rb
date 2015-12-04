@@ -8,7 +8,7 @@ module WsdlMapper
     class Linker
 
       # @param [WsdlMapper::SvcDesc::Wsdl11::Description] description
-      def initialize description
+      def initialize(description)
         @description = description
       end
 
@@ -39,7 +39,7 @@ module WsdlMapper
         end
       end
 
-      def link_binding_operation b, op
+      def link_binding_operation(b, op)
         op.target = b.type.find_operation op.name, op.input.name, op.output.name
 
         link_binding_operation_input op
@@ -47,13 +47,13 @@ module WsdlMapper
         link_binding_operation_faults op
       end
 
-      def link_binding_operation_faults op
+      def link_binding_operation_faults(op)
         op.each_fault do |fault|
           fault.target = op.target.get_fault fault.name
         end
       end
 
-      def link_binding_operation_output op
+      def link_binding_operation_output(op)
         op.output.target = op.target.output
         op.output.message = op.target.output.message
         op.output.each_header do |header|
@@ -71,7 +71,7 @@ module WsdlMapper
         end
       end
 
-      def link_binding_operation_input op
+      def link_binding_operation_input(op)
         op.input.target = op.target.input
         op.input.message = op.target.input.message
         op.input.each_header do |header|

@@ -4,7 +4,7 @@ require 'wsdl_mapper/svc_desc/wsdl11/port_type'
 module WsdlMapper
   module SvcDescParsing
     class PortTypeParser < ParserBase
-      def parse node
+      def parse(node)
         name = parse_name_in_attribute 'name', node
 
         port_type = PortType.new name
@@ -16,7 +16,7 @@ module WsdlMapper
         @base.description.add_port_type port_type
       end
 
-      def parse_port_type_child node, port_type
+      def parse_port_type_child(node, port_type)
         case get_name(node)
         when OPERATION
           parse_operation node, port_type
@@ -27,7 +27,7 @@ module WsdlMapper
         end
       end
 
-      def parse_operation node, port_type
+      def parse_operation(node, port_type)
         name = parse_name_in_attribute 'name', node
 
         operation = PortType::Operation.new name
@@ -42,7 +42,7 @@ module WsdlMapper
         port_type.add_operation operation
       end
 
-      def determine_type sequence
+      def determine_type(sequence)
         case sequence[0, 2]
         when [INPUT]
           :one_way
@@ -55,7 +55,7 @@ module WsdlMapper
         end
       end
 
-      def parse_operation_child node, operation
+      def parse_operation_child(node, operation)
         name = get_name(node)
         case name
         when INPUT
@@ -76,21 +76,21 @@ module WsdlMapper
         end
       end
 
-      def parse_operation_input node, operation
+      def parse_operation_input(node, operation)
         name = parse_name_in_attribute 'name', node
         input = PortType::InputOutput.new name
         input.message_name = parse_name_in_attribute 'message', node
         operation.input = input
       end
 
-      def parse_operation_output node, operation
+      def parse_operation_output(node, operation)
         name = parse_name_in_attribute 'name', node
         output = PortType::InputOutput.new name
         output.message_name = parse_name_in_attribute 'message', node
         operation.output = output
       end
 
-      def parse_operation_fault node, operation
+      def parse_operation_fault(node, operation)
         name = parse_name_in_attribute 'name', node
         fault = PortType::InputOutput.new name
         fault.message_name = parse_name_in_attribute 'message', node

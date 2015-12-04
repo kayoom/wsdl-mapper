@@ -3,7 +3,7 @@ module WsdlMapper
     class TimeDuration
       attr_accessor :years, :months, :days, :hours, :minutes, :seconds, :negative
 
-      def initialize negative: false, years: 0, months: 0, days: 0, hours: 0, minutes: 0, seconds: 0
+      def initialize(negative: false, years: 0, months: 0, days: 0, hours: 0, minutes: 0, seconds: 0)
         @seconds = seconds
         @minutes = minutes
         @hours = hours
@@ -21,7 +21,7 @@ module WsdlMapper
         [negative?, years, months, days, hours, minutes, seconds].hash
       end
 
-      def eql? other
+      def eql?(other)
         return false unless other.is_a?(TimeDuration)
 
         negative? == other.negative? &&
@@ -33,11 +33,11 @@ module WsdlMapper
           seconds == other.seconds
       end
 
-      def == other
+      def ==(other)
         eql? other
       end
 
-      def <=> other
+      def <=>(other)
         return -1 if negative? and !other.negative?
         return 1 if !negative? and other.negative?
 
@@ -49,19 +49,19 @@ module WsdlMapper
         return 0
       end
 
-      def > other
+      def >(other)
         (self <=> other) > 0
       end
 
-      def >= other
+      def >=(other)
         (self <=> other) >= 0
       end
 
-      def < other
+      def <(other)
         (self <=> other) < 0
       end
 
-      def <= other
+      def <=(other)
         (self <=> other) <= 0
       end
     end

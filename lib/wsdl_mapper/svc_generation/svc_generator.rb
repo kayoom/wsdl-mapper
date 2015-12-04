@@ -25,16 +25,16 @@ module WsdlMapper
 
       attr_reader :context, :service_generator, :service_namer, :namer, :port_generator, :operation_generator, :schema_generator, :operation_s8r_generator, :operation_d10r_generator
 
-      def initialize context,
-          formatter_factory: DefaultFormatter,
-          service_namer: WsdlMapper::Naming::DefaultServiceNamer.new,
-          namer: WsdlMapper::Naming::DefaultNamer.new,
-          service_generator_factory: ServiceGenerator,
-          port_generator_factory: PortGenerator,
-          operation_generator_factory: OperationGenerator,
-          operation_s8r_generator_factory: OperationS8rGenerator,
-          operation_d10r_generator_factory: OperationD10rGenerator,
-          schema_generator: nil
+      def initialize(context,
+        formatter_factory: DefaultFormatter,
+        service_namer: WsdlMapper::Naming::DefaultServiceNamer.new,
+        namer: WsdlMapper::Naming::DefaultNamer.new,
+        service_generator_factory: ServiceGenerator,
+        port_generator_factory: PortGenerator,
+        operation_generator_factory: OperationGenerator,
+        operation_s8r_generator_factory: OperationS8rGenerator,
+        operation_d10r_generator_factory: OperationD10rGenerator,
+        schema_generator: nil)
         @formatter_factory = formatter_factory
         @context = context
         @service_namer = service_namer
@@ -50,7 +50,7 @@ module WsdlMapper
         )
       end
 
-      def generate desc
+      def generate(desc)
         result = Result.new description: desc
 
         generate_api desc, result
@@ -58,11 +58,11 @@ module WsdlMapper
         result
       end
 
-      def get_formatter io
+      def get_formatter(io)
         @formatter_factory.new io
       end
 
-      def generate_api desc, result
+      def generate_api(desc, result)
         name = @service_namer.get_api_name
         modules = get_module_names name
         services = desc.each_service.map do |service|
@@ -83,18 +83,18 @@ module WsdlMapper
         end
       end
 
-      def generate_api_class f, name, services
+      def generate_api_class(f, name, services)
         f.in_sub_class name.class_name, api_base.name do
           generate_api_service_accessors f, services
           generate_api_ctr f, services
         end
       end
 
-      def generate_api_service_accessors f, services
+      def generate_api_service_accessors(f, services)
         f.attr_readers *services.map { |s| s.property_name.attr_name }
       end
 
-      def generate_api_ctr f, services
+      def generate_api_ctr(f, services)
         f.in_def :initialize, 'options = {}' do
           f.call :super, 'options'
           services.each do |s|
@@ -104,7 +104,7 @@ module WsdlMapper
         end
       end
 
-      def in_classes f, *names, &block
+      def in_classes(f, *names, &block)
         next_block = if names.length > 1
           proc do
             in_classes f, *names.drop(1), &block
@@ -139,7 +139,7 @@ module WsdlMapper
         @body_base ||= runtime_base 'Body', 'body'
       end
 
-      def runtime_base name, file_name
+      def runtime_base(name, file_name)
         WsdlMapper::Naming::TypeName.new name, runtime_modules, "#{file_name}.rb", runtime_path
       end
 
@@ -151,7 +151,7 @@ module WsdlMapper
         @runtime_path ||= %w[wsdl_mapper runtime]
       end
 
-      def get_type_name type
+      def get_type_name(type)
         @schema_generator.get_type_name type
       end
     end

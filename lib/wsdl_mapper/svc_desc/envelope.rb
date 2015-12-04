@@ -3,7 +3,7 @@ module WsdlMapper
     class Envelope
       attr_accessor :header, :body
 
-      def initialize header: nil, body: nil
+      def initialize(header: nil, body: nil)
         @header = header
         @body = body
       end

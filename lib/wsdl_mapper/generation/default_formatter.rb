@@ -3,7 +3,7 @@ module WsdlMapper
     # Default implementation for the ruby formatter interface. This class should be considered as a reference for
     # custom implementations. All public methods are mandatory.
     class DefaultFormatter
-      def initialize io
+      def initialize(io)
         @io = io
         @i = 0
       end
@@ -27,7 +27,7 @@ module WsdlMapper
         self
       end
 
-      def attr_readers *attrs
+      def attr_readers(*attrs)
         return if attrs.empty?
 
         attrs = attrs.map { |a| ":#{a}" }
@@ -40,20 +40,20 @@ module WsdlMapper
       alias_method :after_requires, :blank_line
       alias_method :after_constants, :blank_line
 
-      def statement statement
+      def statement(statement)
         indent
         @io << statement
         next_statement
       end
 
-      def statements *statements
+      def statements(*statements)
         statements.each do |s|
           statement s
         end
         blank_line
       end
 
-      def call name, *args
+      def call(name, *args)
         if args.empty?
           statement name
         else
@@ -61,7 +61,7 @@ module WsdlMapper
         end
       end
 
-      def block statement, block_args
+      def block(statement, block_args)
         indent
         buf = statement.dup
         buf << ' do'
@@ -74,15 +74,15 @@ module WsdlMapper
         self.end
       end
 
-      def block_assignment var_name, statement, block_args, &block
+      def block_assignment(var_name, statement, block_args, &block)
         block "#{var_name} = #{statement}", block_args, &block
       end
 
-      def require path
+      def require(path)
         statement "require #{path.inspect}"
       end
 
-      def requires *paths
+      def requires(*paths)
         return unless paths.any?
         paths.each do |path|
           require path
@@ -90,7 +90,7 @@ module WsdlMapper
         after_requires
       end
 
-      def attr_accessors *attrs
+      def attr_accessors(*attrs)
         return if attrs.empty?
 
         attrs = attrs.map { |a| ":#{a}" }
@@ -100,62 +100,62 @@ module WsdlMapper
         blank_line
       end
 
-      def begin_module name
+      def begin_module(name)
         statement "module #{name}"
         inc_indent
       end
 
-      def begin_modules names
+      def begin_modules(names)
         names.each do |name|
           begin_module name
         end
       end
 
-      def end_modules names
+      def end_modules(names)
         names.each { self.end }
       end
 
-      def in_modules names
+      def in_modules(names)
         begin_modules names
         yield
         end_modules names
       end
 
-      def begin_class name
+      def begin_class(name)
         statement "class #{name}"
         inc_indent
       end
 
-      def begin_sub_class name, super_name
+      def begin_sub_class(name, super_name)
         statement "class #{name} < #{super_name}"
         inc_indent
       end
 
-      def in_class name
+      def in_class(name)
         begin_class name
         yield
         self.end
       end
 
-      def in_sub_class name, super_name
+      def in_sub_class(name, super_name)
         begin_sub_class name, super_name
         yield
         self.end
       end
 
-      def begin_def name, *args
+      def begin_def(name, *args)
         blank_line
         statement method_definition(name, args)
         inc_indent
       end
 
-      def in_def name, *args
+      def in_def(name, *args)
         begin_def name, *args
         yield
         self.end
       end
 
-      def literal_array name, values
+      def literal_array(name, values)
         if values.empty?
           statement "#{name} = []"
           return
@@ -171,11 +171,11 @@ module WsdlMapper
         statement "]"
       end
 
-      def assignment var_name, value
+      def assignment(var_name, value)
         statement "#{var_name} = #{value}"
       end
 
-      def assignments *assigns
+      def assignments(*assigns)
         assigns.each do |(var_name, value)|
           assignment var_name, value
         end
@@ -191,13 +191,13 @@ module WsdlMapper
       end
 
       private
-      def method_definition name, args
+      def method_definition(name, args)
         s = "def #{name}"
         s << "(#{args * ', '})" unless args.empty?
         s
       end
 
-      def append str
+      def append(str)
         @io << str
         self
       end
@@ -207,12 +207,12 @@ module WsdlMapper
         self
       end
 
-      def inc_indent n = 1
+      def inc_indent(n = 1)
         @i += n
         self
       end
 
-      def dec_indent n = 1
+      def dec_indent(n = 1)
         @i -= n
         self
       end

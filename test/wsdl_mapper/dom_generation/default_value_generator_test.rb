@@ -11,7 +11,7 @@ module DomGenerationTests
       include WsdlMapper::DomGeneration
       include WsdlMapper::CoreExt
 
-      def assert_evalable origin, type
+      def assert_evalable(origin, type)
         evalable = DefaultValueGenerator.new.send "generate_#{type}", origin
         assert_equal origin, eval(evalable)
 

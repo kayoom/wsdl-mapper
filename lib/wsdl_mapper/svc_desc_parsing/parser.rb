@@ -41,7 +41,7 @@ module WsdlMapper
 
       # @param [Nokogiri::XML::Document] doc
       # @return [WsdlMapper::Dom::Schema]
-      def parse doc
+      def parse(doc)
         # Phase 1: Parsing
         parse_doc doc
 
@@ -53,7 +53,7 @@ module WsdlMapper
 
       # @param [Nokogiri::XML::Node] node
       # @param [String, Symbol] msg
-      def log_msg node, msg = '', source = self
+      def log_msg(node, msg = '', source = self)
         log_msg = LogMsg.new(node, source, msg)
         log_msgs << log_msg
         # TODO: remove debugging output
@@ -63,13 +63,13 @@ module WsdlMapper
         puts "\n\n"
       end
 
-      def parse_documentation node, obj
+      def parse_documentation(node, obj)
         obj.documentation = node.text
       end
 
       protected
       # @param [Nokogiri::XML::Document] doc
-      def parse_doc doc
+      def parse_doc(doc)
         parse_namespaces doc
         root = get_root doc
         @description.target_namespace = parse_target_namespace root
@@ -85,7 +85,7 @@ module WsdlMapper
 
       # @param [Nokogiri::XML::Document] doc
       # @return [Nokogiri::XML::Node]
-      def get_root doc
+      def get_root(doc)
         doc.root
         # TODO: handle invalid roots, namespaces
       end

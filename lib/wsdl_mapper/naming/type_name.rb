@@ -5,7 +5,7 @@ module WsdlMapper
       attr_accessor :parent
       alias_method :module_name, :class_name
 
-      def initialize class_name, module_path, file_name, file_path
+      def initialize(class_name, module_path, file_name, file_path)
         @class_name = class_name
         @module_path = module_path
         @file_name = file_name
@@ -28,11 +28,11 @@ module WsdlMapper
         @name ||= ['', *@module_path, @class_name] * "::"
       end
 
-      def eql? other
+      def eql?(other)
         self.class == other.class && name == other.name
       end
 
-      def == other
+      def ==(other)
         eql? other
       end
 

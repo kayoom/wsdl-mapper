@@ -10,20 +10,20 @@ module WsdlMapper
 
         attr_reader :parts
 
-        def initialize name
+        def initialize(name)
           super name
           @parts = WsdlMapper::Dom::Directory.new
         end
 
-        def add_part part
+        def add_part(part)
           @parts[part.name] = part
         end
 
-        def each_part &block
+        def each_part(&block)
           @parts.each_value &block
         end
 
-        def get_part name
+        def get_part(name)
           @parts[name]
         end
       end
