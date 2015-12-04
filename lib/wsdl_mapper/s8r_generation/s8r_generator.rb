@@ -17,16 +17,14 @@ module WsdlMapper
       def initialize(context,
         namer: WsdlMapper::Naming::DefaultNamer.new,
         formatter_factory: DefaultFormatter,
-        module_generator_factory: DefaultModuleGenerator,
-        type_directory_name_template: 'S8rTypeDirectory',
-        serializer_factory_name_template: 'SerializerFactory')
+        module_generator_factory: DefaultModuleGenerator)
 
         @context = context
         @namer = namer
         @formatter_factory = formatter_factory
         @module_generator = module_generator_factory.new self
-        @type_directory_name_template = type_directory_name_template
-        @serializer_factory_name_template = serializer_factory_name_template
+        @type_directory_name = namer.get_s8r_type_directory_name
+        @serializer_name = namer.get_global_s8r_name
       end
 
       def generate(schema)
@@ -48,23 +46,21 @@ module WsdlMapper
 
       protected
       def generate_serializer_factory(schema, result)
-        @serializer_factory_name = @namer.get_support_name @serializer_factory_name_template
-        modules = get_module_names @serializer_factory_name
+        modules = get_module_names @serializer_name
 
-        file_for @serializer_factory_name, result do |f|
+        file_for @serializer_name, result do |f|
           f.requires 'wsdl_mapper/serializers/serializer_factory',
             @type_directory_name.require_path
 
           f.in_modules modules do
             args = [@type_directory_name.name]
             args << "default_namespace: #{schema.target_namespace.inspect}" if schema.target_namespace
-            f.assignment @serializer_factory_name.class_name, "::WsdlMapper::Serializers::SerializerFactory.new(#{args * ', '})"
+            f.assignment @serializer_name.class_name, "::WsdlMapper::Serializers::SerializerFactory.new(#{args * ', '})"
           end
         end
       end
 
       def generate_type_directory(schema, result)
-        @type_directory_name = @namer.get_support_name @type_directory_name_template
         modules = get_module_names @type_directory_name
 
         file_for @type_directory_name, result do |f|

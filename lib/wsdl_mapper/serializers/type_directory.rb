@@ -6,14 +6,15 @@ module WsdlMapper
       class TypeItem < Struct.new(:type_name, :require_path, :s8r_name)
       end
 
-      def initialize(&block)
+      def initialize(*base, &block)
+        @base = base
         @types = {}
         @elements = {}
         @serializers = {}
         @by_type_name = Hash.new do |h, k|
           h[k] = find_and_load k
         end
-        instance_exec &block
+        instance_exec &block if block_given?
       end
 
       def register_element(name, element_name)
@@ -26,7 +27,13 @@ module WsdlMapper
       end
 
       def get_element_name(name)
-        @elements[normalize(name)]
+        element_name = @elements[normalize(name)]
+        return element_name if element_name
+        @base.each do |base|
+          element_name = base.get_element_name(name)
+          return element_name if element_name
+        end
+        nil # TODO: raise error?
       end
 
       def resolve(name)
@@ -45,12 +52,20 @@ module WsdlMapper
       def find_and_load(type_name)
         item = @types[type_name]
         unless item
+          @base.each do |base|
+            begin
+              return base.resolve(type_name)
+            rescue StandardError
+            end
+          end
+          # TODO: custom error classes as in deserializer
           raise StandardError.new "Serializer for #{type_name} not found."
         end
         require item.require_path
         @serializers[normalize(item.s8r_name)]
       end
 
+      protected
       def normalize(name)
         name[0, 2] == '::' ? name : '::' + name
       end

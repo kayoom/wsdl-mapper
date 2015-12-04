@@ -47,6 +47,14 @@ module WsdlMapper
         type_name
       end
 
+      def get_s8r_type_directory_name
+        get_support_name 'S8rTypeDirectory'
+      end
+
+      def get_global_s8r_name
+        get_support_name 'Serializer'
+      end
+
       def get_d10r_type_directory_name
         get_support_name 'D10rTypeDirectory'
       end

@@ -15,6 +15,7 @@ module SvcDescParsingTests
       generator.generate @desc
     end
 
+    focus
     def test_operation_generation
       generate 'wsdls/price_service_rpc_encoded.wsdl'
 
@@ -33,6 +34,7 @@ class PriceService
           "product_idtype",
           "variant_idtype",
           "price_inline_type",
+          "s8r_type_directory",
           "price_service/product_prices/get_product_price/input_header",
           "price_service/product_prices/get_product_price/input_body",
           "price_service/product_prices/get_product_price/output_header",
@@ -52,6 +54,26 @@ class PriceService
       def new_output(header: {}, body: {})
         super
         new_message(::PriceService::ProductPrices::GetProductPrice::OutputHeader.new(**header), ::PriceService::ProductPrices::GetProductPrice::OutputBody.new(**body))
+      end
+
+      def input_s8r
+        super
+        @input_s8r ||= ::PriceService::ProductPrices::GetProductPrice::InputS8r.new(::S8rTypeDirectory)
+      end
+
+      def output_s8r
+        super
+        @output_s8r ||= ::PriceService::ProductPrices::GetProductPrice::OutputS8r.new(::S8rTypeDirectory)
+      end
+
+      def input_d10r
+        super
+        @input_d10r ||= ::PriceService::ProductPrices::GetProductPrice::InputD10r
+      end
+
+      def output_d10r
+        super
+        @output_d10r ||= ::PriceService::ProductPrices::GetProductPrice::OutputD10r
       end
     end
   end

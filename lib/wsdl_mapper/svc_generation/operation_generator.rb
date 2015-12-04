@@ -30,6 +30,44 @@ module WsdlMapper
           generate_op_ctr f, service, port, op
           generate_new_input f, service, port, op
           generate_new_output f, service, port, op
+          generate_input_s8r f, service, port, op
+          generate_output_s8r f, service, port, op
+          generate_input_d10r f, service, port, op
+          generate_output_d10r f, service, port, op
+        end
+      end
+
+      def generate_input_s8r(f, service, port, op)
+        name = service_namer.get_input_s8r_name(service.type, port.type, op.type).name
+        type_directory_name = namer.get_s8r_type_directory_name.name
+        f.in_def :input_s8r do
+          f.call :super
+          f.statement "@input_s8r ||= #{name}.new(#{type_directory_name})"
+        end
+      end
+
+      def generate_output_s8r(f, service, port, op)
+        name = service_namer.get_output_s8r_name(service.type, port.type, op.type).name
+        type_directory_name = namer.get_s8r_type_directory_name.name
+        f.in_def :output_s8r do
+          f.call :super
+          f.statement "@output_s8r ||= #{name}.new(#{type_directory_name})"
+        end
+      end
+
+      def generate_input_d10r(f, service, port, op)
+        name = service_namer.get_input_d10r_name(service.type, port.type, op.type).name
+        f.in_def :input_d10r do
+          f.call :super
+          f.statement "@input_d10r ||= #{name}"
+        end
+      end
+
+      def generate_output_d10r(f, service, port, op)
+        name = service_namer.get_output_d10r_name(service.type, port.type, op.type).name
+        f.in_def :output_d10r do
+          f.call :super
+          f.statement "@output_d10r ||= #{name}"
         end
       end
 
@@ -77,6 +115,7 @@ module WsdlMapper
         get_body_parts(op.type.output).each do |part|
           requires << part.name.require_path
         end
+        requires << namer.get_s8r_type_directory_name.require_path
         requires << service_namer.get_input_header_name(service.type, port.type, op.type).require_path
         requires << service_namer.get_input_body_name(service.type, port.type, op.type).require_path
         requires << service_namer.get_output_header_name(service.type, port.type, op.type).require_path

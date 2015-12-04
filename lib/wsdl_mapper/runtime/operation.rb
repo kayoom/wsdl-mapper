@@ -23,6 +23,22 @@ module WsdlMapper
         WsdlMapper::SvcDesc::Envelope.new header: header, body: body
       end
 
+      def input_s8r
+        load_requires
+      end
+
+      def output_s8r
+        load_requires
+      end
+
+      def input_d10r
+        load_requires
+      end
+
+      def output_d10r
+        load_requires
+      end
+
       protected
       def load_requires
         return if @_loaded
