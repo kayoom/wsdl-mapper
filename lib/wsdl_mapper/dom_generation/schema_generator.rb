@@ -10,6 +10,7 @@ require 'wsdl_mapper/dom_generation/default_enum_generator'
 require 'wsdl_mapper/dom_generation/default_wrapping_type_generator'
 require 'wsdl_mapper/dom_generation/default_value_generator'
 require 'wsdl_mapper/generation/type_to_generate'
+require 'wsdl_mapper/generation/base'
 
 require 'wsdl_mapper/dom/complex_type'
 require 'wsdl_mapper/dom/simple_type'
@@ -18,7 +19,7 @@ require 'wsdl_mapper/type_mapping'
 
 module WsdlMapper
   module DomGeneration
-    class SchemaGenerator
+    class SchemaGenerator < WsdlMapper::Generation::Base
       include WsdlMapper::Generation
 
       attr_reader :context, :namer
@@ -82,7 +83,8 @@ module WsdlMapper
         types = schema.each_type.select(&WsdlMapper::Dom::SimpleType).reject(&:enumeration?).to_a
 
         types_to_generate = types.map do |type|
-          name = get_type_name(type)
+          name = namer.get_type_name get_type_name(type)
+
           TypeToGenerate.new type, name
         end
 
@@ -95,7 +97,7 @@ module WsdlMapper
         enum_types = schema.each_type.select(&WsdlMapper::Dom::SimpleType).select(&:enumeration?).to_a
 
         types_to_generate = enum_types.map do |type|
-          name = get_type_name(type)
+          name = namer.get_type_name get_type_name(type)
 
           TypeToGenerate.new type, name
         end
@@ -109,7 +111,7 @@ module WsdlMapper
         complex_types = schema.each_type.select(&WsdlMapper::Dom::ComplexType).to_a
 
         types_to_generate = complex_types.map do |type|
-          name = get_type_name(type)
+          name = namer.get_type_name get_type_name(type)
 
           TypeToGenerate.new type, name
         end
@@ -119,15 +121,15 @@ module WsdlMapper
         end
       end
 
-      def get_type_name type
-        if type.name
-          @namer.get_type_name type
-        elsif type.containing_property
-          @namer.get_type_name @namer.get_inline_type type.containing_property
-        elsif type.containing_element
-          @namer.get_type_name @namer.get_inline_type type.containing_element
-        end
-      end
+      # def get_type_name type
+      #   if type.name
+      #     @namer.get_type_name type
+      #   elsif type.containing_property
+      #     @namer.get_type_name @namer.get_inline_type type.containing_property
+      #   elsif type.containing_element
+      #     @namer.get_type_name @namer.get_inline_type type.containing_element
+      #   end
+      # end
     end
   end
 end

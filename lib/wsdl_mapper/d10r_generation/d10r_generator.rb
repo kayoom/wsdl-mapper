@@ -17,17 +17,14 @@ module WsdlMapper
       def initialize context,
           namer: WsdlMapper::Naming::DefaultNamer.new,
           formatter_factory: DefaultFormatter,
-          module_generator_factory: DefaultModuleGenerator,
-          type_directory_name_template: 'D10rTypeDirectory',
-          element_directory_name_template: 'D10rElementDirectory',
-          deserializer_name_template: 'Deserializer'
+          module_generator_factory: DefaultModuleGenerator
         @context = context
         @namer = namer
         @formatter_factory = formatter_factory
         @module_generator = module_generator_factory.new self
-        @type_directory_name_template = type_directory_name_template
-        @element_directory_name_template = element_directory_name_template
-        @deserializer_name_template = deserializer_name_template
+        @type_directory_name = @namer.get_d10r_type_directory_name
+        @element_directory_name = @namer.get_d10r_element_directory_name
+        @deserializer_name = @namer.get_global_d10r_name
       end
 
       def generate schema
@@ -55,7 +52,6 @@ module WsdlMapper
 
       protected
       def generate_deserializer schema, result
-        @deserializer_name = @namer.get_support_name @deserializer_name_template
         modules = @deserializer_name.parents.reverse.map &:module_name
 
         type_file_for @deserializer_name, result do |f|
@@ -68,7 +64,6 @@ module WsdlMapper
       end
 
       def generate_element_directory schema, result
-        @element_directory_name = @namer.get_support_name @element_directory_name_template
         modules = get_module_names @element_directory_name
 
         type_file_for @element_directory_name, result do |f|
@@ -101,7 +96,6 @@ module WsdlMapper
       end
 
       def generate_type_directory schema, result
-        @type_directory_name = @namer.get_support_name @type_directory_name_template
         modules = get_module_names @type_directory_name
 
         type_file_for @type_directory_name, result do |f|

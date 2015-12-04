@@ -49,16 +49,6 @@ module WsdlMapper
         type_name
       end
 
-      def get_operation_s8r_name service, port, operation
-        service_name = get_service_name service
-        port_name = get_port_name service, port
-        module_path = @module_path + [service_name.class_name, port_name.class_name]
-        name = operation.name.name + "S8r"
-        type_name = TypeName.new camelize(name), module_path, get_file_name(name), get_file_path(module_path)
-        type_name.parent = make_parents module_path
-        type_name
-      end
-
       def get_property_name_for_string str
         PropertyName.new underscore(str), '@' + underscore(str)
       end
@@ -81,6 +71,38 @@ module WsdlMapper
 
       def get_output_d10r_name service, port, op
         get_operation_part_name service, port, op, 'OutputD10r'
+      end
+
+      def get_output_type_directory_name
+        'OutputTypeDirectory'
+      end
+
+      def get_output_header_d10r_name
+        'OutputHeaderDeserializer'
+      end
+
+      def get_output_body_d10r_name
+        'OutputBodyDeserializer'
+      end
+
+      def get_output_element_directory_name
+        'OutputElementDirectory'
+      end
+
+      def get_input_type_directory_name
+        'InputTypeDirectory'
+      end
+
+      def get_input_header_d10r_name
+        'InputHeaderDeserializer'
+      end
+
+      def get_input_body_d10r_name
+        'InputBodyDeserializer'
+      end
+
+      def get_input_element_directory_name
+        'InputElementDirectory'
       end
 
       def get_operation_part_name service, port, op, name

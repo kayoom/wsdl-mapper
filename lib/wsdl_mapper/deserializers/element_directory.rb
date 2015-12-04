@@ -9,9 +9,10 @@ module WsdlMapper
         attr_accessor :loaded
       end
 
-      def initialize type_directory, &block
+      def initialize type_directory, *base, &block
         @type_directory = type_directory
         @directory = WsdlMapper::Dom::Directory.new on_nil: Errors::UnknownElementError
+        @base = base
         instance_exec &block
       end
 
@@ -21,19 +22,39 @@ module WsdlMapper
         @directory[element_name] = ElementItem.new element_name, type_name, require_path, class_name
       end
 
+      def knows? element_name
+        @directory.has_key?(element_name) || @base.any? { |b| b.knows? element_name }
+      end
+
       def load element_name
-        item = @directory[element_name]
-        if item.loaded
-          false
+        if @directory.has_key? element_name
+          item = @directory[element_name]
+          if item.loaded
+            false
+          else
+            require item.require_path
+            item.loaded = true
+            true
+          end
         else
-          require item.require_path
-          item.loaded = true
-          true
+          base = @base.find { |b| b.knows? element_name }
+          unless base
+            raise Errors::UnknownElementError.new element_name
+          end
+          base.load element_name
         end
       end
 
       def each_element &block
-        @directory.each &block
+        if block_given?
+          @base.each do |base|
+            base.each_element &block
+          end
+          @directory.each &block
+        else
+          types = @base.inject([]) { |sum, b| sum + b.each_element.to_a }
+          types + @directory.each.to_a
+        end
       end
 
       def each_type &block

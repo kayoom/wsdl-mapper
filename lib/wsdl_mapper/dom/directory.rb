@@ -25,12 +25,16 @@ module WsdlMapper
         hsh && hsh[name.name] ||
           on_nil(name)
       end
+      alias_method :[], :get
 
       def on_nil name
         @on_nil && raise(@on_nil.new(name))
       end
 
-      alias_method :[], :get
+      def has_key? name
+        hsh = @data[name.ns]
+        !!(hsh && hsh[name.name])
+      end
 
       # @param [WsdlMapper::Dom::Name] name
       # @param [Object] value

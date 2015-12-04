@@ -47,6 +47,18 @@ module WsdlMapper
         type_name
       end
 
+      def get_d10r_type_directory_name
+        get_support_name 'D10rTypeDirectory'
+      end
+
+      def get_d10r_element_directory_name
+        get_support_name 'D10rElementDirectory'
+      end
+
+      def get_global_d10r_name
+        get_support_name 'Deserializer'
+      end
+
       # @param [WsdlMapper::Dom::ComplexType, WsdlMapper::Dom::SimpleType] type
       # @return [TypeName]
       def get_s8r_name type

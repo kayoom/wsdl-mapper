@@ -6,8 +6,9 @@ require 'wsdl_mapper/deserializers/soap_array_mapping'
 module WsdlMapper
   module Deserializers
     class TypeDirectory
-      def initialize
+      def initialize *base
         @types = WsdlMapper::Dom::Directory.new on_nil: Errors::UnknownTypeError
+        @base = base
       end
 
       def register_type type_name, klass, simple: false, &block
@@ -21,7 +22,15 @@ module WsdlMapper
       end
 
       def each_type &block
-        @types.each &block
+        if block_given?
+          @base.each do |base|
+            base.each_type &block
+          end
+          @types.each &block
+        else
+          types = @base.inject([]) { |sum, b| sum + b.each_type.to_a }
+          types + @types.each.to_a
+        end
       end
     end
   end

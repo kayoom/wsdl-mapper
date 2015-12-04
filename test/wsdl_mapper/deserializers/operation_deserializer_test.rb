@@ -17,9 +17,12 @@ module DeserializersTests
     NS = 'http://example.org/schema'
 
     SimpleExampleRpcEncoded = <<RUBY
-  require 'wsdl_mapper/svc_desc/envelope'
+  require "wsdl_mapper/svc_desc/envelope"
   require "wsdl_mapper/deserializers/type_directory"
   require "wsdl_mapper/deserializers/element_directory"
+  require "wsdl_mapper/deserializers/lazy_loading_deserializer"
+  require "wsdl_mapper/svc_desc/soap_type_directory"
+  require "wsdl_mapper/svc_desc/soap_element_directory"
   class PriceInlineType
     attr_accessor :content, :currency
 
@@ -37,24 +40,18 @@ module DeserializersTests
   end
   class OutputHeader
   end
-  TypeDirectory = ::WsdlMapper::Deserializers::TypeDirectory.new
-  PriceInlineTypeDeserializer = TypeDirectory.register_type(['http://example.org/schema', 'PriceInlineType'], PriceInlineType, simple: ['http://www.w3.org/2001/XMLSchema', 'double']) do
+  D10rTypeDirectory = ::WsdlMapper::Deserializers::TypeDirectory.new
+  PriceInlineTypeDeserializer = D10rTypeDirectory.register_type(['http://example.org/schema', 'PriceInlineType'], PriceInlineType, simple: ['http://www.w3.org/2001/XMLSchema', 'double']) do
     register_attr(:currency, ['http://example.org/schema', 'Currency'], ['http://www.w3.org/2001/XMLSchema', 'string'])
   end
-  OutputBodyDeserializer = TypeDirectory.register_type(['http://schemas.xmlsoap.org/soap/envelope/', 'Body'], OutputBody) do
+  OpTypeDirectory = ::WsdlMapper::Deserializers::TypeDirectory.new D10rTypeDirectory, WsdlMapper::SvcDesc::SoapTypeDirectory
+  OutputBodyDeserializer = OpTypeDirectory.register_type(['http://schemas.xmlsoap.org/soap/envelope/', 'Body'], OutputBody) do
     register_prop(:price, ['http://example.org/schema', 'Price'], ['http://example.org/schema', 'PriceInlineType'])
     register_wrapper(['http://example.org/schema', 'GetProductPriceResponse'])
   end
-  OutputHeaderDeserializer = TypeDirectory.register_type(['http://schemas.xmlsoap.org/soap/envelope/', 'Header'], OutputHeader) do
+  OutputHeaderDeserializer = OpTypeDirectory.register_type(['http://schemas.xmlsoap.org/soap/envelope/', 'Header'], OutputHeader) do
   end
-  EnvelopeDeserializer = TypeDirectory.register_type(['http://schemas.xmlsoap.org/soap/envelope/', 'Envelope'], ::WsdlMapper::SvcDesc::Envelope) do
-    register_prop(:header, ['http://schemas.xmlsoap.org/soap/envelope/', 'Header'], ['http://schemas.xmlsoap.org/soap/envelope/', 'Header'])
-    register_prop(:body, ['http://schemas.xmlsoap.org/soap/envelope/', 'Body'], ['http://schemas.xmlsoap.org/soap/envelope/', 'Body'])
-  end
-  ElementDirectory = ::WsdlMapper::Deserializers::ElementDirectory.new(TypeDirectory) do
-    register_element ['http://schemas.xmlsoap.org/soap/envelope/', 'Envelope'], ['http://schemas.xmlsoap.org/soap/envelope/', 'Envelope'], 'wsdl_mapper/svc_desc/envelope', ::WsdlMapper::SvcDesc::Envelope
-
-    def require(path); end
+  ElementDirectory = ::WsdlMapper::Deserializers::ElementDirectory.new(OpTypeDirectory, WsdlMapper::SvcDesc::SoapElementDirectory) do
   end
 RUBY
 
@@ -319,7 +316,6 @@ XML
   end
 RUBY
 
-    focus
     def test_simple_example_doc_encoded
       xml = <<XML
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sch="http://example.org/schema">

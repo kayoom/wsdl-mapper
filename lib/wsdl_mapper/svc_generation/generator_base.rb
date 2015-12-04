@@ -16,10 +16,13 @@ module WsdlMapper
         @generator.get_formatter io
       end
 
+      # @return [WsdlMapper::Naming::AbstractServiceNamer]
       def service_namer
         @generator.service_namer
       end
 
+
+      # @return [WsdlMapper::Naming::AbstractNamer]
       def namer
         @generator.namer
       end
