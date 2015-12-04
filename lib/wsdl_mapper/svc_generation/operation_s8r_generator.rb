@@ -6,7 +6,7 @@ module WsdlMapper
     class OperationS8rGenerator < OperationGeneratorBase
       include WsdlMapper::Dom
 
-      SOAP_ENV_NS = 'http://www.w3.org/2001/12/soap-envelope'
+      SOAP_ENV_NS = 'http://schemas.xmlsoap.org/soap/envelope/'
       SOAP_BODY = Name.get SOAP_ENV_NS, 'Body'
       SOAP_HEADER = Name.get SOAP_ENV_NS, 'Header'
 

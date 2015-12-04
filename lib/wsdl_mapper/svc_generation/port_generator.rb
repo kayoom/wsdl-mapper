@@ -35,12 +35,13 @@ module WsdlMapper
       def generate_port_ctr f, ops, port
         f.in_def :initialize, 'api', 'service' do
           f.call :super, 'api', 'service'
-          f.assignment '@style', port.type.binding.style.inspect
-          f.assignment '@transport', port.type.binding.transport.inspect
-          f.assignment '@soap_address', port.type.address_location.inspect
+          f.assignment '@_style', port.type.binding.style.inspect
+          f.assignment '@_transport', port.type.binding.transport.inspect
+          f.assignment '@_soap_address', port.type.address_location.inspect
 
           ops.each do |op|
             f.assignment op.property_name.var_name, op.name.name + '.new(api, service, self)'
+            f.statement "@_operations << #{op.property_name.var_name}"
           end
         end
       end

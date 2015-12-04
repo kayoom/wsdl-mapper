@@ -25,7 +25,7 @@ module WsdlMapper
         link_bindings
         link_services
 
-        @description
+        [@description, schema]
       end
 
       private

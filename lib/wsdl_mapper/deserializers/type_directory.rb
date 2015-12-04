@@ -6,9 +6,10 @@ require 'wsdl_mapper/deserializers/soap_array_mapping'
 module WsdlMapper
   module Deserializers
     class TypeDirectory
-      def initialize *base
+      def initialize *base, &block
         @types = WsdlMapper::Dom::Directory.new on_nil: Errors::UnknownTypeError
         @base = base
+        instance_exec &block if block_given?
       end
 
       def register_type type_name, klass, simple: false, &block

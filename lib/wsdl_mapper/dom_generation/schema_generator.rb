@@ -120,16 +120,6 @@ module WsdlMapper
           @class_generator.generate ttg, result
         end
       end
-
-      # def get_type_name type
-      #   if type.name
-      #     @namer.get_type_name type
-      #   elsif type.containing_property
-      #     @namer.get_type_name @namer.get_inline_type type.containing_property
-      #   elsif type.containing_element
-      #     @namer.get_type_name @namer.get_inline_type type.containing_element
-      #   end
-      # end
     end
   end
 end

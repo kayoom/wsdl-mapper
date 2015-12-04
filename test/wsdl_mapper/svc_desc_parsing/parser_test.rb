@@ -10,13 +10,13 @@ module SvcDescParsingTests
     NS = 'http://example.org/schema'
 
     def test_name
-      desc = TestHelper.parse_wsdl 'simple_service.wsdl'
+      desc = TestHelper.parse_wsdl 'wsdls/simple_service.wsdl'
 
       assert_equal 'MyWsdl', desc.name
     end
 
     def test_messages
-      desc = TestHelper.parse_wsdl 'simple_service.wsdl'
+      desc = TestHelper.parse_wsdl 'wsdls/simple_service.wsdl'
 
       msgs = desc.each_message.to_a
       assert_equal 3, msgs.count
@@ -30,7 +30,7 @@ module SvcDescParsingTests
     end
 
     def test_message_part_with_element
-      desc = TestHelper.parse_wsdl 'simple_service.wsdl'
+      desc = TestHelper.parse_wsdl 'wsdls/simple_service.wsdl'
 
       msg = desc.each_message.first
 
@@ -44,7 +44,7 @@ module SvcDescParsingTests
     end
 
     def test_message_part_with_type
-      desc = TestHelper.parse_wsdl 'simple_service.wsdl'
+      desc = TestHelper.parse_wsdl 'wsdls/simple_service.wsdl'
 
       msg = desc.each_message.to_a[1]
 
@@ -58,7 +58,7 @@ module SvcDescParsingTests
     end
 
     def test_port_types
-      desc = TestHelper.parse_wsdl 'simple_service.wsdl'
+      desc = TestHelper.parse_wsdl 'wsdls/simple_service.wsdl'
 
       port_types = desc.each_port_type.to_a
       assert_equal 1, port_types.count
@@ -68,7 +68,7 @@ module SvcDescParsingTests
     end
 
     def test_port_type_operations
-      desc = TestHelper.parse_wsdl 'simple_service.wsdl'
+      desc = TestHelper.parse_wsdl 'wsdls/simple_service.wsdl'
 
       port_types = desc.each_port_type.to_a
       assert_equal 1, port_types.count
@@ -93,7 +93,7 @@ module SvcDescParsingTests
     end
 
     def test_port_type_operation_overloads
-      desc = TestHelper.parse_wsdl 'simple_service_with_overload.wsdl'
+      desc = TestHelper.parse_wsdl 'wsdls/simple_service_with_overload.wsdl'
 
       port_types = desc.each_port_type.to_a
       assert_equal 1, port_types.count
@@ -118,7 +118,7 @@ module SvcDescParsingTests
     end
 
     def test_services
-      desc = TestHelper.parse_wsdl 'simple_service.wsdl'
+      desc = TestHelper.parse_wsdl 'wsdls/simple_service.wsdl'
 
       services = desc.each_service.to_a
       assert_equal 1, services.count
@@ -128,7 +128,7 @@ module SvcDescParsingTests
     end
 
     def test_service_ports
-      desc = TestHelper.parse_wsdl 'simple_service.wsdl'
+      desc = TestHelper.parse_wsdl 'wsdls/simple_service.wsdl'
 
       service = desc.each_service.first
       ports = service.each_port.to_a
@@ -142,7 +142,7 @@ module SvcDescParsingTests
     end
 
     def test_bindings_document
-      desc = TestHelper.parse_wsdl 'simple_service.wsdl'
+      desc = TestHelper.parse_wsdl 'wsdls/simple_service.wsdl'
 
       bindings = desc.each_binding.to_a
       assert_equal 2, bindings.count
@@ -156,7 +156,7 @@ module SvcDescParsingTests
     end
 
     def test_binding_document_operations
-      desc = TestHelper.parse_wsdl 'simple_service.wsdl'
+      desc = TestHelper.parse_wsdl 'wsdls/simple_service.wsdl'
 
       bindings = desc.each_binding.to_a
       binding = bindings.first
@@ -203,7 +203,7 @@ module SvcDescParsingTests
     end
 
     def test_bindings_rpc
-      desc = TestHelper.parse_wsdl 'simple_service.wsdl'
+      desc = TestHelper.parse_wsdl 'wsdls/simple_service.wsdl'
 
       bindings = desc.each_binding.to_a
       assert_equal 2, bindings.count
@@ -217,7 +217,7 @@ module SvcDescParsingTests
     end
 
     def test_binding_rpc_operations
-      desc = TestHelper.parse_wsdl 'simple_service.wsdl'
+      desc = TestHelper.parse_wsdl 'wsdls/simple_service.wsdl'
 
       bindings = desc.each_binding.to_a
       binding = bindings.last
@@ -259,7 +259,7 @@ module SvcDescParsingTests
     end
 
     def test_embedded_schema
-      desc = TestHelper.parse_wsdl 'simple_service.wsdl'
+      desc = TestHelper.parse_wsdl 'wsdls/simple_service.wsdl'
       schema = desc.each_schema.first
 
       assert_equal 3, schema.each_type.count

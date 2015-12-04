@@ -16,7 +16,7 @@ module SvcDescParsingTests
     end
 
     def test_operation_generation
-      generate 'price_service_rpc_encoded.wsdl'
+      generate 'wsdls/price_service_rpc_encoded.wsdl'
 
       assert_file_is 'price_service/product_prices/get_product_price.rb', <<RUBY
 require "wsdl_mapper/runtime/operation"
@@ -27,8 +27,8 @@ class PriceService
 
       def initialize(api, service, port)
         super(api, service, port)
-        @soap_action = "GetProductPrice"
-        @requires = [
+        @_soap_action = "GetProductPrice"
+        @_requires = [
           "credentials_type",
           "product_idtype",
           "variant_idtype",
@@ -36,7 +36,11 @@ class PriceService
           "price_service/product_prices/get_product_price/input_header",
           "price_service/product_prices/get_product_price/input_body",
           "price_service/product_prices/get_product_price/output_header",
-          "price_service/product_prices/get_product_price/output_body"
+          "price_service/product_prices/get_product_price/output_body",
+          "price_service/product_prices/get_product_price/input_s8r",
+          "price_service/product_prices/get_product_price/input_d10r",
+          "price_service/product_prices/get_product_price/output_s8r",
+          "price_service/product_prices/get_product_price/output_d10r"
         ]
       end
 
@@ -56,7 +60,7 @@ RUBY
     end
 
     def test_operation_input_header_generation_doc_literal
-      generate 'price_service_doc_literal.wsdl'
+      generate 'wsdls/price_service_doc_literal.wsdl'
 
       assert_file_is 'price_service/product_prices/get_product_price/input_header.rb', <<RUBY
 require "wsdl_mapper/runtime/header"
@@ -78,7 +82,7 @@ RUBY
     end
 
     def test_operation_output_header_generation_doc_literal
-      generate 'price_service_doc_literal.wsdl'
+      generate 'wsdls/price_service_doc_literal.wsdl'
 
       assert_file_is 'price_service/product_prices/get_product_price/output_header.rb', <<RUBY
 require "wsdl_mapper/runtime/header"
@@ -98,7 +102,7 @@ RUBY
     end
 
     def test_operation_input_body_generation_doc_literal
-      generate 'price_service_doc_literal.wsdl'
+      generate 'wsdls/price_service_doc_literal.wsdl'
 
       assert_file_is 'price_service/product_prices/get_product_price/input_body.rb', <<RUBY
 require "wsdl_mapper/runtime/body"
@@ -122,7 +126,7 @@ RUBY
     end
 
     def test_operation_output_body_generation_doc_literal
-      generate 'price_service_doc_literal.wsdl'
+      generate 'wsdls/price_service_doc_literal.wsdl'
 
       assert_file_is 'price_service/product_prices/get_product_price/output_body.rb', <<RUBY
 require "wsdl_mapper/runtime/body"
@@ -144,7 +148,7 @@ RUBY
     end
 
     def test_operation_input_header_generation
-      generate 'price_service_rpc_encoded.wsdl'
+      generate 'wsdls/price_service_rpc_encoded.wsdl'
 
       assert_file_is 'price_service/product_prices/get_product_price/input_header.rb', <<RUBY
 require "wsdl_mapper/runtime/header"
@@ -166,7 +170,7 @@ RUBY
     end
 
     def test_operation_output_header_generation
-      generate 'price_service_rpc_encoded.wsdl'
+      generate 'wsdls/price_service_rpc_encoded.wsdl'
 
       assert_file_is 'price_service/product_prices/get_product_price/output_header.rb', <<RUBY
 require "wsdl_mapper/runtime/header"
@@ -186,7 +190,7 @@ RUBY
     end
 
     def test_operation_input_body_generation
-      generate 'price_service_rpc_encoded.wsdl'
+      generate 'wsdls/price_service_rpc_encoded.wsdl'
 
       assert_file_is 'price_service/product_prices/get_product_price/input_body.rb', <<RUBY
 require "wsdl_mapper/runtime/body"
@@ -210,7 +214,7 @@ RUBY
     end
 
     def test_operation_output_body_generation
-      generate 'price_service_rpc_encoded.wsdl'
+      generate 'wsdls/price_service_rpc_encoded.wsdl'
 
       assert_file_is 'price_service/product_prices/get_product_price/output_body.rb', <<RUBY
 require "wsdl_mapper/runtime/body"

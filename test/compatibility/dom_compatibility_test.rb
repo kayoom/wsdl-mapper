@@ -8,7 +8,7 @@ module SchemaTests
     include WsdlMapper::Dom
 
     def test_parsing_ebay_svc
-      doc = TestHelper.get_xml_doc 'ebaySvc.xsd'
+      doc = TestHelper.get_xml_doc 'services/ebaySvc.xsd'
       parser = WsdlMapper::DomParsing::Parser.new
 
       schema = parser.parse doc
@@ -17,7 +17,7 @@ module SchemaTests
     end
 
     def test_parsing_plenty_114
-      doc = TestHelper.get_xml_doc 'plenty_114.xsd'
+      doc = TestHelper.get_xml_doc 'services/plenty_114.xsd'
       parser = WsdlMapper::DomParsing::Parser.new
 
       schema = parser.parse doc
@@ -26,7 +26,7 @@ module SchemaTests
     end
 
     def test_parsing_magento_v2
-      doc = TestHelper.get_xml_doc 'magento_v2.xsd'
+      doc = TestHelper.get_xml_doc 'services/magento_v2.xsd'
       parser = WsdlMapper::DomParsing::Parser.new
 
       schema = parser.parse doc
@@ -35,7 +35,7 @@ module SchemaTests
     end
 
     def test_parsing_tb_stock
-      doc = TestHelper.get_xml_doc 'tb-stock_all_in_one.xsd'
+      doc = TestHelper.get_xml_doc 'services/tb-stock_all_in_one.xsd'
       parser = WsdlMapper::DomParsing::Parser.new
 
       schema = parser.parse doc
@@ -44,7 +44,7 @@ module SchemaTests
     end
 
     def test_parsing_tb_cat
-      doc = TestHelper.get_xml_doc 'tb-cat_1_2_import.xsd'
+      doc = TestHelper.get_xml_doc 'services/tb-cat_1_2_import.xsd'
       parser = WsdlMapper::DomParsing::Parser.new import_resolver: DefaultResolver.new(File.dirname(__FILE__))
 
       schema = parser.parse doc

@@ -16,7 +16,7 @@ module SvcDescParsingTests
     end
 
     def test_port_generation
-      generate 'price_service_rpc_encoded.wsdl'
+      generate 'wsdls/price_service_rpc_encoded.wsdl'
 
       assert_file_is 'price_service/product_prices.rb', <<RUBY
 require "wsdl_mapper/runtime/port"
@@ -29,10 +29,11 @@ class PriceService
 
     def initialize(api, service)
       super(api, service)
-      @style = "rpc"
-      @transport = "http://schemas.xmlsoap.org/soap/http"
-      @soap_address = "http://example.org/api"
+      @_style = "rpc"
+      @_transport = "http://schemas.xmlsoap.org/soap/http"
+      @_soap_address = "http://example.org/api"
       @get_product_price = ::PriceService::ProductPrices::GetProductPrice.new(api, service, self)
+      @_operations << @get_product_price
     end
   end
 end

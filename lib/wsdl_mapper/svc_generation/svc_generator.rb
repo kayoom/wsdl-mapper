@@ -99,6 +99,7 @@ module WsdlMapper
           f.call :super, 'options'
           services.each do |s|
             f.assignment s.property_name.var_name, "#{s.name.name}.new(self)"
+            f.statement "@_services << #{s.property_name.var_name}"
           end
         end
       end

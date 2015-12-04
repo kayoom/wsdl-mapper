@@ -16,7 +16,7 @@ module SvcDescParsingTests
     end
 
     def test_api_generation
-      generate 'price_service_rpc_encoded.wsdl'
+      generate 'wsdls/price_service_rpc_encoded.wsdl'
 
       assert_file_is 'api.rb', <<RUBY
 require "wsdl_mapper/runtime/api"
@@ -32,6 +32,7 @@ class Api < ::WsdlMapper::Runtime::Api
   def initialize(options = {})
     super(options)
     @price_service = ::PriceService.new(self)
+    @_services << @price_service
   end
 end
 RUBY

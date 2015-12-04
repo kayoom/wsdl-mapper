@@ -19,7 +19,7 @@ module WsdlMapperTesting
     end
 
     def parse_wsdl name
-      WsdlMapper::SvcDescParsing::Parser.new.parse get_xml_doc name
+      WsdlMapper::SvcDescParsing::Parser.new.parse(get_xml_doc(name)).first
     end
 
     def get_tmp_path

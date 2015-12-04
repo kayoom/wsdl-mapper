@@ -1,18 +1,37 @@
-require 'wsdl_mapper/runtime/soap_message'
+require 'wsdl_mapper/svc_desc/envelope'
 
 module WsdlMapper
   module Runtime
     class Operation
       def initialize(api, service, port)
-        @api = api
-        @service = service
-        @port = port
+        @_api = api
+        @_service = service
+        @_port = port
+        @_requires = []
+        @_loaded = false
       end
 
-      def input_scaffold
-        message = SoapMessage.new
+      def new_input(header: {}, body: {})
+        load_requires
       end
 
+      def new_output(header: {}, body: {})
+        load_requires
+      end
+
+      def new_message(header, body)
+        WsdlMapper::SvcDesc::Envelope.new header: header, body: body
+      end
+
+      protected
+      def load_requires
+        return if @_loaded
+
+        @_requires.each do |req|
+          require req
+        end
+        @_loaded = true
+      end
     end
   end
 end

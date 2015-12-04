@@ -58,8 +58,8 @@ module WsdlMapper
       def generate_op_ctr f, service, port, op
         f.in_def :initialize, 'api', 'service', 'port' do
           f.call :super, 'api', 'service', 'port'
-          f.assignment '@soap_action', op.type.soap_action.inspect
-          f.literal_array '@requires', get_op_requires(service, port, op)
+          f.assignment '@_soap_action', op.type.soap_action.inspect
+          f.literal_array '@_requires', get_op_requires(service, port, op)
         end
       end
 
@@ -81,6 +81,10 @@ module WsdlMapper
         requires << service_namer.get_input_body_name(service.type, port.type, op.type).require_path
         requires << service_namer.get_output_header_name(service.type, port.type, op.type).require_path
         requires << service_namer.get_output_body_name(service.type, port.type, op.type).require_path
+        requires << service_namer.get_input_s8r_name(service.type, port.type, op.type).require_path
+        requires << service_namer.get_input_d10r_name(service.type, port.type, op.type).require_path
+        requires << service_namer.get_output_s8r_name(service.type, port.type, op.type).require_path
+        requires << service_namer.get_output_d10r_name(service.type, port.type, op.type).require_path
         requires.map &:inspect
       end
 

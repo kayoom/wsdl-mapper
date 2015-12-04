@@ -46,9 +46,9 @@ module WsdlMapper
         parse_doc doc
 
         # Phase 2: Linking
-        @linker.link
+        _, @schema = @linker.link
 
-        @description
+        [@description, @schema]
       end
 
       # @param [Nokogiri::XML::Node] node

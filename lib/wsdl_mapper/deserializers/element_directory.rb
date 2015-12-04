@@ -13,7 +13,7 @@ module WsdlMapper
         @type_directory = type_directory
         @directory = WsdlMapper::Dom::Directory.new on_nil: Errors::UnknownElementError
         @base = base
-        instance_exec &block
+        instance_exec &block if block_given?
       end
 
       def register_element element_name, type_name, require_path, class_name

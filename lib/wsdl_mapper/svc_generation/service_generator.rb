@@ -40,6 +40,7 @@ module WsdlMapper
           f.call :super, 'api'
           ports.each do |p|
             f.assignment p.property_name.var_name, "#{p.name.name}.new(api, self)"
+            f.statement "@_ports << #{p.property_name.var_name}"
           end
         end
       end

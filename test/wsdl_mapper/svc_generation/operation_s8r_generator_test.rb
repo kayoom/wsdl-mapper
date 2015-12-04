@@ -8,7 +8,7 @@ module SvcDescParsingTests
     include WsdlMapper::Dom
 
     NS = 'http://example.org/schema'
-    SOAP_ENV = 'http://www.w3.org/2001/12/soap-envelope'
+    SOAP_ENV = 'http://schemas.xmlsoap.org/soap/envelope/'
 
     def generate name
       @desc = TestHelper.parse_wsdl name
@@ -20,7 +20,7 @@ module SvcDescParsingTests
 
     ### Header ###
     def test_encoded_input_header_s8r
-      generate 'price_service_rpc_encoded.wsdl'
+      generate 'wsdls/price_service_rpc_encoded.wsdl'
 
       assert_file_contains 'price_service/product_prices/get_product_price/input_s8r.rb', <<RUBY
         def build_header(x, header)
@@ -32,7 +32,7 @@ RUBY
     end
 
     def test_literal_input_header_with_element_s8r
-      generate 'price_service_doc_literal.wsdl'
+      generate 'wsdls/price_service_doc_literal.wsdl'
 
       assert_file_contains 'price_service/product_prices/get_product_price/input_s8r.rb', <<RUBY
         def build_header(x, header)
@@ -46,7 +46,7 @@ RUBY
     end
 
     def test_literal_input_header_with_type_s8r
-      generate 'price_service_doc_literal_type.wsdl'
+      generate 'wsdls/price_service_doc_literal_type.wsdl'
 
       assert_file_contains 'price_service/product_prices/get_product_price/input_s8r.rb', <<RUBY
         def build_header(x, header)
@@ -62,7 +62,7 @@ RUBY
     #### RPC ####
 
     def test_rpc_encoded_input_body_s8r
-      generate 'price_service_rpc_encoded.wsdl'
+      generate 'wsdls/price_service_rpc_encoded.wsdl'
 
       assert_file_contains 'price_service/product_prices/get_product_price/input_s8r.rb', <<RUBY
         def build_body(x, body)
@@ -77,7 +77,7 @@ RUBY
     end
 
     def test_rpc_literal_input_body_s8r
-      generate 'price_service_rpc_literal.wsdl'
+      generate 'wsdls/price_service_rpc_literal.wsdl'
 
       assert_file_contains 'price_service/product_prices/get_product_price/input_s8r.rb', <<RUBY
         def build_body(x, body)
@@ -94,7 +94,7 @@ RUBY
     #### Document ####
 
     def test_doc_encoded_input_body_s8r
-      generate 'price_service_doc_encoded.wsdl'
+      generate 'wsdls/price_service_doc_encoded.wsdl'
 
       assert_file_contains 'price_service/product_prices/get_product_price/input_s8r.rb', <<RUBY
         def build_body(x, body)
@@ -107,7 +107,7 @@ RUBY
     end
 
     def test_doc_literal_input_body_with_type_s8r
-      generate 'price_service_doc_literal_type.wsdl'
+      generate 'wsdls/price_service_doc_literal_type.wsdl'
 
       assert_file_contains 'price_service/product_prices/get_product_price/input_s8r.rb', <<RUBY
         def build_body(x, body)
@@ -119,7 +119,7 @@ RUBY
     end
 
     def test_doc_literal_input_body_with_elements_s8r
-      generate 'price_service_doc_literal.wsdl'
+      generate 'wsdls/price_service_doc_literal.wsdl'
 
       assert_file_contains 'price_service/product_prices/get_product_price/input_s8r.rb', <<RUBY
         def build_body(x, body)
@@ -137,7 +137,7 @@ RUBY
     #### RPC ####
 
     def test_rpc_encoded_output_body_s8r
-      generate 'price_service_rpc_encoded.wsdl'
+      generate 'wsdls/price_service_rpc_encoded.wsdl'
 
       assert_file_contains 'price_service/product_prices/get_product_price/output_s8r.rb', <<RUBY
 def build_body(x, body)
@@ -151,7 +151,7 @@ RUBY
     end
 
     def test_rpc_literal_output_body_s8r
-      generate 'price_service_rpc_literal.wsdl'
+      generate 'wsdls/price_service_rpc_literal.wsdl'
 
       assert_file_contains 'price_service/product_prices/get_product_price/output_s8r.rb', <<RUBY
 def build_body(x, body)

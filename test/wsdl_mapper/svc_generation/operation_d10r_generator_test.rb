@@ -17,7 +17,7 @@ module SvcDescParsingTests
     end
 
     def test_rpc_encoded_input_d10r
-      generate 'price_service_rpc_encoded.wsdl'
+      generate 'wsdls/price_service_rpc_encoded.wsdl'
 
       assert_file_is 'price_service/product_prices/get_product_price/input_d10r.rb', <<RUBY
 require "wsdl_mapper/svc_desc/envelope"
@@ -52,7 +52,7 @@ RUBY
     end
 
     def test_doc_literal_input_d10r
-      generate 'price_service_doc_literal.wsdl'
+      generate 'wsdls/price_service_doc_literal.wsdl'
 
       assert_file_is 'price_service/product_prices/get_product_price/input_d10r.rb', <<RUBY
 require "wsdl_mapper/svc_desc/envelope"
@@ -86,7 +86,7 @@ RUBY
     end
 
     def test_rpc_encoded_output_d10r
-      generate 'price_service_rpc_encoded.wsdl'
+      generate 'wsdls/price_service_rpc_encoded.wsdl'
 
       assert_file_is 'price_service/product_prices/get_product_price/output_d10r.rb', <<RUBY
 require "wsdl_mapper/svc_desc/envelope"
