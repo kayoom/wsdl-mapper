@@ -18,6 +18,7 @@ module WsdlMapper
 
       protected
       def reload
+        @element_type_mappings.clear
         @element_directory.each_element do |(elm_name, item)|
           @element_mappings[elm_name] = item.type_name
         end

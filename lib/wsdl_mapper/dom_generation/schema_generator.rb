@@ -27,6 +27,7 @@ module WsdlMapper
       attr_reader :class_generator, :module_generator, :ctr_generator, :enum_generator, :type_mapping, :value_defaults_generator, :value_generator, :wrapping_type_generator
 
       def initialize(context,
+        skip_modules: false,
         formatter_factory: DefaultFormatter,
         namer: WsdlMapper::Naming::DefaultNamer.new,
         class_generator_factory: DefaultClassGenerator,
@@ -49,6 +50,7 @@ module WsdlMapper
         @wrapping_type_generator = wrapping_type_generator_factory.new self
         @type_mapping = type_mapping
         @value_generator = value_generator
+        @skip_modules = skip_modules
       end
 
       def generate(schema)
@@ -58,8 +60,10 @@ module WsdlMapper
         generate_enumerations schema, result
         generate_restrictions schema, result
 
-        result.module_tree.each do |module_node|
-          @module_generator.generate module_node, result
+        unless @skip_modules
+          result.module_tree.each do |module_node|
+            @module_generator.generate module_node, result
+          end
         end
 
         result

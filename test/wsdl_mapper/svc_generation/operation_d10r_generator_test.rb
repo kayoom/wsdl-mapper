@@ -38,7 +38,7 @@ require "variant_idtype_deserializer"
 class PriceService
   class ProductPrices
     class GetProductPrice
-      InputTypeDirectory = ::WsdlMapper::Deserializers::TypeDirectory.new(::D10rTypeDirectory, ::WsdlMapper::SvcDesc::SoapTypeDirectory)
+      InputTypeDirectory = ::WsdlMapper::Deserializers::TypeDirectory.new(::WsdlMapper::SvcDesc::SoapTypeDirectory, ::D10rTypeDirectory)
       InputHeaderDeserializer = InputTypeDirectory.register_type(["http://schemas.xmlsoap.org/soap/envelope/", "Header"], ::PriceService::ProductPrices::GetProductPrice::InputHeader) do
         register_prop(:credentials_user_and_password, ["http://example.org/schema", "UserAndPassword"], ["http://example.org/schema", "CredentialsType"])
       end
@@ -78,7 +78,7 @@ require "variant_idtype_deserializer"
 class PriceService
   class ProductPrices
     class GetProductPrice
-      InputTypeDirectory = ::WsdlMapper::Deserializers::TypeDirectory.new(::D10rTypeDirectory, ::WsdlMapper::SvcDesc::SoapTypeDirectory)
+      InputTypeDirectory = ::WsdlMapper::Deserializers::TypeDirectory.new(::WsdlMapper::SvcDesc::SoapTypeDirectory, ::D10rTypeDirectory)
       InputHeaderDeserializer = InputTypeDirectory.register_type(["http://schemas.xmlsoap.org/soap/envelope/", "Header"], ::PriceService::ProductPrices::GetProductPrice::InputHeader) do
         register_prop(:credentials_user_and_password, ["http://example.org/schema", "UserAndPassword"], ["http://example.org/schema", "CredentialsInlineType"])
       end
@@ -115,7 +115,7 @@ require "price_inline_type_deserializer"
 class PriceService
   class ProductPrices
     class GetProductPrice
-      OutputTypeDirectory = ::WsdlMapper::Deserializers::TypeDirectory.new(::D10rTypeDirectory, ::WsdlMapper::SvcDesc::SoapTypeDirectory)
+      OutputTypeDirectory = ::WsdlMapper::Deserializers::TypeDirectory.new(::WsdlMapper::SvcDesc::SoapTypeDirectory, ::D10rTypeDirectory)
       OutputHeaderDeserializer = OutputTypeDirectory.register_type(["http://schemas.xmlsoap.org/soap/envelope/", "Header"], ::PriceService::ProductPrices::GetProductPrice::OutputHeader) do
       end
       OutputBodyDeserializer = OutputTypeDirectory.register_type(["http://schemas.xmlsoap.org/soap/envelope/", "Body"], ::PriceService::ProductPrices::GetProductPrice::OutputBody) do

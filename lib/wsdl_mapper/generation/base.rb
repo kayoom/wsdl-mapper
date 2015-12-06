@@ -28,14 +28,19 @@ module WsdlMapper
         file file_name, result, &block
       end
 
+      def append_file_for(type_name, result, &block)
+        file_name = @context.path_for type_name
+        file file_name, result, mode: 'a', &block
+      end
+
       # @yieldparam [WsdlMapper::Generation::AbstractFormatter]
       def type_file_for(type_name, result, &block)
         file_for type_name, result, &block
         result.add_type type_name
       end
 
-      def file(file_name, result)
-        File.open file_name, 'w' do |io|
+      def file(file_name, result, mode: 'w')
+        File.open file_name, mode do |io|
           f = get_formatter io
           yield f
         end

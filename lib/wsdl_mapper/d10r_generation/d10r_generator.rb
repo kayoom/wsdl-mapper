@@ -15,6 +15,7 @@ module WsdlMapper
       attr_reader :context
 
       def initialize(context,
+        skip_modules: false,
         namer: WsdlMapper::Naming::DefaultNamer.new,
         formatter_factory: DefaultFormatter,
         module_generator_factory: DefaultModuleGenerator)
@@ -25,6 +26,7 @@ module WsdlMapper
         @type_directory_name = @namer.get_d10r_type_directory_name
         @element_directory_name = @namer.get_d10r_element_directory_name
         @deserializer_name = @namer.get_global_d10r_name
+        @skip_modules = skip_modules
       end
 
       def generate(schema)
@@ -36,8 +38,10 @@ module WsdlMapper
           generate_type type, result
         end
 
-        result.module_tree.each do |module_node|
-          @module_generator.generate module_node, result
+        unless @skip_modules
+          result.module_tree.each do |module_node|
+            @module_generator.generate module_node, result
+          end
         end
 
         generate_element_directory schema, result

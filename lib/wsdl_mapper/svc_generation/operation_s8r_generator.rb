@@ -86,9 +86,7 @@ module WsdlMapper
 
       def generate_literal_element_header(f, header, part)
         soap_header_wrapper f do
-          part_wrapper f, part do
-            get_and_build_header f, header, part.element.name
-          end
+          get_and_build_header f, header, part.element.name
         end
       end
 

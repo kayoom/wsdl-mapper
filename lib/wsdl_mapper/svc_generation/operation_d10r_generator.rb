@@ -139,7 +139,7 @@ module WsdlMapper
       end
 
       def generate_type_directory(f, type_directory_name)
-        f.assignment type_directory_name, "#{type_directory_base.name}.new(#{@schema_type_directory_name.name}, #{soap_type_directory.name})"
+        f.assignment type_directory_name, "#{type_directory_base.name}.new(#{soap_type_directory.name}, #{@schema_type_directory_name.name})"
       end
 
       def type_directory_base

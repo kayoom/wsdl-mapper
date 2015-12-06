@@ -9,12 +9,13 @@ module WsdlMapper
   module Generation
     # @abstract
     class Facade
-      def initialize(file:, out:, module_path:, docs: false, separate_modules: true)
+      def initialize(file:, out:, module_path:, docs: false, separate_modules: true, namer: nil)
         @file = file
         @out = out
         @module_path = module_path
         @docs = docs
         @separate_modules = separate_modules
+        @namer = namer
       end
 
       def generate

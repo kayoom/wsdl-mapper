@@ -15,6 +15,7 @@ module WsdlMapper
       attr_reader :context
 
       def initialize(context,
+        skip_modules: false,
         namer: WsdlMapper::Naming::DefaultNamer.new,
         formatter_factory: DefaultFormatter,
         module_generator_factory: DefaultModuleGenerator)
@@ -25,6 +26,7 @@ module WsdlMapper
         @module_generator = module_generator_factory.new self
         @type_directory_name = namer.get_s8r_type_directory_name
         @serializer_name = namer.get_global_s8r_name
+        @skip_modules = skip_modules
       end
 
       def generate(schema)
@@ -37,8 +39,10 @@ module WsdlMapper
           generate_type type, result
         end
 
-        result.module_tree.each do |module_node|
-          @module_generator.generate module_node, result
+        unless @skip_modules
+          result.module_tree.each do |module_node|
+            @module_generator.generate module_node, result
+          end
         end
 
         result
@@ -143,11 +147,14 @@ module WsdlMapper
       end
 
       def write_property_statements(f, ttg)
-        ttg.type.each_property do |prop|
-          if prop.array?
-            write_property_array_statement f, prop
-          else
-            write_property_statement f, prop
+        types = ttg.type.bases << ttg.type
+        types.each do |type|
+          type.each_property do |prop|
+            if prop.array?
+              write_property_array_statement f, prop
+            else
+              write_property_statement f, prop
+            end
           end
         end
       end

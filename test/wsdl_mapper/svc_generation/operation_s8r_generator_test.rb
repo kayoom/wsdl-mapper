@@ -37,9 +37,7 @@ RUBY
       assert_file_contains 'price_service/product_prices/get_product_price/input_s8r.rb', <<RUBY
         def build_header(x, header)
           x.complex(nil, ["#{SOAP_ENV}", "Header"], []) do |x|
-            x.complex(nil, ["http://example.org/schema", "UserAndPassword"], []) do |x|
-              x.get("::CredentialsInlineType").build(x, header.credentials_user_and_password, ["http://example.org/schema", "Credentials"])
-            end
+            x.get("::CredentialsInlineType").build(x, header.credentials_user_and_password, ["http://example.org/schema", "Credentials"])
           end
         end
 RUBY

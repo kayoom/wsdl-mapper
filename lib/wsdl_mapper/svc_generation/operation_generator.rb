@@ -101,6 +101,7 @@ module WsdlMapper
         f.in_def :initialize, 'api', 'service', 'port' do
           f.call :super, 'api', 'service', 'port'
           f.assignment '@name', op.property_name.attr_name.inspect
+          f.assignment '@operation_name', generate_name(op.type.name)
           f.assignment '@soap_action', op.type.soap_action.inspect
           f.literal_array '@requires', get_op_requires(service, port, op)
         end

@@ -11,12 +11,17 @@ module WsdlMapper
   module SvcGeneration
     class Facade < WsdlMapper::Generation::Facade
 
+      def initialize(service_namer: nil, **args)
+        super **args
+        @service_namer = service_namer
+      end
+
       def service_namer
         @service_namer ||= WsdlMapper::Naming::DefaultServiceNamer.new(module_path: @module_path)
       end
 
       def schema_generator
-        @schema_generator ||= schema_generator_class.new context, namer: namer, ctr_generator_factory: WsdlMapper::DomGeneration::DefaultCtrGenerator
+        @schema_generator ||= schema_generator_class.new context, namer: namer, ctr_generator_factory: WsdlMapper::DomGeneration::DefaultCtrGenerator, skip_modules: true
       end
 
       def schema_generator_class
@@ -24,24 +29,36 @@ module WsdlMapper
       end
 
       def s8r_generator
-        @s8r_generator ||= WsdlMapper::S8rGeneration::S8rGenerator.new context, namer: namer
+        @s8r_generator ||= WsdlMapper::S8rGeneration::S8rGenerator.new context, namer: namer, skip_modules: true
       end
 
       def d10r_generator
-        @d10r_generator ||= WsdlMapper::D10rGeneration::D10rGenerator.new context, namer: namer
+        @d10r_generator ||= WsdlMapper::D10rGeneration::D10rGenerator.new context, namer: namer, skip_modules: true
       end
 
       def svc_generator
         @svc_generator ||= WsdlMapper::SvcGeneration::SvcGenerator.new context, namer: namer, service_namer: service_namer, schema_generator: schema_generator
       end
 
+      def module_generator
+        @module_generator ||= WsdlMapper::Generation::DefaultModuleGenerator.new schema_generator
+      end
+
       def generate
         desc, schema = parser.parse document
 
-        schema_generator.generate schema
-        s8r_generator.generate schema
-        d10r_generator.generate schema
-        svc_generator.generate desc
+        schema_result = schema_generator.generate schema
+        s8r_result = s8r_generator.generate schema
+        d10r_result = d10r_generator.generate schema
+        svc_result = svc_generator.generate desc
+
+        result = WsdlMapper::Generation::Result.merge svc_result, schema_result, s8r_result, d10r_result
+
+        result.module_tree.each do |module_node|
+          module_generator.generate module_node, result
+        end
+
+        result
       end
 
       def parser

@@ -11,7 +11,7 @@ module WsdlMapper
       def generate(module_node, result)
         return self if module_node.leaf?
 
-        file_for module_node.type_name, result do |f|
+        append_file_for module_node.type_name, result do |f|
           module_node.children.each do |child|
             f.require child.type_name.require_path
           end

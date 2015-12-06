@@ -9,6 +9,7 @@ module WsdlMapper
     class DocumentedSchemaGenerator < SchemaGenerator
 
       def initialize(context,
+        skip_modules: false,
         formatter_factory: DefaultFormatter,
         namer: WsdlMapper::Naming::DefaultNamer.new,
         class_generator_factory: DocumentedClassGenerator,

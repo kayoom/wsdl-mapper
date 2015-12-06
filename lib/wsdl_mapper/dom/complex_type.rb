@@ -41,6 +41,13 @@ module WsdlMapper
       def root
         @base ? @base.root : self
       end
+
+      def bases
+        # TODO: test
+        return [] unless @base
+
+        [*@base.bases, @base]
+      end
     end
   end
 end

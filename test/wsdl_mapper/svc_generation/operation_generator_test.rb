@@ -28,6 +28,7 @@ class PriceService
       def initialize(api, service, port)
         super(api, service, port)
         @name = "get_product_price"
+        @operation_name = ["http://example.org/schema", "GetProductPrice"]
         @soap_action = "GetProductPrice"
         @requires = [
           "credentials_type",

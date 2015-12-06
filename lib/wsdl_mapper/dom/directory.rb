@@ -18,6 +18,10 @@ module WsdlMapper
         @on_nil = on_nil
       end
 
+      def clear
+        @data.clear
+      end
+
       # @param [WsdlMapper::Dom::Name] name
       # @return [Object]
       def get(name)

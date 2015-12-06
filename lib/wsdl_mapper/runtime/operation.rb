@@ -4,7 +4,7 @@ require 'wsdl_mapper/runtime/message'
 module WsdlMapper
   module Runtime
     class Operation
-      attr_reader :name
+      attr_reader :name, :operation_name
 
       def initialize(api, service, port)
         @api = api
@@ -12,6 +12,7 @@ module WsdlMapper
         @port = port
         @soap_action = nil
         @name = nil
+        @operation_name = nil
         @requires = []
         @loaded = false
       end
