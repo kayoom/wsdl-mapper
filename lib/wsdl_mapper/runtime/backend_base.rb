@@ -1,7 +1,7 @@
 module WsdlMapper
   module Runtime
-    class Body
-      attr_accessor :fault
+    class BackendBase
+
     end
   end
 end

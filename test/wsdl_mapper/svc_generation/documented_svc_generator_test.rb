@@ -29,8 +29,8 @@ class Api < ::WsdlMapper::Runtime::Api
   #   @soap_name PriceService
   attr_reader :price_service
 
-  def initialize(options = {})
-    super(options)
+  def initialize(backend)
+    super(backend)
     @price_service = ::PriceService.new(self)
     @_services << @price_service
   end

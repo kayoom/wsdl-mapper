@@ -14,6 +14,7 @@ require 'wsdl_mapper/dom_generation/default_ctr_generator'
 require 'wsdl_mapper/svc_generation/type_to_generate'
 require 'wsdl_mapper/svc_generation/service_generator'
 require 'wsdl_mapper/svc_generation/port_generator'
+require 'wsdl_mapper/svc_generation/proxy_generator'
 require 'wsdl_mapper/svc_generation/operation_generator'
 require 'wsdl_mapper/svc_generation/operation_s8r_generator'
 require 'wsdl_mapper/svc_generation/operation_d10r_generator'
@@ -23,7 +24,7 @@ module WsdlMapper
     class SvcGenerator < WsdlMapper::Generation::Base
       include WsdlMapper::Generation
 
-      attr_reader :context, :service_generator, :service_namer, :namer, :port_generator, :operation_generator, :schema_generator, :operation_s8r_generator, :operation_d10r_generator
+      attr_reader :context, :service_generator, :service_namer, :namer, :port_generator, :proxy_generator, :operation_generator, :schema_generator, :operation_s8r_generator, :operation_d10r_generator
 
       def initialize(context,
         formatter_factory: DefaultFormatter,
@@ -31,6 +32,7 @@ module WsdlMapper
         namer: WsdlMapper::Naming::DefaultNamer.new,
         service_generator_factory: ServiceGenerator,
         port_generator_factory: PortGenerator,
+        proxy_generator_factory: ProxyGenerator,
         operation_generator_factory: OperationGenerator,
         operation_s8r_generator_factory: OperationS8rGenerator,
         operation_d10r_generator_factory: OperationD10rGenerator,
@@ -41,6 +43,7 @@ module WsdlMapper
         @namer = namer
         @service_generator = service_generator_factory.new(self)
         @port_generator = port_generator_factory.new(self)
+        @proxy_generator = proxy_generator_factory.new(self)
         @operation_generator = operation_generator_factory.new(self)
         @operation_s8r_generator = operation_s8r_generator_factory.new(self)
         @operation_d10r_generator = operation_d10r_generator_factory.new(self)
@@ -95,8 +98,8 @@ module WsdlMapper
       end
 
       def generate_api_ctr(f, services)
-        f.in_def :initialize, 'options = {}' do
-          f.call :super, 'options'
+        f.in_def :initialize, 'backend' do
+          f.call :super, 'backend'
           services.each do |s|
             f.assignment s.property_name.var_name, "#{s.name.name}.new(self)"
             f.statement "@_services << #{s.property_name.var_name}"
@@ -125,6 +128,10 @@ module WsdlMapper
 
       def port_base
         @port_base ||= runtime_base 'Port', 'port'
+      end
+
+      def proxy_base
+        @proxy_base ||= runtime_base 'Proxy', 'proxy'
       end
 
       def operation_base

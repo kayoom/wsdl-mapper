@@ -9,6 +9,8 @@ module WsdlMapper
           TypeToGenerate.new op, service_namer.get_operation_name(service.type, port.type, op), service_namer.get_property_name(op)
         end
 
+        proxy_generator.generate_proxy service, port, ops, result
+
         ops.each do |op|
           operation_generator.generate_operation service, port, op, result
         end

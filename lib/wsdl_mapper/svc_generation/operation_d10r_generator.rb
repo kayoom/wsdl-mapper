@@ -112,7 +112,12 @@ module WsdlMapper
             end
             f.call :register_prop, ":#{part.property_name.attr_name}", generate_name(element_name), generate_name(name)
           end
+          f.call :register_prop, ':fault', fault_name, fault_name
         end
+      end
+
+      def fault_name
+        @fault_name ||= generate_name WsdlMapper::Dom::Name.get('http://schemas.xmlsoap.org/soap/envelope/', 'Fault')
       end
 
       def get_op_name(op, in_out)

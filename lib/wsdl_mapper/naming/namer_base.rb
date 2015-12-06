@@ -6,6 +6,48 @@ module WsdlMapper
     class NamerBase
       include Inflector
 
+      KEYWORDS = %w[
+        alias
+        and
+        begin
+        break
+        case
+        catch
+        class
+        def
+        do
+        elsif
+        else
+        fail
+        ensure
+        for
+        end
+        if
+        in
+        module
+        next
+        not
+        or
+        raise
+        redo
+        rescue
+        retry
+        return
+        then
+        throw
+        super
+        unless
+        undef
+        until
+        when
+        while
+        yield
+        true
+        false
+        nil
+        self
+      ]
+
       attr_reader :module_path
 
       def initialize(module_path: [])
@@ -51,12 +93,12 @@ module WsdlMapper
         if valid_symbol? name
           name
         else
-          "value_#{name}"
+          "x_#{name}"
         end
       end
 
       def valid_symbol?(name)
-        name =~ /^[a-zA-Z]/
+        name =~ /^[a-zA-Z]/ && !KEYWORDS.include?(name.to_s)
       end
     end
   end

@@ -46,6 +46,7 @@ class PriceService
         register_wrapper(["http://example.org/schema", "GetProductPrice"])
         register_prop(:product_idpart, ["http://example.org/schema", "ProductIDPart"], ["http://example.org/schema", "ProductIDType"])
         register_prop(:variant_idpart, ["http://example.org/schema", "VariantIDPart"], ["http://example.org/schema", "VariantIDType"])
+        register_prop(:fault, ["http://schemas.xmlsoap.org/soap/envelope/", "Fault"], ["http://schemas.xmlsoap.org/soap/envelope/", "Fault"])
       end
       InputElementDirectory = ::WsdlMapper::Deserializers::ElementDirectory.new(InputTypeDirectory, ::D10rElementDirectory, ::WsdlMapper::SvcDesc::SoapElementDirectory)
       InputD10r = ::WsdlMapper::Deserializers::LazyLoadingDeserializer.new(InputElementDirectory)
@@ -84,6 +85,7 @@ class PriceService
       InputBodyDeserializer = InputTypeDirectory.register_type(["http://schemas.xmlsoap.org/soap/envelope/", "Body"], ::PriceService::ProductPrices::GetProductPrice::InputBody) do
         register_prop(:product_idpart, ["http://example.org/schema", "ProductID"], ["http://example.org/schema", "ProductIDInlineType"])
         register_prop(:variant_idpart, ["http://example.org/schema", "VariantID"], ["http://example.org/schema", "VariantIDType"])
+        register_prop(:fault, ["http://schemas.xmlsoap.org/soap/envelope/", "Fault"], ["http://schemas.xmlsoap.org/soap/envelope/", "Fault"])
       end
       InputElementDirectory = ::WsdlMapper::Deserializers::ElementDirectory.new(InputTypeDirectory, ::D10rElementDirectory, ::WsdlMapper::SvcDesc::SoapElementDirectory)
       InputD10r = ::WsdlMapper::Deserializers::LazyLoadingDeserializer.new(InputElementDirectory)
@@ -119,6 +121,7 @@ class PriceService
       OutputBodyDeserializer = OutputTypeDirectory.register_type(["http://schemas.xmlsoap.org/soap/envelope/", "Body"], ::PriceService::ProductPrices::GetProductPrice::OutputBody) do
         register_wrapper(["http://example.org/schema", "GetProductPriceResponse"])
         register_prop(:price, ["http://example.org/schema", "Price"], ["http://example.org/schema", "PriceInlineType"])
+        register_prop(:fault, ["http://schemas.xmlsoap.org/soap/envelope/", "Fault"], ["http://schemas.xmlsoap.org/soap/envelope/", "Fault"])
       end
       OutputElementDirectory = ::WsdlMapper::Deserializers::ElementDirectory.new(OutputTypeDirectory, ::D10rElementDirectory, ::WsdlMapper::SvcDesc::SoapElementDirectory)
       OutputD10r = ::WsdlMapper::Deserializers::LazyLoadingDeserializer.new(OutputElementDirectory)

@@ -48,10 +48,14 @@ module WsdlMapper
       end
 
       def to_xml
+        to_doc.to_xml
+      end
+
+      def to_doc
         @namespaces.each do |(prefix, url)|
           @doc.root.add_namespace prefix, url
         end
-        @doc.to_xml
+        @doc
       end
 
       def soap_enc

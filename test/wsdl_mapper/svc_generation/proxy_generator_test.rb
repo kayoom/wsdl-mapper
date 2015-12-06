@@ -3,7 +3,7 @@ require 'test_helper'
 require 'wsdl_mapper/svc_generation/svc_generator'
 
 module SvcDescParsingTests
-  class SvcGeneratorTest < GenerationTest
+  class ProxyGeneratorTest < GenerationTest
     include WsdlMapper::SvcGeneration
     include WsdlMapper::Dom
 
@@ -15,21 +15,19 @@ module SvcDescParsingTests
       generator.generate @desc
     end
 
-    def test_api_generation
+    def test_proxy_generation
       generate 'wsdls/price_service_rpc_encoded.wsdl'
 
-      assert_file_is 'api.rb', <<RUBY
-require "wsdl_mapper/runtime/api"
+      assert_file_is 'price_service/product_prices_proxy.rb', <<RUBY
+require "wsdl_mapper/runtime/proxy"
+require "price_service/product_prices"
 
-require "price_service"
+class PriceService
+  class ProductPricesProxy < ::WsdlMapper::Runtime::Proxy
 
-class Api < ::WsdlMapper::Runtime::Api
-  attr_reader :price_service
-
-  def initialize(backend)
-    super(backend)
-    @price_service = ::PriceService.new(self)
-    @_services << @price_service
+    def get_product_price(body, *args)
+      @_api._call(@_port.get_product_price, body, *args)
+    end
   end
 end
 RUBY

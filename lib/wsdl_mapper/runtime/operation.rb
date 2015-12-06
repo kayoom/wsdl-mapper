@@ -1,14 +1,19 @@
 require 'wsdl_mapper/svc_desc/envelope'
+require 'wsdl_mapper/runtime/message'
 
 module WsdlMapper
   module Runtime
     class Operation
+      attr_reader :name
+
       def initialize(api, service, port)
-        @_api = api
-        @_service = service
-        @_port = port
-        @_requires = []
-        @_loaded = false
+        @api = api
+        @service = service
+        @port = port
+        @soap_action = nil
+        @name = nil
+        @requires = []
+        @loaded = false
       end
 
       def new_input(header: {}, body: {})
@@ -19,8 +24,12 @@ module WsdlMapper
         load_requires
       end
 
-      def new_message(header, body)
+      def new_envelope(header, body)
         WsdlMapper::SvcDesc::Envelope.new header: header, body: body
+      end
+
+      def new_message(header, body)
+        Message.new @port._soap_address, @soap_action, new_envelope(header, body)
       end
 
       def input_s8r
@@ -39,14 +48,13 @@ module WsdlMapper
         load_requires
       end
 
-      protected
       def load_requires
-        return if @_loaded
+        return if @loaded
 
-        @_requires.each do |req|
+        @requires.each do |req|
           require req
         end
-        @_loaded = true
+        @loaded = true
       end
     end
   end

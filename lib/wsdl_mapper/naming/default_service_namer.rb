@@ -28,13 +28,22 @@ module WsdlMapper
       end
 
       def get_property_name(type)
-        PropertyName.new underscore(type.name.name), '@' + underscore(type.name.name)
+        PropertyName.new get_accessor_name(type.name.name), get_var_name(type.name.name)
       end
 
       def get_port_name(service, port)
         service_name = get_service_name service
         module_path = @module_path + [service_name.class_name]
         type_name = TypeName.new camelize(port.name.name), module_path, get_file_name(port.name.name), get_file_path(module_path)
+        type_name.parent = make_parents module_path
+        type_name
+      end
+
+      def get_proxy_name(service, port)
+        service_name = get_service_name service
+        module_path = @module_path + [service_name.class_name]
+        name = port.name.name + 'Proxy'
+        type_name = TypeName.new camelize(name), module_path, get_file_name(name), get_file_path(module_path)
         type_name.parent = make_parents module_path
         type_name
       end
@@ -47,10 +56,6 @@ module WsdlMapper
         type_name = TypeName.new camelize(name), module_path, get_file_name(name), get_file_path(module_path)
         type_name.parent = make_parents module_path
         type_name
-      end
-
-      def get_property_name_for_string(str)
-        PropertyName.new underscore(str), '@' + underscore(str)
       end
 
       def get_input_body_name(service, port, op)
@@ -131,11 +136,11 @@ module WsdlMapper
 
       def get_header_property_name(message_name, part_name)
         name = message_name.name + part_name.name
-        PropertyName.new underscore(name), '@' + underscore(name)
+        PropertyName.new get_accessor_name(name), get_var_name(name)
       end
 
       def get_body_property_name(part_name)
-        PropertyName.new underscore(part_name.name), '@' + underscore(part_name.name)
+        PropertyName.new get_accessor_name(part_name.name), get_var_name(part_name.name)
       end
     end
   end

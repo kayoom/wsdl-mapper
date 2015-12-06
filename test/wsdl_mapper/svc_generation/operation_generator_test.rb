@@ -27,8 +27,9 @@ class PriceService
 
       def initialize(api, service, port)
         super(api, service, port)
-        @_soap_action = "GetProductPrice"
-        @_requires = [
+        @name = "get_product_price"
+        @soap_action = "GetProductPrice"
+        @requires = [
           "credentials_type",
           "product_idtype",
           "variant_idtype",
@@ -52,7 +53,7 @@ class PriceService
 
       def new_output(header: {}, body: {})
         super
-        new_message(::PriceService::ProductPrices::GetProductPrice::OutputHeader.new(**header), ::PriceService::ProductPrices::GetProductPrice::OutputBody.new(**body))
+        new_message(::PriceService::ProductPrices::GetProductPrice::OutputHeader.new(), ::PriceService::ProductPrices::GetProductPrice::OutputBody.new(**body))
       end
 
       def input_s8r

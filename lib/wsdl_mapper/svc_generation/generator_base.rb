@@ -31,6 +31,10 @@ module WsdlMapper
         @generator.port_generator
       end
 
+      def proxy_generator
+        @generator.proxy_generator
+      end
+
       def operation_generator
         @generator.operation_generator
       end
@@ -45,6 +49,10 @@ module WsdlMapper
 
       def port_base
         @generator.port_base
+      end
+
+      def proxy_base
+        @generator.proxy_base
       end
 
       def service_base

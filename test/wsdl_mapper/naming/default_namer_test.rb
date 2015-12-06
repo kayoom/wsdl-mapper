@@ -25,10 +25,10 @@ module NamingTests
       enum_value_name1 = namer.get_enumeration_value_name nil, enum_value1
       enum_value_name2 = namer.get_enumeration_value_name nil, enum_value2
 
-      assert_equal 'VALUE_1', enum_value_name1.constant_name
-      assert_equal 'VALUE_1FOO', enum_value_name2.constant_name
-      assert_equal 'value_1', enum_value_name1.key_name
-      assert_equal 'value_1foo', enum_value_name2.key_name
+      assert_equal 'X_1', enum_value_name1.constant_name
+      assert_equal 'X_1FOO', enum_value_name2.constant_name
+      assert_equal 'x_1', enum_value_name1.key_name
+      assert_equal 'x_1foo', enum_value_name2.key_name
     end
 
     def test_simple_enum_value_name

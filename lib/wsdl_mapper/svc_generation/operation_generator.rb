@@ -76,8 +76,10 @@ module WsdlMapper
           f.call :super
           header_name = service_namer.get_input_header_name(service.type, port.type, op.type)
           body_name = service_namer.get_input_body_name(service.type, port.type, op.type)
-          header = "#{header_name.name}.new(**header)"
-          body = "#{body_name.name}.new(**body)"
+          header_args = get_header_parts(op.type.input).any? ? '**header' : ''
+          header = "#{header_name.name}.new(#{header_args})"
+          body_args = get_body_parts(op.type.input).any? ? '**body' : ''
+          body = "#{body_name.name}.new(#{body_args})"
           f.call :new_message, header, body
         end
       end
@@ -87,8 +89,10 @@ module WsdlMapper
           f.call :super
           header_name = service_namer.get_output_header_name(service.type, port.type, op.type)
           body_name = service_namer.get_output_body_name(service.type, port.type, op.type)
-          header = "#{header_name.name}.new(**header)"
-          body = "#{body_name.name}.new(**body)"
+          header_args = get_header_parts(op.type.output).any? ? '**header' : ''
+          header = "#{header_name.name}.new(#{header_args})"
+          body_args = get_body_parts(op.type.output).any? ? '**body' : ''
+          body = "#{body_name.name}.new(#{body_args})"
           f.call :new_message, header, body
         end
       end
@@ -96,8 +100,9 @@ module WsdlMapper
       def generate_op_ctr(f, service, port, op)
         f.in_def :initialize, 'api', 'service', 'port' do
           f.call :super, 'api', 'service', 'port'
-          f.assignment '@_soap_action', op.type.soap_action.inspect
-          f.literal_array '@_requires', get_op_requires(service, port, op)
+          f.assignment '@name', op.property_name.attr_name.inspect
+          f.assignment '@soap_action', op.type.soap_action.inspect
+          f.literal_array '@requires', get_op_requires(service, port, op)
         end
       end
 
