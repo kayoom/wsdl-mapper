@@ -15,7 +15,6 @@ module SvcDescParsingTests
       generator.generate @desc
     end
 
-    focus
     def test_operation_generation
       generate 'wsdls/price_service_rpc_encoded.wsdl'
 

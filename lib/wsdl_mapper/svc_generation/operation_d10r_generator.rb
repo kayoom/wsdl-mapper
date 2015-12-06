@@ -52,7 +52,13 @@ module WsdlMapper
       def generate_op_d10r(service, port, op, name, in_out,
         header_name, header_d10r_name, body_name, body_d10r_name,
         type_directory_name, element_directory_name, result)
+
+        parts = get_header_parts(in_out) + get_body_parts(in_out)
+        required_d10rs = parts.map do |part|
+          namer.get_d10r_name(get_type_name(part.type))
+        end
         modules = get_module_names service.name
+
         type_file_for name, result do |f|
           f.requires envelope_type.require_path,
             type_directory_base.require_path,
@@ -64,6 +70,7 @@ module WsdlMapper
             @schema_element_directory_name.require_path,
             header_name.require_path,
             body_name.require_path
+          f.requires *required_d10rs.map(&:require_path)
 
           f.in_modules modules do
             in_classes f, service.name.class_name, port.name.class_name, op.name.class_name do

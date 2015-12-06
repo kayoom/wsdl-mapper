@@ -24,11 +24,11 @@ S8rTypeDirectory = ::WsdlMapper::Serializers::TypeDirectory.new do
 end
 RUBY
 
-      assert_file_is 'serializer_factory.rb', <<RUBY
+      assert_file_is 'serializer.rb', <<RUBY
 require "wsdl_mapper/serializers/serializer_factory"
 require "s8r_type_directory"
 
-SerializerFactory = ::WsdlMapper::Serializers::SerializerFactory.new(::S8rTypeDirectory)
+Serializer = ::WsdlMapper::Serializers::SerializerFactory.new(::S8rTypeDirectory)
 RUBY
 
       assert_file_is 'note_type_serializer.rb', <<RUBY

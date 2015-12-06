@@ -31,6 +31,10 @@ require "d10r_element_directory"
 require "price_service/product_prices/get_product_price/input_header"
 require "price_service/product_prices/get_product_price/input_body"
 
+require "credentials_type_deserializer"
+require "product_idtype_deserializer"
+require "variant_idtype_deserializer"
+
 class PriceService
   class ProductPrices
     class GetProductPrice
@@ -66,6 +70,10 @@ require "d10r_element_directory"
 require "price_service/product_prices/get_product_price/input_header"
 require "price_service/product_prices/get_product_price/input_body"
 
+require "credentials_inline_type_deserializer"
+require "product_idinline_type_deserializer"
+require "variant_idtype_deserializer"
+
 class PriceService
   class ProductPrices
     class GetProductPrice
@@ -99,6 +107,8 @@ require "d10r_type_directory"
 require "d10r_element_directory"
 require "price_service/product_prices/get_product_price/output_header"
 require "price_service/product_prices/get_product_price/output_body"
+
+require "price_inline_type_deserializer"
 
 class PriceService
   class ProductPrices
