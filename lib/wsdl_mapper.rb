@@ -1,4 +1,4 @@
-require "wsdl/mapper/version"
+require 'wsdl_mapper/version'
 
 module WsdlMapper
 end

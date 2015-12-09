@@ -1,5 +1,6 @@
 require 'wsdl_mapper/runtime/backend_base'
 require 'wsdl_mapper/runtime/middleware_stack'
+require 'wsdl_mapper/runtime/errors'
 require 'uri'
 require 'net/http'
 require 'logger'
@@ -7,6 +8,8 @@ require 'logger'
 module WsdlMapper
   module Runtime
     class SimpleHttpBackend < BackendBase
+      include WsdlMapper::Runtime::Errors
+
       class SimpleMessageFactory
         def call(operation, body, args)
           message = operation.new_input body: body
@@ -35,20 +38,30 @@ module WsdlMapper
             post[key] = val
           end
 
-          http_response = Net::HTTP.start request.url.host, request.url.port, use_ssl: request.https? do |http|
-            http.request post
-          end
+          begin
+            http_response = Net::HTTP.start request.url.host, request.url.port, use_ssl: request.https? do |http|
+              http.request post
+            end
 
-          [operation, request, http_response]
+            [operation, request, http_response, nil]
+          rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError,
+            Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
+
+            [operation, request, nil, TransportError.new(e.msg, e)]
+          end
         end
       end
 
       class SimpleResponseFactory
-        def call(operation, request, http_response)
-          response = Response.new http_response.code, http_response.body
-          response.envelope = operation.output_d10r.from_xml response.body
+        def call(operation, request, http_response, error)
+          if http_response
+            response = Response.new http_response.code, http_response.body
+            response.envelope = operation.output_d10r.from_xml response.body
 
-          [operation, request, response]
+            [operation, request, response, error]
+          else
+            [operation, request, nil, error]
+          end
         end
       end
 
@@ -72,7 +85,7 @@ module WsdlMapper
 
       class Response
         attr_reader :status, :body
-        attr_accessor :envelope
+        attr_accessor :envelope, :error
 
         def initialize(status, body)
           @status = status
@@ -108,9 +121,9 @@ module WsdlMapper
             logger.info request.xml
             [operation, request]
           }
-          backend.stack.after 'dispatcher', 'response.logger', -> (operation, request, http_response) {
+          backend.stack.after 'dispatcher', 'response.logger', -> (operation, request, http_response, error) {
             logger.info http_response.body
-            [operation, request, http_response]
+            [operation, request, http_response, error]
           }
         end
 

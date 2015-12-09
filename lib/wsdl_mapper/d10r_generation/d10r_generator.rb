@@ -141,7 +141,7 @@ module WsdlMapper
       def collect_property_requires(properties)
         properties.map do |prop|
           type = get_type_name(prop.type)
-          next if WsdlMapper::Dom::BuiltinType.builtin?(type.name) || type.is_a?(WsdlMapper::Dom::SimpleType)
+          next if WsdlMapper::Dom::BuiltinType.builtin?(type.name) || type.is_a?(WsdlMapper::Dom::SimpleType) || WsdlMapper::Dom::SoapEncodingType.builtin?(type.name)
           @namer.get_d10r_name(type).require_path
         end.compact
       end
