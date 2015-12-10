@@ -7,8 +7,8 @@ module WsdlMapper
       end
 
       def line(line)
-        buf = "# "
-        buf << "  " * @i
+        buf = '# '
+        buf << '  ' * @i
         buf << strip(line)
         @formatter.statement buf
         self
@@ -61,12 +61,18 @@ module WsdlMapper
       end
 
       def attribute!(name, type, doc, &block)
-        tag "!attribute", name
+        tag '!attribute', name
         inc_indent
         text doc if doc
-        type_tag "return", type
+        type_tag 'return', type
         block.call if block_given?
         dec_indent
+      end
+
+      def option(param_name, type, name, text = nil)
+        buf = "@option #{param_name} [#{type}] :#{name}"
+        buf << " #{text}" if text
+        line buf
       end
 
       def param(name, type, text = nil)
@@ -85,8 +91,8 @@ module WsdlMapper
 
       protected
       def strip(text)
-        return "" if text.nil?
-        text.gsub(/[\n\r]/, " ").gsub(/\s+/, " ").strip
+        return '' if text.nil?
+        text.gsub(/[\n\r]/, ' ').gsub(/\s+/, ' ').strip
       end
 
       def process(doc)

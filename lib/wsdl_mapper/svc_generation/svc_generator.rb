@@ -161,6 +161,10 @@ module WsdlMapper
       def get_type_name(type)
         @schema_generator.get_type_name type
       end
+
+      def get_ruby_type_name(type)
+        @schema_generator.get_ruby_type_name type
+      end
     end
   end
 end

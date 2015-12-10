@@ -21,7 +21,11 @@ module WsdlMapper
       end
 
       def schema_generator
-        @schema_generator ||= schema_generator_class.new context, namer: namer, ctr_generator_factory: WsdlMapper::DomGeneration::DefaultCtrGenerator, skip_modules: true
+        @schema_generator ||= schema_generator_class.new context, namer: namer, ctr_generator_factory: ctr_generator_class, skip_modules: true
+      end
+
+      def ctr_generator_class
+        @ctr_generator_class ||= @docs ? WsdlMapper::DomGeneration::DocumentedCtrGenerator : WsdlMapper::DomGeneration::DefaultCtrGenerator
       end
 
       def schema_generator_class

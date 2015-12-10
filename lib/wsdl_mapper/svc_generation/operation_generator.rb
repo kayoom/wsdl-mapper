@@ -160,20 +160,8 @@ module WsdlMapper
 
       def generate_header_class(f, name, parts)
         f.in_sub_class name.class_name, header_base.name do
-          generate_header_accessors f, parts
-          generate_header_ctr f, parts
-        end
-      end
-
-      def generate_header_accessors(f, parts)
-        f.attr_accessors *parts.map { |p| p.property_name.attr_name }
-      end
-
-      def generate_header_ctr(f, parts)
-        f.in_def :initialize, *parts.map { |p| "#{p.property_name.attr_name}: nil" } do
-          parts.each do |p|
-            f.assignment p.property_name.var_name, p.property_name.attr_name
-          end
+          generate_accessors f, parts
+          generate_ctr f, parts
         end
       end
 
@@ -204,16 +192,16 @@ module WsdlMapper
 
       def generate_body_class(f, name, parts)
         f.in_sub_class name.class_name, body_base.name do
-          generate_body_accessors f, parts
-          generate_body_ctr f, parts
+          generate_accessors f, parts
+          generate_ctr f, parts
         end
       end
 
-      def generate_body_accessors(f, parts)
+      def generate_accessors(f, parts)
         f.attr_accessors *parts.map { |p| p.property_name.attr_name }
       end
 
-      def generate_body_ctr(f, parts)
+      def generate_ctr(f, parts)
         f.in_def :initialize, *parts.map { |p| "#{p.property_name.attr_name}: nil" } do
           parts.each do |p|
             f.assignment p.property_name.var_name, p.property_name.attr_name
