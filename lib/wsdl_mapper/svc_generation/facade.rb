@@ -2,6 +2,7 @@ require 'wsdl_mapper/generation/facade'
 require 'wsdl_mapper/svc_desc_parsing/parser'
 require 'wsdl_mapper/naming/default_service_namer'
 require 'wsdl_mapper/svc_generation/svc_generator'
+require 'wsdl_mapper/svc_generation/documented_svc_generator'
 require 'wsdl_mapper/dom_generation/schema_generator'
 require 'wsdl_mapper/dom_generation/documented_schema_generator'
 require 'wsdl_mapper/s8r_generation/s8r_generator'
@@ -41,7 +42,11 @@ module WsdlMapper
       end
 
       def svc_generator
-        @svc_generator ||= WsdlMapper::SvcGeneration::SvcGenerator.new context, namer: namer, service_namer: service_namer, schema_generator: schema_generator
+        @svc_generator ||= svc_generator_class.new context, namer: namer, service_namer: service_namer, schema_generator: schema_generator
+      end
+
+      def svc_generator_class
+        @svc_generator_class ||= @docs ? WsdlMapper::SvcGeneration::DocumentedSvcGenerator : WsdlMapper::SvcGeneration::SvcGenerator
       end
 
       def module_generator
