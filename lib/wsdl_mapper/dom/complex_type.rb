@@ -26,6 +26,12 @@ module WsdlMapper
         properties.values.each &block
       end
 
+      def each_property_with_bases(&block)
+        [*bases, self].inject([]) do |arr, type|
+          arr + type.each_property.to_a
+        end.each(&block)
+      end
+
       def each_attribute(&block)
         attributes.values.each &block
       end

@@ -9,7 +9,8 @@ module WsdlMapper
 
         type_file_for proxy_name, result do |f|
           f.requires proxy_base.require_path,
-            port.name.require_path
+            port.name.require_path,
+            *operation_requires(ops)
 
           f.in_modules modules do
             f.in_class service.name.class_name do
@@ -17,6 +18,10 @@ module WsdlMapper
             end
           end
         end
+      end
+
+      def operation_requires(ops)
+        []
       end
 
       def generate_proxy_class(f, ops, proxy_name, port)

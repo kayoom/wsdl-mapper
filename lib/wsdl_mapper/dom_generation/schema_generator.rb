@@ -74,6 +74,10 @@ module WsdlMapper
       end
 
       def get_ruby_type_name(type)
+        if type.name.nil?
+          type = get_type_name type
+        end
+
         if WsdlMapper::Dom::BuiltinType.builtin? type.name
           type_mapping.ruby_type type.name
         elsif WsdlMapper::Dom::SoapEncodingType.builtin? type.name

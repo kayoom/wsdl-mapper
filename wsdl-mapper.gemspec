@@ -32,6 +32,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'ruby-prof'
   spec.add_development_dependency 'webmock'
 
+  spec.add_dependency 'concurrent-ruby'
+  spec.add_dependency 'faraday'
   spec.add_dependency 'nokogiri'
   spec.add_dependency 'thor'
 end

@@ -61,6 +61,7 @@ RUBY
 --tag xml_name:"XML Name"
 --tag xml_namespace:"XML Namespace"
 --tag xml_value:"XML Value"
+--tag soap_name:"SOAP Name"
 --markup markdown
 --markup-provider redcarpet
 **/*.rb

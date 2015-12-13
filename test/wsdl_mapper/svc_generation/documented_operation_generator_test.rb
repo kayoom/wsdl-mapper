@@ -29,6 +29,8 @@ class PriceService
         #   @return [::CredentialsInlineType]
         attr_accessor :credentials_user_and_password
 
+        # @param credentials_user_and_password [::CredentialsInlineType]
+        #
         def initialize(credentials_user_and_password: nil)
           @credentials_user_and_password = credentials_user_and_password
         end
@@ -77,6 +79,9 @@ class PriceService
         #   @return [::VariantIDType]
         attr_accessor :variant_idpart
 
+        # @param product_idpart [::ProductIDInlineType]
+        # @param variant_idpart [::VariantIDType]
+        #
         def initialize(product_idpart: nil, variant_idpart: nil)
           @product_idpart = product_idpart
           @variant_idpart = variant_idpart
@@ -102,6 +107,8 @@ class PriceService
         #   @return [::PriceInlineType]
         attr_accessor :price
 
+        # @param price [::PriceInlineType]
+        #
         def initialize(price: nil)
           @price = price
         end
@@ -126,6 +133,8 @@ class PriceService
         #   @return [::CredentialsType]
         attr_accessor :credentials_user_and_password
 
+        # @param credentials_user_and_password [::CredentialsType]
+        #
         def initialize(credentials_user_and_password: nil)
           @credentials_user_and_password = credentials_user_and_password
         end
@@ -174,6 +183,9 @@ class PriceService
         #   @return [::VariantIDType]
         attr_accessor :variant_idpart
 
+        # @param product_idpart [::ProductIDType]
+        # @param variant_idpart [::VariantIDType]
+        #
         def initialize(product_idpart: nil, variant_idpart: nil)
           @product_idpart = product_idpart
           @variant_idpart = variant_idpart
@@ -199,6 +211,8 @@ class PriceService
         #   @return [::PriceInlineType]
         attr_accessor :price
 
+        # @param price [::PriceInlineType]
+        #
         def initialize(price: nil)
           @price = price
         end
