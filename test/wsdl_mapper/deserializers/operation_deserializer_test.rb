@@ -5,7 +5,7 @@ require 'wsdl_mapper/deserializers/deserializer'
 require 'wsdl_mapper/core_ext/time_duration'
 
 module DeserializersTests
-  class DeserializerTest < ::WsdlMapperTesting::Test
+  class OperationDeserializerTest < ::WsdlMapperTesting::Test
     include WsdlMapper::CoreExt
     include WsdlMapper::Dom
     include WsdlMapper::Deserializers

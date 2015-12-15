@@ -14,6 +14,10 @@ module WsdlMapper
       def _call(operation, body, *args)
         @_backend.dispatch operation, body, *args
       end
+
+      def _load_requires
+        @_services.each &:_load_requires
+      end
     end
   end
 end

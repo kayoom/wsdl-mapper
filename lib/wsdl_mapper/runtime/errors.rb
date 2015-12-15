@@ -21,7 +21,6 @@ module WsdlMapper
           @fault = fault
         end
       end
-
     end
   end
 end

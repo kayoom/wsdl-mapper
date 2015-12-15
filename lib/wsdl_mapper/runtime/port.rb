@@ -13,6 +13,10 @@ module WsdlMapper
         @_soap_address = nil
         @_operations = []
       end
+
+      def _load_requires
+        @_operations.each &:_load_requires
+      end
     end
   end
 end

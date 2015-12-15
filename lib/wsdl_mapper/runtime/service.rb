@@ -11,6 +11,10 @@ module WsdlMapper
         @_api = api
         @_ports = []
       end
+
+      def _load_requires
+        @_ports.each &:_load_requires
+      end
     end
   end
 end
