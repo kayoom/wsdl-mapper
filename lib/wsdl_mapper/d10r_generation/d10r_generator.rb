@@ -19,6 +19,7 @@ module WsdlMapper
         namer: WsdlMapper::Naming::DefaultNamer.new,
         formatter_factory: DefaultFormatter,
         module_generator_factory: DefaultModuleGenerator)
+
         @context = context
         @namer = namer
         @formatter_factory = formatter_factory

@@ -24,7 +24,6 @@ Or install it yourself as:
     
 ## TODOs
 
-* Support for linked schemas (`xs:import`)
 
 ## Contributing
 

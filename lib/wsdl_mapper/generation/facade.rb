@@ -9,7 +9,13 @@ module WsdlMapper
   module Generation
     # @abstract
     class Facade
-      def initialize(file:, out:, module_path:, docs: false, separate_modules: true, namer: nil)
+      # @param [String] file Full path to the XSD or WSDL file
+      # @param [String] out Full path to the desired output directory
+      # @param [Array<String>] module_path Array of module names, to use as root module, i.e. `['Foo', 'Bar']` for `Foo::Bar`
+      # @param [true, false] docs Set to `true` to generate documentation
+      # @param [true, false] separate_modules Set to `true` to separate types and (de)serializers into different modules
+      # @param [WsdlMapper::Naming::AbstractNamer] namer Inject a namer instance here to be used
+      def initialize(file, out, module_path: [], docs: false, separate_modules: true, namer: nil)
         @file = file
         @out = out
         @module_path = module_path
@@ -22,6 +28,7 @@ module WsdlMapper
         generator.generate parser.parse document
       end
 
+      protected
       def context
         @context ||= WsdlMapper::Generation::Context.new @out
       end

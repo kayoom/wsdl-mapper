@@ -6,6 +6,7 @@ require 'wsdl_mapper/d10r_generation/facade'
 require 'wsdl_mapper/svc_generation/facade'
 
 module WsdlMapper
+  # @api cli
   module Cli
     class Generate < Thor
       class_option :out, desc: 'The output directory. If omitted, takes the <xsd_file> (without extension), e.g. `ebaySvc.xsd` => `ebaySvc`.'
