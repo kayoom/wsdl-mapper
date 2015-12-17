@@ -19,10 +19,12 @@ module WsdlMapper
 
       def new_input(header: {}, body: {})
         load_requires
+        nil
       end
 
       def new_output(header: {}, body: {})
         load_requires
+        nil
       end
 
       def new_envelope(header, body)

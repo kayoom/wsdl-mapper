@@ -4,8 +4,13 @@ module WsdlMapper
   module Runtime
     module Middlewares
       class SimpleRequestFactory
+        # Serializes the `message`, sets the service URL and adds SOAPAction and Content-Type headers. For serialization
+        # it relies on {WsdlMapper::Runtime::Operation#input_s8r} to return the proper input serializer for this operation.
+        # @param [WsdlMapper::Runtime::Operation] operation
+        # @param [WsdlMapper::Runtime::Message] message
+        # @return [Array<WsdlMapper::Runtime::Operation, WsdlMapper::Runtime::Request>]
         def call(operation, message)
-          request = Request.new message
+          request = WsdlMapper::Runtime::Request.new message
           serialize_envelope request, operation, message
           set_url request, operation, message
           add_http_headers request, operation, message

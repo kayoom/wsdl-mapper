@@ -20,7 +20,7 @@ module WsdlMapper
       # @param [Array<Nokogiri::XML::Attr>] attrs
       # @param [String] prefix
       # @param [String] uri
-      # @param [Array<Array<String, String>] ns
+      # @param [Array<Array<String, String>>] ns
       def start_element_namespace(name, attrs = [], prefix = nil, uri = nil, ns = [])
         @buffer = ''
         uri = inherit_element_namespace uri

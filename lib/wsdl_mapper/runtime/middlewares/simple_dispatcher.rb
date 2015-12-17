@@ -14,6 +14,11 @@ module WsdlMapper
           @cnx = connection
         end
 
+        # Dispatches the request via the configured {#cnx} and returns the HTTP response.
+        # @param [WsdlMapper::Runtime::Operation] operation
+        # @param [WsdlMapper::Runtime::Request] request
+        # @return [Array<WsdlMapper::Runtime::Operation, Faraday::Response>]
+        # @raise [WsdlMapper::Runtime::Errors::TransportError] if a network error occured
         def call(operation, request)
           begin
             http_response = cnx.post do |c|
@@ -25,7 +30,7 @@ module WsdlMapper
               end
             end
 
-            [operation, request, http_response]
+            [operation, http_response]
           rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError, Faraday::Error => e
             raise TransportError.new(e.message, e)
           end

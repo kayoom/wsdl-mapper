@@ -34,8 +34,8 @@ module WsdlMapper
 
       def generate_operation(f, op)
         name = op.property_name.attr_name
-        f.in_def name, ['body', '**args'] do
-          f.call '@_api._call', "@_port.#{name}", 'body', '**args'
+        f.in_def name, ['body, *args'] do
+          f.call '@_api._call', "@_port.#{name}", 'body', '*args'
         end
       end
     end

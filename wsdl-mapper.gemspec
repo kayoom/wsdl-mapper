@@ -28,9 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'byebug'
   spec.add_development_dependency 'yard'
   spec.add_development_dependency 'redcarpet'
-
-  spec.add_development_dependency 'ruby-prof'
-  spec.add_development_dependency 'webmock'
+  spec.add_development_dependency 'github-markup'
 
   spec.add_dependency 'concurrent-ruby'
   spec.add_dependency 'faraday'

@@ -6,12 +6,15 @@ module WsdlMapper
     class BackendBase
       attr_reader :stack
 
+      # @!attribute stack
+      #   @return [WsdlMapper::Runtime::MiddlewareStack]
+
       def initialize
         @stack = MiddlewareStack.new
       end
 
-      def dispatch(operation, body, **options)
-        stack.execute [operation, body, options]
+      def dispatch(operation, *input)
+        stack.execute([operation, *input]).last
       end
     end
   end

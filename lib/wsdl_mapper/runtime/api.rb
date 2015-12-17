@@ -6,15 +6,26 @@ module WsdlMapper
     class Api
       include SimplerInspect
 
+      attr_reader :_services
+
+      # @!attribute _services
+      #   @return [Array<WsdlMapper::Runtime::Service>] All services contained in this API
+
+      # @param [WsdlMapper::Runtime::SimpleHttpBackend] backend The backend to use
       def initialize(backend)
         @_backend = backend
         @_services = []
       end
 
-      def _call(operation, body, *args)
-        @_backend.dispatch operation, body, *args
+      # Executes a request using the configured backend.
+      # @param [WsdlMapper::Runtime::Operation] operation Operation to call
+      # @param [Array] args Request input
+      # @return [Object] Response
+      def _call(operation, *args)
+        @_backend.dispatch operation, *args
       end
 
+      # Force preloading of requires for all contained services
       def _load_requires
         @_services.each &:_load_requires
       end

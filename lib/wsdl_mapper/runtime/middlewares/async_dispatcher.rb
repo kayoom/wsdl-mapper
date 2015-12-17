@@ -6,10 +6,8 @@ module WsdlMapper
       class AsyncDispatcher
         attr_reader :cnx
 
-        def initialize(adapter: :net_http)
-          @cnx = Faraday.new do |c|
-            c.adapter adapter
-          end
+        def initialize(connection = Faraday.new)
+          @cnx = connection
         end
 
         def call(operation, request_promise)
