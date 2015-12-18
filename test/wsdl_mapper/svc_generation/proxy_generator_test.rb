@@ -25,8 +25,8 @@ require "price_service/product_prices"
 class PriceService
   class ProductPricesProxy < ::WsdlMapper::Runtime::Proxy
 
-    def get_product_price(body, **args)
-      @_api._call(@_port.get_product_price, body, **args)
+    def get_product_price(body, *args)
+      @_api._call(@_port.get_product_price, body, *args)
     end
   end
 end

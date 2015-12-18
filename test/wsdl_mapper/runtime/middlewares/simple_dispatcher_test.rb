@@ -23,9 +23,8 @@ module RuntimeTests
         request = fake_request '/some-url', 'foo bar'
         @cnx.stub_request '/some-url', 'foo bar', 'lorem ipsum'
 
-        op, req, response = @dispatcher.call nil, request
+        op, response = @dispatcher.call nil, request
 
-        assert_equal req, request
         assert_equal 200, response.status
         assert_equal 'lorem ipsum', response.body
       end

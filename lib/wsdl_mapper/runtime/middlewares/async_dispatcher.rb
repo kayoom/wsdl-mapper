@@ -1,9 +1,10 @@
 require 'faraday'
+require 'wsdl_mapper/runtime/middlewares/simple_dispatcher'
 
 module WsdlMapper
   module Runtime
     module Middlewares
-      class AsyncDispatcher
+      class AsyncDispatcher < SimpleDispatcher
         attr_reader :cnx
 
         def initialize(connection = Faraday.new)
@@ -12,14 +13,7 @@ module WsdlMapper
 
         def call(operation, request_promise)
           http_response_promise = request_promise.then do |request|
-            cnx.post do |c|
-              c.url request.url
-              c.body = request.xml
-
-              request.http_headers.each do |key, val|
-                c[key] = val
-              end
-            end
+            super(operation, request).last
           end
 
           [operation, http_response_promise]

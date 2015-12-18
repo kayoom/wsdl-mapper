@@ -9,7 +9,6 @@ end
 
 require 'minitest/autorun'
 require 'minitest/focus'
-require 'webmock/minitest'
 
 require 'nokogiri'
 

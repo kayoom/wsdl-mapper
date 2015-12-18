@@ -6,7 +6,7 @@ module WsdlMapper
       class AsyncResponseFactory < SimpleResponseFactory
         def call(operation, http_response_promise)
           response_promise = http_response_promise.then do |http_response|
-            super(operation, nil, http_response).last
+            super(operation, http_response).last
           end
 
           [operation, response_promise]

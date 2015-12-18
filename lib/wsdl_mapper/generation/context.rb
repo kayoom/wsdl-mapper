@@ -12,16 +12,16 @@ module WsdlMapper
       # @return [String] The full absolute file path for the specified `type_name`
       def path_for(type_name)
         path = path_join type_name.file_path
+        ensure_path_exists path
 
         File.join path, type_name.file_name
       end
 
-      # Returns an absolute path for the specified `paths`, creates it, if it doesn't exist.
+      # Returns an absolute path for the specified `paths`.
       # @param [Array<String>] paths An array of paths
       # @return [String] An absolute path as string
       def path_join(*paths)
         path = File.join @target_path, *paths
-        ensure_path_exists path
 
         path
       end

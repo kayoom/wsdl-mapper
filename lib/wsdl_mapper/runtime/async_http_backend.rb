@@ -2,6 +2,11 @@ require 'wsdl_mapper/runtime/backend_base'
 require 'concurrent'
 require 'faraday'
 
+require 'wsdl_mapper/runtime/middlewares/async_message_factory'
+require 'wsdl_mapper/runtime/middlewares/async_request_factory'
+require 'wsdl_mapper/runtime/middlewares/async_dispatcher'
+require 'wsdl_mapper/runtime/middlewares/async_response_factory'
+
 module WsdlMapper
   module Runtime
     # ## Middleware Stack
@@ -23,7 +28,6 @@ module WsdlMapper
         stack.add 'request.factory', AsyncRequestFactory.new
         stack.add 'dispatcher', AsyncDispatcher.new(connection)
         stack.add 'response.factory', AsyncResponseFactory.new
-        stack.add 'response.processor', -> (operation, response_promise) { response_promise }
       end
 
       # Takes an `operation` and arguments, wraps them in a new {Concurrent::Promise},

@@ -1,10 +1,10 @@
 require 'test_helper'
 require 'wsdl_mapper_testing/fake_operation'
 
-require 'wsdl_mapper/runtime/simple_http_backend'
+require 'wsdl_mapper/runtime/async_http_backend'
 
 module RuntimeTests
-  class SimpleHttpBackendTest < WsdlMapperTesting::Test
+  class AsyncHttpBackendTest < WsdlMapperTesting::Test
     def setup
       @operation = FakeOperation.new
 
@@ -14,7 +14,7 @@ module RuntimeTests
       @input = Object.new
       @output = Object.new
       @message = WsdlMapper::Runtime::Message.new @test_url, @test_action, @input
-      @backend = WsdlMapper::Runtime::SimpleHttpBackend.new(connection: @cnx)
+      @backend = WsdlMapper::Runtime::AsyncHttpBackend.new(connection: @cnx)
     end
 
     def setup_mock_request_response(request_xml, response_xml)
@@ -27,7 +27,11 @@ module RuntimeTests
       setup_mock_request_response 'foo bar', 'lorem ipsum'
       @cnx.stub_request @test_url, 'foo bar', 'lorem ipsum'
 
-      response = @backend.dispatch @operation, @input
+      promise = @backend.dispatch(@operation, @input)
+      assert_kind_of Concurrent::Promise, promise
+      assert promise.unscheduled?
+
+      response = promise.execute.wait!.value
 
       assert_kind_of WsdlMapper::Runtime::Response, response
       assert_equal 'lorem ipsum', response.body
@@ -38,8 +42,12 @@ module RuntimeTests
       setup_mock_request_response 'foo bar', 'lorem ipsum'
       @cnx.stub_error @test_url, Faraday::Error.new
 
+      promise = @backend.dispatch(@operation, @input)
+      assert_kind_of Concurrent::Promise, promise
+      assert promise.unscheduled?
+
       begin
-        @backend.dispatch @operation, @input
+        promise.execute.wait!
         assert false, 'Expected an error'
       rescue => e
         assert_kind_of WsdlMapper::Runtime::Errors::TransportError, e
