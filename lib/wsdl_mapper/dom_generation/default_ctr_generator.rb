@@ -41,11 +41,13 @@ module WsdlMapper
       protected
       def get_base_attrs(type)
         return [] unless type.base
+        return [] if type.base.is_a? WsdlMapper::Dom::SoapEncodingType
         type.base.each_attribute.to_a + get_base_attrs(type.base)
       end
 
       def get_base_props(type)
         return [] unless type.base
+        return [] if type.base.is_a? WsdlMapper::Dom::SoapEncodingType
         type.base.each_property.to_a + get_base_props(type.base)
       end
 

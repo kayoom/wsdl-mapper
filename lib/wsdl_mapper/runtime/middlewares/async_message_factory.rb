@@ -5,8 +5,8 @@ module WsdlMapper
     module Middlewares
       class AsyncMessageFactory < SimpleMessageFactory
         def call(operation, promise)
-          message_promise = promise.then do |(body, args)|
-            super(operation, body, args).last
+          message_promise = promise.then do |body, *args|
+            super(operation, body, *args).last
           end
 
           [operation, message_promise]
