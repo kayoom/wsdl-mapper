@@ -11,7 +11,7 @@ module WsdlMapper
       ]
 
       def to_ruby(string)
-        URI(string)
+        URI(string.strip)
       end
 
       def to_xml(object)
