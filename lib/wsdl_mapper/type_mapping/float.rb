@@ -17,7 +17,7 @@ module WsdlMapper
         case object
         when ::Float, ::Integer
           object.to_s
-        when Rational
+        when Rational, BigDecimal
           object.to_f.to_s
         end
       end
