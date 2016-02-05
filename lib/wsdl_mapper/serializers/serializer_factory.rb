@@ -14,6 +14,9 @@ module WsdlMapper
 
       def to_doc(obj, element_name = nil)
         element_name ||= @type_directory.get_element_name obj.class.name
+        if element_name.nil?
+          raise ArgumentError.new("element_name not found for #{obj.class.name}")
+        end
         core = SerializerCore.new resolver: @type_directory, default_namespace: @default_namespace
         serializer = @type_directory.find obj
         serializer.build core, obj, element_name

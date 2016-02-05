@@ -89,6 +89,9 @@ module WsdlMapper
 
       def get_type_name_for_prop(prop_name)
         @properties[prop_name].type_name
+      rescue Errors::UnknownElementError => e
+        e.parent = @cls
+        raise e
       end
 
       def set_properties(base, frame, object)
