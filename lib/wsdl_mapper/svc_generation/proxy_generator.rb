@@ -28,7 +28,15 @@ module WsdlMapper
         f.in_sub_class proxy_name.class_name, proxy_base.name do
           ops.each do |op|
             generate_operation f, op
+            generate_async_operation f, op
           end
+        end
+      end
+
+      def generate_async_operation(f, op)
+        name = op.property_name.attr_name
+        f.in_def name + '_async', ['args_promise'] do
+          f.call '@_api._call_async', "@_port.#{name}", 'args_promise'
         end
       end
 

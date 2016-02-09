@@ -19,6 +19,18 @@ module WsdlMapper
         yard.blank_line
         super
       end
+
+      def generate_async_operation(f, op)
+        yard = WsdlMapper::Generation::YardDocFormatter.new f
+        f.blank_line
+        yard.text op.type.name.name
+        yard.blank_line
+        yard.tag :xml_name, op.type.name.name
+        yard.tag :xml_namespace, op.type.name.ns
+        yard.param :body_promise, 'Concurrent::Promise', 'Promise delivering keyword arguments (Hash) for the InputBody constructor'
+        yard.blank_line
+        super
+      end
     end
   end
 end

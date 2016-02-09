@@ -171,6 +171,22 @@ module WsdlMapper
         statement "]"
       end
 
+      def literal_hash(name, key_values)
+        if key_values.empty?
+          statement "#{name} = {}"
+          return
+        end
+
+        statement "#{name} = {"
+        inc_indent
+        key_values[0..-2].each do |value|
+          statement "#{value},"
+        end
+        statement key_values.last
+        dec_indent
+        statement '}'
+      end
+
       def assignment(var_name, value)
         statement "#{var_name} = #{value}"
       end

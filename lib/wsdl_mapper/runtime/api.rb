@@ -25,6 +25,14 @@ module WsdlMapper
         @_backend.dispatch operation, *args
       end
 
+      # Executes a request async using the configured backend.
+      # @param [WsdlMapper::Runtime::Operation] operation Operation to call
+      # @param [Concurrent::Promise] args_promise Promise for request input
+      # @return [Concurrent::Promise] Promise for the response
+      def _call_async(operation, args_promise)
+        @_backend.dispatch_async operation, args_promise
+      end
+
       # Force preloading of requires for all contained services
       def _load_requires
         @_services.each &:_load_requires

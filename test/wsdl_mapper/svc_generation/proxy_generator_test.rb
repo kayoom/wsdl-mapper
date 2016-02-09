@@ -28,6 +28,10 @@ class PriceService
     def get_product_price(body, *args)
       @_api._call(@_port.get_product_price, body, *args)
     end
+
+    def get_product_price_async(args_promise)
+      @_api._call_async(@_port.get_product_price, args_promise)
+    end
   end
 end
 RUBY
