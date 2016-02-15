@@ -41,7 +41,7 @@ module WsdlMapper
       end
 
       def get_values_to_generate(ttg)
-        ttg.type.enumeration_values.map do |ev|
+        ttg.type.enumeration_values.uniq(&:value).map do |ev|
           name = @generator.namer.get_enumeration_value_name ttg.type, ev
           TypeToGenerate.new ev, name
         end
