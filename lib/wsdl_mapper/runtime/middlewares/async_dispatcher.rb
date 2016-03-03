@@ -5,12 +5,9 @@ module WsdlMapper
   module Runtime
     module Middlewares
       class AsyncDispatcher < SimpleDispatcher
-        attr_reader :cnx
-
-        def initialize(connection = Faraday.new)
-          @cnx = connection
-        end
-
+        # @api internal
+        # @param [WsdlMapper::Runtime::Operation] operation Operation to perform / call to make
+        # @param [Concurrent::Promise] request_promise A promise for the request to perform
         def call(operation, request_promise)
           http_response_promise = request_promise.then do |request|
             super(operation, request).last

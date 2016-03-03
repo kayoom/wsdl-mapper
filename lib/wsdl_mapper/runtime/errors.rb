@@ -11,6 +11,12 @@ module WsdlMapper
       end
 
       class TransportError < Error
+        attr_reader :request
+
+        def initialize(msg, cause = $!, request = nil)
+          super(msg, cause)
+          @request = request
+        end
       end
 
       class SoapFault < Error

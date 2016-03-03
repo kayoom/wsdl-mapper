@@ -10,7 +10,8 @@ module WsdlMapper
 
         attr_reader :cnx
 
-        def initialize(connection)
+        # @param [Faraday::Connection] connection A faraday connection to use.
+        def initialize(connection = Faraday.new)
           @cnx = connection
         end
 
@@ -32,7 +33,7 @@ module WsdlMapper
 
             [operation, http_response]
           rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError, Faraday::Error => e
-            raise TransportError.new(e.message, e)
+            raise TransportError.new(e.message, e, request)
           end
         end
       end
