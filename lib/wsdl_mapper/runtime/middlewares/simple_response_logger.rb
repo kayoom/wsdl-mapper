@@ -8,7 +8,7 @@ module WsdlMapper
           log "Response for #{operation.name}"
           log response.body
 
-          [operation, request]
+          [operation, response]
         end
       end
     end

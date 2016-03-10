@@ -110,15 +110,19 @@ module WsdlMapper
       def get_op_requires(service, port, op)
         requires = []
         get_header_parts(op.type.input).each do |part|
+          next if WsdlMapper::Dom::BuiltinType.builtin? part.type.name
           requires << part.name.require_path
         end
         get_body_parts(op.type.input).each do |part|
+          next if WsdlMapper::Dom::BuiltinType.builtin? part.type.name
           requires << part.name.require_path
         end
         get_header_parts(op.type.output).each do |part|
+          next if WsdlMapper::Dom::BuiltinType.builtin? part.type.name
           requires << part.name.require_path
         end
         get_body_parts(op.type.output).each do |part|
+          next if WsdlMapper::Dom::BuiltinType.builtin? part.type.name
           requires << part.name.require_path
         end
         requires << namer.get_s8r_type_directory_name.require_path
@@ -130,7 +134,7 @@ module WsdlMapper
         requires << service_namer.get_input_d10r_name(service.type, port.type, op.type).require_path
         requires << service_namer.get_output_s8r_name(service.type, port.type, op.type).require_path
         requires << service_namer.get_output_d10r_name(service.type, port.type, op.type).require_path
-        requires.map &:inspect
+        requires.uniq.map &:inspect
       end
 
       def generate_op_output_header(service, port, op, result)

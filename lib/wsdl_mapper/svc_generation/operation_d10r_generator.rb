@@ -55,6 +55,7 @@ module WsdlMapper
 
         parts = get_header_parts(in_out) + get_body_parts(in_out)
         required_d10rs = parts.map do |part|
+          next if WsdlMapper::Dom::BuiltinType.builtin? part.type.name
           namer.get_d10r_name(get_type_name(part.type))
         end
         modules = get_module_names service.name
@@ -70,7 +71,7 @@ module WsdlMapper
             @schema_element_directory_name.require_path,
             header_name.require_path,
             body_name.require_path
-          f.requires *required_d10rs.map(&:require_path)
+          f.requires *required_d10rs.compact.map(&:require_path)
 
           f.in_modules modules do
             in_classes f, service.name.class_name, port.name.class_name, op.name.class_name do

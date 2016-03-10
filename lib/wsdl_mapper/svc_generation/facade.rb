@@ -12,7 +12,7 @@ module WsdlMapper
   module SvcGeneration
     class Facade < WsdlMapper::Generation::Facade
 
-      def initialize(file, out, service_namer: nil, **args)
+      def initialize(file:, out:, service_namer: nil, **args)
         super file, out, **args
         @service_namer = service_namer
       end

@@ -225,10 +225,22 @@ module WsdlMapper
       end
 
       def get_and_build_body(f, part, element)
-        type_name = namer.get_type_name(get_type_name(part.type)).name.inspect
         attr_name = part.property_name.attr_name
         element_name = generate_name element
-        get_and_build f, type_name, 'body', attr_name, element_name
+
+        if WsdlMapper::Dom::BuiltinType.builtin?(part.type.name)
+          build_simple f, part.type, 'body', attr_name, element_name
+        else
+          type_name = namer.get_type_name(get_type_name(part.type)).name.inspect
+          get_and_build f, type_name, 'body', attr_name, element_name
+        end
+      end
+
+      def build_simple(f, type, obj_name, attr_name, element_name)
+        root_type = type.root.name.name
+        f.block "x.simple(#{generate_name(type.name)}, #{element_name})", ['x'] do
+          f.call 'x.text_builtin', "#{obj_name}.#{attr_name}", root_type.inspect
+        end
       end
 
       def get_and_build(f, type_name, obj_name, attr_name, element_name)
