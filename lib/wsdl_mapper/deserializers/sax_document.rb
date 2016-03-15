@@ -14,6 +14,7 @@ module WsdlMapper
       def initialize(base)
         @base = base
         @namespaces_stack = []
+        @buffer = ''
       end
 
       # @param [String] name
