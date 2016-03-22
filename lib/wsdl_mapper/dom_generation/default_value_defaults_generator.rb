@@ -32,7 +32,7 @@ module WsdlMapper
         elsif property.array? && !property.default?
           @generator.value_generator.generate_empty_array
         elsif property.single? && !builtin?(property.type)
-          name = @generator.namer.get_type_name property.type
+          name = @generator.namer.get_type_name @generator.get_type_name property.type
           "#{name.name}.new"
         else
           @generator.value_generator.generate_nil
@@ -44,6 +44,7 @@ module WsdlMapper
 
       protected
       def builtin?(type)
+        return false unless type.name
         type.name.ns == WsdlMapper::Dom::BuiltinType::NAMESPACE
       end
     end
