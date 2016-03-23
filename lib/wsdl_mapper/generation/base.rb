@@ -2,7 +2,6 @@ module WsdlMapper
   module Generation
     # @abstract
     class Base
-      protected
       def generate_name(name, suffix = '')
         return 'nil' if name.nil?
 
