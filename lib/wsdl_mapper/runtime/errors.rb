@@ -19,6 +19,16 @@ module WsdlMapper
         end
       end
 
+      class HTTPError < Error
+        attr_reader :request, :status
+
+        def initialize(status, msg, cause = $!, request = nil)
+          super("[#{status}] #{msg}", cause)
+          @status = status
+          @request = request
+        end
+      end
+
       class SoapFault < Error
         attr_reader :fault
 
