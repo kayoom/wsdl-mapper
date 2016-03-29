@@ -228,7 +228,8 @@ module WsdlMapper
         attr_name = part.property_name.attr_name
         element_name = generate_name element
 
-        if WsdlMapper::Dom::BuiltinType.builtin?(part.type.name)
+        type_name = get_type_name part.type
+        if WsdlMapper::Dom::BuiltinType.builtin?(type_name.name)
           build_simple f, part.type, 'body', attr_name, element_name
         else
           type_name = namer.get_type_name(get_type_name(part.type)).name.inspect

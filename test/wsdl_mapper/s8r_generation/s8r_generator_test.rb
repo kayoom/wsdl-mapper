@@ -282,11 +282,59 @@ class AttachmentsArraySerializer
   def build(x, obj, name)
     return if obj.nil?
     attributes = [
-      [[x.soap_enc, "arrayType"], "attachment[\#{obj.length}]", "string"]
+      [[x.soap_enc, "arrayType"], [nil, "attachment[\#{obj.length}]"], "string"]
     ]
     x.complex([nil, "attachmentsArray"], name, attributes) do |x|
       obj.each do |itm|
-        x.get("::AttachmentsArray").build(x, itm, [nil, "item"])
+        x.get("::Attachment").build(x, itm, [nil, "item"])
+      end
+    end
+  end
+end
+::S8rTypeDirectory.register_serializer("::AttachmentsArraySerializer", ::AttachmentsArraySerializer.new)
+RUBY
+    end
+
+    def test_soap_array_simple
+      generate 'basic_note_type_with_soap_array_simple.xsd'
+
+      assert_file_is 'attachments_array_serializer.rb', <<RUBY
+require "s8r_type_directory"
+
+class AttachmentsArraySerializer
+
+  def build(x, obj, name)
+    return if obj.nil?
+    attributes = [
+      [[x.soap_enc, "arrayType"], [nil, "attachment[\#{obj.length}]"], "string"]
+    ]
+    x.complex([nil, "attachmentsArray"], name, attributes) do |x|
+      obj.each do |itm|
+        x.get("::Attachment").build(x, itm, [nil, "item"])
+      end
+    end
+  end
+end
+::S8rTypeDirectory.register_serializer("::AttachmentsArraySerializer", ::AttachmentsArraySerializer.new)
+RUBY
+    end
+
+    def test_soap_array_builtin
+      generate 'basic_note_type_with_soap_array_builtin.xsd'
+
+      assert_file_is 'attachments_array_serializer.rb', <<RUBY
+require "s8r_type_directory"
+
+class AttachmentsArraySerializer
+
+  def build(x, obj, name)
+    return if obj.nil?
+    attributes = [
+      [[x.soap_enc, "arrayType"], ["http://www.w3.org/2001/XMLSchema", "string[\#{obj.length}]"], "string"]
+    ]
+    x.complex([nil, "attachmentsArray"], name, attributes) do |x|
+      obj.each do |itm|
+        x.value_builtin([nil, "item"], itm, "string")
       end
     end
   end

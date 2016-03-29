@@ -83,15 +83,25 @@ module WsdlMapper
       def eval_attributes(attributes)
         attributes.each_with_object({}) do |attr, hsh|
           attr_name = attr[0]
+          value = attr[1]
+          type = attr[2]
+          next if value.nil?
+
           ns = attr_name[0]
           name = attr_name[1]
           if ns
             prefix = @namespaces.prefix_for ns
             name = "#{prefix}:#{name}"
           end
-          value = attr[1]
-          type = attr[2]
-          next if value.nil?
+
+          if value.is_a? Array
+            value = if value[0]
+              prefix = @namespaces.prefix_for value[0]
+              "#{prefix}:#{value[1]}"
+            else
+              value[1]
+            end
+          end
 
           hsh[name] = @tm.to_xml builtin(type), value
         end

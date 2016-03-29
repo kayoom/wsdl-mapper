@@ -110,19 +110,19 @@ module WsdlMapper
       def get_op_requires(service, port, op)
         requires = []
         get_header_parts(op.type.input).each do |part|
-          next if WsdlMapper::Dom::BuiltinType.builtin? part.type.name
+          next if WsdlMapper::Dom::BuiltinType.builtin? get_type_name(part.type).name
           requires << part.name.require_path
         end
         get_body_parts(op.type.input).each do |part|
-          next if WsdlMapper::Dom::BuiltinType.builtin? part.type.name
+          next if WsdlMapper::Dom::BuiltinType.builtin? get_type_name(part.type).name
           requires << part.name.require_path
         end
         get_header_parts(op.type.output).each do |part|
-          next if WsdlMapper::Dom::BuiltinType.builtin? part.type.name
+          next if WsdlMapper::Dom::BuiltinType.builtin? get_type_name(part.type).name
           requires << part.name.require_path
         end
         get_body_parts(op.type.output).each do |part|
-          next if WsdlMapper::Dom::BuiltinType.builtin? part.type.name
+          next if WsdlMapper::Dom::BuiltinType.builtin? get_type_name(part.type).name
           requires << part.name.require_path
         end
         requires << namer.get_s8r_type_directory_name.require_path

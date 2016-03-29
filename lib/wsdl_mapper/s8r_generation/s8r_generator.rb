@@ -177,15 +177,30 @@ module WsdlMapper
         type_name = @namer.get_type_name get_type_name ttg.type
         item_name = generate_name WsdlMapper::Dom::Name.get(ttg.type.name.ns, @namer.get_soap_array_item_name(ttg.type))
         f.block 'obj.each', ['itm'] do
+          write_soap_array_item_statement(f, ttg.type, item_name)
+        end
+      end
+
+      def write_soap_array_item_statement(f, type, item_name)
+        case type.soap_array_type
+        when ::WsdlMapper::Dom::BuiltinType
+          write_value_builtin_statement f, item_name, 'itm', type.soap_array_type_name.name.inspect
+        when ::WsdlMapper::Dom::ComplexType
+          type_name = @namer.get_type_name type.soap_array_type
+          f.statement "x.get(#{type_name.name.inspect}).build(x, itm, #{item_name})"
+        when ::WsdlMapper::Dom::SimpleType
+          type_name = @namer.get_type_name type.soap_array_type
           f.statement "x.get(#{type_name.name.inspect}).build(x, itm, #{item_name})"
         end
       end
 
       def soap_array_attributes(ttg)
         # Use String#inspect to get the proper escaping, but cut off the last quotemark and append the array length
+        ns = ttg.type.soap_array_type_name.ns.inspect
         name = ttg.type.soap_array_type_name.name.inspect[0..-2] + "[\#{obj.length}]\""
+        # TODO: what about its namespace?
         [
-          %<[[x.soap_enc, "arrayType"], #{name}, "string"]>
+          %<[[x.soap_enc, "arrayType"], [#{ns}, #{name}], "string"]>
         ]
       end
 
@@ -238,6 +253,10 @@ module WsdlMapper
       def write_builtin_property_statement(f, prop, name)
         type = prop.type_name.name.inspect
         element_name = generate_name prop.name
+        write_value_builtin_statement(f, element_name, name, type)
+      end
+
+      def write_value_builtin_statement(f, element_name, name, type)
         f.statement "x.value_builtin(#{element_name}, #{name}, #{type})"
       end
 
