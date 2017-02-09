@@ -95,9 +95,9 @@ module WsdlMapper
       def parse_body(node)
         body = Binding::Body.new
         body.use = fetch_attribute_value 'use', node
-        body.encoding_styles = fetch_attribute_value('encodingStyle', node, "").split " "
+        body.encoding_styles = fetch_attribute_value('encodingStyle', node, '').split ' '
         body.namespace = fetch_attribute_value 'namespace', node
-        body.part_names = fetch_attribute_value('parts', node, "").split(" ").map { |s| parse_name(s, node) }
+        body.part_names = fetch_attribute_value('parts', node, '').split(' ').map { |s| parse_name(s, node) }
         body
       end
 
@@ -106,7 +106,7 @@ module WsdlMapper
         header.use = fetch_attribute_value 'use', node
         header.message_name = parse_name_in_attribute 'message', node
         header.part_name = parse_name_in_attribute 'part', node
-        header.encoding_styles = fetch_attribute_value('encodingStyle', node, "").split " "
+        header.encoding_styles = fetch_attribute_value('encodingStyle', node, '').split ' '
         header.namespace = fetch_attribute_value 'namespace', node
 
         each_element node do |child|
@@ -132,7 +132,7 @@ module WsdlMapper
         header_fault.use = fetch_attribute_value 'use', node
         header_fault.message_name = parse_name_in_attribute 'message', node
         header_fault.part_name = parse_name_in_attribute 'part', node
-        header_fault.encoding_styles = fetch_attribute_value('encodingStyle', node, "").split " "
+        header_fault.encoding_styles = fetch_attribute_value('encodingStyle', node, '').split ' '
         header_fault.namespace = fetch_attribute_value 'namespace', node
 
         header.add_header_fault header_fault

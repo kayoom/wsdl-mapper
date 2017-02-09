@@ -42,11 +42,11 @@ module WsdlMapper
       end
 
       def generate_nil
-        "nil"
+        'nil'
       end
 
       def generate_empty_array
-        "[]"
+        '[]'
       end
 
       def generate(obj)

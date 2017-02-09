@@ -18,9 +18,9 @@ module DomGenerationTests
       def test_simple_class_generation_with_modules
         result = generate 'basic_note_type.xsd', %w[NotesApi Types]
 
-        assert_includes result.files, path_for("notes_api", "types", "note_type.rb")
+        assert_includes result.files, path_for('notes_api', 'types', 'note_type.rb')
 
-        assert_file_is "notes_api", "types", "note_type.rb", <<RUBY
+        assert_file_is 'notes_api', 'types', 'note_type.rb', <<RUBY
 module NotesApi
   module Types
     class NoteType
@@ -34,17 +34,17 @@ end
 RUBY
 
         root_node = result.module_tree.first
-        assert_equal "NotesApi", root_node.type_name.module_name
+        assert_equal 'NotesApi', root_node.type_name.module_name
         middle_node = root_node.children.first
-        assert_equal "Types", middle_node.type_name.module_name
+        assert_equal 'Types', middle_node.type_name.module_name
         type_node = middle_node.children.first
-        assert_equal "NoteType", type_node.type_name.class_name
+        assert_equal 'NoteType', type_node.type_name.class_name
 
-        assert_file_is "notes_api", "types.rb", <<RUBY
+        assert_file_is 'notes_api', 'types.rb', <<RUBY
 require "notes_api/types/note_type"
 RUBY
 
-        assert_file_is "notes_api.rb", <<RUBY
+        assert_file_is 'notes_api.rb', <<RUBY
 require "notes_api/types"
 RUBY
       end

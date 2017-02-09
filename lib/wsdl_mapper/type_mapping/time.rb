@@ -14,7 +14,7 @@ module WsdlMapper
       end
 
       def to_xml(object)
-        object.strftime "%T%:z"
+        object.strftime '%T%:z'
       end
 
       def ruby_type

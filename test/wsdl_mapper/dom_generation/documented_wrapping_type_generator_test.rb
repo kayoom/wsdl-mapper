@@ -19,7 +19,7 @@ module DomGenerationTests
       def test_generation
         generate 'simple_email_address_type_with_documentation.xsd'
 
-        assert_file_is "email_address_type.rb", <<RUBY
+        assert_file_is 'email_address_type.rb', <<RUBY
 # This is some documentation.
 #
 # @xml_name emailAddressType

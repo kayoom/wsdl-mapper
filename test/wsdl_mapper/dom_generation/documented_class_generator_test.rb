@@ -19,7 +19,7 @@ module DomGenerationTests
       def test_class_documentation
         generate 'empty_note_type_with_multiline_documentation.xsd'
 
-        assert_file_is "note_type.rb", <<RUBY
+        assert_file_is 'note_type.rb', <<RUBY
 # This is some documentation for noteType.
 # With multiple lines.
 #
@@ -32,7 +32,7 @@ RUBY
       def test_class_documentation_with_namespace
         generate 'empty_note_with_documentaion_and_target_namespace.xsd'
 
-        assert_file_is "note_type.rb", <<RUBY
+        assert_file_is 'note_type.rb', <<RUBY
 # This is some documentation for noteType.
 #
 # @xml_name noteType
@@ -45,7 +45,7 @@ RUBY
       def test_property_documentation_with_array
         generate 'basic_note_type_with_attachments.xsd'
 
-        assert_file_is "note_type.rb", <<RUBY
+        assert_file_is 'note_type.rb', <<RUBY
 # @xml_name noteType
 class NoteType
   # @!attribute to
@@ -79,7 +79,7 @@ RUBY
       def test_property_documentation
         generate 'basic_note_type_with_property_and_attribute_documentation.xsd'
 
-        assert_file_is "note_type.rb", <<RUBY
+        assert_file_is 'note_type.rb', <<RUBY
 # @xml_name noteType
 class NoteType
   # @!attribute to
@@ -116,7 +116,7 @@ RUBY
       def test_property_documentation_with_boolean
         generate 'basic_note_type_with_boolean_property.xsd'
 
-        assert_file_is "note_type.rb", <<RUBY
+        assert_file_is 'note_type.rb', <<RUBY
 # @xml_name noteType
 class NoteType
   # @!attribute to

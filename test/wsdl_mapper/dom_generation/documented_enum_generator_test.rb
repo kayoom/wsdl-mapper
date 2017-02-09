@@ -19,7 +19,7 @@ module DomGenerationTests
       def test_class_documentation
         generate 'address_type_enumeration_with_documentation.xsd'
 
-        assert_file_is "address_type.rb", <<RUBY
+        assert_file_is 'address_type.rb', <<RUBY
 # This is some documentation for addressType.
 #
 # @xml_name addressType
@@ -41,7 +41,7 @@ RUBY
       def test_value_documentation
         generate 'address_type_enumeration_with_value_documentation.xsd'
 
-        assert_file_is "address_type.rb", <<RUBY
+        assert_file_is 'address_type.rb', <<RUBY
 # @xml_name addressType
 class AddressType < ::String
   # This is some documentation for ship.

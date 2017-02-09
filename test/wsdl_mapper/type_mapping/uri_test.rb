@@ -7,18 +7,18 @@ module TypeMappingTests
     include WsdlMapper::TypeMapping
 
     def test_to_ruby
-      uri = Uri.to_ruby("http://example.com/?a=foo%20bar")
+      uri = Uri.to_ruby('http://example.com/?a=foo%20bar')
 
       assert_kind_of URI, uri
-      assert_equal URI("http://example.com/?a=foo%20bar"), uri
+      assert_equal URI('http://example.com/?a=foo%20bar'), uri
     end
 
     def test_to_xml
-      uri = URI("http://example.com/?a=foo%20bar")
-      assert_equal "http://example.com/?a=foo%20bar", Uri.to_xml(uri)
+      uri = URI('http://example.com/?a=foo%20bar')
+      assert_equal 'http://example.com/?a=foo%20bar', Uri.to_xml(uri)
 
-      uri = "http://example.com/?a=foo bar"
-      assert_equal "http://example.com/?a=foo%20bar", Uri.to_xml(uri)
+      uri = 'http://example.com/?a=foo bar'
+      assert_equal 'http://example.com/?a=foo%20bar', Uri.to_xml(uri)
     end
 
     def test_ruby_type

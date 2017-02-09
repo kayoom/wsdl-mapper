@@ -12,7 +12,7 @@ module WsdlMapper
 
       def to_ruby(string)
         duration = WsdlMapper::CoreExt::TimeDuration.new
-        value = ""
+        value = ''
         negative = false
         time = false
 
@@ -26,23 +26,23 @@ module WsdlMapper
             time = true
           when 'Y'
             duration.years = value.to_i
-            value = ""
+            value = ''
           when 'M'
             if time
               duration.minutes = value.to_i
             else
               duration.months = value.to_i
             end
-            value = ""
+            value = ''
           when 'D'
             duration.days = value.to_i
-            value = ""
-          when "H"
+            value = ''
+          when 'H'
             duration.hours = value.to_i
-            value = ""
-          when "S"
+            value = ''
+          when 'S'
             duration.seconds = value.to_i
-            value = ""
+            value = ''
           else
             value += chr
           end
@@ -52,7 +52,7 @@ module WsdlMapper
       end
 
       def to_xml(object)
-        buf = ""
+        buf = ''
 
         add_period buf, object
         add_date buf, object
@@ -70,44 +70,44 @@ module WsdlMapper
       end
 
       def add_period(buf, d)
-        buf << "-" if d.negative?
-        buf << "P"
+        buf << '-' if d.negative?
+        buf << 'P'
       end
 
       def add_date(buf, d)
         if d.years > 0
           buf << d.years.to_s
-          buf << "Y"
+          buf << 'Y'
         end
 
         if d.months > 0
           buf << d.months.to_s
-          buf << "M"
+          buf << 'M'
         end
 
         if d.days > 0
           buf << d.days.to_s
-          buf << "D"
+          buf << 'D'
         end
       end
 
       def add_time(buf, d)
         return unless [d.hours, d.minutes, d.seconds].any? { |t| t > 0 }
-        buf << "T"
+        buf << 'T'
 
         if d.hours > 0
           buf << d.hours.to_s
-          buf << "H"
+          buf << 'H'
         end
 
         if d.minutes > 0
           buf << d.minutes.to_s
-          buf << "M"
+          buf << 'M'
         end
 
         if d.seconds > 0
           buf << d.seconds.to_s
-          buf << "S"
+          buf << 'S'
         end
       end
     end

@@ -168,7 +168,7 @@ module WsdlMapper
         end
         statement values.last
         dec_indent
-        statement "]"
+        statement ']'
       end
 
       def literal_hash(name, key_values)
@@ -203,7 +203,7 @@ module WsdlMapper
         if @blank_line
           @io.seek -1, IO::SEEK_CUR
         end
-        statement "end"
+        statement 'end'
       end
 
       private
@@ -219,7 +219,7 @@ module WsdlMapper
       end
 
       def indent
-        @io << "  " * @i
+        @io << '  ' * @i
         self
       end
 

@@ -21,7 +21,7 @@ module DomGenerationTests
       def test_generation
         generate 'simple_email_address_type.xsd'
 
-        assert_file_is "email_address_type.rb", <<RUBY
+        assert_file_is 'email_address_type.rb', <<RUBY
 class EmailAddressType
   attr_accessor :content
 end
@@ -31,13 +31,13 @@ RUBY
       def test_inline_complex_type
         generate 'basic_note_type_with_inline_simple_type.xsd'
 
-        assert_file_is "attachment_inline_type.rb", <<RUBY
+        assert_file_is 'attachment_inline_type.rb', <<RUBY
 class AttachmentInlineType
   attr_accessor :content
 end
 RUBY
 
-        assert_file_is "note_type.rb", <<RUBY
+        assert_file_is 'note_type.rb', <<RUBY
 require "attachment_inline_type"
 
 class NoteType
@@ -53,7 +53,7 @@ RUBY
       def test_element_inline_complex_type
         generate 'element_inline_simple_type.xsd'
 
-        assert_file_is "email_inline_type.rb", <<RUBY
+        assert_file_is 'email_inline_type.rb', <<RUBY
 class EmailInlineType
   attr_accessor :content
 end

@@ -9,12 +9,12 @@ module TypeMappingTests
     def test_to_ruby
       io = Base64Binary.to_ruby "VGhpcyBpcyBhIHRlc3Q=\n"
 
-      assert_equal "This is a test", io.read
+      assert_equal 'This is a test', io.read
       assert_equal Encoding::ASCII_8BIT, io.external_encoding
     end
 
     def test_to_xml
-      io = StringIO.new "This is a test"
+      io = StringIO.new 'This is a test'
       encoded = Base64Binary.to_xml io
 
       assert_equal "VGhpcyBpcyBhIHRlc3Q=\n", encoded

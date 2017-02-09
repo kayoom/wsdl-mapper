@@ -31,7 +31,7 @@ module TypeMappingTests
 
     def test_abstract_methods
       assert_raises(NotImplementedError) { TestMapping.to_xml(1) }
-      assert_raises(NotImplementedError) { TestMapping.to_ruby("1") }
+      assert_raises(NotImplementedError) { TestMapping.to_ruby('1') }
     end
   end
 end

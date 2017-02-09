@@ -18,6 +18,13 @@ module DeserializersTests
       attr_accessor :to, :date_time, :uuid, :attachments
     end
 
+    NoteTypeMapping = ClassMapping.new NoteType do
+      register_attr(:uuid, [nil, 'uuid'], BUILTIN['token'])
+      register_prop(:to, [nil, 'to'], BUILTIN['string'])
+      register_prop(:date_time, [nil, 'dateTime'], BUILTIN['dateTime'])
+      register_prop(:attachments, [nil, 'attachment'], [nil, 'attachmentType'], array: true)
+    end
+
     class AttachmentType
       attr_accessor :name, :content
     end
@@ -25,13 +32,6 @@ module DeserializersTests
     AttachmentTypeMapping = ClassMapping.new AttachmentType do
       register_prop(:name, [nil, 'name'], BUILTIN['string'])
       register_prop(:content, [nil, 'body'], BUILTIN['base64Binary'])
-    end
-
-    NoteTypeMapping = ClassMapping.new NoteType do
-      register_attr(:uuid, [nil, 'uuid'], BUILTIN['token'])
-      register_prop(:to, [nil, 'to'], BUILTIN['string'])
-      register_prop(:date_time, [nil, 'dateTime'], BUILTIN['dateTime'])
-      register_prop(:attachments, [nil, 'attachment'], [nil, 'attachmentType'], array: true)
     end
 
     class MoneyType

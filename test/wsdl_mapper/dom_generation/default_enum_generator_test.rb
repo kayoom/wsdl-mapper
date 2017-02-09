@@ -18,7 +18,7 @@ module DomGenerationTests
       def test_simple_enum_generation
         generate 'address_type_enumeration.xsd'
 
-        assert_file_is "address_type.rb", <<RUBY
+        assert_file_is 'address_type.rb', <<RUBY
 class AddressType < ::String
   SHIP = new("ship").freeze
   BILL = new("bill").freeze

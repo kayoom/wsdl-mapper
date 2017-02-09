@@ -22,7 +22,7 @@ module DomGenerationTests
       def test_documentation_with_array
         generate 'basic_note_type_with_attachments.xsd'
 
-        assert_file_is "note_type.rb", <<RUBY
+        assert_file_is 'note_type.rb', <<RUBY
 class NoteType
   attr_accessor :to
   attr_accessor :from
@@ -52,7 +52,7 @@ RUBY
       def test_simple_class_generation
         generate 'basic_note_type_with_boolean_property_and_documentation.xsd'
 
-        assert_file_is "note_type.rb", <<RUBY
+        assert_file_is 'note_type.rb', <<RUBY
 class NoteType
   attr_accessor :to
   attr_accessor :from

@@ -11,11 +11,11 @@ module WsdlMapper
       ]
 
       def to_ruby(string)
-        StringIO.new [string.to_s.strip].pack("H*")
+        StringIO.new [string.to_s.strip].pack('H*')
       end
 
       def to_xml(io)
-        io.read.unpack("H*").first
+        io.read.unpack('H*').first
       end
 
       def ruby_type

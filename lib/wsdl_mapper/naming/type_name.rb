@@ -21,11 +21,11 @@ module WsdlMapper
       end
 
       def require_path
-        @require_path ||= File.join *@file_path, File.basename(@file_name, ".rb")
+        @require_path ||= File.join *@file_path, File.basename(@file_name, '.rb')
       end
 
       def name
-        @name ||= ['', *@module_path, @class_name] * "::"
+        @name ||= ['', *@module_path, @class_name] * '::'
       end
 
       def eql?(other)

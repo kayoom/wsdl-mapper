@@ -26,7 +26,7 @@ module WsdlMapper
         end
 
         def to_xml(object)
-          "%02d" % object.days
+          '%02d' % object.days
         end
       end
 
@@ -40,7 +40,7 @@ module WsdlMapper
         end
 
         def to_xml(object)
-          "%02d" % object.months
+          '%02d' % object.months
         end
       end
 
@@ -54,7 +54,7 @@ module WsdlMapper
         end
 
         def to_xml(object)
-          "%04d" % object.years
+          '%04d' % object.years
         end
       end
 
@@ -69,7 +69,7 @@ module WsdlMapper
         end
 
         def to_xml(object)
-          "%04d-%02d" % [object.years, object.months]
+          '%04d-%02d' % [object.years, object.months]
         end
       end
 
@@ -84,7 +84,7 @@ module WsdlMapper
         end
 
         def to_xml(object)
-          "%02d-%02d" % [object.months, object.days]
+          '%02d-%02d' % [object.months, object.days]
         end
       end
     end

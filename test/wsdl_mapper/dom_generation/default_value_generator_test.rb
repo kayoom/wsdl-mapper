@@ -20,7 +20,7 @@ module DomGenerationTests
       end
 
       def test_simple_string
-        assert_evalable "foo bar", :string
+        assert_evalable 'foo bar', :string
         assert_evalable "foo\tb\"ar\n", :string
         assert_evalable "foo\u00B6bar\u040E\u0601", :string
       end
@@ -32,7 +32,7 @@ module DomGenerationTests
       end
 
       def test_simple_decimal
-        assert_evalable BigDecimal.new("-123.45"), :big_decimal
+        assert_evalable BigDecimal.new('-123.45'), :big_decimal
       end
 
       def test_date
@@ -40,12 +40,12 @@ module DomGenerationTests
       end
 
       def test_date_time
-        assert_evalable DateTime.new(1999, 10, 9, 8, 7, 6, "+03:00"), :date_time
+        assert_evalable DateTime.new(1999, 10, 9, 8, 7, 6, '+03:00'), :date_time
         assert_evalable DateTime.new(1999, 10, 9, 8, 7, 6), :date_time
       end
 
       def test_time
-        assert_evalable Time.new(1999, 10, 9, 8, 7, 6, "+03:00"), :time
+        assert_evalable Time.new(1999, 10, 9, 8, 7, 6, '+03:00'), :time
         assert_evalable Time.new(1999, 10, 9, 8, 7, 6), :time
       end
 

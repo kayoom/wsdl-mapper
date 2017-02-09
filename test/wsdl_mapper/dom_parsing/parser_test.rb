@@ -63,7 +63,7 @@ module SchemaTests
       schema = TestHelper.parse_schema 'basic_note_type_with_documentation_and_bounds.xsd'
       type = schema.each_type.first
 
-      assert_equal "This is some documentation for type.", type.documentation.default
+      assert_equal 'This is some documentation for type.', type.documentation.default
     end
 
     def test_example_1_properties_sequence
@@ -127,9 +127,9 @@ module SchemaTests
 
       prop = type.properties.values[3]
 
-      assert_equal "This is some documentation.", prop.documentation.default
+      assert_equal 'This is some documentation.', prop.documentation.default
 
-      app_info = "This is some appinfo.<link>http://example.com</link>"
+      app_info = 'This is some appinfo.<link>http://example.com</link>'
       assert_equal app_info, prop.documentation.app_info
     end
 
@@ -162,7 +162,7 @@ module SchemaTests
       assert_equal base_type, type.base
 
       attr = type.attributes.values.first
-      assert_equal Name.get(nil, "currency"), attr.name
+      assert_equal Name.get(nil, 'currency'), attr.name
     end
 
     def test_example_6_complex_type_properties_all
@@ -233,7 +233,7 @@ module SchemaTests
       assert_equal 1, schema.each_attribute.count
       attr = schema.each_attribute.first
 
-      assert_equal Name.get(nil, "uuid"), attr.name
+      assert_equal Name.get(nil, 'uuid'), attr.name
 
       type = schema.each_type.first
 

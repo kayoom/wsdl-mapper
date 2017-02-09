@@ -12,15 +12,15 @@ module WsdlMapper
 
       def to_ruby(string)
         case string.to_s
-        when "true", "1"
+        when 'true', '1'
           true
-        when "false", "0"
+        when 'false', '0'
           false
         end
       end
 
       def to_xml(object)
-        object ? "true" : "false"
+        object ? 'true' : 'false'
       end
 
       def ruby_type
