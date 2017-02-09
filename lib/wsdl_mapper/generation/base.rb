@@ -1,7 +1,18 @@
+require 'logging'
+
 module WsdlMapper
   module Generation
     # @abstract
     class Base
+      attr_reader :logger
+      protected :logger
+
+      def initialize(context)
+        byebug if context.nil?
+        @context = context
+        @logger = Logging.logger[self]
+      end
+
       def generate_name(name, suffix = '')
         return 'nil' if name.nil?
 

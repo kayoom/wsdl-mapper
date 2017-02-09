@@ -37,8 +37,10 @@ module WsdlMapper
         operation_s8r_generator_factory: OperationS8rGenerator,
         operation_d10r_generator_factory: OperationD10rGenerator,
         schema_generator: nil)
+
+        super(context)
+
         @formatter_factory = formatter_factory
-        @context = context
         @service_namer = service_namer
         @namer = namer
         @service_generator = service_generator_factory.new(self)

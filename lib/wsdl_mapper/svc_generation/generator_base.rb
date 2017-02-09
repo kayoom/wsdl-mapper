@@ -8,7 +8,7 @@ module WsdlMapper
 
       def initialize(generator)
         @generator = generator
-        @context = generator.context
+        super(generator.context)
       end
 
       protected
@@ -20,7 +20,6 @@ module WsdlMapper
       def service_namer
         @generator.service_namer
       end
-
 
       # @return [WsdlMapper::Naming::AbstractNamer]
       def namer

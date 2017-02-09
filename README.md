@@ -30,22 +30,31 @@ Or install it yourself as:
 ### XSD
 
     $ wsdl-mapper generate all some-schema.xsd --out some-schema --module SomeSchema
-    
+
 Will generate models and (de)serializers for the given `XSD` schema. The generated classes are all nested within the
 specified module `SomeSchema` and are put under `${pwd}/some-schema` (`pwd` == current working directory).
 
 For all available options, see
-    
+
     $ wsdl-mapper help generate
-    
+
 ### SOAP / WSDL
 
     $ wsdl-mapper generate svc some-svc.wsdl --out some-schema --module SomeSchema
-    
+
 Will generate models, (de)serializers and a client for the given `WSDL` service.
-    
+
 ## TODOs
 
+* loosen the dependency on concurrent-ruby, make the async way optional.
+* refactor code to mitigate the naming mess. (there are so many different domain objects called name or type, which
+  causes a mess in naming variables and methods. probably it makes sense to define acronyms and use them consistently
+  throughout the code.)
+* add more documentation, especially:
+  * how-tos / tutorials / walkthroughs
+  * inline documentation
+  * examples
+* add logging to parsing + generating
 
 ## Contributing
 

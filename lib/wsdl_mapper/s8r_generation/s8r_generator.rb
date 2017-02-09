@@ -20,7 +20,8 @@ module WsdlMapper
         formatter_factory: DefaultFormatter,
         module_generator_factory: DefaultModuleGenerator)
 
-        @context = context
+        super(context)
+
         @namer = namer
         @formatter_factory = formatter_factory
         @module_generator = module_generator_factory.new self

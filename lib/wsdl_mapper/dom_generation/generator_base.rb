@@ -6,7 +6,8 @@ module WsdlMapper
     class GeneratorBase < WsdlMapper::Generation::Base
       def initialize(generator)
         @generator = generator
-        @context = generator.context
+
+        super(generator.context)
       end
 
       protected
@@ -32,7 +33,11 @@ module WsdlMapper
           # ignore
         else
           type = schema.get_type type_name
-          name = @generator.namer.get_type_name type
+          begin
+            name = @generator.namer.get_type_name type
+          rescue => e
+            raise e
+          end
           requires << name.require_path
         end
       end

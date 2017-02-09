@@ -5,7 +5,7 @@ module WsdlMapper
     class DefaultModuleGenerator < Base
       def initialize(generator)
         @generator = generator
-        @context = generator.context
+        super(generator.context)
       end
 
       def generate(module_node, result)

@@ -39,8 +39,9 @@ module WsdlMapper
         type_mapping: WsdlMapper::TypeMapping::DEFAULT,
         value_generator: DefaultValueGenerator.new)
 
+        super(context)
+
         @formatter_factory = formatter_factory
-        @context = context
         @namer = namer
         @class_generator = class_generator_factory.new self
         @module_generator = module_generator_factory.new self
