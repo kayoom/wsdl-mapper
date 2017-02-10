@@ -31,6 +31,8 @@ module WsdlMapper
         @soap_array_item_name = soap_array_item_name
       end
 
+      # Returns a type name for the given type (simple or complex).
+      #
       # @param [WsdlMapper::Dom::ComplexType, WsdlMapper::Dom::SimpleType] type
       # @return [TypeName]
       def get_type_name(type)
