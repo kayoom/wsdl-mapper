@@ -1,14 +1,16 @@
 require 'bundler/setup'
 
-if ENV['cov']
-  require 'simplecov'
-  SimpleCov.start do
-    add_filter 'abstract_.*\.rb'
-    add_filter 'wsdl_mapper_testing/'
-  end
-else
-  require 'coveralls'
-  Coveralls.wear!
+require 'simplecov'
+require 'coveralls'
+
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+    SimpleCov::Formatter::HTMLFormatter,
+    Coveralls::SimpleCov::Formatter
+]
+
+SimpleCov.start do
+  add_filter 'abstract_.*\.rb'
+  add_filter 'wsdl_mapper_testing/'
 end
 
 require 'minitest/autorun'
