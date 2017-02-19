@@ -29,11 +29,11 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'yard'
   spec.add_development_dependency 'kramdown'
   spec.add_development_dependency 'github-markup'
-  spec.add_development_dependency 'logging', '~> 2.1'
   spec.add_development_dependency 'coveralls', '~> 0.8.19'
 
   spec.add_dependency 'concurrent-ruby'
   spec.add_dependency 'faraday', '~> 0.11'
   spec.add_dependency 'nokogiri', '~> 1.7'
   spec.add_dependency 'thor', '~> 0.19'
+  spec.add_dependency 'logging', '~> 2.1'
 end

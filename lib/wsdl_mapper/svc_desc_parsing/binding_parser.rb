@@ -10,11 +10,12 @@ module WsdlMapper
         binding = Binding.new name
         binding.type_name = parse_name_in_attribute 'type', node
 
+        success = true
         each_element node do |child|
-          parse_binding_child child, binding
+          success = parse_binding_child(child, binding) && success
         end
 
-        @base.description.add_binding binding
+        @base.description.add_binding(binding) if success
       end
 
       def parse_binding_child(node, binding)
@@ -23,10 +24,17 @@ module WsdlMapper
           parse_binding_operation node, binding
         when Soap::BINDING
           parse_soap_binding node, binding
+        when Soap12::BINDING
+          log_msg node, :unsupported
+          return false
+        when Http::BINDING
+          log_msg node, :unsupported
+          return false
         when DOCUMENTATION
           @base.parse_documentation node, binding
         else
           log_msg node, :unknown
+          return false
         end
       end
 
@@ -57,6 +65,10 @@ module WsdlMapper
           parse_operation_fault node, operation
         when Soap::OPERATION
           parse_operation_soap_action node, operation
+        when Soap12::OPERATION
+          log_msg node, :unsupported
+        when Http::OPERATION
+          log_msg node, :unsupported
         when DOCUMENTATION
           @base.parse_documentation node, operation
         else
@@ -85,6 +97,10 @@ module WsdlMapper
           in_out.add_header parse_header node
         when Soap::BODY
           in_out.body = parse_body node
+        when Soap12::HEADER
+          log_msg node, :unsupported
+        when Soap12::BODY
+          log_msg node, :unsupported
         when DOCUMENTATION
           @base.parse_documentation node, in_out
         else

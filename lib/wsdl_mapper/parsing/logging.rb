@@ -1,3 +1,5 @@
+require 'logging'
+
 module WsdlMapper
   module Parsing
     module Logging
@@ -22,6 +24,9 @@ module WsdlMapper
       def log_msg(node, msg = '', source = self)
         @log_msgs ||= []
         @log_msgs << LogMsg.new(node, source, msg)
+
+        @logger ||= ::Logging.logger[self]
+        @logger.warn "#{msg} in {#{node.namespace.href}}#{node.name}"
       end
     end
   end

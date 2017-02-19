@@ -5,6 +5,9 @@ require 'wsdl_mapper/s8r_generation/facade'
 require 'wsdl_mapper/d10r_generation/facade'
 require 'wsdl_mapper/svc_generation/facade'
 
+require 'logging'
+Logging.logger.root.appenders = Logging.appenders.stdout
+
 module WsdlMapper
   # @api cli
   module Cli

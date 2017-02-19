@@ -33,17 +33,24 @@ module WsdlMapper
         port = Service::Port.new name
         port.binding_name = parse_name_in_attribute 'binding', node
 
+        success = true
         each_element node do |child|
-          parse_port_child child, port
+          success = parse_port_child(child, port) && success
         end
 
-        service.add_port port
+        service.add_port(port) if success
       end
 
       def parse_port_child(node, port)
         case get_name node
         when Soap::ADDRESS
           parse_port_address node, port
+        when Soap12::ADDRESS
+          log_msg node, :unsupported
+          return false
+        when Http::ADDRESS
+          log_msg node, :unsupported
+          return false
         when DOCUMENTATION
           @base.parse_documentation node, port
         else

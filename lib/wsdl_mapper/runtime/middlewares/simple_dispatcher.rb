@@ -1,4 +1,5 @@
 require 'faraday'
+require 'logger'
 
 require 'wsdl_mapper/runtime/errors'
 
