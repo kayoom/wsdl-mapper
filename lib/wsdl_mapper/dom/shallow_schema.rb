@@ -24,7 +24,7 @@ module WsdlMapper
       include Enumerable
 
       def each(&block)
-        types.values.each &block
+        types.values.each(&block)
       end
 
       def builtin?(name)

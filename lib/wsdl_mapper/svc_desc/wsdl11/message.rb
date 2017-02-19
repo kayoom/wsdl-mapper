@@ -20,7 +20,7 @@ module WsdlMapper
         end
 
         def each_part(&block)
-          @parts.each_value &block
+          @parts.each_value(&block)
         end
 
         def get_part(name)

@@ -13,7 +13,8 @@ module WsdlMapper
         @type_directory = type_directory
         @directory = WsdlMapper::Dom::Directory.new on_nil: Errors::UnknownElementError
         @base = base
-        instance_exec &block if block_given?
+
+        instance_exec(&block) if block_given?
       end
 
       def register_element(element_name, type_name, require_path, class_name)
@@ -48,9 +49,9 @@ module WsdlMapper
       def each_element(&block)
         if block_given?
           @base.each do |base|
-            base.each_element &block
+            base.each_element(&block)
           end
-          @directory.each &block
+          @directory.each(&block)
         else
           types = @base.inject([]) { |sum, b| sum + b.each_element.to_a }
           types + @directory.each.to_a
@@ -58,7 +59,7 @@ module WsdlMapper
       end
 
       def each_type(&block)
-        @type_directory.each_type &block
+        @type_directory.each_type(&block)
       end
     end
   end

@@ -14,7 +14,8 @@ module WsdlMapper
         @by_type_name = Hash.new do |h, k|
           h[k] = find_and_load k
         end
-        instance_exec &block if block_given?
+
+        instance_exec(&block) if block_given?
       end
 
       def register_element(name, element_name)

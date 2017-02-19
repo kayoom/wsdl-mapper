@@ -17,7 +17,7 @@ module WsdlMapper
           end
 
           def each_fault(&block)
-            @faults.each_value &block
+            @faults.each_value(&block)
           end
 
           def get_fault(name)
@@ -37,7 +37,7 @@ module WsdlMapper
         end
 
         def each_operation(&block)
-          @operations.each_value.to_a.flatten.each &block
+          @operations.each_value.to_a.flatten.each(&block)
         end
 
         def add_operation(operation)

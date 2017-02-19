@@ -8,7 +8,7 @@ module WsdlMapper
       attr_accessor :xml_types
 
       def initialize(&block)
-        instance_exec &block
+        instance_exec(&block)
         MappingSet.default << self
       end
 

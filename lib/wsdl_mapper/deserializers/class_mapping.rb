@@ -24,7 +24,8 @@ module WsdlMapper
         @simple = simple
         @wrappers = Directory.new
         @delegate = nil
-        instance_exec &block
+
+        instance_exec(&block)
       end
 
       def register_attr(accessor, attr_name, type_name)

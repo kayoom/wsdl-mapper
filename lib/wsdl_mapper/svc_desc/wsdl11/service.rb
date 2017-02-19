@@ -19,7 +19,7 @@ module WsdlMapper
         end
 
         def each_port(&block)
-          @ports.each_value &block
+          @ports.each_value(&block)
         end
       end
     end

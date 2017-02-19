@@ -9,7 +9,8 @@ module WsdlMapper
       def initialize(*base, &block)
         @types = WsdlMapper::Dom::Directory.new on_nil: Errors::UnknownTypeError
         @base = base
-        instance_exec &block if block_given?
+
+        instance_exec(&block) if block_given?
       end
 
       def register_type(type_name, klass, simple: false, &block)
@@ -25,9 +26,9 @@ module WsdlMapper
       def each_type(&block)
         if block_given?
           @base.each do |base|
-            base.each_type &block
+            base.each_type(&block)
           end
-          @types.each &block
+          @types.each(&block)
         else
           types = @base.inject([]) { |sum, b| sum + b.each_type.to_a }
           types + @types.each.to_a

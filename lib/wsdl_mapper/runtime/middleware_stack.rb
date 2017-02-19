@@ -80,7 +80,7 @@ module WsdlMapper
       # @yieldparam middleware [Object, Proc]
       # @return [Enumerator]
       def each(&block)
-        @stack.lazy.map(&:middleware).each &block
+        @stack.lazy.map(&:middleware).each(&block)
       end
 
       # Calls each middleware in order, by passing the output from the last middleware

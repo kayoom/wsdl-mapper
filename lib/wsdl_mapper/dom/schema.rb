@@ -93,11 +93,11 @@ module WsdlMapper
       end
 
       def each_builtin_type(&block)
-        @builtin_types.values.each &block
+        @builtin_types.values.each(&block)
       end
 
       def each_soap_encoding_type(&block)
-        @soap_encoding_types.values.each &block
+        @soap_encoding_types.values.each(&block)
       end
 
       protected

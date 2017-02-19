@@ -27,7 +27,7 @@ module WsdlMapper
       end
 
       def each_property(&block)
-        properties.values.each &block
+        properties.values.each(&block)
       end
 
       def each_property_with_bases(&block)
@@ -37,7 +37,7 @@ module WsdlMapper
       end
 
       def each_attribute(&block)
-        attributes.values.each &block
+        attributes.values.each(&block)
       end
 
       def simple_content?

@@ -38,23 +38,23 @@ module WsdlMapper
         end
 
         def each_schema(&block)
-          @schemas.each &block
+          @schemas.each(&block)
         end
 
         def each_message(&block)
-          @messages.each_value &block
+          @messages.each_value(&block)
         end
 
         def each_port_type(&block)
-          @port_types.each_value &block
+          @port_types.each_value(&block)
         end
 
         def each_service(&block)
-          @services.each_value &block
+          @services.each_value(&block)
         end
 
         def each_binding(&block)
-          @bindings.each_value &block
+          @bindings.each_value(&block)
         end
 
         def get_message(name)
