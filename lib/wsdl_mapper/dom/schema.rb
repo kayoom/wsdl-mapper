@@ -23,7 +23,7 @@ module WsdlMapper
         @unresolved_imports = []
       end
 
-      def add_import(ns, schema)
+      def add_import(_, schema)
         @imports << schema
       end
 
@@ -68,7 +68,7 @@ module WsdlMapper
 
       def each_type(&block)
         enum = Enumerator.new do |y|
-          @types.each do |(n, t)|
+          @types.each do |(_, t)|
             y << t
           end
           @anon_types.each do |t|
@@ -103,7 +103,7 @@ module WsdlMapper
       protected
       def recursive_each(array, accessor, &block)
         enum = Enumerator.new do |y|
-          array.each do |(n, t)|
+          array.each do |(_, t)|
             y << t
           end
           @imports.each do |i|

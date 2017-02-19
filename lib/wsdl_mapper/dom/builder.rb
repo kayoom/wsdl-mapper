@@ -36,7 +36,7 @@ module WsdlMapper
         type
       end
 
-      def build_property(schema, xsd_element)
+      def build_property(_schema, xsd_element)
         name = build_name xsd_element.name
         type_name = build_name xsd_element.type
 
@@ -55,15 +55,6 @@ module WsdlMapper
         # bounds = get_attribute_bounds xsd_element
 
         parent_bounds #.override bounds
-      end
-
-      def get_attribute_bounds(xsd_element)
-        min = nil
-        max = nil
-        byebug
-        xsd_element.attributes.each do |attr|
-
-        end
       end
 
       def get_parent_bounds(xsd_element)

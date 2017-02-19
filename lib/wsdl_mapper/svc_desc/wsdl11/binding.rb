@@ -113,7 +113,8 @@ module WsdlMapper
 
         def initialize(name)
           super name
-          @operations = WsdlMapper::Dom::Directory.new do |name|
+
+          @operations = WsdlMapper::Dom::Directory.new do |_|
             []
           end
         end

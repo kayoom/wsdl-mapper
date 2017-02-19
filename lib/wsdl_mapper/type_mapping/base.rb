@@ -28,11 +28,11 @@ module WsdlMapper
         end
       end
 
-      def to_ruby(string)
+      def to_ruby(_string)
         raise NotImplementedError
       end
 
-      def to_xml(object)
+      def to_xml(_object)
         raise NotImplementedError
       end
 

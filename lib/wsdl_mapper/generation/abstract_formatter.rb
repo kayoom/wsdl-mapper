@@ -1,6 +1,7 @@
 module WsdlMapper
   module Generation
     # @abstract
+    # noinspection RubyUnusedLocalVariable
     class AbstractFormatter
       def initialize(io)
         @io = io

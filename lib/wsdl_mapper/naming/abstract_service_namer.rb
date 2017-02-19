@@ -1,6 +1,7 @@
 module WsdlMapper
   module Naming
     # @abstract
+    # noinspection RubyUnusedLocalVariable
     class AbstractServiceNamer
       def get_api_name
         raise NotImplementedError

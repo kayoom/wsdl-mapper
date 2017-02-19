@@ -1,5 +1,6 @@
 module WsdlMapper
   module DomGeneration
+    # noinspection RubyUnusedLocalVariable
     class NullCtrGenerator
       def initialize(generator)
         @generator = generator

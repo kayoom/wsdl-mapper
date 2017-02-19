@@ -36,7 +36,7 @@ module WsdlMapper
         @generator.ctr_generator.generate_wrapping ttg, f, result, content_name.var_name, content_name.attr_name
       end
 
-      def generate_accessor(f, ttg, content_name)
+      def generate_accessor(f, _ttg, content_name)
         f.attr_accessors content_name.attr_name
       end
     end

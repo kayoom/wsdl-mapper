@@ -12,7 +12,6 @@ module WsdlMapper
       end
 
       def [](name)
-        n = name.is_a?(WsdlMapper::Dom::Name) ? name.name : name
         types[name]
       end
 

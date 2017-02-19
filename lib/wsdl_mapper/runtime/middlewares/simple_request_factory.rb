@@ -19,12 +19,12 @@ module WsdlMapper
         end
 
         protected
-        def add_http_headers(request, operation, message)
+        def add_http_headers(request, _operation, message)
           request.add_http_header 'SOAPAction', message.action
           request.add_http_header 'Content-Type', 'text/xml'
         end
 
-        def set_url(request, operation, message)
+        def set_url(request, _operation, message)
           request.url = URI(message.address)
         end
 

@@ -20,7 +20,7 @@ module WsdlMapper
       def camelize(source)
         source.
           strip.
-          gsub(NON_WORD_FOLLOWED_BY_WORD) { |s| $1.upcase }.
+          gsub(NON_WORD_FOLLOWED_BY_WORD) { |_| $1.upcase }.
           sub(FIRST_CHAR) { |s| s.upcase }
       end
 
@@ -32,7 +32,7 @@ module WsdlMapper
       def underscore(source)
         source.
           strip.
-          gsub(DOWN_FOLLOWED_BY_UP) { |s| "#{$1}_#{$2.downcase}" }.
+          gsub(DOWN_FOLLOWED_BY_UP) { |_| "#{$1}_#{$2.downcase}" }.
           downcase.
           gsub(NON_AN, '_').
           gsub(/_+/, '_')

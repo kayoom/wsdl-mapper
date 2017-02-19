@@ -40,6 +40,7 @@ module WsdlMapper
       # @abstract
       # @param [WsdlMapper::Serializers::SerializerCore] x Serializer instance to use
       # @param [WsdlMapper::Runtime::Header] header
+      # noinspection RubyUnusedLocalVariable
       def build_header(x, header)
         raise NotImplementedError
       end
@@ -47,6 +48,7 @@ module WsdlMapper
       # @abstract
       # @param [WsdlMapper::Serializers::SerializerCore] x Serializer instance to use
       # @param [WsdlMapper::Runtime::Body] body
+      # noinspection RubyUnusedLocalVariable
       def build_body(x, body)
         raise NotImplementedError
       end

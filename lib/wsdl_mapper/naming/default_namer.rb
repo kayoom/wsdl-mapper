@@ -24,7 +24,7 @@ module WsdlMapper
       # Initializes a new {DefaultNamer} instance.
       #
       # @param [Array<String>] module_path the root module for the generated classes, e.g. `['MyApi', 'Types']` => `MyApi::Types::SomeClass` in `my_api/types/some_class.rb`
-      # @param [String] content_attribute_name the accessor name for {file:concepts/wrapping_types.md wrapping types} (complex type with simple content and simple types with restrictions)
+      # @param [String] content_attribute_name the accessor name for {file:concepts/wrapping_types.md wrapping types} (complex _type with simple content and simple types with restrictions)
       def initialize(module_path: [],
           content_attribute_name: 'content',
           soap_array_item_name: 'item')
@@ -34,7 +34,7 @@ module WsdlMapper
         @soap_array_item_name = soap_array_item_name
       end
 
-      # Returns a type name for the given type (simple or complex).
+      # Returns a _type name for the given _type (simple or complex).
       #
       # @param [WsdlMapper::Dom::ComplexType, WsdlMapper::Dom::SimpleType] type
       # @return [TypeName]
@@ -100,16 +100,16 @@ module WsdlMapper
         PropertyName.new get_accessor_name(attribute.name.name), get_var_name(attribute.name.name)
       end
 
-      # @param [WsdlMapper::Dom::SimpleType] type
+      # @param [WsdlMapper::Dom::SimpleType] _type
       # @param [WsdlMapper::Dom::EnumerationValue] enum_value
       # @return [EnumerationValueName]
-      def get_enumeration_value_name(type, enum_value)
+      def get_enumeration_value_name(_type, enum_value)
         EnumerationValueName.new get_constant_name(enum_value.value), get_key_name(enum_value.value)
       end
 
-      # @param [WsdlMapper::Dom::ComplexType, WsdlMapper::Dom::SimpleType] type
+      # @param [WsdlMapper::Dom::ComplexType, WsdlMapper::Dom::SimpleType] _type
       # @return [PropertyName]
-      def get_content_name(type)
+      def get_content_name(_type)
         @content_name ||= PropertyName.new get_accessor_name(@content_attribute_name), get_var_name(@content_attribute_name)
       end
 
@@ -120,9 +120,9 @@ module WsdlMapper
         InlineType.new WsdlMapper::Dom::Name.get(element.name.ns, name)
       end
 
-      # @param [WsdlMapper::Dom::ComplexType] type
+      # @param [WsdlMapper::Dom::ComplexType] _type
       # @return [String]
-      def get_soap_array_item_name(type)
+      def get_soap_array_item_name(_type)
         @soap_array_item_name
       end
 
@@ -167,7 +167,7 @@ module WsdlMapper
         camelize name
       end
 
-      def get_support_module_path(name)
+      def get_support_module_path(_name)
         @module_path
       end
 

@@ -20,11 +20,11 @@ module WsdlMapper
         end
       end
 
-      def operation_requires(ops)
+      def operation_requires(_ops)
         []
       end
 
-      def generate_proxy_class(f, ops, proxy_name, port)
+      def generate_proxy_class(f, ops, proxy_name, _port)
         f.in_sub_class proxy_name.class_name, proxy_base.name do
           ops.each do |op|
             generate_operation f, op

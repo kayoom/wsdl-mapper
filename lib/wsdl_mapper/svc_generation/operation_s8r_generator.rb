@@ -52,7 +52,7 @@ module WsdlMapper
         end
       end
 
-      def generate_op_s8r_header(f, port, op, in_out)
+      def generate_op_s8r_header(f, _port, _op, in_out)
         headers = get_header_parts in_out
         f.in_def :build_header, 'x', 'header' do
           generate_each_header f, headers

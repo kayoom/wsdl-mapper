@@ -44,7 +44,7 @@ module WsdlMapperTesting
     end
 
     def stub_error(url, error)
-      @stubs.post url do |env|
+      @stubs.post url do |_|
         raise error
       end
     end

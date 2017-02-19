@@ -22,11 +22,11 @@ module WsdlMapperTesting
       @outputs[body] = output
     end
 
-    def new_input(header: nil, body: nil)
+    def new_input(_header: nil, body: nil)
       @inputs.fetch body
     end
 
-    def new_output(header: nil, body: nil)
+    def new_output(_header: nil, body: nil)
       @outputs.fetch body
     end
   end

@@ -57,7 +57,7 @@ module WsdlMapper
       end
 
       protected
-      def generate_deserializer(schema, result)
+      def generate_deserializer(_schema, result)
         modules = @deserializer_name.parents.reverse.map &:module_name
 
         type_file_for @deserializer_name, result do |f|
@@ -91,8 +91,8 @@ module WsdlMapper
 
       # @param [WsdlMapper::Generation::AbstractFormatter] f
       # @param [WsdlMapper::Dom::Element] element
-      # @param [WsdlMapper::Generation::Result] result
-      def register_element(f, element, result)
+      # @param [WsdlMapper::Generation::Result] _result
+      def register_element(f, element, _result)
         element_name = generate_name element.name
         type_name = generate_name get_type_name(element.type).name
         d10r_name = @namer.get_d10r_name(element.type.name ? element.type : @namer.get_inline_type(element))
@@ -101,7 +101,7 @@ module WsdlMapper
         f.statement "register_element #{element_name}, #{type_name}, #{require_path}, #{d10r_name.name.inspect}"
       end
 
-      def generate_type_directory(schema, result)
+      def generate_type_directory(_schema, result)
         modules = get_module_names @type_directory_name
 
         type_file_for @type_directory_name, result do |f|

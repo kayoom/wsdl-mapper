@@ -123,10 +123,6 @@ module WsdlMapper
 
         schema_node
       end
-
-      def get_namespace(prefix)
-
-      end
     end
   end
 end

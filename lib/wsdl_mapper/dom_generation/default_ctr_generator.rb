@@ -22,7 +22,7 @@ module WsdlMapper
         end
       end
 
-      def generate_simple(ttg, f, result)
+      def generate_simple(ttg, f, _result)
         attrs = ttg.type.each_attribute
         content_name = @generator.namer.get_content_name ttg.type
 

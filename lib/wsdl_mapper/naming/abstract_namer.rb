@@ -6,6 +6,7 @@ require 'wsdl_mapper/naming/inflector'
 module WsdlMapper
   module Naming
     # @abstract
+    # noinspection RubyUnusedLocalVariable
     class AbstractNamer
       def get_type_name(type)
         raise NotImplementedError

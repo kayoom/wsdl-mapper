@@ -4,6 +4,7 @@ require 'wsdl_mapper/runtime/message'
 module WsdlMapper
   module Runtime
     # @abstract
+    # noinspection RubyUnusedLocalVariable
     class Operation
       attr_reader :name, :operation_name
 

@@ -51,8 +51,7 @@ module WsdlMapper
         @wrappers[name]
       end
 
-      def start(base, frame)
-        # frame.object = @simple ? @cls.new(nil) : @cls.new
+      def start(_base, _frame)
       end
 
       def end(base, frame)

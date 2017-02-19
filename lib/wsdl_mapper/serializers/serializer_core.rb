@@ -24,15 +24,15 @@ module WsdlMapper
         @resolver.resolve name
       end
 
-      def complex(type_name, element_name, attributes)
+      def complex(_type_name, element_name, attributes)
         # TODO: keep type_name parameter?
-        @x.send expand_tag(*element_name), eval_attributes(attributes) do |x|
+        @x.send expand_tag(*element_name), eval_attributes(attributes) do |_|
           yield self
         end
       end
 
-      def simple(type_name, element_name)
-        @x.send expand_tag(*element_name) do |x|
+      def simple(_type_name, element_name)
+        @x.send expand_tag(*element_name) do |_|
           yield self
         end
       end

@@ -44,7 +44,7 @@ class StubConnectionTest < Minitest::Test
     cnx.stub_error '/some-url', WsdlMapper::Runtime::Errors::TransportError.new('some error occured')
 
     begin
-      response = cnx.post '/some-url', 'some request'
+      cnx.post '/some-url', 'some request'
       assert false, 'Error not risen'
     rescue WsdlMapper::Runtime::Errors::TransportError => e
       assert_equal 'some error occured', e.message

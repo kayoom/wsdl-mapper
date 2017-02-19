@@ -11,7 +11,7 @@ module SchemaTests
       doc = TestHelper.get_xml_doc 'services/ebaySvc.xsd'
       parser = WsdlMapper::DomParsing::Parser.new
 
-      schema = parser.parse doc
+      parser.parse doc
 
       assert_equal 0, parser.log_msgs.count
     end
@@ -20,7 +20,7 @@ module SchemaTests
       doc = TestHelper.get_xml_doc 'services/plenty_114.xsd'
       parser = WsdlMapper::DomParsing::Parser.new
 
-      schema = parser.parse doc
+      parser.parse doc
 
       assert_equal 0, parser.log_msgs.count
     end
@@ -29,7 +29,7 @@ module SchemaTests
       doc = TestHelper.get_xml_doc 'services/magento_v2.xsd'
       parser = WsdlMapper::DomParsing::Parser.new
 
-      schema = parser.parse doc
+      parser.parse doc
 
       assert_equal 0, parser.log_msgs.count
     end
@@ -38,7 +38,7 @@ module SchemaTests
       doc = TestHelper.get_xml_doc 'services/tb-stock_all_in_one.xsd'
       parser = WsdlMapper::DomParsing::Parser.new
 
-      schema = parser.parse doc
+      parser.parse doc
 
       assert_equal 0, parser.log_msgs.count
     end
@@ -47,7 +47,7 @@ module SchemaTests
       doc = TestHelper.get_xml_doc 'services/tb-cat_1_2_import.xsd'
       parser = WsdlMapper::DomParsing::Parser.new import_resolver: DefaultResolver.new(File.dirname(__FILE__))
 
-      schema = parser.parse doc
+      parser.parse doc
 
       assert_equal 0, parser.log_msgs.count
     end

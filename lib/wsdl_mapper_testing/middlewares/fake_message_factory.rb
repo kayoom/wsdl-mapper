@@ -12,7 +12,7 @@ module WsdlMapperTesting
         @header = header
       end
 
-      def call(operation, body, args)
+      def call(operation, body, _args)
         envelope = WsdlMapper::SvcDesc::Envelope.new header: @header, body: body
         message = WsdlMapper::Runtime::Message.new @url, @action, envelope
 

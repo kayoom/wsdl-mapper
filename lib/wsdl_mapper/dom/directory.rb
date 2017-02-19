@@ -61,8 +61,8 @@ module WsdlMapper
 
       def each_value(&block)
         enum = Enumerator.new do |y|
-          @data.each do |ns, data|
-            data.each do |name, value|
+          @data.each do |_, data|
+            data.each do |_, value|
               y << value
             end
           end

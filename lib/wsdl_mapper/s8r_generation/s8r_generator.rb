@@ -84,14 +84,14 @@ module WsdlMapper
         end
       end
 
-      def generate_element_entry(f, element, result)
+      def generate_element_entry(f, element, _result)
         type_name = @namer.get_type_name get_type_name element.type
         type_class_name = type_name.name.inspect
 
         f.call :register_element, type_class_name, generate_name(element.name)
       end
 
-      def generate_type_directory_entry(f, type, result)
+      def generate_type_directory_entry(f, type, _result)
         type_name = @namer.get_type_name get_type_name type
         s8r_name = @namer.get_s8r_name get_type_name type
         type_class_name = type_name.name.inspect
@@ -175,7 +175,6 @@ module WsdlMapper
       end
 
       def write_soap_array_statements(f, ttg)
-        type_name = @namer.get_type_name get_type_name ttg.type
         item_name = generate_name WsdlMapper::Dom::Name.get(ttg.type.name.ns, @namer.get_soap_array_item_name(ttg.type))
         f.block 'obj.each', ['itm'] do
           write_soap_array_item_statement(f, ttg.type, item_name)

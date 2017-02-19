@@ -119,7 +119,7 @@ RUBY
         context = WsdlMapper::Generation::Context.new @tmp_path.to_s
         generator = WsdlMapper::DomGeneration::SchemaGenerator.new context, namer: WsdlMapper::Naming::DefaultNamer.new(module_path: %w[OrdersApi Types])
 
-        result = generator.generate schema
+        generator.generate schema
         assert_file_is 'orders_api', 'types', 'order_type.rb', <<RUBY
 require "orders_api/types/address_type"
 
