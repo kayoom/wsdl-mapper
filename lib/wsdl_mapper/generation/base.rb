@@ -8,7 +8,6 @@ module WsdlMapper
       protected :logger
 
       def initialize(context)
-        byebug if context.nil?
         @context = context
         @logger = Logging.logger[self]
       end
@@ -63,7 +62,7 @@ module WsdlMapper
       end
 
       def get_module_names(type)
-        type.parents.reverse.map &:module_name
+        type.parents.reverse.map(&:module_name)
       end
     end
   end

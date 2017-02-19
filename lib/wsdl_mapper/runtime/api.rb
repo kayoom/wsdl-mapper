@@ -35,7 +35,7 @@ module WsdlMapper
 
       # Force preloading of requires for all contained services
       def _load_requires
-        @_services.each &:_load_requires
+        @_services.each(&:_load_requires)
       end
     end
   end

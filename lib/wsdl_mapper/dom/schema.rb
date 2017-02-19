@@ -51,7 +51,7 @@ module WsdlMapper
           @builtin_types[name] ||= BuiltinType.types[name]
         elsif name.ns == SoapEncodingType::NAMESPACE
           @soap_encoding_types[name] ||= SoapEncodingType.types[name]
-        elsif type = @types[name]
+        elsif (type = @types[name])
           type
         else
           @imports.lazy.map { |s| s.get_type(name) }.reject(&:nil?).first

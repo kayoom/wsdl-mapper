@@ -23,7 +23,7 @@ module WsdlMapper
 
       # Force preloading of requires for all contained operations
       def _load_requires
-        @_operations.each &:load_requires
+        @_operations.each(&:load_requires)
       end
     end
   end

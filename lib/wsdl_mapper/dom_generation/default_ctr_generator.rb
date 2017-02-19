@@ -7,7 +7,7 @@ module WsdlMapper
         @generator = generator
       end
 
-      def generate(ttg, f, result)
+      def generate(ttg, f, _result)
         props = ttg.type.each_property.to_a
         attrs = ttg.type.each_attribute.to_a
 
@@ -32,7 +32,7 @@ module WsdlMapper
         end
       end
 
-      def generate_wrapping(ttg, f, result, var_name, par_name)
+      def generate_wrapping(_ttg, f, _result, var_name, par_name)
         f.in_def 'initialize', par_name do
           f.assignment var_name, par_name
         end

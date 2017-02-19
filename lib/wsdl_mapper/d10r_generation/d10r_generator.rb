@@ -58,7 +58,7 @@ module WsdlMapper
 
       protected
       def generate_deserializer(_schema, result)
-        modules = @deserializer_name.parents.reverse.map &:module_name
+        modules = @deserializer_name.parents.reverse.map(&:module_name)
 
         type_file_for @deserializer_name, result do |f|
           f.requires 'wsdl_mapper/deserializers/lazy_loading_deserializer',

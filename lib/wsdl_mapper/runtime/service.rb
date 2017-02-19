@@ -18,7 +18,7 @@ module WsdlMapper
 
       # Force preloading of requires for all contained ports
       def _load_requires
-        @_ports.each &:_load_requires
+        @_ports.each(&:_load_requires)
       end
     end
   end

@@ -21,10 +21,10 @@ module WsdlMapper
 
       # @param [String] name
       # @param [Array<Nokogiri::XML::Attr>] attrs
-      # @param [String] prefix
+      # @param [String] _prefix
       # @param [String] uri
       # @param [Array<Array<String, String>>] ns
-      def start_element_namespace(name, attrs = [], prefix = nil, uri = nil, ns = [])
+      def start_element_namespace(name, attrs = [], _prefix = nil, uri = nil, ns = [])
         @buffer = ''
         uri = inherit_element_namespace uri
         name = Name.get uri, name
@@ -43,9 +43,9 @@ module WsdlMapper
       end
 
       # @param [String] name
-      # @param [String] prefix
+      # @param [String] _prefix
       # @param [String] uri
-      def end_element_namespace(name, prefix = nil, uri = nil)
+      def end_element_namespace(name, _prefix = nil, uri = nil)
         @namespaces_stack.pop
         if @wrapper == Name.get(uri, name)
           @wrapper = nil

@@ -61,7 +61,7 @@ module WsdlMapper
       end
 
       def in_class(f, ttg, &block)
-        if base_name = get_base_name(ttg.type)
+        if (base_name = get_base_name(ttg.type))
           f.in_sub_class ttg.name.class_name, base_name, &block
         else
           f.in_class ttg.name.class_name, &block

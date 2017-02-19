@@ -69,7 +69,6 @@ module WsdlMapper
       def collect_logs
         @log_msgs ||= []
         @parsers.values.each do |parser|
-          byebug if parser.log_msgs.nil?
           @log_msgs += parser.log_msgs
         end
         @log_msgs += @linker.log_msgs

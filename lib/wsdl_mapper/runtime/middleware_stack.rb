@@ -18,7 +18,7 @@ module WsdlMapper
 
       # @return [Array<String>] The names of the middlewares in order.
       def names
-        @stack.map &:name
+        @stack.map(&:name)
       end
 
       # @param [String] name

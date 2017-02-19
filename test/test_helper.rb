@@ -13,8 +13,6 @@ require 'minitest/focus'
 
 require 'nokogiri'
 
-require 'byebug'
-
 require 'wsdl_mapper_testing/tmp_path'
 
 TEST_TMP_PATH = File.join 'test', 'tmp'
