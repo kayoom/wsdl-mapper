@@ -1,5 +1,7 @@
 # WsdlMapper
 
+[![Build Status](https://travis-ci.org/cice/wsdl-mapper.svg?branch=master)](https://travis-ci.org/cice/wsdl-mapper)
+
 WsdlMapper is a ruby gem to communicate with [SOAP](https://en.wikipedia.org/wiki/SOAP) services.
 It provides:
 
