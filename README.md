@@ -1,6 +1,9 @@
 # WsdlMapper
 
 [![Build Status](https://travis-ci.org/cice/wsdl-mapper.svg?branch=master)](https://travis-ci.org/cice/wsdl-mapper)
+[![Dependency Status](https://gemnasium.com/badges/github.com/cice/wsdl-mapper.svg)](https://gemnasium.com/github.com/cice/wsdl-mapper)
+[![Code Climate](https://codeclimate.com/github/cice/wsdl-mapper/badges/gpa.svg)](https://codeclimate.com/github/cice/wsdl-mapper)
+
 
 WsdlMapper is a ruby gem to communicate with [SOAP](https://en.wikipedia.org/wiki/SOAP) services.
 It provides:

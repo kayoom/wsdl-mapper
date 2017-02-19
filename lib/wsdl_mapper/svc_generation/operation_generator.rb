@@ -134,7 +134,7 @@ module WsdlMapper
         requires << service_namer.get_input_d10r_name(service.type, port.type, op.type).require_path
         requires << service_namer.get_output_s8r_name(service.type, port.type, op.type).require_path
         requires << service_namer.get_output_d10r_name(service.type, port.type, op.type).require_path
-        requires.uniq.map &:inspect
+        requires.uniq.map(&:inspect)
       end
 
       def generate_op_output_header(service, port, op, result)
@@ -202,7 +202,7 @@ module WsdlMapper
       end
 
       def generate_accessors(f, parts)
-        f.attr_accessors *parts.map { |p| p.property_name.attr_name }
+        f.attr_accessors(*parts.map { |p| p.property_name.attr_name })
       end
 
       def generate_ctr(f, parts)
