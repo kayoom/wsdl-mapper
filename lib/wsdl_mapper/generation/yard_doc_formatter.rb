@@ -29,6 +29,8 @@ module WsdlMapper
           text type.documentation.default
           blank_line
         end
+        return unless type.name
+
         tag :xml_name, type.name.name
 
         if type.name.ns
