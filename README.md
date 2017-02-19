@@ -61,6 +61,11 @@ Will generate models, (de)serializers and a client for the given `WSDL` service.
   * inline documentation
   * examples
 * add logging to parsing + generating
+* JRuby compatibility:
+  * Refactor serialization tests
+  * Analyze and mitigate differences in Nokogiris Java SAX parser implementation
+* WSDL 2.0
+* Server generation
 
 ## Contributing
 
