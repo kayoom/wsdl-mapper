@@ -49,7 +49,7 @@ module WsdlMapper
       # @return [String] Full (relative) path (excluding the extension) to use in a `require` statement.
       #                  E.g. `"module_a/module_b/note"`
       def require_path
-        @require_path ||= File.join *@file_path, File.basename(@file_name, '.rb')
+        @require_path ||= File.join(*@file_path, File.basename(@file_name, '.rb'))
       end
 
       # Full qualified ruby class name, including enclosing modules and root module prefix, e.g.

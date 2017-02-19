@@ -89,7 +89,7 @@ module WsdlMapper
       # @return [Object] The output of the last middleware on the stack
       def execute(inputs)
         inject(inputs) do |obj, middleware|
-          middleware.call *obj
+          middleware.call(*obj)
         end
       end
 

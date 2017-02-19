@@ -28,12 +28,12 @@ module WsdlMapper
       end
 
       def register_attr(accessor, attr_name, type_name)
-        attr_name = Name.get *attr_name
+        attr_name = Name.get(*attr_name)
         @attributes[attr_name] = AttrMapping.new(accessor, attr_name, Name.get(*type_name))
       end
 
       def register_prop(accessor, prop_name, type_name, array: false)
-        prop_name = Name.get *prop_name
+        prop_name = Name.get(*prop_name)
         @properties[prop_name] = PropMapping.new(accessor, prop_name, Name.get(*type_name), array: array)
       end
 
@@ -42,7 +42,7 @@ module WsdlMapper
       end
 
       def register_wrapper(name)
-        name = Name.get *name
+        name = Name.get(*name)
         @wrappers[name] = true
       end
 
@@ -80,7 +80,7 @@ module WsdlMapper
 
       def build_object(base, frame)
         if @simple
-          type_name = WsdlMapper::Dom::Name.get *@simple
+          type_name = WsdlMapper::Dom::Name.get(*@simple)
           content = base.to_ruby type_name, frame.text
           @cls.new content
         else

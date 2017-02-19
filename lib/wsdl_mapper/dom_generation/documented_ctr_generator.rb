@@ -38,8 +38,8 @@ module WsdlMapper
           [name, type, attr.documentation.default]
         end
 
-        yard.params *prop_params
-        yard.params *attr_params
+        yard.params(*prop_params)
+        yard.params(*attr_params)
 
         super
       end

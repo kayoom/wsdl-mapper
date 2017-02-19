@@ -84,7 +84,7 @@ module WsdlMapper
       def params(*params)
         return if params.empty?
         params.each do |p|
-          param *p
+          param(*p)
         end
         blank_line
       end

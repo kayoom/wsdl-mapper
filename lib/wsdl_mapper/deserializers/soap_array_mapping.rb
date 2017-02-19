@@ -9,7 +9,7 @@ module WsdlMapper
 
       def initialize(cls, type:)
         @cls = cls
-        @type = Name.get *type
+        @type = Name.get(*type)
       end
 
       def start(base, frame)

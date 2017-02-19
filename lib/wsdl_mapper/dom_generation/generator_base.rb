@@ -49,7 +49,7 @@ module WsdlMapper
       end
 
       def write_requires(f, requires)
-        f.requires *requires
+        f.requires(*requires)
       end
 
       def close_modules(f, modules)

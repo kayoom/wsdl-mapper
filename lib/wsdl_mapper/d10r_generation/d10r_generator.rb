@@ -128,7 +128,7 @@ module WsdlMapper
 
         type_file_for name, result do |f|
           f.requires @type_directory_name.require_path, type_name.require_path
-          f.requires *prop_requires.uniq
+          f.requires(*prop_requires.uniq)
 
           f.in_modules modules do
             if type.soap_array?

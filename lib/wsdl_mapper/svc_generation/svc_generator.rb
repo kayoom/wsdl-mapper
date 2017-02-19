@@ -80,7 +80,7 @@ module WsdlMapper
 
         type_file_for name, result do |f|
           f.requires api_base.require_path
-          f.requires *services.map { |s| s.name.require_path }
+          f.requires(*services.map { |s| s.name.require_path })
 
           f.in_modules modules do
             generate_api_class f, name, services
@@ -96,7 +96,7 @@ module WsdlMapper
       end
 
       def generate_api_service_accessors(f, services)
-        f.attr_readers *services.map { |s| s.property_name.attr_name }
+        f.attr_readers(*services.map { |s| s.property_name.attr_name })
       end
 
       def generate_api_ctr(f, services)

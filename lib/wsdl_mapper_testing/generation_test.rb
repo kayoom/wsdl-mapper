@@ -15,21 +15,21 @@ module WsdlMapperTesting
     end
 
     def path_for(*name)
-      tmp_path.join *name
+      tmp_path.join(*name)
     end
 
     def assert_file_exists(*name)
-      path = tmp_path.join *name
+      path = tmp_path.join(*name)
       assert File.exist?(path), "Expected file #{name * '/'} to exist."
     end
 
     def assert_file_is(*name, expected)
-      assert_file_exists *name
+      assert_file_exists(*name)
       assert_equal expected, file(*name)
     end
 
     def assert_file_contains(*name, expected)
-      assert_file_exists *name
+      assert_file_exists(*name)
       content = file(*name)
       content_normalized = content.gsub(/^\s+/, '')
       expected_normalized = expected.strip.gsub(/^\s+/, '')
@@ -37,7 +37,7 @@ module WsdlMapperTesting
     end
 
     def file(*name)
-      File.read tmp_path.join *name
+      File.read tmp_path.join(*name)
     end
 
     def context

@@ -18,7 +18,7 @@ module WsdlMapper
       end
 
       def register_element(name, element_name)
-        @elements[normalize(name)] = WsdlMapper::Dom::Name.get *element_name
+        @elements[normalize(name)] = WsdlMapper::Dom::Name.get(*element_name)
       end
 
       def register_type(type_name, require_path, s8r_name)

@@ -96,7 +96,7 @@ module WsdlMapper
 
           [attr_name, type, '']
         end
-        yard.params *params
+        yard.params(*params)
         super
       end
     end

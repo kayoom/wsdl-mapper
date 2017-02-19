@@ -41,21 +41,21 @@ module WsdlMapper
 
       desc 'dom <xsd_file>', 'Generates classes for the schema in <xsd_file>'
       def dom(xsd_file)
-        generator = WsdlMapper::DomGeneration::Facade.new **facade_options(xsd_file, '.xsd')
+        generator = WsdlMapper::DomGeneration::Facade.new(**facade_options(xsd_file, '.xsd'))
         FileUtils.rmtree out(xsd_file, '.xsd') if options[:clear]
         generator.generate
       end
 
       desc 's8r <xsd_file>', 'Generate serializers for the schema in <xsd_file>'
       def s8r(xsd_file)
-        generator = WsdlMapper::S8rGeneration::Facade.new **facade_options(xsd_file, '.xsd')
+        generator = WsdlMapper::S8rGeneration::Facade.new(**facade_options(xsd_file, '.xsd'))
         FileUtils.rmtree out(xsd_file, '.xsd') if options[:clear]
         generator.generate
       end
 
       desc 'd10r <xsd_file>', 'Generate deserializers for the schema in <xsd_file>'
       def d10r(xsd_file)
-        generator = WsdlMapper::D10rGeneration::Facade.new **facade_options(xsd_file, '.xsd')
+        generator = WsdlMapper::D10rGeneration::Facade.new(**facade_options(xsd_file, '.xsd'))
         FileUtils.rmtree out(xsd_file, '.xsd') if options[:clear]
         generator.generate
       end
@@ -73,7 +73,7 @@ module WsdlMapper
 
       desc 'svc <wsdl_file>', 'Generate SOAP client'
       def svc(wsdl_file)
-        generator = WsdlMapper::SvcGeneration::Facade.new **facade_options(wsdl_file, '.wsdl')
+        generator = WsdlMapper::SvcGeneration::Facade.new(**facade_options(wsdl_file, '.wsdl'))
         FileUtils.rmtree out(wsdl_file, '.wsdl') if options[:clear]
         generator.generate
       end

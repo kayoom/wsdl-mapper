@@ -35,13 +35,13 @@ module WsdlMapper
       end
 
       def register_element(element_name, type_name)
-        element_name = Name.get *element_name
-        type_name = Name.get *type_name
+        element_name = Name.get(*element_name)
+        type_name = Name.get(*type_name)
         @element_mappings[element_name] = type_name
       end
 
       def register_type(type_name, class_mapping)
-        type_name = Name.get *type_name
+        type_name = Name.get(*type_name)
         @type_mappings[type_name] = class_mapping
       end
 

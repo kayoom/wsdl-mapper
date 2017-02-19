@@ -28,7 +28,7 @@ module WsdlMapper
 
       def generate_port_class(f, ops, port)
         f.in_sub_class port.name.class_name, port_base.name do
-          f.requires *ops.map { |op| op.name.require_path }
+          f.requires(*ops.map { |op| op.name.require_path })
           generate_port_operation_accessors f, ops
           generate_port_ctr f, ops, port
         end
@@ -49,7 +49,7 @@ module WsdlMapper
       end
 
       def generate_port_operation_accessors(f, ops)
-        f.attr_readers *ops.map { |op| op.property_name.attr_name }
+        f.attr_readers(*ops.map { |op| op.property_name.attr_name })
       end
     end
   end

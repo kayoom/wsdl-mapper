@@ -71,7 +71,7 @@ module WsdlMapper
             @schema_element_directory_name.require_path,
             header_name.require_path,
             body_name.require_path
-          f.requires *required_d10rs.compact.map(&:require_path)
+          f.requires(*required_d10rs.compact.map(&:require_path))
 
           f.in_modules modules do
             in_classes f, service.name.class_name, port.name.class_name, op.name.class_name do

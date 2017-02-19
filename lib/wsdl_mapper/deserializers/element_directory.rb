@@ -17,8 +17,8 @@ module WsdlMapper
       end
 
       def register_element(element_name, type_name, require_path, class_name)
-        element_name = WsdlMapper::Dom::Name.get *element_name
-        type_name = WsdlMapper::Dom::Name.get *type_name
+        element_name = WsdlMapper::Dom::Name.get(*element_name)
+        type_name = WsdlMapper::Dom::Name.get(*type_name)
         @directory[element_name] = ElementItem.new element_name, type_name, require_path, class_name
       end
 

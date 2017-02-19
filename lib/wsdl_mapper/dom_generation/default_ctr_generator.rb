@@ -17,8 +17,8 @@ module WsdlMapper
           if ttg.type.base
             f.call :super, *get_prop_kw_assigns(base_props), *get_attr_kw_assigns(base_attrs)
           end
-          f.assignments *get_prop_assigns(props)
-          f.assignments *get_attr_assigns(attrs)
+          f.assignments(*get_prop_assigns(props))
+          f.assignments(*get_attr_assigns(attrs))
         end
       end
 
@@ -28,7 +28,7 @@ module WsdlMapper
 
         f.in_def 'initialize', content_name.attr_name, *get_attr_kw_args(attrs) do
           f.assignments [content_name.var_name, content_name.attr_name]
-          f.assignments *get_attr_assigns(attrs)
+          f.assignments(*get_attr_assigns(attrs))
         end
       end
 
