@@ -15,6 +15,8 @@ module WsdlMapper
         @base = base
         @namespaces_stack = []
         @buffer = ''
+        @wrapper = nil
+        @current_frame = nil
       end
 
       # @param [String] name

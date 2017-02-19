@@ -23,6 +23,7 @@ module WsdlMapper
         @properties = Directory.new on_nil: Errors::UnknownElementError
         @simple = simple
         @wrappers = Directory.new
+        @delegate = nil
         instance_exec &block
       end
 

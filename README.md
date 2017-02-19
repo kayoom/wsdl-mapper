@@ -47,6 +47,7 @@ Will generate models, (de)serializers and a client for the given `WSDL` service.
 ## TODOs
 
 * loosen the dependency on concurrent-ruby, make the async way optional.
+* loosen the dependency on faraday, make the user choose which http library.
 * refactor code to mitigate the naming mess. (there are so many different domain objects called name or type, which
   causes a mess in naming variables and methods. probably it makes sense to define acronyms and use them consistently
   throughout the code.)

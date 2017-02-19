@@ -11,6 +11,9 @@ module WsdlMapper
         super
         @properties = {}
         @attributes = {}
+        @simple_content = false
+        @soap_array = false
+        @base = nil
       end
 
       def add_attribute(attribute)

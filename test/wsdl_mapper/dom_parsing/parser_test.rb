@@ -98,7 +98,7 @@ module SchemaTests
       prop = type.properties.values.first
 
       assert_equal 1, prop.bounds.min
-      assert_equal nil, prop.bounds.max
+      assert_nil prop.bounds.max
     end
 
     def test_example_2_optional_property

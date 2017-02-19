@@ -11,7 +11,7 @@ module NamingTests
 
       assert_equal '::NoteType', type_name.name
       assert_equal 'note_type', type_name.require_path
-      assert_equal nil, type_name.parent
+      assert_nil type_name.parent
       assert_empty type_name.parents
     end
 
@@ -20,7 +20,7 @@ module NamingTests
 
       assert_equal '::NotesApi::Types::NoteType', type_name.name
       assert_equal 'notes_api/types/note_type', type_name.require_path
-      assert_equal nil, type_name.parent
+      assert_nil type_name.parent
       assert_empty type_name.parents
     end
 

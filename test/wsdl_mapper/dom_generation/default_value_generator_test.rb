@@ -65,7 +65,7 @@ module DomGenerationTests
       def test_nil
         evalable = DefaultValueGenerator.new.generate_nil
 
-        assert_equal nil, eval(evalable)
+        assert_nil eval(evalable)
       end
     end
   end
