@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: WsdlMapper::SvcGeneration
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!WsdlMapper/SvcGeneration.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (S)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../WsdlMapper.html" title="WsdlMapper (module)">WsdlMapper</a></span></span>
+     &raquo; 
+    <span class="title">SvcGeneration</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Module: WsdlMapper::SvcGeneration
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/wsdl_mapper/svc_generation/facade.rb<span class="defines">,<br />
+  lib/wsdl_mapper/svc_generation/svc_generator.rb,<br /> lib/wsdl_mapper/svc_generation/generator_base.rb,<br /> lib/wsdl_mapper/svc_generation/port_generator.rb,<br /> lib/wsdl_mapper/svc_generation/proxy_generator.rb,<br /> lib/wsdl_mapper/svc_generation/type_to_generate.rb,<br /> lib/wsdl_mapper/svc_generation/service_generator.rb,<br /> lib/wsdl_mapper/svc_generation/operation_generator.rb,<br /> lib/wsdl_mapper/svc_generation/operation_s8r_generator.rb,<br /> lib/wsdl_mapper/svc_generation/operation_d10r_generator.rb,<br /> lib/wsdl_mapper/svc_generation/documented_svc_generator.rb,<br /> lib/wsdl_mapper/svc_generation/operation_generator_base.rb,<br /> lib/wsdl_mapper/svc_generation/documented_port_generator.rb,<br /> lib/wsdl_mapper/svc_generation/documented_proxy_generator.rb,<br /> lib/wsdl_mapper/svc_generation/documented_service_generator.rb,<br /> lib/wsdl_mapper/svc_generation/documented_operation_generator.rb</span>
+</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="SvcGeneration/DocumentedOperationGenerator.html" title="WsdlMapper::SvcGeneration::DocumentedOperationGenerator (class)">DocumentedOperationGenerator</a></span>, <span class='object_link'><a href="SvcGeneration/DocumentedPortGenerator.html" title="WsdlMapper::SvcGeneration::DocumentedPortGenerator (class)">DocumentedPortGenerator</a></span>, <span class='object_link'><a href="SvcGeneration/DocumentedProxyGenerator.html" title="WsdlMapper::SvcGeneration::DocumentedProxyGenerator (class)">DocumentedProxyGenerator</a></span>, <span class='object_link'><a href="SvcGeneration/DocumentedServiceGenerator.html" title="WsdlMapper::SvcGeneration::DocumentedServiceGenerator (class)">DocumentedServiceGenerator</a></span>, <span class='object_link'><a href="SvcGeneration/DocumentedSvcGenerator.html" title="WsdlMapper::SvcGeneration::DocumentedSvcGenerator (class)">DocumentedSvcGenerator</a></span>, <span class='object_link'><a href="SvcGeneration/Facade.html" title="WsdlMapper::SvcGeneration::Facade (class)">Facade</a></span>, <span class='object_link'><a href="SvcGeneration/GeneratorBase.html" title="WsdlMapper::SvcGeneration::GeneratorBase (class)">GeneratorBase</a></span>, <span class='object_link'><a href="SvcGeneration/OperationD10rGenerator.html" title="WsdlMapper::SvcGeneration::OperationD10rGenerator (class)">OperationD10rGenerator</a></span>, <span class='object_link'><a href="SvcGeneration/OperationGenerator.html" title="WsdlMapper::SvcGeneration::OperationGenerator (class)">OperationGenerator</a></span>, <span class='object_link'><a href="SvcGeneration/OperationGeneratorBase.html" title="WsdlMapper::SvcGeneration::OperationGeneratorBase (class)">OperationGeneratorBase</a></span>, <span class='object_link'><a href="SvcGeneration/OperationS8rGenerator.html" title="WsdlMapper::SvcGeneration::OperationS8rGenerator (class)">OperationS8rGenerator</a></span>, <span class='object_link'><a href="SvcGeneration/PortGenerator.html" title="WsdlMapper::SvcGeneration::PortGenerator (class)">PortGenerator</a></span>, <span class='object_link'><a href="SvcGeneration/ProxyGenerator.html" title="WsdlMapper::SvcGeneration::ProxyGenerator (class)">ProxyGenerator</a></span>, <span class='object_link'><a href="SvcGeneration/ServiceGenerator.html" title="WsdlMapper::SvcGeneration::ServiceGenerator (class)">ServiceGenerator</a></span>, <span class='object_link'><a href="SvcGeneration/SvcGenerator.html" title="WsdlMapper::SvcGeneration::SvcGenerator (class)">SvcGenerator</a></span>, <span class='object_link'><a href="SvcGeneration/TypeToGenerate.html" title="WsdlMapper::SvcGeneration::TypeToGenerate (class)">TypeToGenerate</a></span>
+    
+  
+</p>
+
+
+
+
+
+
+
+
+
+</div>
+
+    <div id="footer">
+  Generated on Sun Feb 19 11:19:08 2017 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.2.6).
+</div>
+
+  </body>
+</html>

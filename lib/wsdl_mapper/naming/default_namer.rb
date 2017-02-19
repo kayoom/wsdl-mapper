@@ -25,8 +25,11 @@ module WsdlMapper
       #
       # @param [Array<String>] module_path the root module for the generated classes, e.g. `['MyApi', 'Types']` => `MyApi::Types::SomeClass` in `my_api/types/some_class.rb`
       # @param [String] content_attribute_name the accessor name for {file:concepts/wrapping_types.md wrapping types} (complex type with simple content and simple types with restrictions)
-      def initialize(module_path: [], content_attribute_name: 'content', soap_array_item_name: 'item')
+      def initialize(module_path: [],
+          content_attribute_name: 'content',
+          soap_array_item_name: 'item')
         super module_path: module_path
+
         @content_attribute_name = content_attribute_name
         @soap_array_item_name = soap_array_item_name
       end

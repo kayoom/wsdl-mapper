@@ -1,0 +1,376 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: WsdlMapper::Naming::SeparatingNamer
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!WsdlMapper/Naming/SeparatingNamer.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (S)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../WsdlMapper.html" title="WsdlMapper (module)">WsdlMapper</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Naming.html" title="WsdlMapper::Naming (module)">Naming</a></span></span>
+     &raquo; 
+    <span class="title">SeparatingNamer</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: WsdlMapper::Naming::SeparatingNamer
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="DefaultNamer.html" title="WsdlMapper::Naming::DefaultNamer (class)">DefaultNamer</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="NamerBase.html" title="WsdlMapper::Naming::NamerBase (class)">NamerBase</a></span></li>
+          
+            <li class="next"><span class='object_link'><a href="DefaultNamer.html" title="WsdlMapper::Naming::DefaultNamer (class)">DefaultNamer</a></span></li>
+          
+            <li class="next">WsdlMapper::Naming::SeparatingNamer</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/wsdl_mapper/naming/separating_namer.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Namer implementation which puts the generated classes into different namespaces,
+according to their funtion: <code>Types</code> for types, <code>S8r</code> for serializers and <code>D10r</code>
+for deserializers.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+  <h2>Constant Summary</h2>
+  
+
+
+
+  <h2>Constant Summary</h2>
+  
+  <h3 class="inherited">Constants inherited
+     from <span class='object_link'><a href="NamerBase.html" title="WsdlMapper::Naming::NamerBase (class)">NamerBase</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="NamerBase.html#KEYWORDS-constant" title="WsdlMapper::Naming::NamerBase::KEYWORDS (constant)">NamerBase::KEYWORDS</a></span></p>
+
+  
+  
+  <h3 class="inherited">Constants included
+     from <span class='object_link'><a href="Inflector.html" title="WsdlMapper::Naming::Inflector (module)">Inflector</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Inflector.html#CAPITALS-constant" title="WsdlMapper::Naming::Inflector::CAPITALS (constant)">Inflector::CAPITALS</a></span>, <span class='object_link'><a href="Inflector.html#DOWN_FOLLOWED_BY_UP-constant" title="WsdlMapper::Naming::Inflector::DOWN_FOLLOWED_BY_UP (constant)">Inflector::DOWN_FOLLOWED_BY_UP</a></span>, <span class='object_link'><a href="Inflector.html#FIRST_CHAR-constant" title="WsdlMapper::Naming::Inflector::FIRST_CHAR (constant)">Inflector::FIRST_CHAR</a></span>, <span class='object_link'><a href="Inflector.html#NON_AN-constant" title="WsdlMapper::Naming::Inflector::NON_AN (constant)">Inflector::NON_AN</a></span>, <span class='object_link'><a href="Inflector.html#NON_WORD-constant" title="WsdlMapper::Naming::Inflector::NON_WORD (constant)">Inflector::NON_WORD</a></span>, <span class='object_link'><a href="Inflector.html#NON_WORD_FOLLOWED_BY_WORD-constant" title="WsdlMapper::Naming::Inflector::NON_WORD_FOLLOWED_BY_WORD (constant)">Inflector::NON_WORD_FOLLOWED_BY_WORD</a></span></p>
+
+
+
+
+  <h2>Instance Attribute Summary</h2>
+  
+  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="NamerBase.html" title="WsdlMapper::Naming::NamerBase (class)">NamerBase</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="NamerBase.html#module_path-instance_method" title="WsdlMapper::Naming::NamerBase#module_path (method)">#module_path</a></span></p>
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (SeparatingNamer) <strong>initialize</strong>(module_path: [], content_attribute_name: &#39;content&#39;, soap_array_item_name: &#39;item&#39;, types_module: [&#39;Types&#39;], s8r_module: [&#39;S8r&#39;], d10r_module: [&#39;D10r&#39;]) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of SeparatingNamer.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="DefaultNamer.html" title="WsdlMapper::Naming::DefaultNamer (class)">DefaultNamer</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="DefaultNamer.html#get_attribute_name-instance_method" title="WsdlMapper::Naming::DefaultNamer#get_attribute_name (method)">#get_attribute_name</a></span>, <span class='object_link'><a href="DefaultNamer.html#get_content_name-instance_method" title="WsdlMapper::Naming::DefaultNamer#get_content_name (method)">#get_content_name</a></span>, <span class='object_link'><a href="DefaultNamer.html#get_d10r_element_directory_name-instance_method" title="WsdlMapper::Naming::DefaultNamer#get_d10r_element_directory_name (method)">#get_d10r_element_directory_name</a></span>, <span class='object_link'><a href="DefaultNamer.html#get_d10r_name-instance_method" title="WsdlMapper::Naming::DefaultNamer#get_d10r_name (method)">#get_d10r_name</a></span>, <span class='object_link'><a href="DefaultNamer.html#get_d10r_type_directory_name-instance_method" title="WsdlMapper::Naming::DefaultNamer#get_d10r_type_directory_name (method)">#get_d10r_type_directory_name</a></span>, <span class='object_link'><a href="DefaultNamer.html#get_enumeration_value_name-instance_method" title="WsdlMapper::Naming::DefaultNamer#get_enumeration_value_name (method)">#get_enumeration_value_name</a></span>, <span class='object_link'><a href="DefaultNamer.html#get_global_d10r_name-instance_method" title="WsdlMapper::Naming::DefaultNamer#get_global_d10r_name (method)">#get_global_d10r_name</a></span>, <span class='object_link'><a href="DefaultNamer.html#get_global_s8r_name-instance_method" title="WsdlMapper::Naming::DefaultNamer#get_global_s8r_name (method)">#get_global_s8r_name</a></span>, <span class='object_link'><a href="DefaultNamer.html#get_inline_type-instance_method" title="WsdlMapper::Naming::DefaultNamer#get_inline_type (method)">#get_inline_type</a></span>, <span class='object_link'><a href="DefaultNamer.html#get_property_name-instance_method" title="WsdlMapper::Naming::DefaultNamer#get_property_name (method)">#get_property_name</a></span>, <span class='object_link'><a href="DefaultNamer.html#get_s8r_name-instance_method" title="WsdlMapper::Naming::DefaultNamer#get_s8r_name (method)">#get_s8r_name</a></span>, <span class='object_link'><a href="DefaultNamer.html#get_s8r_type_directory_name-instance_method" title="WsdlMapper::Naming::DefaultNamer#get_s8r_type_directory_name (method)">#get_s8r_type_directory_name</a></span>, <span class='object_link'><a href="DefaultNamer.html#get_soap_array_item_name-instance_method" title="WsdlMapper::Naming::DefaultNamer#get_soap_array_item_name (method)">#get_soap_array_item_name</a></span>, <span class='object_link'><a href="DefaultNamer.html#get_support_name-instance_method" title="WsdlMapper::Naming::DefaultNamer#get_support_name (method)">#get_support_name</a></span>, <span class='object_link'><a href="DefaultNamer.html#get_type_name-instance_method" title="WsdlMapper::Naming::DefaultNamer#get_type_name (method)">#get_type_name</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Inflector.html" title="WsdlMapper::Naming::Inflector (module)">Inflector</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Inflector.html#camelize-instance_method" title="WsdlMapper::Naming::Inflector#camelize (method)">#camelize</a></span>, <span class='object_link'><a href="Inflector.html#underscore-instance_method" title="WsdlMapper::Naming::Inflector#underscore (method)">#underscore</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="WsdlMapper::Naming::SeparatingNamer (class)">SeparatingNamer</a></span></tt>) <strong>initialize</strong>(module_path: [], content_attribute_name: &#39;content&#39;, soap_array_item_name: &#39;item&#39;, types_module: [&#39;Types&#39;], s8r_module: [&#39;S8r&#39;], d10r_module: [&#39;D10r&#39;]) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a new instance of SeparatingNamer</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>module_path</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;String&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Root module path, e.g. to generate classes in
+<code>::MyApi::Types</code>, specify <code>[&#39;MyApi&#39;]</code> as root module path</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>content_attribute_name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Sets name of the attribute generated for direct content
+of types. You can change it, if this clashes with attributes
+in your schema.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>types_module</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;String&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Where to generate types</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>s8r_module</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;String&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Where to genereate serializers</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>d10r_module</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;String&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Where to generate deserializers</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/naming/separating_namer.rb', line 18</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>module_path:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='label'>content_attribute_name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>content</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='label'>soap_array_item_name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>item</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='label'>types_module:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Types</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='label'>s8r_module:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>S8r</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='label'>d10r_module:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>D10r</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='label'>module_path:</span> <span class='id identifier rubyid_module_path'>module_path</span><span class='comma'>,</span>
+      <span class='label'>content_attribute_name:</span> <span class='id identifier rubyid_content_attribute_name'>content_attribute_name</span><span class='comma'>,</span>
+      <span class='label'>soap_array_item_name:</span> <span class='id identifier rubyid_soap_array_item_name'>soap_array_item_name</span><span class='rparen'>)</span>
+
+  <span class='ivar'>@types_module</span> <span class='op'>=</span> <span class='id identifier rubyid_types_module'>types_module</span>
+  <span class='ivar'>@s8r_module</span> <span class='op'>=</span> <span class='id identifier rubyid_s8r_module'>s8r_module</span>
+  <span class='ivar'>@d10r_module</span> <span class='op'>=</span> <span class='id identifier rubyid_d10r_module'>d10r_module</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+</div>
+
+    <div id="footer">
+  Generated on Sun Feb 19 11:19:10 2017 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.2.6).
+</div>
+
+  </body>
+</html>

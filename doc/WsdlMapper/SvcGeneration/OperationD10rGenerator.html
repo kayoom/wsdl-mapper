@@ -1,0 +1,1327 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: WsdlMapper::SvcGeneration::OperationD10rGenerator
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!WsdlMapper/SvcGeneration/OperationD10rGenerator.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (O)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../WsdlMapper.html" title="WsdlMapper (module)">WsdlMapper</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../SvcGeneration.html" title="WsdlMapper::SvcGeneration (module)">SvcGeneration</a></span></span>
+     &raquo; 
+    <span class="title">OperationD10rGenerator</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: WsdlMapper::SvcGeneration::OperationD10rGenerator
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="OperationGeneratorBase.html" title="WsdlMapper::SvcGeneration::OperationGeneratorBase (class)">OperationGeneratorBase</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="../Generation/Base.html" title="WsdlMapper::Generation::Base (class)">Generation::Base</a></span></li>
+          
+            <li class="next"><span class='object_link'><a href="GeneratorBase.html" title="WsdlMapper::SvcGeneration::GeneratorBase (class)">GeneratorBase</a></span></li>
+          
+            <li class="next"><span class='object_link'><a href="OperationGeneratorBase.html" title="WsdlMapper::SvcGeneration::OperationGeneratorBase (class)">OperationGeneratorBase</a></span></li>
+          
+            <li class="next">WsdlMapper::SvcGeneration::OperationD10rGenerator</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="../Dom.html" title="WsdlMapper::Dom (module)">Dom</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/wsdl_mapper/svc_generation/operation_d10r_generator.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="SOAP_ENV_NS-constant" class="">SOAP_ENV_NS =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>http://schemas.xmlsoap.org/soap/envelope/</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="SOAP_BODY-constant" class="">SOAP_BODY =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>SOAP_ENV_NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Body</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="SOAP_HEADER-constant" class="">SOAP_HEADER =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>SOAP_ENV_NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Header</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#deserializer_type-instance_method" title="#deserializer_type (instance method)">- (Object) <strong>deserializer_type</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#element_directory_base-instance_method" title="#element_directory_base (instance method)">- (Object) <strong>element_directory_base</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#envelope_type-instance_method" title="#envelope_type (instance method)">- (Object) <strong>envelope_type</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#fault_name-instance_method" title="#fault_name (instance method)">- (Object) <strong>fault_name</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#generate_body_d10r-instance_method" title="#generate_body_d10r (instance method)">- (Object) <strong>generate_body_d10r</strong>(f, body_deserializer_name, type_directory_name, input_body_name, port, op, in_out) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#generate_d10r-instance_method" title="#generate_d10r (instance method)">- (Object) <strong>generate_d10r</strong>(f, input_d10r_name, element_directory_name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#generate_element_directory-instance_method" title="#generate_element_directory (instance method)">- (Object) <strong>generate_element_directory</strong>(f, element_directory_name, type_directory_name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#generate_header_d10r-instance_method" title="#generate_header_d10r (instance method)">- (Object) <strong>generate_header_d10r</strong>(f, header_deserializer_name, type_directory_name, input_header_name, in_out) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#generate_op_d10r-instance_method" title="#generate_op_d10r (instance method)">- (Object) <strong>generate_op_d10r</strong>(service, port, op, name, in_out, header_name, header_d10r_name, body_name, body_d10r_name, type_directory_name, element_directory_name, result) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#generate_op_input_d10r-instance_method" title="#generate_op_input_d10r (instance method)">- (Object) <strong>generate_op_input_d10r</strong>(service, port, op, result) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#generate_op_output_d10r-instance_method" title="#generate_op_output_d10r (instance method)">- (Object) <strong>generate_op_output_d10r</strong>(service, port, op, result) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#generate_operation_d10r-instance_method" title="#generate_operation_d10r (instance method)">- (Object) <strong>generate_operation_d10r</strong>(service, port, op, result) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#generate_type_directory-instance_method" title="#generate_type_directory (instance method)">- (Object) <strong>generate_type_directory</strong>(f, type_directory_name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_op_name-instance_method" title="#get_op_name (instance method)">- (Object) <strong>get_op_name</strong>(op, in_out) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (OperationD10rGenerator) <strong>initialize</strong>(generator) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of OperationD10rGenerator.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#soap_element_directory-instance_method" title="#soap_element_directory (instance method)">- (Object) <strong>soap_element_directory</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#soap_type_directory-instance_method" title="#soap_type_directory (instance method)">- (Object) <strong>soap_type_directory</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#type_directory_base-instance_method" title="#type_directory_base (instance method)">- (Object) <strong>type_directory_base</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../Generation/Base.html" title="WsdlMapper::Generation::Base (class)">Generation::Base</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Generation/Base.html#append_file_for-instance_method" title="WsdlMapper::Generation::Base#append_file_for (method)">#append_file_for</a></span>, <span class='object_link'><a href="../Generation/Base.html#file-instance_method" title="WsdlMapper::Generation::Base#file (method)">#file</a></span>, <span class='object_link'><a href="../Generation/Base.html#file_for-instance_method" title="WsdlMapper::Generation::Base#file_for (method)">#file_for</a></span>, <span class='object_link'><a href="../Generation/Base.html#generate_name-instance_method" title="WsdlMapper::Generation::Base#generate_name (method)">#generate_name</a></span>, <span class='object_link'><a href="../Generation/Base.html#get_formatter-instance_method" title="WsdlMapper::Generation::Base#get_formatter (method)">#get_formatter</a></span>, <span class='object_link'><a href="../Generation/Base.html#get_module_names-instance_method" title="WsdlMapper::Generation::Base#get_module_names (method)">#get_module_names</a></span>, <span class='object_link'><a href="../Generation/Base.html#get_type_name-instance_method" title="WsdlMapper::Generation::Base#get_type_name (method)">#get_type_name</a></span>, <span class='object_link'><a href="../Generation/Base.html#type_file_for-instance_method" title="WsdlMapper::Generation::Base#type_file_for (method)">#type_file_for</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="WsdlMapper::SvcGeneration::OperationD10rGenerator (class)">OperationD10rGenerator</a></span></tt>) <strong>initialize</strong>(generator) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a new instance of OperationD10rGenerator</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+13
+14
+15
+16
+17</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/svc_generation/operation_d10r_generator.rb', line 13</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_generator'>generator</span><span class='rparen'>)</span>
+  <span class='kw'>super</span> <span class='id identifier rubyid_generator'>generator</span>
+  <span class='ivar'>@schema_type_directory_name</span> <span class='op'>=</span> <span class='id identifier rubyid_namer'>namer</span><span class='period'>.</span><span class='id identifier rubyid_get_d10r_type_directory_name'>get_d10r_type_directory_name</span>
+  <span class='ivar'>@schema_element_directory_name</span> <span class='op'>=</span> <span class='id identifier rubyid_namer'>namer</span><span class='period'>.</span><span class='id identifier rubyid_get_d10r_element_directory_name'>get_d10r_element_directory_name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="deserializer_type-instance_method">
+  
+    - (<tt>Object</tt>) <strong>deserializer_type</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+162
+163
+164</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/svc_generation/operation_d10r_generator.rb', line 162</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_deserializer_type'>deserializer_type</span>
+  <span class='ivar'>@deserializer_type</span> <span class='op'>||=</span> <span class='const'>WsdlMapper</span><span class='op'>::</span><span class='const'>Naming</span><span class='op'>::</span><span class='const'>TypeName</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>LazyLoadingDeserializer</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>WsdlMapper</span><span class='words_sep'> </span><span class='tstring_content'>Deserializers</span><span class='words_sep'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>lazy_loading_deserializer.rb</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>wsdl_mapper</span><span class='words_sep'> </span><span class='tstring_content'>deserializers</span><span class='words_sep'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="element_directory_base-instance_method">
+  
+    - (<tt>Object</tt>) <strong>element_directory_base</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+150
+151
+152</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/svc_generation/operation_d10r_generator.rb', line 150</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_element_directory_base'>element_directory_base</span>
+  <span class='ivar'>@element_directory_base</span> <span class='op'>||=</span> <span class='const'>WsdlMapper</span><span class='op'>::</span><span class='const'>Naming</span><span class='op'>::</span><span class='const'>TypeName</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ElementDirectory</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>WsdlMapper</span><span class='words_sep'> </span><span class='tstring_content'>Deserializers</span><span class='words_sep'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>element_directory.rb</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>wsdl_mapper</span><span class='words_sep'> </span><span class='tstring_content'>deserializers</span><span class='words_sep'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="envelope_type-instance_method">
+  
+    - (<tt>Object</tt>) <strong>envelope_type</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+166
+167
+168</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/svc_generation/operation_d10r_generator.rb', line 166</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_envelope_type'>envelope_type</span>
+  <span class='ivar'>@envelope_type</span> <span class='op'>||=</span> <span class='const'>WsdlMapper</span><span class='op'>::</span><span class='const'>Naming</span><span class='op'>::</span><span class='const'>TypeName</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Envelope</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>WsdlMapper</span><span class='words_sep'> </span><span class='tstring_content'>SvcDesc</span><span class='words_sep'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>envelope.rb</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>wsdl_mapper</span><span class='words_sep'> </span><span class='tstring_content'>svc_desc</span><span class='words_sep'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="fault_name-instance_method">
+  
+    - (<tt>Object</tt>) <strong>fault_name</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+120
+121
+122</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/svc_generation/operation_d10r_generator.rb', line 120</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_fault_name'>fault_name</span>
+  <span class='ivar'>@fault_name</span> <span class='op'>||=</span> <span class='id identifier rubyid_generate_name'>generate_name</span> <span class='const'>WsdlMapper</span><span class='op'>::</span><span class='const'>Dom</span><span class='op'>::</span><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>http://schemas.xmlsoap.org/soap/envelope/</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Fault</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="generate_body_d10r-instance_method">
+  
+    - (<tt>Object</tt>) <strong>generate_body_d10r</strong>(f, body_deserializer_name, type_directory_name, input_body_name, port, op, in_out) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/svc_generation/operation_d10r_generator.rb', line 96</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_generate_body_d10r'>generate_body_d10r</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='id identifier rubyid_body_deserializer_name'>body_deserializer_name</span><span class='comma'>,</span> <span class='id identifier rubyid_type_directory_name'>type_directory_name</span><span class='comma'>,</span> <span class='id identifier rubyid_input_body_name'>input_body_name</span><span class='comma'>,</span> <span class='id identifier rubyid_port'>port</span><span class='comma'>,</span> <span class='id identifier rubyid_op'>op</span><span class='comma'>,</span> <span class='id identifier rubyid_in_out'>in_out</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_parts'>parts</span> <span class='op'>=</span> <span class='id identifier rubyid_get_body_parts'>get_body_parts</span> <span class='id identifier rubyid_in_out'>in_out</span>
+  <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_block'>block</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_body_deserializer_name'>body_deserializer_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> = </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_type_directory_name'>type_directory_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>.register_type(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_generate_name'>generate_name</span><span class='lparen'>(</span><span class='const'>SOAP_BODY</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>, </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_input_body_name'>input_body_name</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_op_name'>op_name</span> <span class='op'>=</span> <span class='id identifier rubyid_get_op_name'>get_op_name</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_in_out'>in_out</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_port'>port</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_binding'>binding</span><span class='period'>.</span><span class='id identifier rubyid_style'>style</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rpc</span><span class='tstring_end'>&#39;</span></span>
+      <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='symbol'>:register_wrapper</span><span class='comma'>,</span> <span class='id identifier rubyid_generate_name'>generate_name</span><span class='lparen'>(</span><span class='id identifier rubyid_op_name'>op_name</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_parts'>parts</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_part'>part</span><span class='op'>|</span>
+      <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_get_type_name'>get_type_name</span><span class='lparen'>(</span><span class='id identifier rubyid_part'>part</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+      <span class='id identifier rubyid_element_name'>element_name</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_port'>port</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_binding'>binding</span><span class='period'>.</span><span class='id identifier rubyid_style'>style</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rpc</span><span class='tstring_end'>&#39;</span></span>
+        <span class='id identifier rubyid_part'>part</span><span class='period'>.</span><span class='id identifier rubyid_part'>part</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+      <span class='kw'>else</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_part'>part</span><span class='period'>.</span><span class='id identifier rubyid_part'>part</span><span class='period'>.</span><span class='id identifier rubyid_element'>element</span>
+          <span class='id identifier rubyid_part'>part</span><span class='period'>.</span><span class='id identifier rubyid_part'>part</span><span class='period'>.</span><span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+        <span class='kw'>else</span>
+          <span class='id identifier rubyid_part'>part</span><span class='period'>.</span><span class='id identifier rubyid_part'>part</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+      <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='symbol'>:register_prop</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_part'>part</span><span class='period'>.</span><span class='id identifier rubyid_property_name'>property_name</span><span class='period'>.</span><span class='id identifier rubyid_attr_name'>attr_name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_generate_name'>generate_name</span><span class='lparen'>(</span><span class='id identifier rubyid_element_name'>element_name</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_generate_name'>generate_name</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='symbol'>:register_prop</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>:fault</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_fault_name'>fault_name</span><span class='comma'>,</span> <span class='id identifier rubyid_fault_name'>fault_name</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="generate_d10r-instance_method">
+  
+    - (<tt>Object</tt>) <strong>generate_d10r</strong>(f, input_d10r_name, element_directory_name) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+88
+89
+90</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/svc_generation/operation_d10r_generator.rb', line 88</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_generate_d10r'>generate_d10r</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='id identifier rubyid_input_d10r_name'>input_d10r_name</span><span class='comma'>,</span> <span class='id identifier rubyid_element_directory_name'>element_directory_name</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_assignment'>assignment</span> <span class='id identifier rubyid_input_d10r_name'>input_d10r_name</span><span class='period'>.</span><span class='id identifier rubyid_class_name'>class_name</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_deserializer_type'>deserializer_type</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>.new(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_element_directory_name'>element_directory_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="generate_element_directory-instance_method">
+  
+    - (<tt>Object</tt>) <strong>generate_element_directory</strong>(f, element_directory_name, type_directory_name) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+92
+93
+94</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/svc_generation/operation_d10r_generator.rb', line 92</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_generate_element_directory'>generate_element_directory</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='id identifier rubyid_element_directory_name'>element_directory_name</span><span class='comma'>,</span> <span class='id identifier rubyid_type_directory_name'>type_directory_name</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_assignment'>assignment</span> <span class='id identifier rubyid_element_directory_name'>element_directory_name</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_element_directory_base'>element_directory_base</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>.new(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_type_directory_name'>type_directory_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>, </span><span class='embexpr_beg'>#{</span><span class='ivar'>@schema_element_directory_name</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>, </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_soap_element_directory'>soap_element_directory</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="generate_header_d10r-instance_method">
+  
+    - (<tt>Object</tt>) <strong>generate_header_d10r</strong>(f, header_deserializer_name, type_directory_name, input_header_name, in_out) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+132
+133
+134
+135
+136
+137
+138
+139
+140</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/svc_generation/operation_d10r_generator.rb', line 132</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_generate_header_d10r'>generate_header_d10r</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='id identifier rubyid_header_deserializer_name'>header_deserializer_name</span><span class='comma'>,</span> <span class='id identifier rubyid_type_directory_name'>type_directory_name</span><span class='comma'>,</span> <span class='id identifier rubyid_input_header_name'>input_header_name</span><span class='comma'>,</span> <span class='id identifier rubyid_in_out'>in_out</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_parts'>parts</span> <span class='op'>=</span> <span class='id identifier rubyid_get_header_parts'>get_header_parts</span> <span class='id identifier rubyid_in_out'>in_out</span>
+  <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_block'>block</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_header_deserializer_name'>header_deserializer_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> = </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_type_directory_name'>type_directory_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>.register_type(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_generate_name'>generate_name</span><span class='lparen'>(</span><span class='const'>SOAP_HEADER</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>, </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_input_header_name'>input_header_name</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_parts'>parts</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_part'>part</span><span class='op'>|</span>
+      <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_get_type_name'>get_type_name</span><span class='lparen'>(</span><span class='id identifier rubyid_part'>part</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+      <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='symbol'>:register_prop</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_part'>part</span><span class='period'>.</span><span class='id identifier rubyid_property_name'>property_name</span><span class='period'>.</span><span class='id identifier rubyid_attr_name'>attr_name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_generate_name'>generate_name</span><span class='lparen'>(</span><span class='id identifier rubyid_part'>part</span><span class='period'>.</span><span class='id identifier rubyid_header'>header</span><span class='period'>.</span><span class='id identifier rubyid_part'>part</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_generate_name'>generate_name</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="generate_op_d10r-instance_method">
+  
+    - (<tt>Object</tt>) <strong>generate_op_d10r</strong>(service, port, op, name, in_out, header_name, header_d10r_name, body_name, body_d10r_name, type_directory_name, element_directory_name, result) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/svc_generation/operation_d10r_generator.rb', line 52</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_generate_op_d10r'>generate_op_d10r</span><span class='lparen'>(</span><span class='id identifier rubyid_service'>service</span><span class='comma'>,</span> <span class='id identifier rubyid_port'>port</span><span class='comma'>,</span> <span class='id identifier rubyid_op'>op</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_in_out'>in_out</span><span class='comma'>,</span>
+  <span class='id identifier rubyid_header_name'>header_name</span><span class='comma'>,</span> <span class='id identifier rubyid_header_d10r_name'>header_d10r_name</span><span class='comma'>,</span> <span class='id identifier rubyid_body_name'>body_name</span><span class='comma'>,</span> <span class='id identifier rubyid_body_d10r_name'>body_d10r_name</span><span class='comma'>,</span>
+  <span class='id identifier rubyid_type_directory_name'>type_directory_name</span><span class='comma'>,</span> <span class='id identifier rubyid_element_directory_name'>element_directory_name</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_parts'>parts</span> <span class='op'>=</span> <span class='id identifier rubyid_get_header_parts'>get_header_parts</span><span class='lparen'>(</span><span class='id identifier rubyid_in_out'>in_out</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_get_body_parts'>get_body_parts</span><span class='lparen'>(</span><span class='id identifier rubyid_in_out'>in_out</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_required_d10rs'>required_d10rs</span> <span class='op'>=</span> <span class='id identifier rubyid_parts'>parts</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_part'>part</span><span class='op'>|</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='const'>WsdlMapper</span><span class='op'>::</span><span class='const'>Dom</span><span class='op'>::</span><span class='const'>BuiltinType</span><span class='period'>.</span><span class='id identifier rubyid_builtin?'>builtin?</span> <span class='id identifier rubyid_get_type_name'>get_type_name</span><span class='lparen'>(</span><span class='id identifier rubyid_part'>part</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+    <span class='id identifier rubyid_namer'>namer</span><span class='period'>.</span><span class='id identifier rubyid_get_d10r_name'>get_d10r_name</span><span class='lparen'>(</span><span class='id identifier rubyid_get_type_name'>get_type_name</span><span class='lparen'>(</span><span class='id identifier rubyid_part'>part</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_modules'>modules</span> <span class='op'>=</span> <span class='id identifier rubyid_get_module_names'>get_module_names</span> <span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+
+  <span class='id identifier rubyid_type_file_for'>type_file_for</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
+    <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_requires'>requires</span> <span class='id identifier rubyid_envelope_type'>envelope_type</span><span class='period'>.</span><span class='id identifier rubyid_require_path'>require_path</span><span class='comma'>,</span>
+      <span class='id identifier rubyid_type_directory_base'>type_directory_base</span><span class='period'>.</span><span class='id identifier rubyid_require_path'>require_path</span><span class='comma'>,</span>
+      <span class='id identifier rubyid_element_directory_base'>element_directory_base</span><span class='period'>.</span><span class='id identifier rubyid_require_path'>require_path</span><span class='comma'>,</span>
+      <span class='id identifier rubyid_deserializer_type'>deserializer_type</span><span class='period'>.</span><span class='id identifier rubyid_require_path'>require_path</span><span class='comma'>,</span>
+      <span class='id identifier rubyid_soap_type_directory'>soap_type_directory</span><span class='period'>.</span><span class='id identifier rubyid_require_path'>require_path</span><span class='comma'>,</span>
+      <span class='id identifier rubyid_soap_element_directory'>soap_element_directory</span><span class='period'>.</span><span class='id identifier rubyid_require_path'>require_path</span><span class='comma'>,</span>
+      <span class='ivar'>@schema_type_directory_name</span><span class='period'>.</span><span class='id identifier rubyid_require_path'>require_path</span><span class='comma'>,</span>
+      <span class='ivar'>@schema_element_directory_name</span><span class='period'>.</span><span class='id identifier rubyid_require_path'>require_path</span><span class='comma'>,</span>
+      <span class='id identifier rubyid_header_name'>header_name</span><span class='period'>.</span><span class='id identifier rubyid_require_path'>require_path</span><span class='comma'>,</span>
+      <span class='id identifier rubyid_body_name'>body_name</span><span class='period'>.</span><span class='id identifier rubyid_require_path'>require_path</span>
+    <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_requires'>requires</span> <span class='op'>*</span><span class='id identifier rubyid_required_d10rs'>required_d10rs</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:require_path</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_in_modules'>in_modules</span> <span class='id identifier rubyid_modules'>modules</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_in_classes'>in_classes</span> <span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_class_name'>class_name</span><span class='comma'>,</span> <span class='id identifier rubyid_port'>port</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_class_name'>class_name</span><span class='comma'>,</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_class_name'>class_name</span> <span class='kw'>do</span>
+        <span class='id identifier rubyid_generate_type_directory'>generate_type_directory</span> <span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='id identifier rubyid_type_directory_name'>type_directory_name</span>
+        <span class='id identifier rubyid_generate_header_d10r'>generate_header_d10r</span> <span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='id identifier rubyid_header_d10r_name'>header_d10r_name</span><span class='comma'>,</span> <span class='id identifier rubyid_type_directory_name'>type_directory_name</span><span class='comma'>,</span> <span class='id identifier rubyid_header_name'>header_name</span><span class='comma'>,</span> <span class='id identifier rubyid_in_out'>in_out</span>
+        <span class='id identifier rubyid_generate_body_d10r'>generate_body_d10r</span> <span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='id identifier rubyid_body_d10r_name'>body_d10r_name</span><span class='comma'>,</span> <span class='id identifier rubyid_type_directory_name'>type_directory_name</span><span class='comma'>,</span> <span class='id identifier rubyid_body_name'>body_name</span><span class='comma'>,</span> <span class='id identifier rubyid_port'>port</span><span class='comma'>,</span> <span class='id identifier rubyid_op'>op</span><span class='comma'>,</span> <span class='id identifier rubyid_in_out'>in_out</span>
+        <span class='id identifier rubyid_generate_element_directory'>generate_element_directory</span> <span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='id identifier rubyid_element_directory_name'>element_directory_name</span><span class='comma'>,</span> <span class='id identifier rubyid_type_directory_name'>type_directory_name</span>
+        <span class='id identifier rubyid_generate_d10r'>generate_d10r</span> <span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_element_directory_name'>element_directory_name</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="generate_op_input_d10r-instance_method">
+  
+    - (<tt>Object</tt>) <strong>generate_op_input_d10r</strong>(service, port, op, result) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/svc_generation/operation_d10r_generator.rb', line 24</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_generate_op_input_d10r'>generate_op_input_d10r</span><span class='lparen'>(</span><span class='id identifier rubyid_service'>service</span><span class='comma'>,</span> <span class='id identifier rubyid_port'>port</span><span class='comma'>,</span> <span class='id identifier rubyid_op'>op</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_service_namer'>service_namer</span><span class='period'>.</span><span class='id identifier rubyid_get_input_d10r_name'>get_input_d10r_name</span> <span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_port'>port</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span>
+
+  <span class='id identifier rubyid_type_directory_name'>type_directory_name</span> <span class='op'>=</span> <span class='id identifier rubyid_service_namer'>service_namer</span><span class='period'>.</span><span class='id identifier rubyid_get_input_type_directory_name'>get_input_type_directory_name</span>
+  <span class='id identifier rubyid_header_d10r_name'>header_d10r_name</span> <span class='op'>=</span> <span class='id identifier rubyid_service_namer'>service_namer</span><span class='period'>.</span><span class='id identifier rubyid_get_input_header_d10r_name'>get_input_header_d10r_name</span>
+  <span class='id identifier rubyid_body_d10r_name'>body_d10r_name</span> <span class='op'>=</span> <span class='id identifier rubyid_service_namer'>service_namer</span><span class='period'>.</span><span class='id identifier rubyid_get_input_body_d10r_name'>get_input_body_d10r_name</span>
+  <span class='id identifier rubyid_header_name'>header_name</span> <span class='op'>=</span> <span class='id identifier rubyid_service_namer'>service_namer</span><span class='period'>.</span><span class='id identifier rubyid_get_input_header_name'>get_input_header_name</span> <span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_port'>port</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span>
+  <span class='id identifier rubyid_body_name'>body_name</span> <span class='op'>=</span> <span class='id identifier rubyid_service_namer'>service_namer</span><span class='period'>.</span><span class='id identifier rubyid_get_input_body_name'>get_input_body_name</span> <span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_port'>port</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span>
+  <span class='id identifier rubyid_element_directory_name'>element_directory_name</span> <span class='op'>=</span> <span class='id identifier rubyid_service_namer'>service_namer</span><span class='period'>.</span><span class='id identifier rubyid_get_input_element_directory_name'>get_input_element_directory_name</span>
+
+  <span class='id identifier rubyid_generate_op_d10r'>generate_op_d10r</span> <span class='id identifier rubyid_service'>service</span><span class='comma'>,</span> <span class='id identifier rubyid_port'>port</span><span class='comma'>,</span> <span class='id identifier rubyid_op'>op</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_header_name'>header_name</span><span class='comma'>,</span> <span class='id identifier rubyid_header_d10r_name'>header_d10r_name</span><span class='comma'>,</span> <span class='id identifier rubyid_body_name'>body_name</span><span class='comma'>,</span> <span class='id identifier rubyid_body_d10r_name'>body_d10r_name</span><span class='comma'>,</span> <span class='id identifier rubyid_type_directory_name'>type_directory_name</span><span class='comma'>,</span> <span class='id identifier rubyid_element_directory_name'>element_directory_name</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="generate_op_output_d10r-instance_method">
+  
+    - (<tt>Object</tt>) <strong>generate_op_output_d10r</strong>(service, port, op, result) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/svc_generation/operation_d10r_generator.rb', line 38</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_generate_op_output_d10r'>generate_op_output_d10r</span><span class='lparen'>(</span><span class='id identifier rubyid_service'>service</span><span class='comma'>,</span> <span class='id identifier rubyid_port'>port</span><span class='comma'>,</span> <span class='id identifier rubyid_op'>op</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_service_namer'>service_namer</span><span class='period'>.</span><span class='id identifier rubyid_get_output_d10r_name'>get_output_d10r_name</span> <span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_port'>port</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span>
+
+  <span class='id identifier rubyid_type_directory_name'>type_directory_name</span> <span class='op'>=</span> <span class='id identifier rubyid_service_namer'>service_namer</span><span class='period'>.</span><span class='id identifier rubyid_get_output_type_directory_name'>get_output_type_directory_name</span>
+  <span class='id identifier rubyid_header_d10r_name'>header_d10r_name</span> <span class='op'>=</span> <span class='id identifier rubyid_service_namer'>service_namer</span><span class='period'>.</span><span class='id identifier rubyid_get_output_header_d10r_name'>get_output_header_d10r_name</span>
+  <span class='id identifier rubyid_body_d10r_name'>body_d10r_name</span> <span class='op'>=</span> <span class='id identifier rubyid_service_namer'>service_namer</span><span class='period'>.</span><span class='id identifier rubyid_get_output_body_d10r_name'>get_output_body_d10r_name</span>
+  <span class='id identifier rubyid_header_name'>header_name</span> <span class='op'>=</span> <span class='id identifier rubyid_service_namer'>service_namer</span><span class='period'>.</span><span class='id identifier rubyid_get_output_header_name'>get_output_header_name</span> <span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_port'>port</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span>
+  <span class='id identifier rubyid_body_name'>body_name</span> <span class='op'>=</span> <span class='id identifier rubyid_service_namer'>service_namer</span><span class='period'>.</span><span class='id identifier rubyid_get_output_body_name'>get_output_body_name</span> <span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_port'>port</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span>
+  <span class='id identifier rubyid_element_directory_name'>element_directory_name</span> <span class='op'>=</span> <span class='id identifier rubyid_service_namer'>service_namer</span><span class='period'>.</span><span class='id identifier rubyid_get_output_element_directory_name'>get_output_element_directory_name</span>
+
+  <span class='id identifier rubyid_generate_op_d10r'>generate_op_d10r</span> <span class='id identifier rubyid_service'>service</span><span class='comma'>,</span> <span class='id identifier rubyid_port'>port</span><span class='comma'>,</span> <span class='id identifier rubyid_op'>op</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_output'>output</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_header_name'>header_name</span><span class='comma'>,</span> <span class='id identifier rubyid_header_d10r_name'>header_d10r_name</span><span class='comma'>,</span> <span class='id identifier rubyid_body_name'>body_name</span><span class='comma'>,</span> <span class='id identifier rubyid_body_d10r_name'>body_d10r_name</span><span class='comma'>,</span> <span class='id identifier rubyid_type_directory_name'>type_directory_name</span><span class='comma'>,</span> <span class='id identifier rubyid_element_directory_name'>element_directory_name</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="generate_operation_d10r-instance_method">
+  
+    - (<tt>Object</tt>) <strong>generate_operation_d10r</strong>(service, port, op, result) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+19
+20
+21
+22</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/svc_generation/operation_d10r_generator.rb', line 19</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_generate_operation_d10r'>generate_operation_d10r</span><span class='lparen'>(</span><span class='id identifier rubyid_service'>service</span><span class='comma'>,</span> <span class='id identifier rubyid_port'>port</span><span class='comma'>,</span> <span class='id identifier rubyid_op'>op</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_generate_op_input_d10r'>generate_op_input_d10r</span> <span class='id identifier rubyid_service'>service</span><span class='comma'>,</span> <span class='id identifier rubyid_port'>port</span><span class='comma'>,</span> <span class='id identifier rubyid_op'>op</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span>
+  <span class='id identifier rubyid_generate_op_output_d10r'>generate_op_output_d10r</span> <span class='id identifier rubyid_service'>service</span><span class='comma'>,</span> <span class='id identifier rubyid_port'>port</span><span class='comma'>,</span> <span class='id identifier rubyid_op'>op</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="generate_type_directory-instance_method">
+  
+    - (<tt>Object</tt>) <strong>generate_type_directory</strong>(f, type_directory_name) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+142
+143
+144</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/svc_generation/operation_d10r_generator.rb', line 142</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_generate_type_directory'>generate_type_directory</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='id identifier rubyid_type_directory_name'>type_directory_name</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_assignment'>assignment</span> <span class='id identifier rubyid_type_directory_name'>type_directory_name</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_type_directory_base'>type_directory_base</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>.new(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_soap_type_directory'>soap_type_directory</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>, </span><span class='embexpr_beg'>#{</span><span class='ivar'>@schema_type_directory_name</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_op_name-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_op_name</strong>(op, in_out) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+124
+125
+126
+127
+128
+129
+130</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/svc_generation/operation_d10r_generator.rb', line 124</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_op_name'>get_op_name</span><span class='lparen'>(</span><span class='id identifier rubyid_op'>op</span><span class='comma'>,</span> <span class='id identifier rubyid_in_out'>in_out</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_in_out'>in_out</span> <span class='op'>==</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_input'>input</span>
+    <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+  <span class='kw'>else</span>
+    <span class='const'>WsdlMapper</span><span class='op'>::</span><span class='const'>Dom</span><span class='op'>::</span><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_ns'>ns</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>Response</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="soap_element_directory-instance_method">
+  
+    - (<tt>Object</tt>) <strong>soap_element_directory</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+158
+159
+160</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/svc_generation/operation_d10r_generator.rb', line 158</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_soap_element_directory'>soap_element_directory</span>
+  <span class='ivar'>@soap_element_directory</span> <span class='op'>||=</span> <span class='const'>WsdlMapper</span><span class='op'>::</span><span class='const'>Naming</span><span class='op'>::</span><span class='const'>TypeName</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>SoapElementDirectory</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>WsdlMapper</span><span class='words_sep'> </span><span class='tstring_content'>SvcDesc</span><span class='words_sep'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>soap_element_directory.rb</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>wsdl_mapper</span><span class='words_sep'> </span><span class='tstring_content'>svc_desc</span><span class='words_sep'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="soap_type_directory-instance_method">
+  
+    - (<tt>Object</tt>) <strong>soap_type_directory</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+154
+155
+156</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/svc_generation/operation_d10r_generator.rb', line 154</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_soap_type_directory'>soap_type_directory</span>
+  <span class='ivar'>@soap_type_directory</span> <span class='op'>||=</span> <span class='const'>WsdlMapper</span><span class='op'>::</span><span class='const'>Naming</span><span class='op'>::</span><span class='const'>TypeName</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>SoapTypeDirectory</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>WsdlMapper</span><span class='words_sep'> </span><span class='tstring_content'>SvcDesc</span><span class='words_sep'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>soap_type_directory.rb</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>wsdl_mapper</span><span class='words_sep'> </span><span class='tstring_content'>svc_desc</span><span class='words_sep'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="type_directory_base-instance_method">
+  
+    - (<tt>Object</tt>) <strong>type_directory_base</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+146
+147
+148</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/svc_generation/operation_d10r_generator.rb', line 146</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_type_directory_base'>type_directory_base</span>
+  <span class='ivar'>@type_directory_base</span> <span class='op'>||=</span> <span class='const'>WsdlMapper</span><span class='op'>::</span><span class='const'>Naming</span><span class='op'>::</span><span class='const'>TypeName</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>TypeDirectory</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>WsdlMapper</span><span class='words_sep'> </span><span class='tstring_content'>Deserializers</span><span class='words_sep'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>type_directory.rb</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>wsdl_mapper</span><span class='words_sep'> </span><span class='tstring_content'>deserializers</span><span class='words_sep'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Sun Feb 19 11:19:13 2017 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.2.6).
+</div>
+
+  </body>
+</html>

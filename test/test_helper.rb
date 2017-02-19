@@ -4,6 +4,7 @@ if ENV['cov']
   require 'simplecov'
   SimpleCov.start do
     add_filter 'abstract_.*\.rb'
+    add_filter 'wsdl_mapper_testing/'
   end
 end
 

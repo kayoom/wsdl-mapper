@@ -1,0 +1,279 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: WsdlMapper::DomParsing::Xsd
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!WsdlMapper/DomParsing/Xsd.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (X)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../WsdlMapper.html" title="WsdlMapper (module)">WsdlMapper</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../DomParsing.html" title="WsdlMapper::DomParsing (module)">DomParsing</a></span></span>
+     &raquo; 
+    <span class="title">Xsd</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Module: WsdlMapper::DomParsing::Xsd
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+      <dt class="r1">Includes:</dt>
+      <dd class="r1"><span class='object_link'><a href="../Dom.html" title="WsdlMapper::Dom (module)">WsdlMapper::Dom</a></span></dd>
+      
+    
+  
+  
+    <dt class="r2">Included in:</dt>
+    <dd class="r2"><span class='object_link'><a href="Parser.html" title="WsdlMapper::DomParsing::Parser (class)">Parser</a></span>, <span class='object_link'><a href="ParserBase.html" title="WsdlMapper::DomParsing::ParserBase (class)">ParserBase</a></span></dd>
+    
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/wsdl_mapper/dom_parsing/xsd.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="NS-constant" class="">NS =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>http://www.w3.org/2001/XMLSchema</span><span class='tstring_end'>&#39;</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
+        <dt id="IMPORT-constant" class="">IMPORT =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>import</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="SCHEMA-constant" class="">SCHEMA =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>schema</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="ELEMENT-constant" class="">ELEMENT =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>element</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="SEQUENCE-constant" class="">SEQUENCE =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>sequence</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="COMPLEX_TYPE-constant" class="">COMPLEX_TYPE =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>complexType</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="SIMPLE_TYPE-constant" class="">SIMPLE_TYPE =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>simpleType</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="ANNOTATION-constant" class="">ANNOTATION =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>annotation</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="DOCUMENTATION-constant" class="">DOCUMENTATION =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>documentation</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="APPINFO-constant" class="">APPINFO =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>appinfo</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="COMPLEX_CONTENT-constant" class="">COMPLEX_CONTENT =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>complexContent</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="SIMPLE_CONTENT-constant" class="">SIMPLE_CONTENT =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>simpleContent</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="EXTENSION-constant" class="">EXTENSION =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>extension</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="RESTRICTION-constant" class="">RESTRICTION =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>restriction</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="ENUMERATION-constant" class="">ENUMERATION =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>enumeration</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="ATTRIBUTE-constant" class="">ATTRIBUTE =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>attribute</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="ANY_ATTRIBUTE-constant" class="">ANY_ATTRIBUTE =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>anyAttribute</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="CHOICE-constant" class="">CHOICE =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>choice</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="UNIQUE-constant" class="">UNIQUE =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>unique</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="ALL-constant" class="">ALL =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>all</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="PATTERN-constant" class="">PATTERN =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>pattern</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="MIN_INCLUSIVE-constant" class="">MIN_INCLUSIVE =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>minInclusive</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="MIN_LENGTH-constant" class="">MIN_LENGTH =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>minLength</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="MAX_INCLUSIVE-constant" class="">MAX_INCLUSIVE =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>maxInclusive</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="MAX_LENGTH-constant" class="">MAX_LENGTH =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>maxLength</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="TOTAL_DIGITS-constant" class="">TOTAL_DIGITS =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>totalDigits</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="FRACTION_DIGITS-constant" class="">FRACTION_DIGITS =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='const'>NS</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>fractionDigits</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="ELEMENT_FORM_DEFAULT-constant" class="">ELEMENT_FORM_DEFAULT =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>elementFormDefault</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="ATTRIBUTE_FORM_DEFAULT-constant" class="">ATTRIBUTE_FORM_DEFAULT =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>attributeFormDefault</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="DEFAULT_BOUNDS-constant" class="">DEFAULT_BOUNDS =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span>
+  <span class='const'>SEQUENCE</span>  <span class='op'>=&gt;</span> <span class='const'>Bounds</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>min:</span> <span class='int'>1</span><span class='comma'>,</span> <span class='label'>max:</span> <span class='int'>1</span><span class='rparen'>)</span><span class='comma'>,</span>
+  <span class='const'>ALL</span>       <span class='op'>=&gt;</span> <span class='const'>Bounds</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>min:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='label'>max:</span> <span class='int'>1</span><span class='rparen'>)</span>
+<span class='rbrace'>}</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+
+</div>
+
+    <div id="footer">
+  Generated on Sun Feb 19 11:19:08 2017 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.2.6).
+</div>
+
+  </body>
+</html>

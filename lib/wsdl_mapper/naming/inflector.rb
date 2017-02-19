@@ -1,5 +1,7 @@
 module WsdlMapper
   module Naming
+    # Module with inflection helper methods. As a permanent dependency on Rails'
+    # ActiveSupport library is not feasible, here are some quick re-implementations.
     module Inflector
       extend self
 
@@ -10,6 +12,11 @@ module WsdlMapper
       CAPITALS = /([A-Z])/
       DOWN_FOLLOWED_BY_UP = /([a-z0-9])([A-Z])/
 
+      # Camelize a string.
+      # @param [String] source String to camelize.
+      # @return [String] Camelized string.
+      # @example
+      #   camelize('foo_bar baz ') #=> 'FooBarBaz'
       def camelize(source)
         source.
           strip.
@@ -17,6 +24,11 @@ module WsdlMapper
           sub(FIRST_CHAR) { |s| s.upcase }
       end
 
+      # Snake-cases a string.
+      # @param [String] source String to underscore.
+      # @return [String] snake-cased string.
+      # @example
+      #   underscore('Foo Bar') #=> 'foo_bar'
       def underscore(source)
         source.
           strip.

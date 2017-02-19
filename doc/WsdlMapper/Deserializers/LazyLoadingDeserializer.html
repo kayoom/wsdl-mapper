@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: WsdlMapper::Deserializers::LazyLoadingDeserializer
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!WsdlMapper/Deserializers/LazyLoadingDeserializer.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (L)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../WsdlMapper.html" title="WsdlMapper (module)">WsdlMapper</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Deserializers.html" title="WsdlMapper::Deserializers (module)">Deserializers</a></span></span>
+     &raquo; 
+    <span class="title">LazyLoadingDeserializer</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: WsdlMapper::Deserializers::LazyLoadingDeserializer
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="Deserializer.html" title="WsdlMapper::Deserializers::Deserializer (class)">Deserializer</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="Deserializer.html" title="WsdlMapper::Deserializers::Deserializer (class)">Deserializer</a></span></li>
+          
+            <li class="next">WsdlMapper::Deserializers::LazyLoadingDeserializer</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/wsdl_mapper/deserializers/lazy_loading_deserializer.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_element_type-instance_method" title="#get_element_type (instance method)">- (Object) <strong>get_element_type</strong>(element_name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (LazyLoadingDeserializer) <strong>initialize</strong>(element_directory, type_mapping: WsdlMapper::TypeMapping::DEFAULT, qualified_elements: false, qualified_attributes: false) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of LazyLoadingDeserializer.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Deserializer.html" title="WsdlMapper::Deserializers::Deserializer (class)">Deserializer</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Deserializer.html#from_xml-instance_method" title="WsdlMapper::Deserializers::Deserializer#from_xml (method)">#from_xml</a></span>, <span class='object_link'><a href="Deserializer.html#get_element_type_mapping-instance_method" title="WsdlMapper::Deserializers::Deserializer#get_element_type_mapping (method)">#get_element_type_mapping</a></span>, <span class='object_link'><a href="Deserializer.html#get_type_mapping-instance_method" title="WsdlMapper::Deserializers::Deserializer#get_type_mapping (method)">#get_type_mapping</a></span>, <span class='object_link'><a href="Deserializer.html#qualified_attributes%3F-instance_method" title="WsdlMapper::Deserializers::Deserializer#qualified_attributes? (method)">#qualified_attributes?</a></span>, <span class='object_link'><a href="Deserializer.html#qualified_elements%3F-instance_method" title="WsdlMapper::Deserializers::Deserializer#qualified_elements? (method)">#qualified_elements?</a></span>, <span class='object_link'><a href="Deserializer.html#register_element-instance_method" title="WsdlMapper::Deserializers::Deserializer#register_element (method)">#register_element</a></span>, <span class='object_link'><a href="Deserializer.html#register_type-instance_method" title="WsdlMapper::Deserializers::Deserializer#register_type (method)">#register_type</a></span>, <span class='object_link'><a href="Deserializer.html#to_ruby-instance_method" title="WsdlMapper::Deserializers::Deserializer#to_ruby (method)">#to_ruby</a></span></p>
+
+  
+  
+  
+  
+  
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="WsdlMapper::Deserializers::LazyLoadingDeserializer (class)">LazyLoadingDeserializer</a></span></tt>) <strong>initialize</strong>(element_directory, type_mapping: WsdlMapper::TypeMapping::DEFAULT, qualified_elements: false, qualified_attributes: false) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a new instance of LazyLoadingDeserializer</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+6
+7
+8
+9
+10</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/deserializers/lazy_loading_deserializer.rb', line 6</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_element_directory'>element_directory</span><span class='comma'>,</span> <span class='label'>type_mapping:</span> <span class='const'>WsdlMapper</span><span class='op'>::</span><span class='const'>TypeMapping</span><span class='op'>::</span><span class='const'>DEFAULT</span><span class='comma'>,</span> <span class='label'>qualified_elements:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>qualified_attributes:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='label'>type_mapping:</span> <span class='id identifier rubyid_type_mapping'>type_mapping</span><span class='comma'>,</span> <span class='label'>qualified_elements:</span> <span class='id identifier rubyid_qualified_elements'>qualified_elements</span><span class='comma'>,</span> <span class='label'>qualified_attributes:</span> <span class='id identifier rubyid_qualified_attributes'>qualified_attributes</span><span class='rparen'>)</span>
+  <span class='ivar'>@element_directory</span> <span class='op'>=</span> <span class='id identifier rubyid_element_directory'>element_directory</span>
+  <span class='id identifier rubyid_reload'>reload</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="get_element_type-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_element_type</strong>(element_name) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+12
+13
+14
+15
+16
+17</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/deserializers/lazy_loading_deserializer.rb', line 12</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_element_type'>get_element_type</span><span class='lparen'>(</span><span class='id identifier rubyid_element_name'>element_name</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='ivar'>@element_directory</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span> <span class='id identifier rubyid_element_name'>element_name</span>
+    <span class='id identifier rubyid_reload'>reload</span>
+  <span class='kw'>end</span>
+  <span class='kw'>super</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Sun Feb 19 11:19:13 2017 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.2.6).
+</div>
+
+  </body>
+</html>

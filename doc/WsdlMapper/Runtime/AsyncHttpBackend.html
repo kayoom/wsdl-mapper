@@ -1,0 +1,674 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: WsdlMapper::Runtime::AsyncHttpBackend
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!WsdlMapper/Runtime/AsyncHttpBackend.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (A)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../WsdlMapper.html" title="WsdlMapper (module)">WsdlMapper</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Runtime.html" title="WsdlMapper::Runtime (module)">Runtime</a></span></span>
+     &raquo; 
+    <span class="title">AsyncHttpBackend</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: WsdlMapper::Runtime::AsyncHttpBackend
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="BackendBase.html" title="WsdlMapper::Runtime::BackendBase (class)">BackendBase</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="BackendBase.html" title="WsdlMapper::Runtime::BackendBase (class)">BackendBase</a></span></li>
+          
+            <li class="next">WsdlMapper::Runtime::AsyncHttpBackend</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="Middlewares.html" title="WsdlMapper::Runtime::Middlewares (module)">Middlewares</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/wsdl_mapper/runtime/async_http_backend.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <h2>Middleware Stack</h2>
+
+<h3>Default Configuration</h3>
+
+<p>The default stack is composed of the following middlewares:
+<img src="/docs/file/doc/diag/async_backend.png" alt="Diagram"></p>
+
+<ol>
+<li><code>message.factory</code>: <span class='object_link'><a href="Middlewares/AsyncMessageFactory.html" title="WsdlMapper::Runtime::Middlewares::AsyncMessageFactory (class)">Middlewares::AsyncMessageFactory</a></span></li>
+<li><code>request.factory</code>: <span class='object_link'><a href="Middlewares/AsyncRequestFactory.html" title="WsdlMapper::Runtime::Middlewares::AsyncRequestFactory (class)">Middlewares::AsyncRequestFactory</a></span></li>
+<li><code>dispatcher</code>: <span class='object_link'><a href="Middlewares/AsyncDispatcher.html" title="WsdlMapper::Runtime::Middlewares::AsyncDispatcher (class)">Middlewares::AsyncDispatcher</a></span></li>
+<li><code>response.factory</code>: <span class='object_link'><a href="Middlewares/AsyncResponseFactory.html" title="WsdlMapper::Runtime::Middlewares::AsyncResponseFactory (class)">Middlewares::AsyncResponseFactory</a></span></li>
+</ol>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+
+
+
+
+
+  <h2>Instance Attribute Summary</h2>
+  
+  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="BackendBase.html" title="WsdlMapper::Runtime::BackendBase (class)">BackendBase</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="BackendBase.html#stack-instance_method" title="WsdlMapper::Runtime::BackendBase#stack (method)">#stack</a></span></p>
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#disable_logging-instance_method" title="#disable_logging (instance method)">- (AsyncHttpBackend) <strong>disable_logging</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Disables logging by removing the logging middlewares from the stack.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#dispatch-instance_method" title="#dispatch (instance method)">- (Concurrent::Promise) <strong>dispatch</strong>(operation, *args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Takes an <code>operation</code> and arguments, wraps them in a new Concurrent::Promise, passes them to the <span class='object_link'><a href="BackendBase.html#stack-instance_method" title="WsdlMapper::Runtime::BackendBase#stack (method)">BackendBase#stack</a></span> and returns the response promise.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#dispatch_async-instance_method" title="#dispatch_async (instance method)">- (Concurrent::Promise) <strong>dispatch_async</strong>(operation, promise) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Passes a promise to the stack and returns the response promise.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#enable_logging-instance_method" title="#enable_logging (instance method)">- (AsyncHttpBackend) <strong>enable_logging</strong>(logger = Logger.new(STDOUT), log_level: Logger::DEBUG) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Enables request and response logging.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (AsyncHttpBackend) <strong>initialize</strong>(connection: Faraday.new, executor: nil) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of AsyncHttpBackend.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="WsdlMapper::Runtime::AsyncHttpBackend (class)">AsyncHttpBackend</a></span></tt>) <strong>initialize</strong>(connection: Faraday.new, executor: nil) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a new instance of AsyncHttpBackend</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+25
+26
+27
+28
+29
+30
+31
+32
+33</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/runtime/async_http_backend.rb', line 25</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>connection:</span> <span class='const'>Faraday</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='comma'>,</span> <span class='label'>executor:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='rparen'>)</span>
+  <span class='ivar'>@executor</span> <span class='op'>=</span> <span class='id identifier rubyid_executor'>executor</span>
+
+  <span class='id identifier rubyid_stack'>stack</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>message.factory</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='const'>AsyncMessageFactory</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_stack'>stack</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>request.factory</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='const'>AsyncRequestFactory</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_stack'>stack</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>dispatcher</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='const'>AsyncDispatcher</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_connection'>connection</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_stack'>stack</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>response.factory</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='const'>AsyncResponseFactory</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="disable_logging-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="WsdlMapper::Runtime::AsyncHttpBackend (class)">AsyncHttpBackend</a></span></tt>) <strong>disable_logging</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Disables logging by removing the logging middlewares from the stack. Returns self.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="WsdlMapper::Runtime::AsyncHttpBackend (class)">AsyncHttpBackend</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+47
+48
+49
+50
+51</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/runtime/async_http_backend.rb', line 47</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_disable_logging'>disable_logging</span>
+  <span class='id identifier rubyid_stack'>stack</span><span class='period'>.</span><span class='id identifier rubyid_remove'>remove</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>request.logger</span><span class='tstring_end'>&#39;</span></span>
+  <span class='id identifier rubyid_stack'>stack</span><span class='period'>.</span><span class='id identifier rubyid_remove'>remove</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>response.logger</span><span class='tstring_end'>&#39;</span></span>
+  <span class='kw'>self</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="dispatch-instance_method">
+  
+    - (<tt>Concurrent::Promise</tt>) <strong>dispatch</strong>(operation, *args) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Takes an <code>operation</code> and arguments, wraps them in a new Concurrent::Promise,
+passes them to the <span class='object_link'><a href="BackendBase.html#stack-instance_method" title="WsdlMapper::Runtime::BackendBase#stack (method)">BackendBase#stack</a></span> and returns the response promise.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>operation</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Operation.html" title="WsdlMapper::Runtime::Operation (class)">WsdlMapper::Runtime::Operation</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>args</span>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Concurrent::Promise</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The unscheduled response promise.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+58
+59
+60
+61</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/runtime/async_http_backend.rb', line 58</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_dispatch'>dispatch</span><span class='lparen'>(</span><span class='id identifier rubyid_operation'>operation</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_promise'>promise</span> <span class='op'>=</span> <span class='const'>Concurrent</span><span class='op'>::</span><span class='const'>Promise</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>executor:</span> <span class='ivar'>@executor</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_args'>args</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_dispatch_async'>dispatch_async</span> <span class='id identifier rubyid_operation'>operation</span><span class='comma'>,</span> <span class='id identifier rubyid_promise'>promise</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="dispatch_async-instance_method">
+  
+    - (<tt>Concurrent::Promise</tt>) <strong>dispatch_async</strong>(operation, promise) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Passes a promise to the stack and returns the response promise.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>operation</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Operation.html" title="WsdlMapper::Runtime::Operation (class)">WsdlMapper::Runtime::Operation</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>promise</span>
+      
+      
+        <span class='type'>(<tt>Concurrent::Promise</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>A promise for the request arguments.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Concurrent::Promise</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The unscheduled response promise.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+67
+68
+69</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/runtime/async_http_backend.rb', line 67</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_dispatch_async'>dispatch_async</span><span class='lparen'>(</span><span class='id identifier rubyid_operation'>operation</span><span class='comma'>,</span> <span class='id identifier rubyid_promise'>promise</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_stack'>stack</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='id identifier rubyid_operation'>operation</span><span class='comma'>,</span> <span class='id identifier rubyid_promise'>promise</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="enable_logging-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="WsdlMapper::Runtime::AsyncHttpBackend (class)">AsyncHttpBackend</a></span></tt>) <strong>enable_logging</strong>(logger = Logger.new(STDOUT), log_level: Logger::DEBUG) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Enables request and response logging. Returns self.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>logger</span>
+      
+      
+        <span class='type'>(<tt>Logger</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>Logger.new(STDOUT)</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Logger instance to use.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>log_level</span>
+      
+      
+        <span class='type'>(<tt>Logger::DEBUG</tt>, <tt>Logger::INFO</tt>, <tt>Logger::FATAL</tt>, <tt>Logger::ERROR</tt>, <tt>Logger::WARN</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="WsdlMapper::Runtime::AsyncHttpBackend (class)">AsyncHttpBackend</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+39
+40
+41
+42
+43</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/runtime/async_http_backend.rb', line 39</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_enable_logging'>enable_logging</span><span class='lparen'>(</span><span class='id identifier rubyid_logger'>logger</span> <span class='op'>=</span> <span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>STDOUT</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>log_level:</span> <span class='const'>Logger</span><span class='op'>::</span><span class='const'>DEBUG</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_stack'>stack</span><span class='period'>.</span><span class='id identifier rubyid_after'>after</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>request.factory</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>request.logger</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='const'>AsyncRequestLogger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='label'>log_level:</span> <span class='id identifier rubyid_log_level'>log_level</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_stack'>stack</span><span class='period'>.</span><span class='id identifier rubyid_before'>before</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>response.factory</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>response.logger</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='const'>AsyncResponseLogger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='label'>log_level:</span> <span class='id identifier rubyid_log_level'>log_level</span><span class='rparen'>)</span>
+  <span class='kw'>self</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Sun Feb 19 11:19:11 2017 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.2.6).
+</div>
+
+  </body>
+</html>

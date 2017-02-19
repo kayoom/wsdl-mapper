@@ -1,0 +1,1512 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: WsdlMapper::Naming::DefaultNamer
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!WsdlMapper/Naming/DefaultNamer.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (D)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../WsdlMapper.html" title="WsdlMapper (module)">WsdlMapper</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Naming.html" title="WsdlMapper::Naming (module)">Naming</a></span></span>
+     &raquo; 
+    <span class="title">DefaultNamer</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: WsdlMapper::Naming::DefaultNamer
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="NamerBase.html" title="WsdlMapper::Naming::NamerBase (class)">NamerBase</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="NamerBase.html" title="WsdlMapper::Naming::NamerBase (class)">NamerBase</a></span></li>
+          
+            <li class="next">WsdlMapper::Naming::DefaultNamer</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="../Dom.html" title="WsdlMapper::Dom (module)">Dom</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/wsdl_mapper/naming/default_namer.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>This is the default Namer implementation. It provides the de-facto standard of organizing and naming
+classes in ruby:</p>
+
+<ol>
+<li>Class/Module names are CamelCase (e.g. <code>SomeType</code>)</li>
+<li>File names are under_score (e.g. <code>some_type.rb</code>)</li>
+<li>Each class in its own file</li>
+<li>(De)Serializers are put within the same module as XSD Types</li>
+</ol>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><div id="subclasses">
+  <h2>Direct Known Subclasses</h2>
+  <p class="children"><span class='object_link'><a href="SeparatingNamer.html" title="WsdlMapper::Naming::SeparatingNamer (class)">SeparatingNamer</a></span></p>
+</div>
+<h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="DefaultNamer/InlineType.html" title="WsdlMapper::Naming::DefaultNamer::InlineType (class)">InlineType</a></span>
+    
+  
+</p>
+
+  <h2>Constant Summary</h2>
+  
+
+
+
+  <h2>Constant Summary</h2>
+  
+  <h3 class="inherited">Constants inherited
+     from <span class='object_link'><a href="NamerBase.html" title="WsdlMapper::Naming::NamerBase (class)">NamerBase</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="NamerBase.html#KEYWORDS-constant" title="WsdlMapper::Naming::NamerBase::KEYWORDS (constant)">NamerBase::KEYWORDS</a></span></p>
+
+  
+  
+  <h3 class="inherited">Constants included
+     from <span class='object_link'><a href="Inflector.html" title="WsdlMapper::Naming::Inflector (module)">Inflector</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Inflector.html#CAPITALS-constant" title="WsdlMapper::Naming::Inflector::CAPITALS (constant)">Inflector::CAPITALS</a></span>, <span class='object_link'><a href="Inflector.html#DOWN_FOLLOWED_BY_UP-constant" title="WsdlMapper::Naming::Inflector::DOWN_FOLLOWED_BY_UP (constant)">Inflector::DOWN_FOLLOWED_BY_UP</a></span>, <span class='object_link'><a href="Inflector.html#FIRST_CHAR-constant" title="WsdlMapper::Naming::Inflector::FIRST_CHAR (constant)">Inflector::FIRST_CHAR</a></span>, <span class='object_link'><a href="Inflector.html#NON_AN-constant" title="WsdlMapper::Naming::Inflector::NON_AN (constant)">Inflector::NON_AN</a></span>, <span class='object_link'><a href="Inflector.html#NON_WORD-constant" title="WsdlMapper::Naming::Inflector::NON_WORD (constant)">Inflector::NON_WORD</a></span>, <span class='object_link'><a href="Inflector.html#NON_WORD_FOLLOWED_BY_WORD-constant" title="WsdlMapper::Naming::Inflector::NON_WORD_FOLLOWED_BY_WORD (constant)">Inflector::NON_WORD_FOLLOWED_BY_WORD</a></span></p>
+
+
+
+
+  <h2>Instance Attribute Summary</h2>
+  
+  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="NamerBase.html" title="WsdlMapper::Naming::NamerBase (class)">NamerBase</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="NamerBase.html#module_path-instance_method" title="WsdlMapper::Naming::NamerBase#module_path (method)">#module_path</a></span></p>
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_attribute_name-instance_method" title="#get_attribute_name (instance method)">- (PropertyName) <strong>get_attribute_name</strong>(attribute) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_content_name-instance_method" title="#get_content_name (instance method)">- (PropertyName) <strong>get_content_name</strong>(type) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_d10r_element_directory_name-instance_method" title="#get_d10r_element_directory_name (instance method)">- (Object) <strong>get_d10r_element_directory_name</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_d10r_name-instance_method" title="#get_d10r_name (instance method)">- (TypeName) <strong>get_d10r_name</strong>(type) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_d10r_type_directory_name-instance_method" title="#get_d10r_type_directory_name (instance method)">- (Object) <strong>get_d10r_type_directory_name</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_enumeration_value_name-instance_method" title="#get_enumeration_value_name (instance method)">- (EnumerationValueName) <strong>get_enumeration_value_name</strong>(type, enum_value) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_global_d10r_name-instance_method" title="#get_global_d10r_name (instance method)">- (Object) <strong>get_global_d10r_name</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_global_s8r_name-instance_method" title="#get_global_s8r_name (instance method)">- (Object) <strong>get_global_s8r_name</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_inline_type-instance_method" title="#get_inline_type (instance method)">- (InlineType) <strong>get_inline_type</strong>(element) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_property_name-instance_method" title="#get_property_name (instance method)">- (PropertyName) <strong>get_property_name</strong>(property) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_s8r_name-instance_method" title="#get_s8r_name (instance method)">- (TypeName) <strong>get_s8r_name</strong>(type) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_s8r_type_directory_name-instance_method" title="#get_s8r_type_directory_name (instance method)">- (Object) <strong>get_s8r_type_directory_name</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_soap_array_item_name-instance_method" title="#get_soap_array_item_name (instance method)">- (String) <strong>get_soap_array_item_name</strong>(type) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_support_name-instance_method" title="#get_support_name (instance method)">- (TypeName) <strong>get_support_name</strong>(name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_type_name-instance_method" title="#get_type_name (instance method)">- (TypeName) <strong>get_type_name</strong>(type) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns a type name for the given type (simple or complex).</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (DefaultNamer) <strong>initialize</strong>(module_path: [], content_attribute_name: &#39;content&#39;, soap_array_item_name: &#39;item&#39;) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Initializes a new <span class='object_link'><a href="" title="WsdlMapper::Naming::DefaultNamer (class)">DefaultNamer</a></span> instance.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Inflector.html" title="WsdlMapper::Naming::Inflector (module)">Inflector</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Inflector.html#camelize-instance_method" title="WsdlMapper::Naming::Inflector#camelize (method)">#camelize</a></span>, <span class='object_link'><a href="Inflector.html#underscore-instance_method" title="WsdlMapper::Naming::Inflector#underscore (method)">#underscore</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="WsdlMapper::Naming::DefaultNamer (class)">DefaultNamer</a></span></tt>) <strong>initialize</strong>(module_path: [], content_attribute_name: &#39;content&#39;, soap_array_item_name: &#39;item&#39;) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Initializes a new <span class='object_link'><a href="" title="WsdlMapper::Naming::DefaultNamer (class)">WsdlMapper::Naming::DefaultNamer</a></span> instance.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>module_path</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;String&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the root module for the generated classes, e.g. <code>[&#39;MyApi&#39;, &#39;Types&#39;]</code> =&gt; <code>MyApi::Types::SomeClass</code> in <code>my_api/types/some_class.rb</code></p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>content_attribute_name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the accessor name for <a href="../../file.wrapping_types.html" title="wrapping types">wrapping types</a> (complex type with simple content and simple types with restrictions)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+28
+29
+30
+31
+32
+33
+34
+35</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/naming/default_namer.rb', line 28</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>module_path:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='label'>content_attribute_name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>content</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='label'>soap_array_item_name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>item</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='kw'>super</span> <span class='label'>module_path:</span> <span class='id identifier rubyid_module_path'>module_path</span>
+
+  <span class='ivar'>@content_attribute_name</span> <span class='op'>=</span> <span class='id identifier rubyid_content_attribute_name'>content_attribute_name</span>
+  <span class='ivar'>@soap_array_item_name</span> <span class='op'>=</span> <span class='id identifier rubyid_soap_array_item_name'>soap_array_item_name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="get_attribute_name-instance_method">
+  
+    - (<tt><span class='object_link'><a href="PropertyName.html" title="WsdlMapper::Naming::PropertyName (class)">PropertyName</a></span></tt>) <strong>get_attribute_name</strong>(attribute) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>attribute</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Dom/Attribute.html" title="WsdlMapper::Dom::Attribute (class)">WsdlMapper::Dom::Attribute</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="PropertyName.html" title="WsdlMapper::Naming::PropertyName (class)">PropertyName</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+99
+100
+101</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/naming/default_namer.rb', line 99</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_attribute_name'>get_attribute_name</span><span class='lparen'>(</span><span class='id identifier rubyid_attribute'>attribute</span><span class='rparen'>)</span>
+  <span class='const'>PropertyName</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_get_accessor_name'>get_accessor_name</span><span class='lparen'>(</span><span class='id identifier rubyid_attribute'>attribute</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_get_var_name'>get_var_name</span><span class='lparen'>(</span><span class='id identifier rubyid_attribute'>attribute</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_content_name-instance_method">
+  
+    - (<tt><span class='object_link'><a href="PropertyName.html" title="WsdlMapper::Naming::PropertyName (class)">PropertyName</a></span></tt>) <strong>get_content_name</strong>(type) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>type</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Dom/ComplexType.html" title="WsdlMapper::Dom::ComplexType (class)">WsdlMapper::Dom::ComplexType</a></span></tt>, <tt><span class='object_link'><a href="../Dom/SimpleType.html" title="WsdlMapper::Dom::SimpleType (class)">WsdlMapper::Dom::SimpleType</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="PropertyName.html" title="WsdlMapper::Naming::PropertyName (class)">PropertyName</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+112
+113
+114</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/naming/default_namer.rb', line 112</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_content_name'>get_content_name</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
+  <span class='ivar'>@content_name</span> <span class='op'>||=</span> <span class='const'>PropertyName</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_get_accessor_name'>get_accessor_name</span><span class='lparen'>(</span><span class='ivar'>@content_attribute_name</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_get_var_name'>get_var_name</span><span class='lparen'>(</span><span class='ivar'>@content_attribute_name</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_d10r_element_directory_name-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_d10r_element_directory_name</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+67
+68
+69</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/naming/default_namer.rb', line 67</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_d10r_element_directory_name'>get_d10r_element_directory_name</span>
+  <span class='id identifier rubyid_get_support_name'>get_support_name</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>D10rElementDirectory</span><span class='tstring_end'>&#39;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_d10r_name-instance_method">
+  
+    - (<tt><span class='object_link'><a href="TypeName.html" title="WsdlMapper::Naming::TypeName (class)">TypeName</a></span></tt>) <strong>get_d10r_name</strong>(type) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>type</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Dom/ComplexType.html" title="WsdlMapper::Dom::ComplexType (class)">WsdlMapper::Dom::ComplexType</a></span></tt>, <tt><span class='object_link'><a href="../Dom/SimpleType.html" title="WsdlMapper::Dom::SimpleType (class)">WsdlMapper::Dom::SimpleType</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="TypeName.html" title="WsdlMapper::Naming::TypeName (class)">TypeName</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+85
+86
+87
+88
+89</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/naming/default_namer.rb', line 85</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_d10r_name'>get_d10r_name</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_type_name'>type_name</span> <span class='op'>=</span> <span class='const'>TypeName</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_get_d10r_class_name'>get_d10r_class_name</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_get_d10r_module_path'>get_d10r_module_path</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_get_d10r_file_name'>get_d10r_file_name</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_get_d10r_file_path'>get_d10r_file_path</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_type_name'>type_name</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span> <span class='op'>=</span> <span class='id identifier rubyid_make_parents'>make_parents</span> <span class='id identifier rubyid_get_d10r_module_path'>get_d10r_module_path</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_type_name'>type_name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_d10r_type_directory_name-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_d10r_type_directory_name</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+63
+64
+65</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/naming/default_namer.rb', line 63</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_d10r_type_directory_name'>get_d10r_type_directory_name</span>
+  <span class='id identifier rubyid_get_support_name'>get_support_name</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>D10rTypeDirectory</span><span class='tstring_end'>&#39;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_enumeration_value_name-instance_method">
+  
+    - (<tt><span class='object_link'><a href="EnumerationValueName.html" title="WsdlMapper::Naming::EnumerationValueName (class)">EnumerationValueName</a></span></tt>) <strong>get_enumeration_value_name</strong>(type, enum_value) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>type</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Dom/SimpleType.html" title="WsdlMapper::Dom::SimpleType (class)">WsdlMapper::Dom::SimpleType</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>enum_value</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Dom/EnumerationValue.html" title="WsdlMapper::Dom::EnumerationValue (class)">WsdlMapper::Dom::EnumerationValue</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="EnumerationValueName.html" title="WsdlMapper::Naming::EnumerationValueName (class)">EnumerationValueName</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+106
+107
+108</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/naming/default_namer.rb', line 106</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_enumeration_value_name'>get_enumeration_value_name</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_enum_value'>enum_value</span><span class='rparen'>)</span>
+  <span class='const'>EnumerationValueName</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_get_constant_name'>get_constant_name</span><span class='lparen'>(</span><span class='id identifier rubyid_enum_value'>enum_value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_get_key_name'>get_key_name</span><span class='lparen'>(</span><span class='id identifier rubyid_enum_value'>enum_value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_global_d10r_name-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_global_d10r_name</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+71
+72
+73</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/naming/default_namer.rb', line 71</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_global_d10r_name'>get_global_d10r_name</span>
+  <span class='id identifier rubyid_get_support_name'>get_support_name</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Deserializer</span><span class='tstring_end'>&#39;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_global_s8r_name-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_global_s8r_name</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+59
+60
+61</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/naming/default_namer.rb', line 59</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_global_s8r_name'>get_global_s8r_name</span>
+  <span class='id identifier rubyid_get_support_name'>get_support_name</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Serializer</span><span class='tstring_end'>&#39;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_inline_type-instance_method">
+  
+    - (<tt><span class='object_link'><a href="DefaultNamer/InlineType.html" title="WsdlMapper::Naming::DefaultNamer::InlineType (class)">InlineType</a></span></tt>) <strong>get_inline_type</strong>(element) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>element</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Dom/Property.html" title="WsdlMapper::Dom::Property (class)">WsdlMapper::Dom::Property</a></span></tt>, <tt><span class='object_link'><a href="../Dom/Element.html" title="WsdlMapper::Dom::Element (class)">WsdlMapper::Dom::Element</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="DefaultNamer/InlineType.html" title="WsdlMapper::Naming::DefaultNamer::InlineType (class)">InlineType</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+118
+119
+120
+121</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/naming/default_namer.rb', line 118</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_inline_type'>get_inline_type</span><span class='lparen'>(</span><span class='id identifier rubyid_element'>element</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>InlineType</span><span class='tstring_end'>&#39;</span></span>
+  <span class='const'>InlineType</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='const'>WsdlMapper</span><span class='op'>::</span><span class='const'>Dom</span><span class='op'>::</span><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_ns'>ns</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_property_name-instance_method">
+  
+    - (<tt><span class='object_link'><a href="PropertyName.html" title="WsdlMapper::Naming::PropertyName (class)">PropertyName</a></span></tt>) <strong>get_property_name</strong>(property) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>property</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Dom/Property.html" title="WsdlMapper::Dom::Property (class)">WsdlMapper::Dom::Property</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="PropertyName.html" title="WsdlMapper::Naming::PropertyName (class)">PropertyName</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+93
+94
+95</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/naming/default_namer.rb', line 93</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_property_name'>get_property_name</span><span class='lparen'>(</span><span class='id identifier rubyid_property'>property</span><span class='rparen'>)</span>
+  <span class='const'>PropertyName</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_get_accessor_name'>get_accessor_name</span><span class='lparen'>(</span><span class='id identifier rubyid_property'>property</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_get_var_name'>get_var_name</span><span class='lparen'>(</span><span class='id identifier rubyid_property'>property</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_s8r_name-instance_method">
+  
+    - (<tt><span class='object_link'><a href="TypeName.html" title="WsdlMapper::Naming::TypeName (class)">TypeName</a></span></tt>) <strong>get_s8r_name</strong>(type) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>type</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Dom/ComplexType.html" title="WsdlMapper::Dom::ComplexType (class)">WsdlMapper::Dom::ComplexType</a></span></tt>, <tt><span class='object_link'><a href="../Dom/SimpleType.html" title="WsdlMapper::Dom::SimpleType (class)">WsdlMapper::Dom::SimpleType</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="TypeName.html" title="WsdlMapper::Naming::TypeName (class)">TypeName</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+77
+78
+79
+80
+81</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/naming/default_namer.rb', line 77</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_s8r_name'>get_s8r_name</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_type_name'>type_name</span> <span class='op'>=</span> <span class='const'>TypeName</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_get_s8r_class_name'>get_s8r_class_name</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_get_s8r_module_path'>get_s8r_module_path</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_get_s8r_file_name'>get_s8r_file_name</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_get_s8r_file_path'>get_s8r_file_path</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_type_name'>type_name</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span> <span class='op'>=</span> <span class='id identifier rubyid_make_parents'>make_parents</span> <span class='id identifier rubyid_get_s8r_module_path'>get_s8r_module_path</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_type_name'>type_name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_s8r_type_directory_name-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_s8r_type_directory_name</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+55
+56
+57</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/naming/default_namer.rb', line 55</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_s8r_type_directory_name'>get_s8r_type_directory_name</span>
+  <span class='id identifier rubyid_get_support_name'>get_support_name</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>S8rTypeDirectory</span><span class='tstring_end'>&#39;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_soap_array_item_name-instance_method">
+  
+    - (<tt>String</tt>) <strong>get_soap_array_item_name</strong>(type) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>type</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Dom/ComplexType.html" title="WsdlMapper::Dom::ComplexType (class)">WsdlMapper::Dom::ComplexType</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+125
+126
+127</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/naming/default_namer.rb', line 125</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_soap_array_item_name'>get_soap_array_item_name</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
+  <span class='ivar'>@soap_array_item_name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_support_name-instance_method">
+  
+    - (<tt><span class='object_link'><a href="TypeName.html" title="WsdlMapper::Naming::TypeName (class)">TypeName</a></span></tt>) <strong>get_support_name</strong>(name) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="TypeName.html" title="WsdlMapper::Naming::TypeName (class)">TypeName</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+49
+50
+51
+52
+53</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/naming/default_namer.rb', line 49</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_support_name'>get_support_name</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_type_name'>type_name</span> <span class='op'>=</span> <span class='const'>TypeName</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_get_support_class_name'>get_support_class_name</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_get_support_module_path'>get_support_module_path</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_get_support_file_name'>get_support_file_name</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_get_support_file_path'>get_support_file_path</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_type_name'>type_name</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span> <span class='op'>=</span> <span class='id identifier rubyid_make_parents'>make_parents</span> <span class='id identifier rubyid_get_support_module_path'>get_support_module_path</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_type_name'>type_name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_type_name-instance_method">
+  
+    - (<tt><span class='object_link'><a href="TypeName.html" title="WsdlMapper::Naming::TypeName (class)">TypeName</a></span></tt>) <strong>get_type_name</strong>(type) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a type name for the given type (simple or complex).</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>type</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Dom/ComplexType.html" title="WsdlMapper::Dom::ComplexType (class)">WsdlMapper::Dom::ComplexType</a></span></tt>, <tt><span class='object_link'><a href="../Dom/SimpleType.html" title="WsdlMapper::Dom::SimpleType (class)">WsdlMapper::Dom::SimpleType</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="TypeName.html" title="WsdlMapper::Naming::TypeName (class)">TypeName</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+41
+42
+43
+44
+45</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/naming/default_namer.rb', line 41</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_type_name'>get_type_name</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_type_name'>type_name</span> <span class='op'>=</span> <span class='const'>TypeName</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_get_class_name'>get_class_name</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_get_class_module_path'>get_class_module_path</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_get_class_file_name'>get_class_file_name</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_get_class_file_path'>get_class_file_path</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_type_name'>type_name</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span> <span class='op'>=</span> <span class='id identifier rubyid_make_parents'>make_parents</span> <span class='id identifier rubyid_get_class_module_path'>get_class_module_path</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_type_name'>type_name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Sun Feb 19 11:19:10 2017 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.2.6).
+</div>
+
+  </body>
+</html>

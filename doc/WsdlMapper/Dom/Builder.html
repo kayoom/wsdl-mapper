@@ -1,0 +1,696 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: WsdlMapper::Dom::Builder
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!WsdlMapper/Dom/Builder.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (B)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../WsdlMapper.html" title="WsdlMapper (module)">WsdlMapper</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Dom.html" title="WsdlMapper::Dom (module)">Dom</a></span></span>
+     &raquo; 
+    <span class="title">Builder</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: WsdlMapper::Dom::Builder
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">WsdlMapper::Dom::Builder</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/wsdl_mapper/dom/builder.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#build-instance_method" title="#build (instance method)">- (Object) <strong>build</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#build_name-instance_method" title="#build_name (instance method)">- (Object) <strong>build_name</strong>(qname) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#build_property-instance_method" title="#build_property (instance method)">- (Object) <strong>build_property</strong>(schema, xsd_element) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#build_type-instance_method" title="#build_type (instance method)">- (Object) <strong>build_type</strong>(schema, xsd_type) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_attribute_bounds-instance_method" title="#get_attribute_bounds (instance method)">- (Object) <strong>get_attribute_bounds</strong>(xsd_element) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_bounds-instance_method" title="#get_bounds (instance method)">- (Object) <strong>get_bounds</strong>(xsd_element) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_parent_bounds-instance_method" title="#get_parent_bounds (instance method)">- (Object) <strong>get_parent_bounds</strong>(xsd_element) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_sequence-instance_method" title="#get_sequence (instance method)">- (Object) <strong>get_sequence</strong>(xsd_element) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Builder) <strong>initialize</strong>(xsd_file) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of Builder.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="WsdlMapper::Dom::Builder (class)">Builder</a></span></tt>) <strong>initialize</strong>(xsd_file) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a new instance of Builder</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+12
+13
+14</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/dom/builder.rb', line 12</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_xsd_file'>xsd_file</span><span class='rparen'>)</span>
+  <span class='ivar'>@xsd_file</span> <span class='op'>=</span> <span class='id identifier rubyid_xsd_file'>xsd_file</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="build-instance_method">
+  
+    - (<tt>Object</tt>) <strong>build</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/dom/builder.rb', line 16</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_build'>build</span>
+  <span class='id identifier rubyid_schema'>schema</span> <span class='op'>=</span> <span class='const'>Schema</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+
+  <span class='ivar'>@xsd_file</span><span class='period'>.</span><span class='id identifier rubyid_complex_types'>complex_types</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_xsd_type'>xsd_type</span><span class='op'>|</span>
+    <span class='id identifier rubyid_schema'>schema</span><span class='period'>.</span><span class='id identifier rubyid_add_type'>add_type</span> <span class='id identifier rubyid_build_type'>build_type</span><span class='lparen'>(</span><span class='id identifier rubyid_schema'>schema</span><span class='comma'>,</span> <span class='id identifier rubyid_xsd_type'>xsd_type</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_schema'>schema</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="build_name-instance_method">
+  
+    - (<tt>Object</tt>) <strong>build_name</strong>(qname) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+49
+50
+51</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/dom/builder.rb', line 49</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_build_name'>build_name</span><span class='lparen'>(</span><span class='id identifier rubyid_qname'>qname</span><span class='rparen'>)</span>
+  <span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span> <span class='id identifier rubyid_qname'>qname</span><span class='period'>.</span><span class='id identifier rubyid_namespace'>namespace</span><span class='comma'>,</span> <span class='id identifier rubyid_qname'>qname</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="build_property-instance_method">
+  
+    - (<tt>Object</tt>) <strong>build_property</strong>(schema, xsd_element) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+39
+40
+41
+42
+43
+44
+45
+46
+47</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/dom/builder.rb', line 39</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_build_property'>build_property</span><span class='lparen'>(</span><span class='id identifier rubyid_schema'>schema</span><span class='comma'>,</span> <span class='id identifier rubyid_xsd_element'>xsd_element</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_build_name'>build_name</span> <span class='id identifier rubyid_xsd_element'>xsd_element</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+  <span class='id identifier rubyid_type_name'>type_name</span> <span class='op'>=</span> <span class='id identifier rubyid_build_name'>build_name</span> <span class='id identifier rubyid_xsd_element'>xsd_element</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span>
+
+  <span class='id identifier rubyid_sequence'>sequence</span> <span class='op'>=</span> <span class='id identifier rubyid_get_sequence'>get_sequence</span> <span class='id identifier rubyid_xsd_element'>xsd_element</span>
+  <span class='id identifier rubyid_bounds'>bounds</span> <span class='op'>=</span> <span class='id identifier rubyid_get_bounds'>get_bounds</span> <span class='id identifier rubyid_xsd_element'>xsd_element</span>
+
+  <span class='const'>Property</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_type_name'>type_name</span><span class='comma'>,</span> <span class='label'>sequence:</span> <span class='id identifier rubyid_sequence'>sequence</span><span class='comma'>,</span> <span class='label'>bounds:</span> <span class='id identifier rubyid_bounds'>bounds</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="build_type-instance_method">
+  
+    - (<tt>Object</tt>) <strong>build_type</strong>(schema, xsd_type) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/dom/builder.rb', line 26</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_build_type'>build_type</span><span class='lparen'>(</span><span class='id identifier rubyid_schema'>schema</span><span class='comma'>,</span> <span class='id identifier rubyid_xsd_type'>xsd_type</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_build_name'>build_name</span> <span class='id identifier rubyid_xsd_type'>xsd_type</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+
+  <span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='const'>ComplexType</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_name'>name</span>
+
+  <span class='id identifier rubyid_xsd_type'>xsd_type</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_element'>element</span><span class='op'>|</span>
+    <span class='id identifier rubyid_property'>property</span> <span class='op'>=</span> <span class='id identifier rubyid_build_property'>build_property</span> <span class='id identifier rubyid_schema'>schema</span><span class='comma'>,</span> <span class='id identifier rubyid_element'>element</span>
+    <span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_add_property'>add_property</span> <span class='id identifier rubyid_property'>property</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_type'>type</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_attribute_bounds-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_attribute_bounds</strong>(xsd_element) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+60
+61
+62
+63
+64
+65
+66
+67</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/dom/builder.rb', line 60</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_attribute_bounds'>get_attribute_bounds</span><span class='lparen'>(</span><span class='id identifier rubyid_xsd_element'>xsd_element</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_min'>min</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='id identifier rubyid_max'>max</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='id identifier rubyid_byebug'>byebug</span>
+  <span class='id identifier rubyid_xsd_element'>xsd_element</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_attr'>attr</span><span class='op'>|</span>
+
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_bounds-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_bounds</strong>(xsd_element) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+53
+54
+55
+56
+57
+58</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/dom/builder.rb', line 53</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_bounds'>get_bounds</span><span class='lparen'>(</span><span class='id identifier rubyid_xsd_element'>xsd_element</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_parent_bounds'>parent_bounds</span> <span class='op'>=</span> <span class='id identifier rubyid_get_parent_bounds'>get_parent_bounds</span> <span class='id identifier rubyid_xsd_element'>xsd_element</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span>
+  <span class='comment'># bounds = get_attribute_bounds xsd_element
+</span>
+  <span class='id identifier rubyid_parent_bounds'>parent_bounds</span> <span class='comment'>#.override bounds
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_parent_bounds-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_parent_bounds</strong>(xsd_element) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+69
+70
+71
+72
+73
+74
+75
+76</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/dom/builder.rb', line 69</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_parent_bounds'>get_parent_bounds</span><span class='lparen'>(</span><span class='id identifier rubyid_xsd_element'>xsd_element</span><span class='rparen'>)</span>
+  <span class='kw'>case</span> <span class='id identifier rubyid_xsd_element'>xsd_element</span>
+  <span class='kw'>when</span> <span class='const'>WSDL</span><span class='op'>::</span><span class='const'>XMLSchema</span><span class='op'>::</span><span class='const'>Sequence</span>
+    <span class='const'>Bounds</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='label'>min:</span> <span class='int'>1</span><span class='comma'>,</span> <span class='label'>max:</span> <span class='int'>1</span>
+  <span class='kw'>else</span>
+    <span class='const'>Bounds</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_sequence-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_sequence</strong>(xsd_element) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+78
+79
+80
+81
+82
+83</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/dom/builder.rb', line 78</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_sequence'>get_sequence</span><span class='lparen'>(</span><span class='id identifier rubyid_xsd_element'>xsd_element</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_parent'>parent</span> <span class='op'>=</span> <span class='id identifier rubyid_xsd_element'>xsd_element</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span>
+  <span class='kw'>return</span> <span class='int'>0</span> <span class='kw'>unless</span> <span class='id identifier rubyid_parent'>parent</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>WSDL</span><span class='op'>::</span><span class='const'>XMLSchema</span><span class='op'>::</span><span class='const'>Sequence</span>
+
+  <span class='id identifier rubyid_parent'>parent</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='period'>.</span><span class='id identifier rubyid_find_index'>find_index</span> <span class='id identifier rubyid_xsd_element'>xsd_element</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Sun Feb 19 11:19:08 2017 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.2.6).
+</div>
+
+  </body>
+</html>

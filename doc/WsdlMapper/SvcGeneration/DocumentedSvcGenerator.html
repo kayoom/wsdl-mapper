@@ -1,0 +1,331 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: WsdlMapper::SvcGeneration::DocumentedSvcGenerator
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!WsdlMapper/SvcGeneration/DocumentedSvcGenerator.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (D)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../WsdlMapper.html" title="WsdlMapper (module)">WsdlMapper</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../SvcGeneration.html" title="WsdlMapper::SvcGeneration (module)">SvcGeneration</a></span></span>
+     &raquo; 
+    <span class="title">DocumentedSvcGenerator</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: WsdlMapper::SvcGeneration::DocumentedSvcGenerator
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="SvcGenerator.html" title="WsdlMapper::SvcGeneration::SvcGenerator (class)">SvcGenerator</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="../Generation/Base.html" title="WsdlMapper::Generation::Base (class)">Generation::Base</a></span></li>
+          
+            <li class="next"><span class='object_link'><a href="SvcGenerator.html" title="WsdlMapper::SvcGeneration::SvcGenerator (class)">SvcGenerator</a></span></li>
+          
+            <li class="next">WsdlMapper::SvcGeneration::DocumentedSvcGenerator</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/wsdl_mapper/svc_generation/documented_svc_generator.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+
+
+
+  <h2>Instance Attribute Summary</h2>
+  
+  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="SvcGenerator.html" title="WsdlMapper::SvcGeneration::SvcGenerator (class)">SvcGenerator</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="SvcGenerator.html#context-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#context (method)">#context</a></span>, <span class='object_link'><a href="SvcGenerator.html#namer-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#namer (method)">#namer</a></span>, <span class='object_link'><a href="SvcGenerator.html#operation_d10r_generator-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#operation_d10r_generator (method)">#operation_d10r_generator</a></span>, <span class='object_link'><a href="SvcGenerator.html#operation_generator-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#operation_generator (method)">#operation_generator</a></span>, <span class='object_link'><a href="SvcGenerator.html#operation_s8r_generator-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#operation_s8r_generator (method)">#operation_s8r_generator</a></span>, <span class='object_link'><a href="SvcGenerator.html#port_generator-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#port_generator (method)">#port_generator</a></span>, <span class='object_link'><a href="SvcGenerator.html#proxy_generator-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#proxy_generator (method)">#proxy_generator</a></span>, <span class='object_link'><a href="SvcGenerator.html#schema_generator-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#schema_generator (method)">#schema_generator</a></span>, <span class='object_link'><a href="SvcGenerator.html#service_generator-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#service_generator (method)">#service_generator</a></span>, <span class='object_link'><a href="SvcGenerator.html#service_namer-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#service_namer (method)">#service_namer</a></span></p>
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#generate_api_service_accessors-instance_method" title="#generate_api_service_accessors (instance method)">- (Object) <strong>generate_api_service_accessors</strong>(f, services) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (DocumentedSvcGenerator) <strong>initialize</strong>(context, formatter_factory: DefaultFormatter, namer: WsdlMapper::Naming::DefaultNamer.new, service_namer: WsdlMapper::Naming::DefaultServiceNamer.new, service_generator_factory: DocumentedServiceGenerator, port_generator_factory: DocumentedPortGenerator, proxy_generator_factory: DocumentedProxyGenerator, operation_generator_factory: DocumentedOperationGenerator, operation_s8r_generator_factory: OperationS8rGenerator, operation_d10r_generator_factory: OperationD10rGenerator, schema_generator: nil) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of DocumentedSvcGenerator.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="SvcGenerator.html" title="WsdlMapper::SvcGeneration::SvcGenerator (class)">SvcGenerator</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="SvcGenerator.html#api_base-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#api_base (method)">#api_base</a></span>, <span class='object_link'><a href="SvcGenerator.html#body_base-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#body_base (method)">#body_base</a></span>, <span class='object_link'><a href="SvcGenerator.html#generate-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#generate (method)">#generate</a></span>, <span class='object_link'><a href="SvcGenerator.html#generate_api-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#generate_api (method)">#generate_api</a></span>, <span class='object_link'><a href="SvcGenerator.html#generate_api_class-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#generate_api_class (method)">#generate_api_class</a></span>, <span class='object_link'><a href="SvcGenerator.html#generate_api_ctr-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#generate_api_ctr (method)">#generate_api_ctr</a></span>, <span class='object_link'><a href="SvcGenerator.html#get_formatter-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#get_formatter (method)">#get_formatter</a></span>, <span class='object_link'><a href="SvcGenerator.html#get_ruby_type_name-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#get_ruby_type_name (method)">#get_ruby_type_name</a></span>, <span class='object_link'><a href="SvcGenerator.html#get_type_name-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#get_type_name (method)">#get_type_name</a></span>, <span class='object_link'><a href="SvcGenerator.html#header_base-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#header_base (method)">#header_base</a></span>, <span class='object_link'><a href="SvcGenerator.html#in_classes-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#in_classes (method)">#in_classes</a></span>, <span class='object_link'><a href="SvcGenerator.html#operation_base-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#operation_base (method)">#operation_base</a></span>, <span class='object_link'><a href="SvcGenerator.html#port_base-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#port_base (method)">#port_base</a></span>, <span class='object_link'><a href="SvcGenerator.html#proxy_base-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#proxy_base (method)">#proxy_base</a></span>, <span class='object_link'><a href="SvcGenerator.html#runtime_base-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#runtime_base (method)">#runtime_base</a></span>, <span class='object_link'><a href="SvcGenerator.html#runtime_modules-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#runtime_modules (method)">#runtime_modules</a></span>, <span class='object_link'><a href="SvcGenerator.html#runtime_path-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#runtime_path (method)">#runtime_path</a></span>, <span class='object_link'><a href="SvcGenerator.html#service_base-instance_method" title="WsdlMapper::SvcGeneration::SvcGenerator#service_base (method)">#service_base</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../Generation/Base.html" title="WsdlMapper::Generation::Base (class)">Generation::Base</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Generation/Base.html#append_file_for-instance_method" title="WsdlMapper::Generation::Base#append_file_for (method)">#append_file_for</a></span>, <span class='object_link'><a href="../Generation/Base.html#file-instance_method" title="WsdlMapper::Generation::Base#file (method)">#file</a></span>, <span class='object_link'><a href="../Generation/Base.html#file_for-instance_method" title="WsdlMapper::Generation::Base#file_for (method)">#file_for</a></span>, <span class='object_link'><a href="../Generation/Base.html#generate_name-instance_method" title="WsdlMapper::Generation::Base#generate_name (method)">#generate_name</a></span>, <span class='object_link'><a href="../Generation/Base.html#get_formatter-instance_method" title="WsdlMapper::Generation::Base#get_formatter (method)">#get_formatter</a></span>, <span class='object_link'><a href="../Generation/Base.html#get_module_names-instance_method" title="WsdlMapper::Generation::Base#get_module_names (method)">#get_module_names</a></span>, <span class='object_link'><a href="../Generation/Base.html#get_type_name-instance_method" title="WsdlMapper::Generation::Base#get_type_name (method)">#get_type_name</a></span>, <span class='object_link'><a href="../Generation/Base.html#type_file_for-instance_method" title="WsdlMapper::Generation::Base#type_file_for (method)">#type_file_for</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="WsdlMapper::SvcGeneration::DocumentedSvcGenerator (class)">DocumentedSvcGenerator</a></span></tt>) <strong>initialize</strong>(context, formatter_factory: DefaultFormatter, namer: WsdlMapper::Naming::DefaultNamer.new, service_namer: WsdlMapper::Naming::DefaultServiceNamer.new, service_generator_factory: DocumentedServiceGenerator, port_generator_factory: DocumentedPortGenerator, proxy_generator_factory: DocumentedProxyGenerator, operation_generator_factory: DocumentedOperationGenerator, operation_s8r_generator_factory: OperationS8rGenerator, operation_d10r_generator_factory: OperationD10rGenerator, schema_generator: nil) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a new instance of DocumentedSvcGenerator</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/svc_generation/documented_svc_generator.rb', line 11</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='comma'>,</span>
+  <span class='label'>formatter_factory:</span> <span class='const'>DefaultFormatter</span><span class='comma'>,</span>
+  <span class='label'>namer:</span> <span class='const'>WsdlMapper</span><span class='op'>::</span><span class='const'>Naming</span><span class='op'>::</span><span class='const'>DefaultNamer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='comma'>,</span>
+  <span class='label'>service_namer:</span> <span class='const'>WsdlMapper</span><span class='op'>::</span><span class='const'>Naming</span><span class='op'>::</span><span class='const'>DefaultServiceNamer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='comma'>,</span>
+  <span class='label'>service_generator_factory:</span> <span class='const'>DocumentedServiceGenerator</span><span class='comma'>,</span>
+  <span class='label'>port_generator_factory:</span> <span class='const'>DocumentedPortGenerator</span><span class='comma'>,</span>
+  <span class='label'>proxy_generator_factory:</span> <span class='const'>DocumentedProxyGenerator</span><span class='comma'>,</span>
+  <span class='label'>operation_generator_factory:</span> <span class='const'>DocumentedOperationGenerator</span><span class='comma'>,</span>
+  <span class='label'>operation_s8r_generator_factory:</span> <span class='const'>OperationS8rGenerator</span><span class='comma'>,</span>
+  <span class='label'>operation_d10r_generator_factory:</span> <span class='const'>OperationD10rGenerator</span><span class='comma'>,</span>
+  <span class='label'>schema_generator:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='kw'>super</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="generate_api_service_accessors-instance_method">
+  
+    - (<tt>Object</tt>) <strong>generate_api_service_accessors</strong>(f, services) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/svc_generation/documented_svc_generator.rb', line 25</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_generate_api_service_accessors'>generate_api_service_accessors</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='id identifier rubyid_services'>services</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_yard'>yard</span> <span class='op'>=</span> <span class='const'>WsdlMapper</span><span class='op'>::</span><span class='const'>Generation</span><span class='op'>::</span><span class='const'>YardDocFormatter</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_f'>f</span>
+  <span class='id identifier rubyid_services'>services</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
+    <span class='id identifier rubyid_attr_name'>attr_name</span> <span class='op'>=</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_property_name'>property_name</span><span class='period'>.</span><span class='id identifier rubyid_attr_name'>attr_name</span>
+    <span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+    <span class='id identifier rubyid_yard'>yard</span><span class='period'>.</span><span class='id identifier rubyid_attribute!'>attribute!</span> <span class='id identifier rubyid_attr_name'>attr_name</span><span class='comma'>,</span> <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='kw'>nil</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_yard'>yard</span><span class='period'>.</span><span class='id identifier rubyid_tag'>tag</span> <span class='symbol'>:soap_name</span><span class='comma'>,</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_attr_readers'>attr_readers</span> <span class='id identifier rubyid_attr_name'>attr_name</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Sun Feb 19 11:19:13 2017 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.2.6).
+</div>
+
+  </body>
+</html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: WsdlMapper::D10rGeneration::D10rGenerator
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!WsdlMapper/D10rGeneration/D10rGenerator.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (D)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../WsdlMapper.html" title="WsdlMapper (module)">WsdlMapper</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../D10rGeneration.html" title="WsdlMapper::D10rGeneration (module)">D10rGeneration</a></span></span>
+     &raquo; 
+    <span class="title">D10rGenerator</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: WsdlMapper::D10rGeneration::D10rGenerator
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="../Generation/Base.html" title="WsdlMapper::Generation::Base (class)">Generation::Base</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="../Generation/Base.html" title="WsdlMapper::Generation::Base (class)">Generation::Base</a></span></li>
+          
+            <li class="next">WsdlMapper::D10rGeneration::D10rGenerator</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="../Generation.html" title="WsdlMapper::Generation (module)">Generation</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/wsdl_mapper/d10r_generation/d10r_generator.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#context-instance_method" title="#context (instance method)">- (Object) <strong>context</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute context.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#generate-instance_method" title="#generate (instance method)">- (Object) <strong>generate</strong>(schema) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_formatter-instance_method" title="#get_formatter (instance method)">- (Object) <strong>get_formatter</strong>(io) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (D10rGenerator) <strong>initialize</strong>(context, skip_modules: false, namer: WsdlMapper::Naming::DefaultNamer.new, formatter_factory: DefaultFormatter, module_generator_factory: DefaultModuleGenerator) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of D10rGenerator.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../Generation/Base.html" title="WsdlMapper::Generation::Base (class)">Generation::Base</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Generation/Base.html#append_file_for-instance_method" title="WsdlMapper::Generation::Base#append_file_for (method)">#append_file_for</a></span>, <span class='object_link'><a href="../Generation/Base.html#file-instance_method" title="WsdlMapper::Generation::Base#file (method)">#file</a></span>, <span class='object_link'><a href="../Generation/Base.html#file_for-instance_method" title="WsdlMapper::Generation::Base#file_for (method)">#file_for</a></span>, <span class='object_link'><a href="../Generation/Base.html#generate_name-instance_method" title="WsdlMapper::Generation::Base#generate_name (method)">#generate_name</a></span>, <span class='object_link'><a href="../Generation/Base.html#get_module_names-instance_method" title="WsdlMapper::Generation::Base#get_module_names (method)">#get_module_names</a></span>, <span class='object_link'><a href="../Generation/Base.html#get_type_name-instance_method" title="WsdlMapper::Generation::Base#get_type_name (method)">#get_type_name</a></span>, <span class='object_link'><a href="../Generation/Base.html#type_file_for-instance_method" title="WsdlMapper::Generation::Base#type_file_for (method)">#type_file_for</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="WsdlMapper::D10rGeneration::D10rGenerator (class)">D10rGenerator</a></span></tt>) <strong>initialize</strong>(context, skip_modules: false, namer: WsdlMapper::Naming::DefaultNamer.new, formatter_factory: DefaultFormatter, module_generator_factory: DefaultModuleGenerator) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a new instance of D10rGenerator</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/d10r_generation/d10r_generator.rb', line 17</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='comma'>,</span>
+  <span class='label'>skip_modules:</span> <span class='kw'>false</span><span class='comma'>,</span>
+  <span class='label'>namer:</span> <span class='const'>WsdlMapper</span><span class='op'>::</span><span class='const'>Naming</span><span class='op'>::</span><span class='const'>DefaultNamer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='comma'>,</span>
+  <span class='label'>formatter_factory:</span> <span class='const'>DefaultFormatter</span><span class='comma'>,</span>
+  <span class='label'>module_generator_factory:</span> <span class='const'>DefaultModuleGenerator</span><span class='rparen'>)</span>
+
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
+
+  <span class='ivar'>@namer</span> <span class='op'>=</span> <span class='id identifier rubyid_namer'>namer</span>
+  <span class='ivar'>@formatter_factory</span> <span class='op'>=</span> <span class='id identifier rubyid_formatter_factory'>formatter_factory</span>
+  <span class='ivar'>@module_generator</span> <span class='op'>=</span> <span class='id identifier rubyid_module_generator_factory'>module_generator_factory</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>self</span>
+  <span class='ivar'>@type_directory_name</span> <span class='op'>=</span> <span class='ivar'>@namer</span><span class='period'>.</span><span class='id identifier rubyid_get_d10r_type_directory_name'>get_d10r_type_directory_name</span>
+  <span class='ivar'>@element_directory_name</span> <span class='op'>=</span> <span class='ivar'>@namer</span><span class='period'>.</span><span class='id identifier rubyid_get_d10r_element_directory_name'>get_d10r_element_directory_name</span>
+  <span class='ivar'>@deserializer_name</span> <span class='op'>=</span> <span class='ivar'>@namer</span><span class='period'>.</span><span class='id identifier rubyid_get_global_d10r_name'>get_global_d10r_name</span>
+  <span class='ivar'>@skip_modules</span> <span class='op'>=</span> <span class='id identifier rubyid_skip_modules'>skip_modules</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="context-instance_method">
+  
+    - (<tt>Object</tt>) <strong>context</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute context</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+15
+16
+17</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/d10r_generation/d10r_generator.rb', line 15</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_context'>context</span>
+  <span class='ivar'>@context</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="generate-instance_method">
+  
+    - (<tt>Object</tt>) <strong>generate</strong>(schema) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/d10r_generation/d10r_generator.rb', line 34</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_generate'>generate</span><span class='lparen'>(</span><span class='id identifier rubyid_schema'>schema</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'>Result</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='label'>schema:</span> <span class='id identifier rubyid_schema'>schema</span>
+
+  <span class='id identifier rubyid_generate_type_directory'>generate_type_directory</span> <span class='id identifier rubyid_schema'>schema</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span>
+
+  <span class='id identifier rubyid_schema'>schema</span><span class='period'>.</span><span class='id identifier rubyid_each_type'>each_type</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_type'>type</span><span class='op'>|</span>
+    <span class='id identifier rubyid_generate_type'>generate_type</span> <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>unless</span> <span class='ivar'>@skip_modules</span>
+    <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_module_tree'>module_tree</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_module_node'>module_node</span><span class='op'>|</span>
+      <span class='ivar'>@module_generator</span><span class='period'>.</span><span class='id identifier rubyid_generate'>generate</span> <span class='id identifier rubyid_module_node'>module_node</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_generate_element_directory'>generate_element_directory</span> <span class='id identifier rubyid_schema'>schema</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span>
+  <span class='id identifier rubyid_generate_deserializer'>generate_deserializer</span> <span class='id identifier rubyid_schema'>schema</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span>
+
+  <span class='id identifier rubyid_result'>result</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_formatter-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_formatter</strong>(io) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+55
+56
+57</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/wsdl_mapper/d10r_generation/d10r_generator.rb', line 55</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_formatter'>get_formatter</span><span class='lparen'>(</span><span class='id identifier rubyid_io'>io</span><span class='rparen'>)</span>
+  <span class='ivar'>@formatter_factory</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_io'>io</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Sun Feb 19 11:19:12 2017 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.2.6).
+</div>
+
+  </body>
+</html>

@@ -59,14 +59,16 @@ module WsdlMapper
         @name ||= ['', *@module_path, @class_name] * '::'
       end
 
+      # Determines if this type name is equal to `other`. Two type names are considered
+      # equal, if their {TypeName#name} is equal.
+      # @param [TypeName] other Other type name to compare to
+      # @return [true, false]
       def eql?(other)
         self.class == other.class && name == other.name
       end
+      alias_method :==, :eql?
 
-      def ==(other)
-        eql? other
-      end
-
+      # @!visibility private
       def hash
         [self.class, name].hash
       end

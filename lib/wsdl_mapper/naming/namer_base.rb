@@ -3,6 +3,14 @@ require 'wsdl_mapper/naming/inflector'
 
 module WsdlMapper
   module Naming
+    # This is the base class of all namers, which implements common functionality.
+    #
+    # A namer is responsible for generating ruby class / module / attribute / constant
+    # names from schema information.
+    #
+    # For the most part, derivations such as {DefaultNamer} just implement
+    # common ruby conventions. The interface, though, also allows for complete
+    # customization.
     class NamerBase
       include Inflector
 
@@ -57,6 +65,7 @@ module WsdlMapper
       protected
       def make_parents(path)
         return if path.empty?
+
         mod, path = path.last, path[0...-1]
         type_name = TypeName.new mod, path, get_file_name(mod), get_file_path(path)
         type_name.parent = make_parents path
