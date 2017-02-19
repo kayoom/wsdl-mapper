@@ -63,7 +63,7 @@ RUBY
 --tag xml_value:"XML Value"
 --tag soap_name:"SOAP Name"
 --markup markdown
---markup-provider redcarpet
+--markup-provider kramdown
 **/*.rb
 SH
       end

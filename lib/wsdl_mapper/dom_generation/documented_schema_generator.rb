@@ -42,6 +42,7 @@ module WsdlMapper
 --tag xml_value:"XML Value"
 --tag soap_name:"SOAP Name"
 --markup markdown
+--markup-provider redcarpet
 **/*.rb
 SH
       end
