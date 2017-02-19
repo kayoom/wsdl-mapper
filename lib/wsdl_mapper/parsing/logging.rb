@@ -26,7 +26,7 @@ module WsdlMapper
         @log_msgs << LogMsg.new(node, source, msg)
 
         @logger ||= ::Logging.logger[self]
-        @logger.warn "#{msg} in {#{node.namespace.href}}#{node.name}"
+        @logger.warn "#{msg} in #{node}"
       end
     end
   end
