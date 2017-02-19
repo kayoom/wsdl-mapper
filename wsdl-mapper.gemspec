@@ -30,6 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'redcarpet'
   spec.add_development_dependency 'github-markup'
   spec.add_development_dependency 'logging', '~> 2.1'
+  spec.add_development_dependency 'coveralls'
 
   spec.add_dependency 'concurrent-ruby'
   spec.add_dependency 'faraday', '~> 0.11'
